@@ -5,11 +5,7 @@ module.exports = function(config) {
     frameworks: ['jasmine', 'browserify'],
     files: [{ pattern: 'src/**/*.test.js', included: true }],
 
-    exclude: [
-      'src/resource/index.test.js',
-      'src/mercury.test.js',
-      'src/resource/utls/fetch-resource.test.js',
-    ],
+    exclude: [],
 
     preprocessors: {
       'src/**/*.js': ['browserify'],
@@ -25,7 +21,7 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
     concurrency: Infinity,
   });
