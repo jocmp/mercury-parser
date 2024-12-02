@@ -1,14 +1,15 @@
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
-
     basePath: '',
 
     frameworks: ['jasmine', 'browserify'],
-    files: [
-      { pattern: 'src/**/*.test.js', included: true },
-    ],
+    files: [{ pattern: 'src/**/*.test.js', included: true }],
 
-    exclude: [],
+    exclude: [
+      'src/resource/index.test.js',
+      'src/mercury.test.js',
+      'src/resource/utls/fetch-resource.test.js',
+    ],
 
     preprocessors: {
       'src/**/*.js': ['browserify'],

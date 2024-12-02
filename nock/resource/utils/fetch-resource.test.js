@@ -1,9 +1,12 @@
 import assert from 'assert';
 import URL from 'url';
 
-import { record } from 'test-helpers';
-import fetchResource, { baseDomain, validateResponse } from './fetch-resource';
-import { MAX_CONTENT_LENGTH } from './constants';
+import { record } from '../../test-recorder';
+import fetchResource, {
+  baseDomain,
+  validateResponse,
+} from '../../../src/resource/utils/fetch-resource';
+import { MAX_CONTENT_LENGTH } from '../../../src/resource/utils/constants';
 
 describe('fetchResource(url)', () => {
   const recorder = record('fetch-resource-test');
