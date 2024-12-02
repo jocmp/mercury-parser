@@ -1,18 +1,8 @@
-# Postlight Parser - Extracting content from chaos
+# Mercury Parser - Extracting content from chaos
 
-[![CircleCI](https://circleci.com/gh/postlight/parser.svg?style=svg&circle-token=3026c2b527d3767750e767872d08991aeb4f8f10)](https://circleci.com/gh/postlight/mercury-parser) [![Greenkeeper badge](https://badges.greenkeeper.io/postlight/mercury-parser.svg)](https://greenkeeper.io/) [![Apache License][license-apach-badge]][license-apach] [![MITC License][license-mit-badge]][license-mit]
-[![Gitter chat](https://badges.gitter.im/postlight/mercury.png)](https://gitter.im/postlight/mercury)
+Mercury Parser extracts the bits that humans care about from any URL you give it. That includes article content, titles, authors, published dates, excerpts, lead images, and more.
 
-[license-apach-badge]: https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square
-[license-apach]: https://github.com/postlight/mercury-parser/blob/master/LICENSE-APACHE
-[license-mit-badge]: https://img.shields.io/badge/License-MIT%202.0-blue.svg?style=flat-square
-[license-mit]: https://github.com/postlight/mercury-parser/blob/master/LICENSE-MIT
-
-[Postlight](https://postlight.com)'s Parser extracts the bits that humans care about from any URL you give it. That includes article content, titles, authors, published dates, excerpts, lead images, and more.
-
-Postlight Parser powers [Postlight Reader](https://reader.postlight.com/), a browser extension that removes ads and distractions, leaving only text and images for a beautiful reading view on any site.
-
-Postlight Parser allows you to easily create custom parsers using simple JavaScript and CSS selectors. This allows you to proactively manage parsing and migration edge cases. There are [many examples available](https://github.com/postlight/parser/tree/master/src/extractors/custom) along with [documentation](https://github.com/postlight/parser/blob/master/src/extractors/custom/README.md).
+Mercury Parser allows you to easily create custom parsers using simple JavaScript and CSS selectors. This allows you to proactively manage parsing and migration edge cases. There are [many examples available](https://github.com/jocmp/mercury-parser/tree/master/src/extractors/custom) along with [documentation](https://github.com/jocmp/mercury-parser/blob/master/src/extractors/custom/README.md).
 
 ## How? Like this.
 
@@ -20,16 +10,16 @@ Postlight Parser allows you to easily create custom parsers using simple JavaScr
 
 ```bash
 # If you're using yarn
-yarn add @postlight/parser
+yarn add @jocmp/mercury-parser
 
 # If you're using npm
-npm install @postlight/parser
+npm install @jocmp/mercury-parser
 ```
 
 ### Usage
 
 ```javascript
-import Parser from '@postlight/parser';
+import Parser from '@jocmp/mercury-parser';
 
 Parser.parse(url).then(result => console.log(result));
 
@@ -113,9 +103,9 @@ Postlight Parser also ships with a CLI, meaning you can use it from your command
 
 ```bash
 # Install Postlight Parser globally
-yarn global add @postlight/parser
+yarn global add @jocmp/mercury-parser
 #   or
-npm -g install @postlight/parser
+npm -g install @jocmp/mercury-parser
 
 # Then
 postlight-parser https://postlight.com/trackchanges/mercury-goes-open-source

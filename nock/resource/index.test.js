@@ -1,9 +1,9 @@
 import assert from 'assert';
 import cheerio from 'cheerio';
-import { getEncoding } from 'utils/text';
+import { getEncoding } from '../../src/utils/text';
 
-import { record } from 'test-helpers';
-import Resource from './index';
+import { record } from '../test-recorder';
+import Resource from '../../src/resource/index';
 
 describe('Resource', () => {
   const recorder = record('resource-test');

@@ -1,12 +1,9 @@
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
-
     basePath: '',
 
     frameworks: ['jasmine', 'browserify'],
-    files: [
-      { pattern: 'src/**/*.test.js', included: true },
-    ],
+    files: [{ pattern: 'src/**/*.test.js', included: true }],
 
     exclude: [],
 
@@ -24,7 +21,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
     concurrency: Infinity,
   });

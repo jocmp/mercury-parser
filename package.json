@@ -1,16 +1,16 @@
 {
-  "name": "@postlight/parser",
-  "version": "2.2.3",
-  "description": "Postlight Parser transforms web pages into clean text. Publishers and programmers use it to make the web make sense, and readers use it to read any web article comfortably.",
-  "author": "Postlight <mercury@postlight.com>",
-  "homepage": "https://reader.postlight.com",
+  "name": "@jocmp/mercury-parser",
+  "version": "2.2.3-dev",
+  "description": "Mercury Parser transforms web pages into clean text. Publishers and programmers use it to make the web make sense, and readers use it to read any web article comfortably.",
+  "author": "jocmp <hello@jocmp.com>",
+  "homepage": "https://github.com/jocmp/mercury-parser",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/postlight/parser.git"
+    "url": "git+https://github.com/jocmp/mercury-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/postlight/parser/issues"
+    "url": "https://github.com/@jocmp/mercury-parser/issues"
   },
   "keywords": [
     "mercury",
@@ -26,8 +26,7 @@
   ],
   "main": "./dist/mercury.js",
   "bin": {
-    "mercury-parser": "./cli.js",
-    "postlight-parser": "./cli.js"
+    "mercury-parser": "./cli.js"
   },
   "scripts": {
     "lint": "eslint . --fix",
@@ -96,7 +95,7 @@
     "karma-requirejs": "^1.1.0",
     "lint-staged": "^8.1.0",
     "mocha": "^6.0.0",
-    "nock": "^10.0.6",
+    "nock": "^13.5.6",
     "ora": "^4.0.0",
     "prettier": "^1.15.3",
     "remark-cli": "^7.0.0",

@@ -1,6 +1,6 @@
 import assert from 'assert';
-import { record } from 'test-helpers';
-import Parser from './mercury';
+import { record } from './test-recorder';
+import Parser from '../src/mercury';
 
 const fs = require('fs');
 
