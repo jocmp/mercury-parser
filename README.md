@@ -1,5 +1,7 @@
 # Mercury Parser - Extracting content from chaos
 
+![Tests](https://github.com/jocmp/mercury-parser/actions/workflows/ci.yaml/badge.svg)
+
 Mercury Parser extracts the bits that humans care about from any URL you give it. That includes article content, titles, authors, published dates, excerpts, lead images, and more.
 
 Mercury Parser allows you to easily create custom parsers using simple JavaScript and CSS selectors. This allows you to proactively manage parsing and migration edge cases. There are [many examples available](https://github.com/jocmp/mercury-parser/tree/master/src/extractors/custom) along with [documentation](https://github.com/jocmp/mercury-parser/blob/master/src/extractors/custom/README.md).
@@ -54,7 +56,7 @@ If Parser is unable to find a field, that field will return `null`.
 
 ##### Content Formats
 
-By default, Postlight Parser returns the `content` field as HTML. However, you can override this behavior by passing in options to the `parse` function, specifying whether or not to scrape all pages of an article, and what type of output to return (valid values are `'html'`, `'markdown'`, and `'text'`). For example:
+By default, Mercury Parser returns the `content` field as HTML. However, you can override this behavior by passing in options to the `parse` function, specifying whether or not to scrape all pages of an article, and what type of output to return (valid values are `'html'`, `'markdown'`, and `'text'`). For example:
 
 ```javascript
 Parser.parse(url, { contentType: 'markdown' }).then(result =>
@@ -84,7 +86,7 @@ Parser.parse(url, {
 
 ##### Pre-fetched HTML
 
-You can use Postlight Parser to parse custom or pre-fetched HTML by passing an HTML string to the `parse` function as follows:
+You can use Mercury Parser to parse custom or pre-fetched HTML by passing an HTML string to the `parse` function as follows:
 
 ```javascript
 Parser.parse(url, {
@@ -97,12 +99,12 @@ Note that the URL argument is still supplied, in order to identify the web site 
 
 #### The command-line parser
 
-Postlight Parser also ships with a CLI, meaning you can use it from your command line like so:
+Mercury Parser also ships with a CLI, meaning you can use it from your command line like so:
 
-![Postlight Parser CLI Basic Usage](./assets/parser-basic-usage.gif)
+![Mercury Parser CLI Basic Usage](./assets/parser-basic-usage.gif)
 
 ```bash
-# Install Postlight Parser globally
+# Install Mercury Parser globally
 yarn global add @jocmp/mercury-parser
 #   or
 npm -g install @jocmp/mercury-parser
@@ -140,10 +142,6 @@ Licensed under either of the below, at your preference:
 
 ## Contributing
 
-For details on how to contribute to Postlight Parser, including how to write a custom content extractor for any site, see [CONTRIBUTING.md](./CONTRIBUTING.md)
+For details on how to contribute to Mercury Parser, including how to write a custom content extractor for any site, see [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 Unless it is explicitly stated otherwise, any contribution intentionally submitted for inclusion in the work, as defined in the Apache-2.0 license, shall be dual licensed as above without any additional terms or conditions.
-
----
-
-🔬 A Labs project from your friends at [Postlight](https://postlight.com). Happy coding!
