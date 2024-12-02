@@ -71,7 +71,7 @@
     "brfs": "^2.0.1",
     "brfs-babel": "^2.0.0",
     "browserify": "^16.2.3",
-    "changelog-maker": "^2.3.0",
+    "changelog-maker": "^4.2.1",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^6.1.0",
