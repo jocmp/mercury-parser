@@ -813,8 +813,9 @@
     "@octokit/openapi-types" "^22.2.0"
 
 "@postlight/ci-failed-test-reporter@^1.0":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@postlight/ci-failed-test-reporter/-/ci-failed-test-reporter-1.0.22.tgz#c382c3e75a4bcf078e4ed1abf14ea63d074d56b3"
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@postlight/ci-failed-test-reporter/-/ci-failed-test-reporter-1.0.26.tgz#dbb8a07bf2e500476dc6bac0611aac2c8fbbe567"
+  integrity sha512-xfXzxyOiKhco7Gx2OLTe9b66b0dFJw0elg94KGHoQXf5F8JqqFvdo35J8wayGOor64CSMvn+4Bjlu2NKV+yTGA==
   dependencies:
     dotenv "^6.2.0"
     node-fetch "^2.3.0"
