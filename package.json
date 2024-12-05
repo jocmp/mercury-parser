@@ -122,7 +122,7 @@
     "iconv-lite": "0.5.0",
     "jquery": "^3.5.0",
     "moment": "^2.23.0",
-    "moment-parseformat": "3.0.0",
+    "moment-parseformat": "4.0.0",
     "moment-timezone": "0.5.46",
     "postman-request": "^2.88.1-postman.31",
     "string-direction": "^0.1.2",
