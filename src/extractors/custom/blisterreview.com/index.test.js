@@ -56,16 +56,6 @@ describe('BlisterreviewComExtractor', () => {
       assert.equal(date_published, `2019-04-09T14:00:15.000Z`);
     });
 
-    // it('returns the dek', async () => {
-    //     // To pass this test, fill out the dek selector
-    //     // in ./src/extractors/custom/blisterreview.com/index.js.
-    //     const { dek } = await result
-
-    //     // Update these values with the expected values from
-    //     // the article.
-    //     assert.equal(dek, '')
-    //   });
-
     it('returns the lead_image_url', async () => {
       // To pass this test, fill out the lead_image_url selector
       // in ./src/extractors/custom/blisterreview.com/index.js.
