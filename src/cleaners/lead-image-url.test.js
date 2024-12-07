@@ -4,7 +4,7 @@ import clean from './lead-image-url';
 
 describe('clean(leadImageUrl)', () => {
   it('returns the url if valid', () => {
-    const url = 'https://example.com';
+    const url = 'https://example.com/';
     assert.equal(clean(url), url);
   });
 
