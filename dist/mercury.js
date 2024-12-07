@@ -6176,6 +6176,31 @@ var WwwVersantsComExtractor = {
   }
 };
 
+var Www1pezeshkComExtractor = {
+  domain: 'www.1pezeshk.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value'], 'h1.post-title']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[property="article:published_time"', 'content']]
+  },
+  lead_image_url: {
+    selectors: [['meta[property="og:image"', 'content']]
+  },
+  content: {
+    selectors: [// enter content selectors
+    ],
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6322,7 +6347,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   PostlightComExtractor: PostlightComExtractor,
   WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
   WwwCbcCaExtractor: WwwCbcCaExtractor,
-  WwwVersantsComExtractor: WwwVersantsComExtractor
+  WwwVersantsComExtractor: WwwVersantsComExtractor,
+  Www1pezeshkComExtractor: Www1pezeshkComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {

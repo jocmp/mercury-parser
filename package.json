@@ -127,7 +127,6 @@
     "postman-request": "^2.88.1-postman.31",
     "string-direction": "^0.1.2",
     "turndown": "^7.1.1",
-    "valid-url": "^1.0.9",
     "wuzzy": "^0.1.4",
     "yargs-parser": "^15.0.1"
   },

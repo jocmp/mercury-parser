@@ -142,3 +142,4 @@ export * from './postlight.com';
 export * from './www.investmentexecutive.com';
 export * from './www.cbc.ca';
 export * from './www.versants.com';
+export * from './www.1pezeshk.com';
