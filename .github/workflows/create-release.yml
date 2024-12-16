@@ -1,46 +1,24 @@
-name: create-release
-
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        type: choice
-        description: Select version bump
-        options:
-          - patch
-          - minor
-          - major
+  push:
+    tags:
+      - "*"
+
+name: Create Release
 
 jobs:
-  create-release:
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
-      - uses: actions/setup-node@v4
-        with:
-          cache: "yarn"
-          node-version-file: ".tool-versions"
-      - name: Setup build dependencies
-        run: |
-          make deps
-          yarn install
-      - name: Configure Git user
-        run: |
-          git config user.name "jocmp"
-          git config user.email "9521010+jocmp@users.noreply.github.com"
-      - name: Build
-        run: |
-          yarn run release
-          git add dist/
-      - name: Bump Version
-        run: |
-          bumpver update --${{ github.event.inputs.version }}
-      - name: Create GitHub Release
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          generate_release_notes: true
+          draft: false
+          prerelease: false

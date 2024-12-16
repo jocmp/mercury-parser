@@ -1,0 +1,42 @@
+name: bump-version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        description: Select version bump
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
+      - uses: actions/setup-node@v4
+        with:
+          cache: "yarn"
+          node-version-file: ".tool-versions"
+      - name: Setup build dependencies
+        run: |
+          make deps
+          yarn install
+      - name: Configure Git user
+        run: |
+          git config user.name "jocmp"
+          git config user.email "9521010+jocmp@users.noreply.github.com"
+      - name: Build
+        run: |
+          yarn run release
+          git add dist/
+      - name: Bump Version
+        run: |
+          bumpver update --${{ github.event.inputs.version }}
