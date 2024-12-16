@@ -1,6 +1,6 @@
 # Mercury Parser - Extracting content from chaos
 
-![Tests](https://github.com/jocmp/mercury-parser/actions/workflows/ci.yaml/badge.svg)
+![Tests](https://github.com/jocmp/mercury-parser/actions/workflows/ci.yml/badge.svg)
 
 Mercury Parser extracts the bits that humans care about from any URL you give it. That includes article content, titles, authors, published dates, excerpts, lead images, and more.
 
