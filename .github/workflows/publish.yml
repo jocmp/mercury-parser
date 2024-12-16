@@ -1,6 +1,7 @@
 name: publish
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "*"
@@ -17,6 +18,6 @@ jobs:
         with:
           registry-url: "https://registry.npmjs.org"
       - run: yarn install
-      - run: yarn publish --provenance --access public
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
