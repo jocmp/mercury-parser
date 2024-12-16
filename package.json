@@ -110,7 +110,7 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-uglify": "^6.0.1",
-    "watchify": "^3.11.1"
+    "watchify": "^4.0.0"
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.2.0",
