@@ -2,10 +2,10 @@ name: publish
 
 on:
   release:
-    types: [published]
+    types: [released]
 
 jobs:
-  build:
+  npm:
     runs-on: ubuntu-latest
     permissions:
       contents: read
