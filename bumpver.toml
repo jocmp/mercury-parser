@@ -1,0 +1,15 @@
+[bumpver]
+current_version = "2.2.3"
+version_pattern = "[MAJOR].[MINOR].[PATCH]"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = "scripts/update-changelog"
+post_commit_hook = ""
+commit = true
+tag = true
+push = false
+
+[bumpver.file_patterns]
+"package.json" = ['"version": "{version}"']
+"bumpver.toml" = ['current_version = "{version}"']

@@ -1,0 +1,42 @@
+name: create-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        description: Select version bump
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: "yarn"
+          node-version-file: ".tool-versions"
+      - name: Setup build dependencies
+        run: make deps
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Build
+        run: |
+          yarn run release
+          git add dist/
+      - name: Bump Version
+        run: |
+          bumpver update --${{ github.event.inputs.version }}
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

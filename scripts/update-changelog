@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+make changelog
+git add CHANGELOG.md
