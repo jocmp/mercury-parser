@@ -24,7 +24,9 @@ jobs:
           cache: "yarn"
           node-version-file: ".tool-versions"
       - name: Setup build dependencies
-        run: make deps
+        run: |
+          make deps
+          yarn install
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"
