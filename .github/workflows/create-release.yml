@@ -7,12 +7,12 @@ on:
         type: choice
         description: Select version bump
         options:
-          - major
-          - minor
           - patch
+          - minor
+          - major
 
 jobs:
-  production:
+  create-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write

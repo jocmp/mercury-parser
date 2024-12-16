@@ -8,7 +8,7 @@ pre_commit_hook = "scripts/update-changelog"
 post_commit_hook = ""
 commit = true
 tag = true
-push = false
+push = true
 
 [bumpver.file_patterns]
 "package.json" = ['"version": "{version}"']
