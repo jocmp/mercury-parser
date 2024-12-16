@@ -1,9 +1,5 @@
 # Mercury Parser Changelog
 
-### 2.2.4 (Dec 16, 2024)
-
-* \[[`4c00f5e36a`](https://github.com/jocmp/mercury-parser/commit/4c00f5e36a)] - Update release workflow (Josiah Campbell)
-
 ### 2.2.3 (Oct 24, 2022)
 
 - [[`635fcf6356`](https://github.com/postlight/parser/commit/635fcf6356)] - **fix**: handle sec & ms timestamps properly (#702) (Austin)
