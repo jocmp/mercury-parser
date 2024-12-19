@@ -5,7 +5,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var _slicedToArray = _interopDefault(require('@babel/runtime-corejs2/helpers/slicedToArray'));
 var _toConsumableArray = _interopDefault(require('@babel/runtime-corejs2/helpers/toConsumableArray'));
 var fs = _interopDefault(require('fs'));
-var URL = _interopDefault(require('url'));
+var URL$1 = _interopDefault(require('url'));
 var inquirer = _interopDefault(require('inquirer'));
 var ora = _interopDefault(require('ora'));
 var child_process = require('child_process');
@@ -29,7 +29,6 @@ var postmanRequest = _interopDefault(require('postman-request'));
 var assign = _interopDefault(require('@babel/runtime-corejs2/core-js/object/assign'));
 var keys = _interopDefault(require('@babel/runtime-corejs2/core-js/object/keys'));
 var stringDirection = _interopDefault(require('string-direction'));
-var validUrl = _interopDefault(require('valid-url'));
 var momentTimezone = _interopDefault(require('moment-timezone'));
 var momentParseformat = _interopDefault(require('moment-parseformat'));
 var wuzzy = _interopDefault(require('wuzzy'));
@@ -77,7 +76,7 @@ function absolutize($, rootUrl, attr) {
     var attrs = getAttrs(node);
     var url = attrs[attr];
     if (!url) return;
-    var absoluteUrl = URL.resolve(baseUrl || rootUrl, url);
+    var absoluteUrl = URL$1.resolve(baseUrl || rootUrl, url);
     setAttr(node, attr, absoluteUrl);
   });
 }
@@ -97,7 +96,7 @@ function absolutizeSet($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL.resolve(rootUrl, parts[0]);
+        parts[0] = URL$1.resolve(rootUrl, parts[0]);
         return parts.join(' ');
       });
 
@@ -162,7 +161,7 @@ var _objectWithoutProperties = _interopDefault$1(objectWithoutProperties);
 
 var _asyncToGenerator = _interopDefault$1(asyncToGenerator);
 
-var URL$1 = _interopDefault$1(URL);
+var URL$1$1 = _interopDefault$1(URL$1);
 
 var cheerio$1 = _interopDefault$1(cheerio);
 
@@ -197,8 +196,6 @@ var _Object$assign = _interopDefault$1(assign);
 var _Object$keys = _interopDefault$1(keys);
 
 var stringDirection$1 = _interopDefault$1(stringDirection);
-
-var validUrl$1 = _interopDefault$1(validUrl);
 
 var moment = _interopDefault$1(momentTimezone);
 
@@ -302,7 +299,7 @@ function isGoodSegment$1(segment, index, firstSegmentHasLetters) {
 
 
 function articleBaseUrl$1(url, parsed) {
-  var parsedUrl = parsed || URL$1.parse(url);
+  var parsedUrl = parsed || URL$1$1.parse(url);
   var protocol = parsedUrl.protocol,
       host = parsedUrl.host,
       path = parsedUrl.path;
@@ -455,7 +452,7 @@ function _fetchResource() {
   _regeneratorRuntime.mark(function _callee(url, parsedUrl) {
     var headers,
         options,
-        _ref2,
+        _yield$get,
         response,
         body,
         _args = arguments;
@@ -465,7 +462,7 @@ function _fetchResource() {
         switch (_context.prev = _context.next) {
           case 0:
             headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-            parsedUrl = parsedUrl || URL$1.parse(encodeURI(url));
+            parsedUrl = parsedUrl || URL$1$1.parse(encodeURI(url));
             options = _objectSpread({
               url: parsedUrl.href,
               headers: _objectSpread({}, REQUEST_HEADERS, headers),
@@ -487,9 +484,9 @@ function _fetchResource() {
             return get(options);
 
           case 5:
-            _ref2 = _context.sent;
-            response = _ref2.response;
-            body = _ref2.body;
+            _yield$get = _context.sent;
+            response = _yield$get.response;
+            body = _yield$get.body;
             _context.prev = 8;
             validateResponse(response);
             return _context.abrupt("return", {
@@ -818,7 +815,7 @@ function markToKeep$1(article, $, url) {
   }
 
   if (url) {
-    var _URL$parse = URL$1.parse(url),
+    var _URL$parse = URL$1$1.parse(url),
         protocol = _URL$parse.protocol,
         hostname = _URL$parse.hostname;
 
@@ -1424,7 +1421,7 @@ function absolutize$1($, rootUrl, attr) {
     var attrs = getAttrs$1(node);
     var url = attrs[attr];
     if (!url) return;
-    var absoluteUrl = URL$1.resolve(baseUrl || rootUrl, url);
+    var absoluteUrl = URL$1$1.resolve(baseUrl || rootUrl, url);
     setAttr$1(node, attr, absoluteUrl);
   });
 }
@@ -1444,7 +1441,7 @@ function absolutizeSet$1($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL$1.resolve(rootUrl, parts[0]);
+        parts[0] = URL$1$1.resolve(rootUrl, parts[0]);
         return parts.join(' ');
       });
 
@@ -2189,13 +2186,16 @@ var NewYorkerExtractor = {
 var WiredExtractor = {
   domain: 'www.wired.com',
   title: {
-    selectors: ['h1[data-testId="ContentHeaderHed"]']
+    selectors: ['h1[data-testId="ContentHeaderHed"]' // enter title selectors
+    ]
   },
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], 'a[rel="author"]']
+    selectors: [['meta[name="article:author"]', 'value'], 'a[rel="author"]' // enter author selectors
+    ]
   },
   content: {
-    selectors: ['article.article.main-content', 'article.content'],
+    selectors: ['article.article.main-content', 'article.content' // enter content selectors
+    ],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
@@ -2222,13 +2222,16 @@ var WiredExtractor = {
 var MSNExtractor = {
   domain: 'www.msn.com',
   title: {
-    selectors: ['h1']
+    selectors: ['h1' // enter title selectors
+    ]
   },
   author: {
-    selectors: ['span.authorname-txt']
+    selectors: ['span.authorname-txt' // enter author selectors
+    ]
   },
   content: {
-    selectors: ['div.richtext'],
+    selectors: ['div.richtext' // enter content selectors
+    ],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
@@ -2255,10 +2258,12 @@ var MSNExtractor = {
 var YahooExtractor = {
   domain: 'www.yahoo.com',
   title: {
-    selectors: ['header.canvas-header']
+    selectors: ['header.canvas-header' // enter title selectors
+    ]
   },
   author: {
-    selectors: ['span.provider-name']
+    selectors: ['span.provider-name' // enter author selectors
+    ]
   },
   content: {
     selectors: [// enter content selectors
@@ -2291,10 +2296,12 @@ var BuzzfeedExtractor = {
   domain: 'www.buzzfeed.com',
   supportedDomains: ['www.buzzfeednews.com'],
   title: {
-    selectors: ['h1.embed-headline-title']
+    selectors: ['h1.embed-headline-title' // enter title selectors
+    ]
   },
   author: {
-    selectors: ['a[data-action="user/username"]', 'byline__author', ['meta[name="author"]', 'value']]
+    selectors: ['a[data-action="user/username"]', 'byline__author', ['meta[name="author"]', 'value'] // enter author selectors
+    ]
   },
   content: {
     selectors: [['div[class^="featureimage_featureImageWrapper"]', '.js-subbuzz-wrapper'], ['.js-subbuzz-wrapper']],
@@ -2335,13 +2342,16 @@ var BuzzfeedExtractor = {
 var WikiaExtractor = {
   domain: 'fandom.wikia.com',
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title' // enter title selectors
+    ]
   },
   author: {
-    selectors: ['.author vcard', '.fn']
+    selectors: ['.author vcard', '.fn' // enter author selectors
+    ]
   },
   content: {
-    selectors: ['.grid-content', '.entry-content'],
+    selectors: ['.grid-content', '.entry-content' // enter content selectors
+    ],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
@@ -2368,10 +2378,12 @@ var WikiaExtractor = {
 var LittleThingsExtractor = {
   domain: 'www.littlethings.com',
   title: {
-    selectors: ['h1[class*="PostHeader"]', 'h1.post-title']
+    selectors: ['h1[class*="PostHeader"]', 'h1.post-title' // enter title selectors
+    ]
   },
   author: {
-    selectors: ['div[class^="PostHeader__ScAuthorNameSection"]', ['meta[name="author"]', 'value']]
+    selectors: ['div[class^="PostHeader__ScAuthorNameSection"]', ['meta[name="author"]', 'value'] // enter author selectors
+    ]
   },
   content: {
     selectors: [// enter content selectors
@@ -2814,7 +2826,8 @@ var WwwThevergeComExtractor = {
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.aside', 'img.c-dynamic-image']
+    clean: ['.aside', 'img.c-dynamic-image' // images come from noscript transform
+    ]
   }
 };
 var WwwCnnComExtractor = {
@@ -3535,7 +3548,8 @@ var WwwThepoliticalinsiderComExtractor = {
     ]
   },
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value'] // enter selectors
+    ]
   },
   content: {
     selectors: ['div#article-body'],
@@ -4866,7 +4880,8 @@ var WwwRedditComExtractor = {
   content: {
     selectors: [['div[data-test-id="post-content"] p'], // text post
     ['div[data-test-id="post-content"] a[target="_blank"]:not([data-click-id="timestamp"])', // external link
-    'div[data-test-id="post-content"] div[data-click-id="media"]'], // external link with media preview (YouTube, imgur album, etc...)
+    'div[data-test-id="post-content"] div[data-click-id="media"]' // embedded media
+    ], // external link with media preview (YouTube, imgur album, etc...)
     ['div[data-test-id="post-content"] div[data-click-id="media"]'], // Embedded media (Reddit video)
     ['div[data-test-id="post-content"] a'], // external link
     'div[data-test-id="post-content"]'],
@@ -5563,7 +5578,7 @@ var WiredJpExtractor = {
       'img[data-original]': function imgDataOriginal($node) {
         var dataOriginal = $node.attr('data-original');
         var src = $node.attr('src');
-        var url = URL$1.resolve(src, dataOriginal);
+        var url = URL$1$1.resolve(src, dataOriginal);
         $node.attr('src', url);
       }
     },
@@ -6168,6 +6183,52 @@ var WwwCbcCaExtractor = {
     clean: []
   }
 };
+var WwwVersantsComExtractor = {
+  domain: 'www.versants.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content'],
+    clean: ['.adv-link', '.versa-target']
+  }
+};
+var Www1pezeshkComExtractor = {
+  domain: 'www.1pezeshk.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value'], 'h1.post-title']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['.featured-area img', 'src']]
+  },
+  content: {
+    selectors: ['article > .entry-content'],
+    transforms: {
+      img: function img($node) {
+        $node.src = decodeURIComponent($node.src);
+      }
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -6314,7 +6375,9 @@ _Object$freeze({
   SpektrumExtractor: SpektrumExtractor,
   PostlightComExtractor: PostlightComExtractor,
   WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
-  WwwCbcCaExtractor: WwwCbcCaExtractor
+  WwwCbcCaExtractor: WwwCbcCaExtractor,
+  WwwVersantsComExtractor: WwwVersantsComExtractor,
+  Www1pezeshkComExtractor: Www1pezeshkComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
@@ -6356,13 +6419,11 @@ function cleanAuthor(author) {
 }
 
 function clean$1(leadImageUrl) {
-  leadImageUrl = leadImageUrl.trim();
-
-  if (validUrl$1.isWebUri(leadImageUrl)) {
-    return leadImageUrl;
+  try {
+    return new URL(leadImageUrl.trim()).toString();
+  } catch (_unused) {
+    return null;
   }
-
-  return null;
 } // Return None if the dek wasn't good enough.
 
 
@@ -6549,7 +6610,7 @@ function cleanDomainFromTitle(splitTitle, url) {
   //
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
-  var _URL$parse = URL$1.parse(url),
+  var _URL$parse = URL$1$1.parse(url),
       host = _URL$parse.host;
 
   var nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
@@ -7296,7 +7357,7 @@ function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrl
 
   var hostname = parsedUrl.hostname;
 
-  var _URL$parse = URL$1.parse(href),
+  var _URL$parse = URL$1$1.parse(href),
       linkHost = _URL$parse.hostname; // Domain mismatch.
 
 
@@ -7378,7 +7439,7 @@ function scoreLinks(_ref) {
       $ = _ref.$,
       _ref$previousUrls = _ref.previousUrls,
       previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-  parsedUrl = parsedUrl || URL$1.parse(articleUrl);
+  parsedUrl = parsedUrl || URL$1$1.parse(articleUrl);
   var baseRegex = makeBaseRegex(baseUrl);
   var isWp = isWordpress$1($); // Loop through all links, looking for hints that they may be next-page
   // links. Things like having "page" in their textContent, className or
@@ -7440,7 +7501,7 @@ var GenericNextPageUrlExtractor = {
         parsedUrl = _ref.parsedUrl,
         _ref$previousUrls = _ref.previousUrls,
         previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-    parsedUrl = parsedUrl || URL$1.parse(url);
+    parsedUrl = parsedUrl || URL$1$1.parse(url);
     var articleUrl = removeAnchor$1(url);
     var baseUrl = articleBaseUrl$1(url, parsedUrl);
     var links = $('a[href]').toArray();
@@ -7475,7 +7536,7 @@ var GenericNextPageUrlExtractor = {
 var CANONICAL_META_SELECTORS = ['og:url'];
 
 function parseDomain(url) {
-  var parsedUrl = URL$1.parse(url);
+  var parsedUrl = URL$1$1.parse(url);
   var hostname = parsedUrl.hostname;
   return hostname;
 }
@@ -7644,7 +7705,7 @@ function detectByHtml($) {
 }
 
 function getExtractor(url, parsedUrl, $) {
-  parsedUrl = parsedUrl || URL$1.parse(url);
+  parsedUrl = parsedUrl || URL$1$1.parse(url);
   var _parsedUrl = parsedUrl,
       hostname = _parsedUrl.hostname;
   var baseDomain = hostname.split('.').slice(-2).join('.');
@@ -7868,6 +7929,12 @@ var RootExtractor = {
       };
     }
 
+    var extendedResults = {};
+
+    if (extractor.extend) {
+      extendedResults = selectExtendedTypes(extractor.extend, opts);
+    }
+
     var title = extractResult(_objectSpread({}, opts, {
       type: 'title'
     }));
@@ -7915,12 +7982,6 @@ var RootExtractor = {
     },
         url = _ref3.url,
         domain = _ref3.domain;
-
-    var extendedResults = {};
-
-    if (extractor.extend) {
-      extendedResults = selectExtendedTypes(extractor.extend, opts);
-    }
 
     return _objectSpread({
       title: title,
@@ -8056,7 +8117,7 @@ var Parser = {
                 html = html || cheerio$1.html();
               }
 
-              parsedUrl = URL$1.parse(url);
+              parsedUrl = URL$1$1.parse(url);
 
               if (validateUrl(parsedUrl)) {
                 _context.next = 6;
@@ -8291,7 +8352,7 @@ var questions = [{
   name: 'website',
   message: "Paste a url to an article you'd like to create or extend a parser for:",
   validate: function validate(value) {
-    var _URL$parse = URL.parse(value),
+    var _URL$parse = URL$1.parse(value),
         hostname = _URL$parse.hostname;
 
     if (hostname) return true;
@@ -8325,7 +8386,7 @@ function confirmCreateDir(dir, msg) {
 }
 
 function getDir(url) {
-  var _URL$parse2 = URL.parse(url),
+  var _URL$parse2 = URL$1.parse(url),
       hostname = _URL$parse2.hostname;
 
   return "./src/extractors/custom/".concat(hostname);
@@ -8334,7 +8395,7 @@ function getDir(url) {
 function scaffoldCustomParser(url) {
   var dir = getDir(url);
 
-  var _URL$parse3 = URL.parse(url),
+  var _URL$parse3 = URL$1.parse(url),
       hostname = _URL$parse3.hostname;
 
   var newParser = false;
@@ -8360,7 +8421,7 @@ if (urlArg) {
 }
 
 function generateScaffold(url, file, result) {
-  var _URL$parse4 = URL.parse(url),
+  var _URL$parse4 = URL$1.parse(url),
       hostname = _URL$parse4.hostname;
 
   var extractor = extractorTemplate(hostname, extractorName(hostname));
@@ -8375,7 +8436,7 @@ function savePage($, _ref, newParser) {
   var _ref2 = _slicedToArray(_ref, 1),
       url = _ref2[0];
 
-  var _URL$parse5 = URL.parse(url),
+  var _URL$parse5 = URL$1.parse(url),
       hostname = _URL$parse5.hostname;
 
   spinner.succeed();
@@ -8406,7 +8467,7 @@ function savePage($, _ref, newParser) {
 }
 
 function exportString(url) {
-  var _URL$parse6 = URL.parse(url),
+  var _URL$parse6 = URL$1.parse(url),
       hostname = _URL$parse6.hostname;
 
   return "export * from './".concat(hostname, "';");
