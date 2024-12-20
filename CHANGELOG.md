@@ -2,11 +2,12 @@
 
 ### v2.2.5 (Dec 20, 2024)
 
-* \[[`3dea77b3f3`](https://github.com/jocmp/mercury-parser/commit/3dea77b3f3)] - **chore**: Update bump-version.yml (Josiah Campbell)
+- \[[`3dea77b3f3`](https://github.com/jocmp/mercury-parser/commit/3dea77b3f3)] - **chore**: Update bump-version.yml (Josiah Campbell)
+- \[[`4bdbe5ec86`](https://github.com/jocmp/mercury-parser/commit/4bdbe5ec86)] - feat: android authority extractor (Josiah Campbell) https://github.com/jocmp/mercury-parser/pull/27
 
 ### 2.2.4 (Dec 16, 2024)
 
-* \[[`c759969a12`](https://github.com/jocmp/mercury-parser/commit/c759969a12)] - _**Revert**_ "bump version 2.2.3 -> 2.2.4" (Josiah Campbell)
+- \[[`c759969a12`](https://github.com/jocmp/mercury-parser/commit/c759969a12)] - _**Revert**_ "bump version 2.2.3 -> 2.2.4" (Josiah Campbell)
 
 ### 2.2.3 (Oct 24, 2022)
 
