@@ -22,6 +22,12 @@ export const WwwAndroidauthorityComExtractor = {
       ol: node => {
         node.attr('class', 'mercury-parser-keep');
       },
+      h2: $node => {
+        // Some pages have an element h2 that is significant, and that the parser will
+        // remove if not following a paragraph. Adding this empty paragraph fixes it, and
+        // the empty paragraph will be removed anyway.
+        $node.before('<p></p>');
+      },
     },
     clean: [
       '.d_f .d_nr', // Lead image
