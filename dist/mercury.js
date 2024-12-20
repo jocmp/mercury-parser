@@ -6203,6 +6203,38 @@ var Www1pezeshkComExtractor = {
   }
 };
 
+var WwwAndroidauthorityComExtractor = {
+  domain: 'www.androidauthority.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value'], 'h1']
+  },
+  author: {
+    selectors: ['button.d_ic']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.d_Dd'],
+    transforms: {
+      ol: function ol(node) {
+        node.attr('class', 'mercury-parser-keep');
+      },
+      h2: function h2($node) {
+        // Some pages have an element h2 that is significant, and that the parser will
+        // remove if not following a paragraph. Adding this empty paragraph fixes it, and
+        // the empty paragraph will be removed anyway.
+        $node.before('<p></p>');
+      }
+    },
+    clean: ['.d_f .d_nr' // Lead image
+    ]
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6350,7 +6382,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
   WwwCbcCaExtractor: WwwCbcCaExtractor,
   WwwVersantsComExtractor: WwwVersantsComExtractor,
-  Www1pezeshkComExtractor: Www1pezeshkComExtractor
+  Www1pezeshkComExtractor: Www1pezeshkComExtractor,
+  WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
