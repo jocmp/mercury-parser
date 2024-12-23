@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### v2.2.8 (Dec 23, 2024)
+
+* \[[`b054affe4b`](https://github.com/jocmp/mercury-parser/commit/b054affe4b)] - bump version v2.2.6 -> v2.2.7 (jocmp)
+
 ### v2.2.7 (Dec 23, 2024)
 
 * \[[`9605744d43`](https://github.com/jocmp/mercury-parser/commit/9605744d43)] - Update test script (Josiah Campbell)
