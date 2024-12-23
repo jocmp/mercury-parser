@@ -1,5 +1,11 @@
 # Mercury Parser Changelog
 
+### v2.2.6 (Dec 23, 2024)
+
+Personal access token auth for Github.
+Enter a 40 character personal access token generated at
+https://github.com/settings/tokens with the following scopes: repo
+PAT: 
 ### v2.2.5 (Dec 20, 2024)
 
 - \[[`3dea77b3f3`](https://github.com/jocmp/mercury-parser/commit/3dea77b3f3)] - **chore**: Update bump-version.yml (Josiah Campbell)

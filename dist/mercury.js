@@ -5622,8 +5622,9 @@ var WwwPhoronixComExtractor = {
     format: 'D MMMM YYYY at hh:mm',
     timezone: 'America/New_York'
   },
-  dek: null,
-  lead_image_url: null,
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
   content: {
     selectors: ['.content'],
     // Is there anything in the content you selected that needs transformed
