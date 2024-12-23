@@ -2,14 +2,16 @@
 
 ### v2.2.6 (Dec 23, 2024)
 
-Personal access token auth for Github.
-Enter a 40 character personal access token generated at
-https://github.com/settings/tokens with the following scopes: repo
-PAT: 
+- \[[`12b1a1a86d`](https://github.com/jocmp/mercury-parser/commit/12b1a1a86d)] - **feat**: Update phoronix.com custom extractor (Josiah Campbell) [#29](https://github.com/jocmp/mercury-parser/pull/29)
+- \[[`186eb3fb38`](https://github.com/jocmp/mercury-parser/commit/186eb3fb38)] - **chore(deps-dev)**: Bump brfs from 2.0.1 to 2.0.2 (dependabot\[bot]) [#26](https://github.com/jocmp/mercury-parser/pull/26)
+- \[[`8b66ee4c61`](https://github.com/jocmp/mercury-parser/commit/8b66ee4c61)] - **chore(deps)**: Bump iconv-lite from 0.5.0 to 0.6.3 (dependabot\[bot]) [#24](https://github.com/jocmp/mercury-parser/pull/24)
+- \[[`1829add56b`](https://github.com/jocmp/mercury-parser/commit/1829add56b)] - **chore(deps-dev)**: Bump watchify from 3.11.1 to 4.0.0 (dependabot\[bot]) [#23](https://github.com/jocmp/mercury-parser/pull/23)
+- \[[`7ea48f5419`](https://github.com/jocmp/mercury-parser/commit/7ea48f5419)] - **chore**: Update changelog (Josiah Campbell)
+
 ### v2.2.5 (Dec 20, 2024)
 
 - \[[`3dea77b3f3`](https://github.com/jocmp/mercury-parser/commit/3dea77b3f3)] - **chore**: Update bump-version.yml (Josiah Campbell)
-- \[[`4bdbe5ec86`](https://github.com/jocmp/mercury-parser/commit/4bdbe5ec86)] - feat: android authority extractor (Josiah Campbell) https://github.com/jocmp/mercury-parser/pull/27
+- \[[`4bdbe5ec86`](https://github.com/jocmp/mercury-parser/commit/4bdbe5ec86)] - **feat**: android authority extractor (Josiah Campbell) https://github.com/jocmp/mercury-parser/pull/27
 
 ### 2.2.4 (Dec 16, 2024)
 
