@@ -29,7 +29,7 @@ async function parseFixture(reqURL) {
 
   return `<h1>${json.title}</h1><img src=${
     json.lead_image_url
-  } style="max-width: 100%;" /><p>${json.author}</p>${json.content}`;
+  } style="max-width: 100%;" /><p>By ${json.author}</p>${json.content}`;
 }
 
 const server = http.createServer(async (req, res) => {
