@@ -21,8 +21,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           cache: "yarn"
@@ -42,4 +40,5 @@ jobs:
       - name: Bump Version
         run: |
           bumpver update --${{ github.event.inputs.version }} --allow-dirty
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
