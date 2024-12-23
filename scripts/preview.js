@@ -14,18 +14,17 @@ function followPath(path) {
 }
 
 /**
- * @param {string} reqURL
+ * @param {string} reqPath
  * @returns string | null
  */
-async function parseFixture(reqURL) {
-  const fixturePath = reqURL.split('/')[1];
+async function parseFixture(reqPath) {
+  const reqURL = new URL(`https://example.com${reqPath}`);
+  const fixturePath = reqURL.pathname;
+  const url = reqURL.searchParams.get('article_url');
+
   const html = fs.readFileSync(followPath(fixturePath)).toString();
 
-  const { url } = await Parser.parse('http://example.com', {
-    html,
-    fallback: false,
-  });
-  const json = await Parser.parse(url, { html });
+  const json = await Parser.parse(url, { html, fallback: false });
 
   return `<h1>${json.title}</h1><img src=${
     json.lead_image_url

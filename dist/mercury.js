@@ -5614,7 +5614,7 @@ var WwwPhoronixComExtractor = {
     selectors: ['article h1', 'article header']
   },
   author: {
-    selectors: ['.author:first-child']
+    selectors: ['.author a:first-child']
   },
   date_published: {
     selectors: ['.author'],
