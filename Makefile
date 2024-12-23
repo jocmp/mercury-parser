@@ -20,3 +20,7 @@ $(CHANGELOG): $(CHANGELOG_TMP)
 
 .PHONY: changelog
 changelog: $(CHANGELOG)
+
+.PHONY: preview
+preview:
+	yarn preview
