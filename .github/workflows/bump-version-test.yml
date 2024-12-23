@@ -1,22 +1,11 @@
-name: bump-version
+name: bump-version-test
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        type: choice
-        description: Select version bump
-        options:
-          - patch
-          - minor
-          - major
+  push:
 
 jobs:
   bump-version:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,5 +30,4 @@ jobs:
           git add dist/
       - name: Bump Version
         run: |
-          bumpver update --${{ github.event.inputs.version }} --allow-dirty
-
+          BUMPVER_NEW_VERSION=v2.2.7 make changelog

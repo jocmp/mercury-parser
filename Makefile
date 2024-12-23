@@ -30,7 +30,7 @@ $(CHANGELOG_TMP):
 	echo -e "### $(BUMPVER_NEW_VERSION) ($$(date '+%b %d, %Y'))\n" >>  $(CHANGELOG_TMP)
 	yarn run --silent changelog-maker --format=markdown >> $(CHANGELOG_TMP)
 	cat $(CHANGELOG) | sed 1d >> $(CHANGELOG_TMP)
-	cp $(CHANGELOG_TMP) $(CHANGELOG)
+	cat $(CHANGELOG_TMP)
 
 $(CHANGELOG): $(CHANGELOG_TMP)
 
