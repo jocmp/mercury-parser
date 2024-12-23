@@ -16,9 +16,9 @@ export const WwwPhoronixComExtractor = {
     timezone: 'America/New_York',
   },
 
-  dek: null,
-
-  lead_image_url: null,
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
 
   content: {
     selectors: ['.content'],

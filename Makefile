@@ -3,7 +3,23 @@ SHELL :=/usr/bin/env bash
 CHANGELOG=CHANGELOG.md
 CHANGELOG_TMP=tmp/$(CHANGELOG)
 
-.PHONY: deps
+.PHONY: build
+build:
+	$(MAKE) -j2 build-node build-web build-generator
+
+.PHONY: build-node
+build-node:
+	yarn build
+
+.PHONY: build-web
+build-web:
+	yarn build:web
+
+.PHONY: build-generator
+build-generator:
+	yarn build:generator
+
+run .PHONY: deps
 deps: ## Install bumpver
 	pip install bumpver==2024.1130
 
@@ -20,3 +36,7 @@ $(CHANGELOG): $(CHANGELOG_TMP)
 
 .PHONY: changelog
 changelog: $(CHANGELOG)
+
+.PHONY: preview
+preview:
+	yarn preview

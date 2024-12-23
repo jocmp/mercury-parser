@@ -35,7 +35,7 @@ jobs:
           git config user.email "9521010+jocmp@users.noreply.github.com"
       - name: Build
         run: |
-          yarn run release
+          make build
           git add dist/
       - name: Bump Version
         run: |
