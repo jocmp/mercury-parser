@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### v2.2.7 (Dec 23, 2024)
+
+* \[[`9605744d43`](https://github.com/jocmp/mercury-parser/commit/9605744d43)] - Update test script (Josiah Campbell)
+
 ### v2.2.6 (Dec 23, 2024)
 
 - \[[`12b1a1a86d`](https://github.com/jocmp/mercury-parser/commit/12b1a1a86d)] - **feat**: Update phoronix.com custom extractor (Josiah Campbell) [#29](https://github.com/jocmp/mercury-parser/pull/29)
