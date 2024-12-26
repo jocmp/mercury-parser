@@ -1,17 +1,5 @@
 const http = require('http');
-const fs = require('fs');
 const Parser = require('../dist/mercury.js');
-
-function followPath(path) {
-  const rootPath = `fixtures/${path}`;
-  const isDirectory = fs.lstatSync(rootPath).isDirectory();
-
-  if (isDirectory) {
-    return `${rootPath}/${fs.readdirSync(rootPath)[0]}`;
-  }
-
-  return rootPath;
-}
 
 /**
  * @param {string} reqPath
@@ -19,12 +7,9 @@ function followPath(path) {
  */
 async function parseFixture(reqPath) {
   const reqURL = new URL(`https://example.com${reqPath}`);
-  const fixturePath = reqURL.pathname;
   const url = reqURL.searchParams.get('article_url');
 
-  const html = fs.readFileSync(followPath(fixturePath)).toString();
-
-  const json = await Parser.parse(url, { html, fallback: false });
+  const json = await Parser.parse(url, { fallback: false });
 
   return `<h1>${json.title}</h1><img src=${
     json.lead_image_url
