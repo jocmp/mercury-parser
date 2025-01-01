@@ -144,3 +144,4 @@ export * from './www.cbc.ca';
 export * from './www.versants.com';
 export * from './www.1pezeshk.com';
 export * from './www.androidauthority.com';
+export * from './techcrunch.com';
