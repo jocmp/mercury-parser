@@ -20,6 +20,6 @@ export const TechcrunchComExtractor = {
   content: {
     selectors: ['main'],
     transforms: {},
-    clean: [],
+    clean: ['img.post-authors-list__author-thumb'],
   },
 };
