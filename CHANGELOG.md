@@ -1,5 +1,12 @@
 # Mercury Parser Changelog
 
+### v2.2.7 (Jan 02, 2025)
+
+- \[[`ab366e4818`](https://github.com/jocmp/mercury-parser/commit/ab366e4818)] - **fix**: Hide author thumbnail in techcrunch feed (Josiah Campbell)
+- \[[`c4feda4f46`](https://github.com/jocmp/mercury-parser/commit/c4feda4f46)] - **feat**: Add custom parser - techcrunch.com (Josiah Campbell) [#34](https://github.com/jocmp/mercury-parser/pull/34)
+- \[[`fbe06d3ebb`](https://github.com/jocmp/mercury-parser/commit/fbe06d3ebb)] - Allow any article in preview (Josiah Campbell)
+- \[[`b2e835a344`](https://github.com/jocmp/mercury-parser/commit/b2e835a344)] - Update changelog (Josiah Campbell)
+
 ### v2.2.6 (Dec 23, 2024)
 
 - \[[`12b1a1a86d`](https://github.com/jocmp/mercury-parser/commit/12b1a1a86d)] - **feat**: Update phoronix.com custom extractor (Josiah Campbell) [#29](https://github.com/jocmp/mercury-parser/pull/29)
