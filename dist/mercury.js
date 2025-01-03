@@ -6236,6 +6236,27 @@ var WwwAndroidauthorityComExtractor = {
   }
 };
 
+var TechcrunchComExtractor = {
+  domain: 'techcrunch.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    transforms: {},
+    clean: ['img.post-authors-list__author-thumb']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6384,7 +6405,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwCbcCaExtractor: WwwCbcCaExtractor,
   WwwVersantsComExtractor: WwwVersantsComExtractor,
   Www1pezeshkComExtractor: Www1pezeshkComExtractor,
-  WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor
+  WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
+  TechcrunchComExtractor: TechcrunchComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
