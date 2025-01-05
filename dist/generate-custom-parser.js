@@ -6281,6 +6281,27 @@ var TechcrunchComExtractor = {
     clean: ['img.post-authors-list__author-thumb']
   }
 };
+var WwwHardwarezoneComSgExtractor = {
+  domain: 'www.hardwarezone.com.sg',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article-view-author-name a']
+  },
+  date_published: {
+    selectors: ['.article-view-timestamp'],
+    timezone: 'UTC'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.content'],
+    transforms: {},
+    clean: []
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -6431,7 +6452,8 @@ _Object$freeze({
   WwwVersantsComExtractor: WwwVersantsComExtractor,
   Www1pezeshkComExtractor: Www1pezeshkComExtractor,
   WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
-  TechcrunchComExtractor: TechcrunchComExtractor
+  TechcrunchComExtractor: TechcrunchComExtractor,
+  WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
