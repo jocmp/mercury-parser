@@ -1,5 +1,11 @@
 # Mercury Parser Changelog
 
+### v2.2.8 (Jan 05, 2025)
+
+- [7dc7246f62] - **feat:** Add custom parser - hardwarezone.com.sg (Josiah Campbell) [#37](https://github.com/jocmp/mercury-parser/pull/37)
+- [ef3044bc5c] - [skip ci] Update changelog (Josiah Campbell)
+- [c11d4da869] - bump version v2.2.6 -> v2.2.7 (jocmp)
+
 ### v2.2.7 (Jan 02, 2025)
 
 - \[[`ab366e4818`](https://github.com/jocmp/mercury-parser/commit/ab366e4818)] - **fix**: Hide author thumbnail in techcrunch feed (Josiah Campbell)
