@@ -145,3 +145,4 @@ export * from './www.versants.com';
 export * from './www.1pezeshk.com';
 export * from './www.androidauthority.com';
 export * from './techcrunch.com';
+export * from './www.hardwarezone.com.sg';
