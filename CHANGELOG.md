@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### v2.2.9 (Jan 09, 2025)
+
+- [0217f6205a] - **feat**: Add custom parser - spiegel.de (Josiah Campbell) [#38](https://github.com/jocmp/mercury-parser/pull/38)
+
 ### v2.2.8 (Jan 05, 2025)
 
 - [7dc7246f62] - **feat:** Add custom parser - hardwarezone.com.sg (Josiah Campbell) [#37](https://github.com/jocmp/mercury-parser/pull/37)
