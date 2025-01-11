@@ -147,3 +147,4 @@ export * from './www.androidauthority.com';
 export * from './techcrunch.com';
 export * from './www.hardwarezone.com.sg';
 export * from './www.spiegel.de';
+export * from './mobilesyrup.com';
