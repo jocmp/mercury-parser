@@ -1,5 +1,10 @@
 # Mercury Parser Changelog
 
+### v2.2.10 (Jan 11, 2025)
+
+- [b8b4df7037] - feat: Add custom parser for mobilesyrup.com (Josiah Campbell) [#39](https://github.com/jocmp/mercury-parser/pull/39)
+- [8d48dcf932] - bump version v2.2.8 -> v2.2.9 (jocmp)
+
 ### v2.2.9 (Jan 09, 2025)
 
 - [0217f6205a] - **feat**: Add custom parser - spiegel.de (Josiah Campbell) [#38](https://github.com/jocmp/mercury-parser/pull/38)
