@@ -6322,6 +6322,34 @@ var WwwSpiegelDeExtractor = {
     clean: []
   }
 };
+var MobilesyrupComExtractor = {
+  domain: 'mobilesyrup.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article-content'],
+    transforms: {
+      '.article-content > ul': function articleContentUl(node) {
+        node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: []
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -6474,7 +6502,8 @@ _Object$freeze({
   WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
   TechcrunchComExtractor: TechcrunchComExtractor,
   WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
-  WwwSpiegelDeExtractor: WwwSpiegelDeExtractor
+  WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
+  MobilesyrupComExtractor: MobilesyrupComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
