@@ -1,11 +1,16 @@
 import { getWeight } from 'extractors/generic/content/scoring';
 
-import { HEADER_TAG_LIST } from './constants';
+import { HEADER_TAG_LIST, KEEP_CLASS } from './constants';
 import { normalizeSpaces } from '../text';
 
 export default function cleanHeaders($article, $, title = '') {
   $(HEADER_TAG_LIST, $article).each((index, header) => {
     const $header = $(header);
+
+    if ($(header).hasClass(KEEP_CLASS)) {
+      return $header;
+    }
+
     // Remove any headers that appear before all other p tags in the
     // document. This probably means that it was part of the title, a
     // subtitle or something else extraneous like a datestamp or byline,

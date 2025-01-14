@@ -69,4 +69,24 @@ describe('cleanHeaders(article, $)', () => {
     `
     );
   });
+
+  it('keeps headers with keep class', () => {
+    const $ = cheerio.load(`
+      <div>
+        <h3 class="mercury-parser-keep">Keep me</h3>
+        <p>What do you think?</p>
+      </div>
+    `);
+
+    const result = cleanHeaders($('*').first(), $);
+    assertClean(
+      result.html(),
+      `
+      <div>
+        <h3 class="mercury-parser-keep">Keep me</h3>
+        <p>What do you think?</p>
+      </div>
+    `
+    );
+  });
 });
