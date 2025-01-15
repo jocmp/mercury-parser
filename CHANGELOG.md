@@ -1,6 +1,6 @@
 # Mercury Parser Changelog
 
-### 2.3.0 (Jan 14, 2025)
+### 2.3.0 (Jan 15, 2025)
 
 - [a45b329e0a] - fix: Update versants.com to parse figures (Josiah Campbell) [#42](https://github.com/jocmp/mercury-parser/pull/42)
 - [68e9b88a8d] - fix: androidauthority.com - Retain heading tags (Josiah Campbell) [#41](https://github.com/jocmp/mercury-parser/pull/41)
