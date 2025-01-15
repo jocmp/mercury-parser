@@ -16,21 +16,21 @@ export const WwwAndroidauthorityComExtractor = {
     selectors: [['meta[name="og:image"]', 'value']],
   },
 
+  // Some pages have a nested header elements that are significant, and that the parser will
+  // remove if not following a paragraph. Adding this empty paragraph fixes it, and
+  // the empty paragraph will be removed anyway.
   content: {
-    selectors: ['.d_Dd'],
+    selectors: ['.e_Bc', '.d_Dd'],
     transforms: {
       ol: node => {
         node.attr('class', 'mercury-parser-keep');
       },
-      h2: $node => {
-        // Some pages have an element h2 that is significant, and that the parser will
-        // remove if not following a paragraph. Adding this empty paragraph fixes it, and
-        // the empty paragraph will be removed anyway.
-        $node.before('<p></p>');
-      },
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
     },
     clean: [
-      '.d_f .d_nr', // Lead image
+      '.e_Oh', // Polls
+      'picture + div', // Lead image text
     ],
   },
 };

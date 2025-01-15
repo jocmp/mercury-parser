@@ -3,6 +3,8 @@
 ### 2.3.0
 
 - [a45b329e0a] - fix: Update versants.com to parse figures (Josiah Campbell) [#42](https://github.com/jocmp/mercury-parser/pull/42)
+- [68e9b88a8d] - fix: androidauthority.com - Retain heading tags (Josiah Campbell) [#41](https://github.com/jocmp/mercury-parser/pull/41)
+- [c2bc68449f] - bump version v2.2.9 -> v2.2.10 (jocmp)
 
 ### v2.2.10 (Jan 11, 2025)
 
