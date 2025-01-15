@@ -36,11 +36,11 @@ const {
   if (!urlToParse) {
     console.log(
       '\n\
-postlight-parser\n\n\
-    The Postlight Parser extracts semantic content from any url\n\n\
+mercury-parser\n\n\
+    Mercury Parser extracts semantic content from any url\n\n\
 Usage:\n\
 \n\
-    $ postlight-parser url-to-parse [--format=html|text|markdown] [--header.name=value]... [--extend type=selector]... [--extend-list type=selector]... [--add-extractor path_to_extractor.js]... \n\
+    $ mercury-parser url-to-parse [--format=html|text|markdown] [--header.name=value]... [--extend type=selector]... [--extend-list type=selector]... [--add-extractor path_to_extractor.js]... \n\
 \n\
 '
     );

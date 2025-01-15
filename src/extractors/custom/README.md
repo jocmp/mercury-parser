@@ -1,12 +1,12 @@
 # Custom Parsers
 
-Postlight Parser can extract meaningful content from almost any web site, but custom parsers/extractors allow the Postlight Parser to find the content more quickly and more accurately than it might otherwise do. Our goal is to include custom parsers as many sites as we can, and we'd love your help!
+Postlight Parser can extract meaningful content from almost any web site, but custom parsers/extractors allow Mercury Parser to find the content more quickly and more accurately than it might otherwise do. Our goal is to include custom parsers as many sites as we can, and we'd love your help!
 
 ## The basics of parsing a site with a custom parser
 
 Custom parsers allow you to write CSS selectors that will find the content you're looking for on the page you're testing against. If you've written any CSS or jQuery, CSS selectors should be very familiar to you.
 
-You can query for every field returned by the Postlight Parser:
+You can query for every field returned by Mercury Parser:
 
 - `title`
 - `author`
@@ -195,7 +195,7 @@ Now that you know the basics of how custom extractors work, let's walk through t
 
 ### Step 0: Installation
 
-First, you'll need to clone the Postlight Parser repository and install dependencies.
+First, you'll need to clone Mercury Parser repository and install dependencies.
 
 ```bash
 git clone git@github.com:postlight/parser.git
@@ -404,5 +404,5 @@ module.exports = customExtractor;
 ### 2. From the CLI, add the `--add-extractor` param:
 
 ```bash
-postlight-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
+mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
 ```
