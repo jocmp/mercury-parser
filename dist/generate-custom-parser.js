@@ -543,7 +543,7 @@ var KEEP_SELECTORS$1 = ['iframe[src^="https://www.youtube.com"]', 'iframe[src^="
 
 var STRIP_OUTPUT_TAGS$1 = ['title', 'script', 'noscript', 'link', 'style', 'hr', 'embed', 'iframe', 'object']; // cleanAttributes
 
-var WHITELIST_ATTRS$1 = ['src', 'srcset', 'sizes', 'type', 'href', 'class', 'id', 'alt', 'xlink:href', 'width', 'height'];
+var WHITELIST_ATTRS$1 = ['src', 'srcset', 'start', 'sizes', 'type', 'href', 'class', 'id', 'alt', 'xlink:href', 'width', 'height'];
 var WHITELIST_ATTRS_RE$1 = new RegExp("^(".concat(WHITELIST_ATTRS$1.join('|'), ")$"), 'i'); // removeEmpty
 
 var CLEAN_CONDITIONALLY_TAGS$1 = ['ul', 'ol', 'table', 'div', 'button', 'form'].join(','); // cleanHeaders
@@ -1370,7 +1370,7 @@ function cleanTags$$1($article, $) {
     if (weight < 0) {
       $node.remove();
     } else {
-      // deteremine if node seems like content
+      // determine if node seems like content
       removeUnlessContent$1($node, $, weight);
     }
   });
@@ -1380,10 +1380,15 @@ function cleanTags$$1($article, $) {
 function cleanHeaders$1($article, $) {
   var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   $(HEADER_TAG_LIST$1, $article).each(function (index, header) {
-    var $header = $(header); // Remove any headers that appear before all other p tags in the
+    var $header = $(header);
+
+    if ($(header).hasClass(KEEP_CLASS$1)) {
+      return $header;
+    } // Remove any headers that appear before all other p tags in the
     // document. This probably means that it was part of the title, a
     // subtitle or something else extraneous like a datestamp or byline,
     // all of which should be handled by other metadata handling.
+
 
     if ($($header, $article).prevAll('p').length === 0) {
       return $header.remove();
@@ -6199,8 +6204,18 @@ var WwwVersantsComExtractor = {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['.entry-content'],
-    clean: ['.adv-link', '.versa-target']
+    transforms: {
+      '.featured-image': function featuredImage($node) {
+        $node.addClass('mercury-parser-keep');
+        var figcaption = $node.find('span');
+        $node.find('figure').append(figcaption);
+      }
+    },
+    selectors: ['.article-content'],
+    clean: ['.adv-link', '.versa-target', 'header', // Clean title
+    '.author', // Clean author
+    '.thumbnail-slider' // Remove, the main images will be within the .main-slider div.
+    ]
   }
 };
 var Www1pezeshkComExtractor = {
@@ -6244,20 +6259,24 @@ var WwwAndroidauthorityComExtractor = {
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']]
   },
+  // Some pages have a nested header elements that are significant, and that the parser will
+  // remove if not following a paragraph. Adding this empty paragraph fixes it, and
+  // the empty paragraph will be removed anyway.
   content: {
-    selectors: ['.d_Dd'],
+    selectors: ['.e_Bc', '.d_Dd'],
     transforms: {
       ol: function ol(node) {
         node.attr('class', 'mercury-parser-keep');
       },
       h2: function h2($node) {
-        // Some pages have an element h2 that is significant, and that the parser will
-        // remove if not following a paragraph. Adding this empty paragraph fixes it, and
-        // the empty paragraph will be removed anyway.
-        $node.before('<p></p>');
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: ['.d_f .d_nr' // Lead image
+    clean: ['.e_Oh', // Polls
+    'picture + div' // Lead image text
     ]
   }
 };
