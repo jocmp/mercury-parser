@@ -105,7 +105,7 @@ export default function cleanTags($article, $) {
     if (weight < 0) {
       $node.remove();
     } else {
-      // deteremine if node seems like content
+      // determine if node seems like content
       removeUnlessContent($node, $, weight);
     }
   });
