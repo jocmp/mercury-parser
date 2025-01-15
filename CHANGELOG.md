@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### 2.3.0
+
+- [a45b329e0a] - fix: Update versants.com to parse figures (Josiah Campbell) [#42](https://github.com/jocmp/mercury-parser/pull/42)
+
 ### v2.2.10 (Jan 11, 2025)
 
 - [b8b4df7037] - feat: Add custom parser for mobilesyrup.com (Josiah Campbell) [#39](https://github.com/jocmp/mercury-parser/pull/39)

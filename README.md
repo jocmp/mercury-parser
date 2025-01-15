@@ -106,8 +106,6 @@ Note that the URL argument is still supplied, in order to identify the web site 
 
 Mercury Parser also ships with a CLI, meaning you can use it from your command line like so:
 
-![Mercury Parser CLI Basic Usage](./assets/parser-basic-usage.gif)
-
 ```bash
 # Install Mercury Parser globally
 yarn global add @jocmp/mercury-parser

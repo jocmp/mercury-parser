@@ -17,7 +17,20 @@ export const WwwVersantsComExtractor = {
   },
 
   content: {
-    selectors: ['.entry-content'],
-    clean: ['.adv-link', '.versa-target'],
+    transforms: {
+      '.featured-image': $node => {
+        $node.addClass('mercury-parser-keep');
+        const figcaption = $node.find('span');
+        $node.find('figure').append(figcaption);
+      },
+    },
+    selectors: ['.article-content'],
+    clean: [
+      '.adv-link',
+      '.versa-target',
+      'header', // Clean title
+      '.author', // Clean author
+      '.thumbnail-slider', // Remove, the main images will be within the .main-slider div.
+    ],
   },
 };

@@ -70,7 +70,7 @@ describe('WwwVersantsComExtractor', () => {
 
       assert.equal(
         first13,
-        'La 32e campagne d’Opération Nez rouge de la Vallée-du-Richelieu sera en vigueur durant'
+        "C'est à Sainte-Julie que les bénévoles de l'ONR VDR se retrouveront dès le"
       );
     });
   });
