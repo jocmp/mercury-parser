@@ -20,7 +20,7 @@ export const WwwAndroidauthorityComExtractor = {
   // remove if not following a paragraph. Adding this empty paragraph fixes it, and
   // the empty paragraph will be removed anyway.
   content: {
-    selectors: ['.d_Dd', '.e_Ac'],
+    selectors: ['.e_Bc', '.d_Dd'],
     transforms: {
       ol: node => {
         node.attr('class', 'mercury-parser-keep');
@@ -29,7 +29,8 @@ export const WwwAndroidauthorityComExtractor = {
       h3: $node => $node.attr('class', 'mercury-parser-keep'),
     },
     clean: [
-      '.d_f .d_nr', // Lead image
+      '.e_Oh', // Polls
+      'picture + div', // Lead image text
     ],
   },
 };
