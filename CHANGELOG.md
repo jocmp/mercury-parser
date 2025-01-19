@@ -1,5 +1,10 @@
 # Mercury Parser Changelog
 
+### 2.3.1
+
+- [ba949c0c87] - feat: Add custom parser - channelnewsasia.com (Josiah Campbell) [#44](https://github.com/jocmp/mercury-parser/pull/44)
+- [6abdf5a862] - chore: Fix references to Postlight Parser in README (Josiah Campbell)
+
 ### 2.3.0 (Jan 15, 2025)
 
 - [a45b329e0a] - fix: Update versants.com to parse figures (Josiah Campbell) [#42](https://github.com/jocmp/mercury-parser/pull/42)
