@@ -1,7 +1,8 @@
 # Mercury Parser Changelog
 
-### 2.3.1
+### 2.3.1 (Jan 21, 2025)
 
+- [a11d811898] - feat: Add custom parser - wccftech.com (Josiah Campbell) [#45](https://github.com/jocmp/mercury-parser/pull/45)
 - [ba949c0c87] - feat: Add custom parser - channelnewsasia.com (Josiah Campbell) [#44](https://github.com/jocmp/mercury-parser/pull/44)
 - [6abdf5a862] - chore: Fix references to Postlight Parser in README (Josiah Campbell)
 
