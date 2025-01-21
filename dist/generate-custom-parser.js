@@ -6369,6 +6369,52 @@ var MobilesyrupComExtractor = {
     clean: []
   }
 };
+var WwwChannelnewsasiaComExtractor = {
+  domain: 'www.channelnewsasia.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.link--author-profile', ['meta[name="cXenseParse:author"]', 'value']]
+  },
+  date_published: {
+    selectors: ['.article-publish:not(span)'],
+    format: 'DD MMM YYYY HH:mma',
+    timezone: 'Asia/Singapore'
+  },
+  dek: {
+    selectors: ['.content-detail__description']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['section[data-title="Content"]'],
+    transforms: {},
+    clean: []
+  }
+};
+var WccftechComExtractor = {
+  domain: 'wccftech.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['div.meta a:first-of-type']
+  },
+  date_published: {
+    selectors: [['meta[name="pub_date"]', 'value'], ['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.content'],
+    transforms: {},
+    clean: ['.democracy' // JavaScript polls
+    ]
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -6522,7 +6568,9 @@ _Object$freeze({
   TechcrunchComExtractor: TechcrunchComExtractor,
   WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
   WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
-  MobilesyrupComExtractor: MobilesyrupComExtractor
+  MobilesyrupComExtractor: MobilesyrupComExtractor,
+  WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
+  WccftechComExtractor: WccftechComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
