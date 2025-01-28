@@ -6245,6 +6245,24 @@ var Www1pezeshkComExtractor = {
     clean: []
   }
 };
+
+function removeAffiliateLink(node) {
+  if (node.text().startsWith('Affiliate links on Android Authority may earn us a commission.')) {
+    node.remove();
+  }
+}
+
+function removePolls(node) {
+  var siblings = node.parent().children();
+
+  if (siblings.find('button:not(:has(picture))').length > 0) {
+    node.parent().remove();
+    return true;
+  }
+
+  return false;
+}
+
 var WwwAndroidauthorityComExtractor = {
   domain: 'www.androidauthority.com',
   title: {
@@ -6263,19 +6281,31 @@ var WwwAndroidauthorityComExtractor = {
   // remove if not following a paragraph. Adding this empty paragraph fixes it, and
   // the empty paragraph will be removed anyway.
   content: {
-    selectors: ['.e_Bc', '.d_Dd'],
+    selectors: ['main'],
     transforms: {
+      div: function div(node) {
+        removeAffiliateLink(node);
+      },
+      p: function p(node) {
+        if (node.text().startsWith('Published on')) {
+          node.remove();
+        }
+
+        removeAffiliateLink(node);
+      },
       ol: function ol(node) {
         node.attr('class', 'mercury-parser-keep');
       },
       h2: function h2($node) {
         return $node.attr('class', 'mercury-parser-keep');
       },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
+      h3: function h3(node) {
+        if (!removePolls(node)) {
+          node.attr('class', 'mercury-parser-keep');
+        }
       }
     },
-    clean: ['.e_Oh', // Polls
+    clean: ['h1 + div', // Dek
     'picture + div' // Lead image text
     ]
   }
