@@ -1,3 +1,27 @@
+function removeAffiliateLink(node) {
+  if (
+    node
+      .text()
+      .startsWith(
+        'Affiliate links on Android Authority may earn us a commission.'
+      )
+  ) {
+    node.remove();
+  }
+}
+
+function removePolls(node) {
+  const siblings = node.parent().children();
+
+  if (siblings.find('button:not(:has(picture))').length > 0) {
+    node.parent().remove();
+
+    return true;
+  }
+
+  return false;
+}
+
 export const WwwAndroidauthorityComExtractor = {
   domain: 'www.androidauthority.com',
 
@@ -12,6 +36,7 @@ export const WwwAndroidauthorityComExtractor = {
   date_published: {
     selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']],
   },
@@ -20,16 +45,30 @@ export const WwwAndroidauthorityComExtractor = {
   // remove if not following a paragraph. Adding this empty paragraph fixes it, and
   // the empty paragraph will be removed anyway.
   content: {
-    selectors: ['.e_Bc', '.d_Dd'],
+    selectors: ['main'],
     transforms: {
+      div: node => {
+        removeAffiliateLink(node);
+      },
+      p: node => {
+        if (node.text().startsWith('Published on')) {
+          node.remove();
+        }
+
+        removeAffiliateLink(node);
+      },
       ol: node => {
         node.attr('class', 'mercury-parser-keep');
       },
       h2: $node => $node.attr('class', 'mercury-parser-keep'),
-      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: node => {
+        if (!removePolls(node)) {
+          node.attr('class', 'mercury-parser-keep');
+        }
+      },
     },
     clean: [
-      '.e_Oh', // Polls
+      'h1 + div', // Dek
       'picture + div', // Lead image text
     ],
   },

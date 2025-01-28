@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### 2.3.2 (Jan 27, 2025)
+
+- [684eab9194] - fix: Don't follow class names for androidauthority (Josiah Campbell) [#46](https://github.com/jocmp/mercury-parser/pull/46)
+
 ### 2.3.1 (Jan 21, 2025)
 
 - [a11d811898] - feat: Add custom parser - wccftech.com (Josiah Campbell) [#45](https://github.com/jocmp/mercury-parser/pull/45)
