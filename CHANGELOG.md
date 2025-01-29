@@ -1,5 +1,9 @@
 # Mercury Parser Changelog
 
+### 2.3.3 (Jan 31, 2025)
+
+- [d5cd516d52] - fix: Retain h2 for channelnewsasia.com (Josiah Campbell) [#47](https://github.com/jocmp/mercury-parser/pull/47)
+
 ### 2.3.2 (Jan 27, 2025)
 
 - [684eab9194] - fix: Don't follow class names for androidauthority (Josiah Campbell) [#46](https://github.com/jocmp/mercury-parser/pull/46)
