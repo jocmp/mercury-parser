@@ -29,7 +29,9 @@ export const WwwChannelnewsasiaComExtractor = {
   content: {
     selectors: ['section[data-title="Content"]'],
 
-    transforms: {},
+    transforms: {
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+    },
 
     clean: [],
   },
