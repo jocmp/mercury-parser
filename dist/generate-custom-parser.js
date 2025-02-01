@@ -6420,7 +6420,11 @@ var WwwChannelnewsasiaComExtractor = {
   },
   content: {
     selectors: ['section[data-title="Content"]'],
-    transforms: {},
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
     clean: []
   }
 };
