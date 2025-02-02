@@ -27,10 +27,7 @@ describe('TldrTechExtractor', () => {
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
-        title,
-        `OpenAI eyes $340B valuation 💰, Gemini 2.0 🤖, Javascript Temporal 👨‍💻`
-      );
+      assert.equal(title, `TLDR 2025-01-31`);
     });
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;

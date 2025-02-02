@@ -2,7 +2,7 @@ export const TldrTechExtractor = {
   domain: 'tldr.tech',
 
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'title'],
+    selectors: ['h1'],
   },
 
   lead_image_url: {
@@ -10,7 +10,7 @@ export const TldrTechExtractor = {
   },
 
   content: {
-    selectors: ['body'],
+    selectors: ['.content-center', 'body'],
 
     transforms: {
       h2: $node => $node.attr('class', 'mercury-parser-keep'),
