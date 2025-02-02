@@ -6429,6 +6429,56 @@ var WccftechComExtractor = {
   }
 };
 
+var WwwHeiseDeExtractor = {
+  domain: 'www.heise.de',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="date"]', 'value']]
+  },
+  dek: {
+    selectors: ['.a-article-header__lead']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article-layout__content'],
+    transforms: {
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: []
+  }
+};
+
+var TldrTechExtractor = {
+  domain: 'tldr.tech',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value'], 'title']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="twitter:image"]', 'value']]
+  },
+  content: {
+    selectors: ['body'],
+    transforms: {
+      h2: function h2($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6583,7 +6633,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
   MobilesyrupComExtractor: MobilesyrupComExtractor,
   WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
-  WccftechComExtractor: WccftechComExtractor
+  WccftechComExtractor: WccftechComExtractor,
+  WwwHeiseDeExtractor: WwwHeiseDeExtractor,
+  TldrTechExtractor: TldrTechExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
