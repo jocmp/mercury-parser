@@ -2,7 +2,7 @@
 
 ### 2.3.4 (Feb 1, 2025)
 
-- [fb837984cf] - feat: Add custom parser for tldr.tech (Josiah Campbell) [#49](https://github.com/jocmp/mercury-parser/pull/49)
+- [5cab3e581a] - feat: Add custom parser for tldr.tech (Josiah Campbell) [#49](https://github.com/jocmp/mercury-parser/pull/49)
 - [f183a63b2d] - feat: Add custom parser for heise.de (Josiah Campbell) [#48](https://github.com/jocmp/mercury-parser/pull/48)
 
 ### 2.3.3 (Jan 31, 2025)
