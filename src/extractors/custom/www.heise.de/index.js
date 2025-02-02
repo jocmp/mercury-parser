@@ -28,6 +28,10 @@ export const WwwHeiseDeExtractor = {
       h3: $node => $node.attr('class', 'mercury-parser-keep'),
     },
 
-    clean: [],
+    clean: [
+      '.ad-mobile-group-1',
+      '.branding',
+      '[data-component="RecommendationBox"]',
+    ],
   },
 };
