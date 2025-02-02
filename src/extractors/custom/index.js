@@ -150,3 +150,4 @@ export * from './www.spiegel.de';
 export * from './mobilesyrup.com';
 export * from './www.channelnewsasia.com';
 export * from './wccftech.com';
+export * from './www.heise.de';
