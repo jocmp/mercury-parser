@@ -5,14 +5,9 @@ export const BskyAppExtractor = {
     selectors: [['meta[name="og:title"]', 'value']],
   },
 
-  author: {
-    selectors: [],
-  },
+  author: null,
 
-  date_published: {
-    allowMultiple: true,
-    selectors: [['meta[name="article:published_time"]', 'value']],
-  },
+  date_published: null,
 
   lead_image_url: null,
 
