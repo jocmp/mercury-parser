@@ -153,3 +153,4 @@ export * from './wccftech.com';
 export * from './www.heise.de';
 export * from './tldr.tech';
 export * from './bsky.app';
+export * from './www.n-tv.de';
