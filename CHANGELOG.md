@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
-## Unreleased
+## v2.3.5
 
 - feat: Add custom parser for n-tv.de
 - feat: Add custom parser for bsky.app by @jocmp in [#50](https://github.com/jocmp/mercury-parser/pull/50)
