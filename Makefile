@@ -1,8 +1,5 @@
 SHELL :=/usr/bin/env bash
 
-CHANGELOG=CHANGELOG.md
-CHANGELOG_TMP=tmp/$(CHANGELOG)
-
 .PHONY: build
 build:
 	$(MAKE) -j2 build-node build-web build-generator
@@ -19,23 +16,18 @@ build-web:
 build-generator:
 	yarn build:generator
 
-run .PHONY: deps
+.PHONY: deps
 deps: ## Install bumpver
 	pip install bumpver==2024.1130
 
-$(CHANGELOG_TMP):
-	mkdir -p tmp
-	echo -e "# Mercury Parser Changelog\n" > $(CHANGELOG_TMP)
-	echo $(now)
-	echo -e "### $(BUMPVER_NEW_VERSION) ($$(date '+%b %d, %Y'))\n" >>  $(CHANGELOG_TMP)
-	yarn run --silent changelog-maker --format=markdown >> $(CHANGELOG_TMP)
-	cat $(CHANGELOG) | sed 1d >> $(CHANGELOG_TMP)
-	cp $(CHANGELOG_TMP) $(CHANGELOG)
+.PHONY: local-deps
+local-deps: deps
+	cargo install git-cliff
 
-$(CHANGELOG): $(CHANGELOG_TMP)
+$(CHANGELOG):
 
-.PHONY: changelog
-changelog: $(CHANGELOG)
+changelog:
+	git cliff > CHANGELOG.md
 
 .PHONY: preview
 preview:
