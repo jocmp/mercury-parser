@@ -1,491 +1,775 @@
-# Mercury Parser Changelog
+# Changelog
 
-### 2.3.4 (Feb 1, 2025)
+All notable changes to this project will be documented in this file.
 
-- [5cab3e581a] - feat: Add custom parser for tldr.tech (Josiah Campbell) [#49](https://github.com/jocmp/mercury-parser/pull/49)
-- [f183a63b2d] - feat: Add custom parser for heise.de (Josiah Campbell) [#48](https://github.com/jocmp/mercury-parser/pull/48)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
-### 2.3.3 (Jan 31, 2025)
+## Unreleased
 
-- [d5cd516d52] - fix: Retain h2 for channelnewsasia.com (Josiah Campbell) [#47](https://github.com/jocmp/mercury-parser/pull/47)
+- feat: Add custom parser for n-tv.de
+- feat: Add custom parser for bsky.app by @jocmp in [#50](https://github.com/jocmp/mercury-parser/pull/50)
+- fix: Hide ads on heise.de by @jocmp
+- fix: Keep nested h3's in tldr.tech by @jocmp
 
-### 2.3.2 (Jan 27, 2025)
+## v2.3.4
 
-- [684eab9194] - fix: Don't follow class names for androidauthority (Josiah Campbell) [#46](https://github.com/jocmp/mercury-parser/pull/46)
+- bump version v2.3.3 -> v2.3.4 by @jocmp
+- feat: Add custom parser for tldr.tech by @jocmp in [#49](https://github.com/jocmp/mercury-parser/pull/49)
+- feat: Add custom parser for tldr.tech by @jocmp
+- feat: Add custom parser for heise.de by @jocmp in [#48](https://github.com/jocmp/mercury-parser/pull/48)
 
-### 2.3.1 (Jan 21, 2025)
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.3...v2.3.4
 
-- [a11d811898] - feat: Add custom parser - wccftech.com (Josiah Campbell) [#45](https://github.com/jocmp/mercury-parser/pull/45)
-- [ba949c0c87] - feat: Add custom parser - channelnewsasia.com (Josiah Campbell) [#44](https://github.com/jocmp/mercury-parser/pull/44)
-- [6abdf5a862] - chore: Fix references to Postlight Parser in README (Josiah Campbell)
-
-### 2.3.0 (Jan 15, 2025)
-
-- [a45b329e0a] - fix: Update versants.com to parse figures (Josiah Campbell) [#42](https://github.com/jocmp/mercury-parser/pull/42)
-- [68e9b88a8d] - fix: androidauthority.com - Retain heading tags (Josiah Campbell) [#41](https://github.com/jocmp/mercury-parser/pull/41)
-- [c2bc68449f] - bump version v2.2.9 -> v2.2.10 (jocmp)
-
-### v2.2.10 (Jan 11, 2025)
-
-- [b8b4df7037] - feat: Add custom parser for mobilesyrup.com (Josiah Campbell) [#39](https://github.com/jocmp/mercury-parser/pull/39)
-- [8d48dcf932] - bump version v2.2.8 -> v2.2.9 (jocmp)
-
-### v2.2.9 (Jan 09, 2025)
-
-- [0217f6205a] - **feat**: Add custom parser - spiegel.de (Josiah Campbell) [#38](https://github.com/jocmp/mercury-parser/pull/38)
-
-### v2.2.8 (Jan 05, 2025)
-
-- [7dc7246f62] - **feat:** Add custom parser - hardwarezone.com.sg (Josiah Campbell) [#37](https://github.com/jocmp/mercury-parser/pull/37)
-- [ef3044bc5c] - [skip ci] Update changelog (Josiah Campbell)
-- [c11d4da869] - bump version v2.2.6 -> v2.2.7 (jocmp)
-
-### v2.2.7 (Jan 02, 2025)
-
-- \[[`ab366e4818`](https://github.com/jocmp/mercury-parser/commit/ab366e4818)] - **fix**: Hide author thumbnail in techcrunch feed (Josiah Campbell)
-- \[[`c4feda4f46`](https://github.com/jocmp/mercury-parser/commit/c4feda4f46)] - **feat**: Add custom parser - techcrunch.com (Josiah Campbell) [#34](https://github.com/jocmp/mercury-parser/pull/34)
-- \[[`fbe06d3ebb`](https://github.com/jocmp/mercury-parser/commit/fbe06d3ebb)] - Allow any article in preview (Josiah Campbell)
-- \[[`b2e835a344`](https://github.com/jocmp/mercury-parser/commit/b2e835a344)] - Update changelog (Josiah Campbell)
-
-### v2.2.6 (Dec 23, 2024)
-
-- \[[`12b1a1a86d`](https://github.com/jocmp/mercury-parser/commit/12b1a1a86d)] - **feat**: Update phoronix.com custom extractor (Josiah Campbell) [#29](https://github.com/jocmp/mercury-parser/pull/29)
-- \[[`186eb3fb38`](https://github.com/jocmp/mercury-parser/commit/186eb3fb38)] - **chore(deps-dev)**: Bump brfs from 2.0.1 to 2.0.2 (dependabot\[bot]) [#26](https://github.com/jocmp/mercury-parser/pull/26)
-- \[[`8b66ee4c61`](https://github.com/jocmp/mercury-parser/commit/8b66ee4c61)] - **chore(deps)**: Bump iconv-lite from 0.5.0 to 0.6.3 (dependabot\[bot]) [#24](https://github.com/jocmp/mercury-parser/pull/24)
-- \[[`1829add56b`](https://github.com/jocmp/mercury-parser/commit/1829add56b)] - **chore(deps-dev)**: Bump watchify from 3.11.1 to 4.0.0 (dependabot\[bot]) [#23](https://github.com/jocmp/mercury-parser/pull/23)
-
-### v2.2.5 (Dec 20, 2024)
-
-- \[[`3dea77b3f3`](https://github.com/jocmp/mercury-parser/commit/3dea77b3f3)] - **chore**: Update bump-version.yml (Josiah Campbell)
-- \[[`4bdbe5ec86`](https://github.com/jocmp/mercury-parser/commit/4bdbe5ec86)] - feat: android authority extractor (Josiah Campbell) https://github.com/jocmp/mercury-parser/pull/27
-
-### 2.2.4 (Dec 16, 2024)
-
-- \[[`c759969a12`](https://github.com/jocmp/mercury-parser/commit/c759969a12)] - _**Revert**_ "bump version 2.2.3 -> 2.2.4" (Josiah Campbell)
-
-### 2.2.3 (Oct 24, 2022)
-
-- [[`635fcf6356`](https://github.com/postlight/parser/commit/635fcf6356)] - **fix**: handle sec & ms timestamps properly (#702) (Austin)
-- [[`ab401822aa`](https://github.com/postlight/parser/commit/ab401822aa)] - maintenance update - october 2022 (#696) (Michael Ashley)
-- [[`8ca8a5f7e5`](https://github.com/postlight/parser/commit/8ca8a5f7e5)] - **feat**: add postlight.com custom extractor (#695) (Sarah Doire)
-- [[`39b9ff55c4`](https://github.com/postlight/parser/commit/39b9ff55c4)] - **release**: 2.2.2 (#689) (John Holdun)
-
-### 2.2.2 (Sept 08, 2022)
-
-##### Commits
-
-- [[`a90bafb030`](https://github.com/postlight/parser/commit/a90bafb030)] - Change Name (John Holdun)
-- [[`eb9d0bc5e8`](https://github.com/postlight/parser/commit/eb9d0bc5e8)] - Update more dependencies (#687) (John Holdun)
-- [[`112846f74f`](https://github.com/postlight/parser/commit/112846f74f)] - **chore**: Inline test fixtures (#683) (John Holdun)
-- [[`0d2bad544c`](https://github.com/postlight/parser/commit/0d2bad544c)] - **chore**: Update builds (John Holdun)
-- [[`035aa65dbc`](https://github.com/postlight/parser/commit/035aa65dbc)] - Added custom extractor for www.spektrum.de (#677) (Simon Reinhardt)
-- [[`f259d13753`](https://github.com/postlight/parser/commit/f259d13753)] - **feat**: Add figcaption to list of non-convertible span parents (#682) (John Holdun)
-- [[`de314a9728`](https://github.com/postlight/parser/commit/de314a9728)] - Add li to the list of non-convertible parents for spans (#531) (Nate Weaver)
-- [[`9a961aa595`](https://github.com/postlight/parser/commit/9a961aa595)] - **feat**: Add a custom extractor for www.ndtv.com. (#554) (John Brayton)
-- [[`143631b4b7`](https://github.com/postlight/parser/commit/143631b4b7)] - **feat**: arstechnica.com extractor (#553) (John Brayton)
-- [[`3c5c0bdba9`](https://github.com/postlight/parser/commit/3c5c0bdba9)] - **feat**: Add a custom extractor for www.engadget.com. (#552) (John Brayton)
-- [[`13dfe720bd`](https://github.com/postlight/parser/commit/13dfe720bd)] - Custom extractor for www.gruene.de (#485) (Sven Wiegand)
-- [[`025261c120`](https://github.com/postlight/parser/commit/025261c120)] - chore(deps): Bump ws from 5.2.2 to 5.2.3 (#673) (dependabot[bot])
-- [[`34bc6facc7`](https://github.com/postlight/parser/commit/34bc6facc7)] - chore(deps): Bump moment from 2.29.2 to 2.29.4 (#672) (dependabot[bot])
-- [[`7b15df58be`](https://github.com/postlight/parser/commit/7b15df58be)] - chore(deps): Bump terser from 4.8.0 to 4.8.1 (#671) (dependabot[bot])
-- [[`fb74196d79`](https://github.com/postlight/parser/commit/fb74196d79)] - **chore**: Update CircleCI config (#661) (John Holdun)
-- [[`f7439ec3fd`](https://github.com/postlight/parser/commit/f7439ec3fd)] - modifies check-build to differentiate between test env (#665) (Jae Hanley)
-- [[`6ffa1a746e`](https://github.com/postlight/parser/commit/6ffa1a746e)] - **chore**: Update jQuery to 3.5.0 (#662) (John Holdun)
-- [[`8d18b0ed0d`](https://github.com/postlight/parser/commit/8d18b0ed0d)] - chore(deps): Bump shell-quote from 1.6.1 to 1.7.3 (#668) (dependabot[bot])
-- [[`d5dabae20b`](https://github.com/postlight/parser/commit/d5dabae20b)] - Update CHANGELOG.md (#663) (Samuel Clay)
-- [[`9cd9662bcb`](https://github.com/postlight/parser/commit/9cd9662bcb)] - support build of es modules (#570) (Jim Nielsen)
-- [[`d0c78911e6`](https://github.com/postlight/parser/commit/d0c78911e6)] - Add a new custom extractor for www.abendblatt.de (#559) (Marco Wiedemeyer)
-- [[`6014016283`](https://github.com/postlight/parser/commit/6014016283)] - **feat**: Add a custom extractor for pastebin.com (#556) (Felipe Canejo)
-- [[`e217648c0b`](https://github.com/postlight/parser/commit/e217648c0b)] - **feat**: ma.ttias.be extractor (#551) (John Brayton)
-- [[`70e99d56cf`](https://github.com/postlight/parser/commit/70e99d56cf)] - **Feat**: update qz.com selectors and tests (#538) (James Shakespeare)
-- [[`56a19bf934`](https://github.com/postlight/parser/commit/56a19bf934)] - **fix**: updating generate-parser dist (#499) (Michael Ashley)
-- [[`af9cfcd120`](https://github.com/postlight/parser/commit/af9cfcd120)] - **fix**: don't try to re-decode prepared response (#498) (Ethan Jucovy)
-- [[`9515dc28c1`](https://github.com/postlight/parser/commit/9515dc28c1)] - **chore**: update node version in .nvmrc & CONTRIBUTING.md (#599) (Peter Dave Hello)
-- [[`fb44ab0244`](https://github.com/postlight/parser/commit/fb44ab0244)] - Bugfix new yorker wired extractors (#604) (Joe Moon)
-- [[`99062da034`](https://github.com/postlight/parser/commit/99062da034)] - Add --version CLI flag (#610) (Nick Sweeting)
-- [[`32dff4aedb`](https://github.com/postlight/parser/commit/32dff4aedb)] - chore(deps-dev): bump karma from 3.1.4 to 6.3.16 (#654) (dependabot[bot])
-- [[`736778d2e7`](https://github.com/postlight/parser/commit/736778d2e7)] - chore(deps): bump moment from 2.23.0 to 2.29.2 (#656) (dependabot[bot])
-- [[`65e338a403`](https://github.com/postlight/parser/commit/65e338a403)] - **feat**: Add date formats to two extractors (#660) (John Holdun)
-- [[`8dd3c7078a`](https://github.com/postlight/parser/commit/8dd3c7078a)] - chore(deps): bump jquery from 3.4.1 to 3.5.0 (#557) (dependabot[bot])
-- [[`88718d4caf`](https://github.com/postlight/parser/commit/88718d4caf)] - chore(deps): bump cached-path-relative from 1.0.2 to 1.1.0 (#647) (dependabot[bot])
-- [[`af5974f6ea`](https://github.com/postlight/parser/commit/af5974f6ea)] - chore(deps): bump async from 2.6.1 to 2.6.4 (#658) (dependabot[bot])
-- [[`5d5e833ff0`](https://github.com/postlight/parser/commit/5d5e833ff0)] - chore(deps): bump tmpl from 1.0.4 to 1.0.5 (#633) (dependabot[bot])
-- [[`78cd8e06ee`](https://github.com/postlight/parser/commit/78cd8e06ee)] - chore(deps): bump tar from 4.4.8 to 4.4.19 (#630) (dependabot[bot])
-- [[`9dbe885364`](https://github.com/postlight/parser/commit/9dbe885364)] - chore(deps): bump path-parse from 1.0.5 to 1.0.7 (#628) (dependabot[bot])
-- [[`09558599fa`](https://github.com/postlight/parser/commit/09558599fa)] - chore(deps): bump y18n from 3.2.1 to 3.2.2 (#609) (dependabot[bot])
-- [[`633c172ff0`](https://github.com/postlight/parser/commit/633c172ff0)] - chore(deps): bump mixin-deep from 1.3.1 to 1.3.2 (#489) (dependabot[bot])
-- [[`6fcd2233a8`](https://github.com/postlight/parser/commit/6fcd2233a8)] - chore(deps): bump browserslist from 4.4.0 to 4.20.3 (#659) (dependabot[bot])
-- [[`d2d4287581`](https://github.com/postlight/parser/commit/d2d4287581)] - chore(deps): bump ajv from 6.7.0 to 6.12.6 (#650) (dependabot[bot])
-- [[`11b2f4414a`](https://github.com/postlight/parser/commit/11b2f4414a)] - chore(deps): bump pathval from 1.1.0 to 1.1.1 (#648) (dependabot[bot])
-- [[`adecdcfef0`](https://github.com/postlight/parser/commit/adecdcfef0)] - chore(deps): bump node-fetch from 2.3.0 to 2.6.7 (#642) (dependabot[bot])
-- [[`5340d4c4ec`](https://github.com/postlight/parser/commit/5340d4c4ec)] - chore(deps): bump hosted-git-info from 2.1.5 to 2.8.9 (#614) (dependabot[bot])
-- [[`19c2b53684`](https://github.com/postlight/parser/commit/19c2b53684)] - chore(deps): bump ini from 1.3.4 to 1.3.8 (#613) (dependabot[bot])
-- [[`f9ddb3b6fa`](https://github.com/postlight/parser/commit/f9ddb3b6fa)] - chore(deps): bump handlebars from 4.7.6 to 4.7.7 (#611) (dependabot[bot])
-- [[`1678cda413`](https://github.com/postlight/parser/commit/1678cda413)] - chore(deps): bump elliptic from 6.3.2 to 6.5.4 (#608) (dependabot[bot])
-- [[`4432bc766c`](https://github.com/postlight/parser/commit/4432bc766c)] - chore(deps): bump http-proxy from 1.15.2 to 1.18.1 (#586) (dependabot[bot])
-- [[`453cd7962d`](https://github.com/postlight/parser/commit/453cd7962d)] - chore(deps): bump eslint-utils from 1.3.1 to 1.4.3 (#585) (dependabot[bot])
-- [[`f8b12d9130`](https://github.com/postlight/parser/commit/f8b12d9130)] - chore(deps): bump yargs-parser from 14.0.0 to 15.0.1 (#584) (dependabot[bot])
-- [[`73dc2a1879`](https://github.com/postlight/parser/commit/73dc2a1879)] - chore(deps): bump static-eval from 2.0.0 to 2.1.0 (#578) (dependabot[bot])
-- [[`0ccb91a487`](https://github.com/postlight/parser/commit/0ccb91a487)] - **release**: 2.2.1 (#631) (Jad Termsani)
-
-### 2.2.1 (Sept 08, 2021)
-
-##### Commits
-
-- [[`8c9982247b`](https://github.com/postlight/mercury-parser/commit/8c9982247b)] - **feat**: Ladbible.com extractor (#624) (Nitin Khanna)
-- [[`30d6f472ee`](https://github.com/postlight/mercury-parser/commit/30d6f472ee)] - **feat**: Times of India extractor (#503) (Nitin Khanna)
-- [[`c15f4f5c3e`](https://github.com/postlight/mercury-parser/commit/c15f4f5c3e)] - chore(deps): bump lodash from 4.17.2 to 4.17.21 (#612) (dependabot[bot])
-- [[`b8b90afa95`](https://github.com/postlight/mercury-parser/commit/b8b90afa95)] - chore(deps): bump handlebars from 4.1.2 to 4.7.6 (#583) (dependabot[bot])
-- [[`38fb3204f5`](https://github.com/postlight/mercury-parser/commit/38fb3204f5)] - **chore**: remove greenkeeper configs (#580) (Jad Termsani)
-- [[`a5a066c69d`](https://github.com/postlight/mercury-parser/commit/a5a066c69d)] - **chore**: update node version (#579) (Jad Termsani)
-- [[`b0e708aac6`](https://github.com/postlight/mercury-parser/commit/b0e708aac6)] - **feat**: update nytimes extractor (#506) (Wajeeh Zantout)
-- [[`3fb8526c4a`](https://github.com/postlight/mercury-parser/commit/3fb8526c4a)] - chore(package): update ora to version 4.0.0 (#500) (greenkeeper[bot])
-- [[`3009ecf137`](https://github.com/postlight/mercury-parser/commit/3009ecf137)] - fix(package): update yargs-parser to version 14.0.0 (#495) (greenkeeper[bot])
-- [[`c5c000586d`](https://github.com/postlight/mercury-parser/commit/c5c000586d)] - **release**: 2.2.0 (#496) (Michael Ashley)
-
-### 2.2.0 (Sept 10, 2019)
-
-##### Commits
-
-- [[`e12c916499`](https://github.com/postlight/mercury-parser/commit/e12c916499)] - **feat**: ability to add custom extractors via api (#484) (Michael Ashley)
-- [[`f95947fe88`](https://github.com/postlight/mercury-parser/commit/f95947fe88)] - Implemented custom extractor epaper.zeit.de (#488) (Sven Wiegand)
-- [[`2422e4717d`](https://github.com/postlight/mercury-parser/commit/2422e4717d)] - **fix**: incorrect parsing on medium.com (#477) (Michael Ashley)
-- [[`2bed238b68`](https://github.com/postlight/mercury-parser/commit/2bed238b68)] - chore(package): update inquirer to version 7.0.0 (#479) (greenkeeper[bot])
-- [[`869e44a69f`](https://github.com/postlight/mercury-parser/commit/869e44a69f)] - chore(package): update karma-chrome-launcher to version 3.0.0 (#458) (greenkeeper[bot])
-- [[`e4a7a288e5`](https://github.com/postlight/mercury-parser/commit/e4a7a288e5)] - chore(package): update eslint-config-prettier to version 6.1.0 (#476) (greenkeeper[bot])
-- [[`2173c4cf83`](https://github.com/postlight/mercury-parser/commit/2173c4cf83)] - **deps**: Update wuzzy to fix vulnerability (#462) (Malo Bourgon)
-- [[`a918a9d6fa`](https://github.com/postlight/mercury-parser/commit/a918a9d6fa)] - **doc**: correct link that points to wrong line (#469) (Jakob Fix)
-- [[`0686ee7956`](https://github.com/postlight/mercury-parser/commit/0686ee7956)] - **fix**: incorrect parsing on theatlantic.com (#475) (Michael Ashley)
-- [[`5e33263d25`](https://github.com/postlight/mercury-parser/commit/5e33263d25)] - **chore**: minifying biorxiv.com fixture (#478) (Michael Ashley)
-- [[`911b0f87c8`](https://github.com/postlight/mercury-parser/commit/911b0f87c8)] - Add custom extractor for biorxiv.org (#467) (david0leong)
-- [[`76d59f2d58`](https://github.com/postlight/mercury-parser/commit/76d59f2d58)] - **doc**: correct internal page links (#470) (Jakob Fix)
-- [[`398cba4d66`](https://github.com/postlight/mercury-parser/commit/398cba4d66)] - chore(deps): bump lodash.merge from 4.6.1 to 4.6.2 (#456) (dependabot[bot])
-- [[`90e208ea13`](https://github.com/postlight/mercury-parser/commit/90e208ea13)] - chore(deps): bump cached-path-relative from 1.0.0 to 1.0.2 (#472) (dependabot[bot])
-- [[`5bb7c58e95`](https://github.com/postlight/mercury-parser/commit/5bb7c58e95)] - chore(deps): bump merge from 1.2.0 to 1.2.1 (#473) (dependabot[bot])
-- [[`ce572f3a28`](https://github.com/postlight/mercury-parser/commit/ce572f3a28)] - chore(package): update brfs-babel to version 2.0.0 (#461) (greenkeeper[bot])
-- [[`6f65702a6c`](https://github.com/postlight/mercury-parser/commit/6f65702a6c)] - Update moment-timezone to the latest version 🚀 (#455) (greenkeeper[bot])
-- [[`c764cebc0c`](https://github.com/postlight/mercury-parser/commit/c764cebc0c)] - chore(package): update remark-cli to version 7.0.0 (#460) (greenkeeper[bot])
-- [[`853e041d84`](https://github.com/postlight/mercury-parser/commit/853e041d84)] - **deps**: update husky to the latest version 🚀 (#450) (greenkeeper[bot])
-- [[`f42f81218b`](https://github.com/postlight/mercury-parser/commit/f42f81218b)] - **deps**: update iconv-lite to the latest version 🚀 (#447) (greenkeeper[bot])
-- [[`592f175270`](https://github.com/postlight/mercury-parser/commit/592f175270)] - **tests**: remove a duplicate test (#448) (Kirill Danshin)
-
-### 2.1.1 (Jun 26, 2019)
-
-##### Commits
-
-- [[`713de25751`](https://github.com/postlight/mercury-parser/commit/713de25751)] - **release**: 2.1.1 (#446) (Adam Pash)
-- [[`c11b85f405`](https://github.com/postlight/mercury-parser/commit/c11b85f405)] - **deps**: update eslint-config-prettier to version 5.0.0 (#441) (greenkeeper[bot])
-- [[`3b0d5fed69`](https://github.com/postlight/mercury-parser/commit/3b0d5fed69)] - **chore**: prevent adding phantomjs-prebuilt as a dependency in CI. (#412) (Jaen)
-- [[`939d181951`](https://github.com/postlight/mercury-parser/commit/939d181951)] - **fix**: support query strings in lazy-loaded srcsets (#387) (Toufic Mouallem)
-- [[`0942c37876`](https://github.com/postlight/mercury-parser/commit/0942c37876)] - **feat**: custom parser for phoronix.com. (#431) (Ben Ubois)
-- [[`571a913745`](https://github.com/postlight/mercury-parser/commit/571a913745)] - **feat**: pitchfork extractor (#439) (Michael P. Geraci)
-- [[`c8a66b0d77`](https://github.com/postlight/mercury-parser/commit/c8a66b0d77)] - **deps**: Update moment-timezone to the latest version 🚀 (#388) (greenkeeper[bot])
-- [[`255da63e26`](https://github.com/postlight/mercury-parser/commit/255da63e26)] - **deps**: bump handlebars from 4.0.6 to 4.1.2 (#434) (dependabot[bot])
-- [[`c7abfc25c6`](https://github.com/postlight/mercury-parser/commit/c7abfc25c6)] - chore(deps): bump sshpk from 1.10.1 to 1.16.1 (#435) (dependabot[bot])
-- [[`694ea820aa`](https://github.com/postlight/mercury-parser/commit/694ea820aa)] - Custom Extractor for clinicaltrials.gov (#305) (david0leong)
-- [[`a7cd9027e2`](https://github.com/postlight/mercury-parser/commit/a7cd9027e2)] - **chore**: update husky to version 2.3.0 (#422) (Toufic Mouallem)
-- [[`9f6f07508c`](https://github.com/postlight/mercury-parser/commit/9f6f07508c)] - **docs**: Add links to README (Gina Trapani)
-- [[`3414ebaa62`](https://github.com/postlight/mercury-parser/commit/3414ebaa62)] - **chore**: update jquery to version 3.4.1 (#420) (Toufic Mouallem)
-- [[`7c8de71c52`](https://github.com/postlight/mercury-parser/commit/7c8de71c52)] - **fix**: new yorker extractor (#414) (Wajeeh Zantout)
-- [[`e66ad8b81c`](https://github.com/postlight/mercury-parser/commit/e66ad8b81c)] - **feat**: add le monde extractor (#415) (Wajeeh Zantout)
-- [[`f81dc63617`](https://github.com/postlight/mercury-parser/commit/f81dc63617)] - **feat**: add rbbtoday.com custom parser (#411) (kik0220)
-- [[`5e1113b3a9`](https://github.com/postlight/mercury-parser/commit/5e1113b3a9)] - **feat**: add japan.zdnet.com custom parser (#410) (kik0220)
-- [[`77e3bc00e2`](https://github.com/postlight/mercury-parser/commit/77e3bc00e2)] - **feat**: add wired.jp custom parser (#409) (kik0220)
-- [[`0b36c96de0`](https://github.com/postlight/mercury-parser/commit/0b36c96de0)] - **feat**: add techlog.iij.ad.jp custom parser (#405) (kik0220)
-- [[`406bf1b1a9`](https://github.com/postlight/mercury-parser/commit/406bf1b1a9)] - **feat**: add weekly.ascii.jp custom parser (#401) (kik0220)
-- [[`216bfade00`](https://github.com/postlight/mercury-parser/commit/216bfade00)] - **feat**: add www.ipa.go.jp custom parser (#408) (kik0220)
-- [[`3ae8f3bde3`](https://github.com/postlight/mercury-parser/commit/3ae8f3bde3)] - **feat**: add www.oreilly.co.jp custom parser (#407) (kik0220)
-- [[`7396e81b72`](https://github.com/postlight/mercury-parser/commit/7396e81b72)] - **feat**: add sect.iij.ad.jp custom parser (#404) (kik0220)
-- [[`3f1d9030ee`](https://github.com/postlight/mercury-parser/commit/3f1d9030ee)] - **feat**: add www.lifehacker.jp custom parser (#403) (kik0220)
-- [[`b077000c4a`](https://github.com/postlight/mercury-parser/commit/b077000c4a)] - **feat**: add getnews.jp custom parser (#402) (kik0220)
-- [[`b5425c3e8a`](https://github.com/postlight/mercury-parser/commit/b5425c3e8a)] - **feat**: add www.gizmodo.jp custom parser (#400) (kik0220)
-- [[`a38c727a0a`](https://github.com/postlight/mercury-parser/commit/a38c727a0a)] - **feat**: add deadline.com custom parser (#383) (kik0220)
-- [[`74a3c49a3c`](https://github.com/postlight/mercury-parser/commit/74a3c49a3c)] - **feat**: add japan.cnet.com custom parser (#382) (kik0220)
-- [[`7b07f88448`](https://github.com/postlight/mercury-parser/commit/7b07f88448)] - **feat**: add www.yomiuri.co.jp custom parser (#381) (kik0220)
-- [[`3f46859d14`](https://github.com/postlight/mercury-parser/commit/3f46859d14)] - **fix**: skip absolutizing invalid srcsets (#386) (Toufic Mouallem)
-- [[`779c1154fb`](https://github.com/postlight/mercury-parser/commit/779c1154fb)] - **fix**: add date_published selector in www.sanwa.co.jp extractor (#378) (kik0220)
-- [[`ea5b65f019`](https://github.com/postlight/mercury-parser/commit/ea5b65f019)] - **fix**: add date_published selector in www.elecom.co.jp extractor (#377) (kik0220)
-- [[`7c0949e587`](https://github.com/postlight/mercury-parser/commit/7c0949e587)] - **fix**: add date_published selector in www.ossnews.jp extractor (#376) (kik0220)
-- [[`3e91ac55db`](https://github.com/postlight/mercury-parser/commit/3e91ac55db)] - **fix**: add date_published selector in jvndb.jvn.jp extractor (#375) (kik0220)
-- [[`8ca2894751`](https://github.com/postlight/mercury-parser/commit/8ca2894751)] - **feat**: add bookwalker.jp custom parser (#374) (kik0220)
-- [[`a5f06ce27a`](https://github.com/postlight/mercury-parser/commit/a5f06ce27a)] - **feat**: add takagi-hiromitsu.jp custom parser (#364) (kik0220)
-- [[`b9c57dbc2f`](https://github.com/postlight/mercury-parser/commit/b9c57dbc2f)] - **feat**: add www.publickey1.jp custom parser (#365) (kik0220)
-- [[`d7dbea8a95`](https://github.com/postlight/mercury-parser/commit/d7dbea8a95)] - **feat**: add www.itmedia.co.jp custom parser (#366) (kik0220)
-- [[`9218f80da6`](https://github.com/postlight/mercury-parser/commit/9218f80da6)] - **feat**: add www.moongift.jp custom parser (#367) (kik0220)
-- [[`4eb73dffb0`](https://github.com/postlight/mercury-parser/commit/4eb73dffb0)] - **feat**: add www.infoq.com custom parser (#368) (kik0220)
-- [[`ce5cd2dd0d`](https://github.com/postlight/mercury-parser/commit/ce5cd2dd0d)] - **feat**: add phpspot.org custom parser (#369) (kik0220)
-
-### 2.1.0 (Apr 10, 2019)
-
-##### Commits
-
-- [[`3614e31abc`](https://github.com/postlight/mercury-parser/commit/3614e31abc)] - **fix**: skip absolutizing empty hrefs (#372) (Toufic Mouallem)
-- [[`73be0c5a10`](https://github.com/postlight/mercury-parser/commit/73be0c5a10)] - **feat**: add www.jnsa.org custom parser (#346) (kik0220)
-- [[`eacd1ee97f`](https://github.com/postlight/mercury-parser/commit/eacd1ee97f)] - **feat**: custom genius parser. (#284) (Adam Pash)
-- [[`c389c966d7`](https://github.com/postlight/mercury-parser/commit/c389c966d7)] - **feat**: add jvndb.jvn.jp custom parser (#345) (kik0220)
-- [[`8493d05cb5`](https://github.com/postlight/mercury-parser/commit/8493d05cb5)] - **feat**: add scan.netsecurity.ne.jp custom parser (#347) (kik0220)
-- [[`2a76c6c212`](https://github.com/postlight/mercury-parser/commit/2a76c6c212)] - **feat**: add www.elecom.co.jp custom parser (#348) (kik0220)
-- [[`a9e010b718`](https://github.com/postlight/mercury-parser/commit/a9e010b718)] - **feat**: add www.sanwa.co.jp custom parser (#349) (kik0220)
-- [[`1639eae324`](https://github.com/postlight/mercury-parser/commit/1639eae324)] - **feat**: add www.asahi.com custom parser (#350) (kik0220)
-- [[`21f7de70c1`](https://github.com/postlight/mercury-parser/commit/21f7de70c1)] - **feat**: add buzzap.jp custom parser (#351) (kik0220)
-- [[`f3a7e393a3`](https://github.com/postlight/mercury-parser/commit/f3a7e393a3)] - **feat**: add www.ossnews.jp custom parser (#352) (kik0220)
-- [[`c309bdb373`](https://github.com/postlight/mercury-parser/commit/c309bdb373)] - **feat**: add otrs.com custom parser (#353) (kik0220)
-- [[`71c4d05037`](https://github.com/postlight/mercury-parser/commit/71c4d05037)] - **chore**: Include "src/shims" for webpack builds for web (#302) (Alexsander Akers)
-- [[`a3fe02678c`](https://github.com/postlight/mercury-parser/commit/a3fe02678c)] - **chore**: small CoC typofix (#358) (Frankie Simms)
-- [[`437f50a5c8`](https://github.com/postlight/mercury-parser/commit/437f50a5c8)] - **fix**: Initialize Content-Type as empty string if not present (#359) (John Holdun)
-- [[`da9a836eab`](https://github.com/postlight/mercury-parser/commit/da9a836eab)] - **chore**: remove unneeded import (#357) (Frankie Simms)
-- [[`bafa764000`](https://github.com/postlight/mercury-parser/commit/bafa764000)] - **chore**: set up ciftr for failed test reports (#343) (Frankie Simms)
-- [[`262dda94b3`](https://github.com/postlight/mercury-parser/commit/262dda94b3)] - **fix**: explicity reject non-200 status codes (#342) (Toufic Mouallem)
-- [[`b6c82f2b16`](https://github.com/postlight/mercury-parser/commit/b6c82f2b16)] - **docs**: fix extend typo in README (#340) (Drew Bell)
-- [[`144a797564`](https://github.com/postlight/mercury-parser/commit/144a797564)] - **feat**: Support passing custom headers in requests (#337) (Toufic Mouallem)
-- [[`3ed778b53e`](https://github.com/postlight/mercury-parser/commit/3ed778b53e)] - **fix**: Adapt CNBC extractor to article redesign (#336) (Toufic Mouallem)
-- [[`da9606a4cb`](https://github.com/postlight/mercury-parser/commit/da9606a4cb)] - **docs**: Add parsing custom HTML to README.md (#326) (Toufic Mouallem)
-- [[`b3e2a0ffd1`](https://github.com/postlight/mercury-parser/commit/b3e2a0ffd1)] - **feat**: extract custom types with extend option (#313) (Drew Bell)
-- [[`136d6df798`](https://github.com/postlight/mercury-parser/commit/136d6df798)] - **feat**: Return specific errors on failed parse attempts (Toufic Mouallem)
-- [[`a250f403f5`](https://github.com/postlight/mercury-parser/commit/a250f403f5)] - **fix**: Preserve whitespace in certain HTML elements (#333) (Toufic Mouallem)
-- [[`2a3ade706d`](https://github.com/postlight/mercury-parser/commit/2a3ade706d)] - **fix**: run parser preview (Adam Pash)
-- [[`a7e4c67d1d`](https://github.com/postlight/mercury-parser/commit/a7e4c67d1d)] - **feat**: Extract content from GitHub repos. (#306) (Ben Ubois)
-- [[`6e66887048`](https://github.com/postlight/mercury-parser/commit/6e66887048)] - **docs**: add content formats to README.md (#318) (Matthew Watkins)
-- [[`0940971069`](https://github.com/postlight/mercury-parser/commit/0940971069)] - **fix**: better handling for responsive images (#312) (Toufic Mouallem)
-- [[`785a22245f`](https://github.com/postlight/mercury-parser/commit/785a22245f)] - **feat**: switch from forked request to postman-request (#319) (Drew Bell)
-- [[`7844129fda`](https://github.com/postlight/mercury-parser/commit/7844129fda)] - **feat**: Add custom parser for Reddit (#307) (Toufic Mouallem)
-- [[`13581cd899`](https://github.com/postlight/mercury-parser/commit/13581cd899)] - **feat**: upgrade watchify to remove vulnerable hoek dep (#320) (Drew Bell)
-- [[`91fb0dfb46`](https://github.com/postlight/mercury-parser/commit/91fb0dfb46)] - **fix**: update parse signature in tests (#315) (Drew Bell)
-- [[`ffb25f34d7`](https://github.com/postlight/mercury-parser/commit/ffb25f34d7)] - **docs**: add usage gif (#308) (Adam Pash)
-- [[`9714cb70c5`](https://github.com/postlight/mercury-parser/commit/9714cb70c5)] - **feat**: Use Deadspin parser for all Kinja websites (#304) (Toufic Mouallem)
-- [[`83d1c2401b`](https://github.com/postlight/mercury-parser/commit/83d1c2401b)] - **feat**: add custom extractor for blisterreview.com (#299) (Jordan Hotmann)
-- [[`d9a1e7b22b`](https://github.com/postlight/mercury-parser/commit/d9a1e7b22b)] - **feat**: add news.mynavi.jp custom parser (#287) (kik0220)
-- [[`44a7ec791d`](https://github.com/postlight/mercury-parser/commit/44a7ec791d)] - **docs**: typofix (#300) (Olli Sulopuisto)
-- [[`0a15a37f04`](https://github.com/postlight/mercury-parser/commit/0a15a37f04)] - **fix**: ci artifact paths (#301) (Adam Pash)
-- [[`9698d9a0c4`](https://github.com/postlight/mercury-parser/commit/9698d9a0c4)] - **dx**: comment on custom parser pr fix (#278) (Adam Pash)
-- [[`ed14203e97`](https://github.com/postlight/mercury-parser/commit/ed14203e97)] - **fix**: return early if creating the resource failed. (#285) (Ben Ubois)
-- [[`52dfdda553`](https://github.com/postlight/mercury-parser/commit/52dfdda553)] - **deps**: Update mocha to the latest version 🚀 (#282) (greenkeeper[bot])
-- [[`b044cfa958`](https://github.com/postlight/mercury-parser/commit/b044cfa958)] - **release**: 2.0.0 (#275) (Adam Pash)
-
-### 2.0.0 (Feb 13, 2019)
-
-##### Commits
-
-- [[`2afd8c9fa8`](https://github.com/postlight/mercury-parser/commit/2afd8c9fa8)] - **fix**: jquery doesn't like the case insensitive selector (#274) (Adam Pash)
-- [[`9bf88b0ba3`](https://github.com/postlight/mercury-parser/commit/9bf88b0ba3)] - **chore**: refactor format output adjustments (#272) (Adam Pash)
-- [[`867623ab33`](https://github.com/postlight/mercury-parser/commit/867623ab33)] - **chore**: add files to package.json (#269) (David Brownman)
-- [[`ab56ce0de3`](https://github.com/postlight/mercury-parser/commit/ab56ce0de3)] - **fix**: custom parser generator (#271) (Adam Pash)
-- [[`0e27448866`](https://github.com/postlight/mercury-parser/commit/0e27448866)] - **feat**: Various Character Encoding Improvements (#270) (Ben Ubois)
-- [[`b3fa18b6d9`](https://github.com/postlight/mercury-parser/commit/b3fa18b6d9)] - **docs**: delete extra semicolon (#266) (Madison Kanna)
-- [[`e033835c72`](https://github.com/postlight/mercury-parser/commit/e033835c72)] - **fix**: parse signature in cli (#259) (Adam Pash)
-- [[`32748ad4c5`](https://github.com/postlight/mercury-parser/commit/32748ad4c5)] - **dx**: add .prettierignore (#258) (Adam Pash)
-- [[`2d0f10a888`](https://github.com/postlight/mercury-parser/commit/2d0f10a888)] - **dx**: add .prettierignore (#257) (Adam Pash)
-- [[`9b0664bc91`](https://github.com/postlight/mercury-parser/commit/9b0664bc91)] - **feat**: add content format output options (#256) (Adam Pash)
-- [[`a57f29eec3`](https://github.com/postlight/mercury-parser/commit/a57f29eec3)] - **release**: 1.1.1 (#254) (Adam Pash)
-
-### 1.1.1 (Feb 7, 2019)
-
-##### Commits
-
-- [[`b15948f3f4`](https://github.com/postlight/mercury-parser/commit/b15948f3f4)] - **chore**: remove all-contributors-cli deps and script since no longer used (#253) (George Haddad)
-- [[`02476f4336`](https://github.com/postlight/mercury-parser/commit/02476f4336)] - **docs**: add instructions for cli to README (#251) (Adam Pash)
-- [[`b77a236dbe`](https://github.com/postlight/mercury-parser/commit/b77a236dbe)] - **feat**: handle cli errors/timeout (#250) (Adam Pash)
-- [[`44edcda53f`](https://github.com/postlight/mercury-parser/commit/44edcda53f)] - **docs**: added gitter badge (#249) (Keith Mancuso)
-- [[`cfd9b59345`](https://github.com/postlight/mercury-parser/commit/cfd9b59345)] - **docs**: add custom parsers to README (Paul Ford)
-- [[`d0726a2d32`](https://github.com/postlight/mercury-parser/commit/d0726a2d32)] - **chor**: remove appveyor yml and badge (#247) (Adam Pash)
-- [[`03c7040065`](https://github.com/postlight/mercury-parser/commit/03c7040065)] - **fix**: ci config (#246) (Adam Pash)
-
-### 1.1.0 (Feb 5, 2019)
-
-##### Commits
-
-- [[`6844975c94`](https://github.com/postlight/mercury-parser/commit/6844975c94)] - **feat**: add mercury-parser cli (#244) (Adam Pash)
-- [[`7bdbbc8ed8`](https://github.com/postlight/mercury-parser/commit/7bdbbc8ed8)] - **deps**: update dependencies to enable Greenkeeper 🌴 (#243) (greenkeeper[bot])
-- [[`e38aff9c17`](https://github.com/postlight/mercury-parser/commit/e38aff9c17)] - **docs**: add npm install instructions (#240) (Adam Pash)
-- [[`dc3dff6584`](https://github.com/postlight/mercury-parser/commit/dc3dff6584)] - **docs**: add hero to README (#239) (Gina Trapani)
-- [[`15f7fa1e27`](https://github.com/postlight/mercury-parser/commit/15f7fa1e27)] - a more explicit .prettierrc (Adam Pash)
-- [[`c6f42c1278`](https://github.com/postlight/mercury-parser/commit/c6f42c1278)] - **docs**: cleanup and update docs (#238) (Adam Pash)
-- [[`92de5ce4ed`](https://github.com/postlight/mercury-parser/commit/92de5ce4ed)] - **docs**: remove contributors (github already has this covered) (#237) (Adam Pash)
-- [[`2845a1bb7e`](https://github.com/postlight/mercury-parser/commit/2845a1bb7e)] - **docs**: add gitter room text and link (#235) (George Haddad)
-- [[`380196b709`](https://github.com/postlight/mercury-parser/commit/380196b709)] - **docs**: change text to include AMP and Reader (#236) (George Haddad)
-- [[`33bf5882b9`](https://github.com/postlight/mercury-parser/commit/33bf5882b9)] - **docs**: add mit license badge (#234) (George Haddad)
-- [[`5c0325f5a7`](https://github.com/postlight/mercury-parser/commit/5c0325f5a7)] - **feat**: hook up ci to publish to npm (#226) (George Haddad)
-- [[`663cc45bf4`](https://github.com/postlight/mercury-parser/commit/663cc45bf4)] - fresh run of prettier; remove NOTES.md (#233) (Adam Pash)
-- [[`244d17ddd3`](https://github.com/postlight/mercury-parser/commit/244d17ddd3)] - **fix**: proxy browser in build tests (#232) (Adam Pash)
-- [[`0668f5d75b`](https://github.com/postlight/mercury-parser/commit/0668f5d75b)] - **docs**: add instructions for browser usage to parse current page (#231) (Toufic Mouallem)
-- [[`4ab50133f4`](https://github.com/postlight/mercury-parser/commit/4ab50133f4)] - **chore**: update node rollup config (#229) (Jad Termsani)
-- [[`1ccd14e1e9`](https://github.com/postlight/mercury-parser/commit/1ccd14e1e9)] - **feat**: add fortinet custom parser (#188) (Wajeeh Zantout)
-- [[`9b36003b62`](https://github.com/postlight/mercury-parser/commit/9b36003b62)] - **feat**: add fastcompany custom parser (#191) (Wajeeh Zantout)
-- [[`199fe70b03`](https://github.com/postlight/mercury-parser/commit/199fe70b03)] - Docs contributors (#227) (Ralph Jbeily)
-- [[`9756e6ee67`](https://github.com/postlight/mercury-parser/commit/9756e6ee67)] - **docs**: update mercury parser installation (#228) (Ralph Jbeily)
-- [[`1c7ae48de0`](https://github.com/postlight/mercury-parser/commit/1c7ae48de0)] - **dx**: include test results in comment (#230) (Adam Pash)
-
-### 1.0.13 (Oct 11, 2018)
-
-##### Commits
-
-- [[`0c15e9aad3`](https://github.com/Postlight/mercury-parser/commit/0c15e9aad3)] - **chore**: update circle config.yml to 2.0 (#182) (Adam Pash)
-- [[`5663660f76`](https://github.com/Postlight/mercury-parser/commit/5663660f76)] - **fix**: nytimes custom parser title selector (#181) (Adam Pash)
-- [[`7fcd9b62eb`](https://github.com/Postlight/mercury-parser/commit/7fcd9b62eb)] - **release**: 1.0.12 (#173) (Adam Pash)
-
-### 1.0.12 (Apr 10, 2017)
-
-##### Commits
-
-- [[`5fcea1c5c3`](https://github.com/postlight/mercury-parser/commit/5fcea1c5c3)] - **fix**: PARSING_NODE undefined (#172) (Jeremy Mack)
-- [[`a51cc81c27`](https://github.com/postlight/mercury-parser/commit/a51cc81c27)] - **release**: 1.0.11 (#171) (Adam Pash)
-
-### 1.0.11 (Apr 10, 2017)
-
-##### Commits
-
-- [[`e92e798880`](https://github.com/postlight/mercury-parser/commit/e92e798880)] - **fix**: viewport tags leaking to parent page (#170) (Jeremy Mack)
-- [[`86d6bd1dc1`](https://github.com/postlight/mercury-parser/commit/86d6bd1dc1)] - **release**: 1.0.10 (#169) (Adam Pash)
-
-### 1.0.10 (Mar 24, 2017)
-
-##### Commits
-
-- [[`b8aa87c777`](https://github.com/postlight/mercury-parser/commit/b8aa87c777)] - **feat**: improve wh parser (#168) (Adam Pash)
-- [[`e56e8e24cd`](https://github.com/postlight/mercury-parser/commit/e56e8e24cd)] - **release**: 1.0.9 (#167) (Adam Pash)
-
-### 1.0.9 (Mar 23, 2017)
-
-##### Commits
-
-- [[`61f0f4e1af`](https://github.com/postlight/mercury-parser/commit/61f0f4e1af)] - **fix**: kept elements being removed (#166) (Adam Pash)
-- [[`5741910fdc`](https://github.com/postlight/mercury-parser/commit/5741910fdc)] - **docs**: update changelog (#165) (Adam Pash)
-- [[`321c087be6`](https://github.com/postlight/mercury-parser/commit/321c087be6)] - **release**: 1.0.8 (#164) (Adam Pash)
-
-### 1.0.8 (Mar 22, 2017)
-
-##### Commits
-
-- [[`453419de72`](https://github.com/postlight/mercury-parser/commit/453419de72)] - **feat**: improve wh.gov parser (#163) (Adam Pash)
-- [[`e267d57d78`](https://github.com/postlight/mercury-parser/commit/e267d57d78)] - **release**: 1.0.7 (#160) (Adam Pash)
-
-### 1.0.7 (Mar 15, 2017)
-
-##### Commits
-
-- [[`f13bb721f6`](https://github.com/postlight/mercury-parser/commit/f13bb721f6)] - **feat**: prospect magazine parser (#147) (Janet)
-- [[`1b28713cf5`](https://github.com/postlight/mercury-parser/commit/1b28713cf5)] - **feat**: fool.com parser (#158) (Kevin Ngao)
-- [[`c18959779d`](https://github.com/postlight/mercury-parser/commit/c18959779d)] - **feat**: forward.com parser (#144) (Janet)
-- [[`50e548bac2`](https://github.com/postlight/mercury-parser/commit/50e548bac2)] - **feat**: qdaily parser (#146) (Janet)
-- [[`51a4d1d12f`](https://github.com/postlight/mercury-parser/commit/51a4d1d12f)] - **feat**: newrepublic parser shows image on page (#159) (Silas Burton)
-- [[`11382ce651`](https://github.com/postlight/mercury-parser/commit/11382ce651)] - **feat**: Slate extractor (#153) (Silas Burton)
-- [[`5acaa6ab56`](https://github.com/postlight/mercury-parser/commit/5acaa6ab56)] - **feat**: ici.radio-canada.ca extractor (#156) (Silas Burton)
-- [[`4509b341e6`](https://github.com/postlight/mercury-parser/commit/4509b341e6)] - **feat**: better cleanup of atlantic articles (#157) (Silas Burton)
-- [[`f2e3f055c2`](https://github.com/postlight/mercury-parser/commit/f2e3f055c2)] - **fix**: an issue with encoding (#154) (Kevin Ngao)
-- [[`9b371e51ac`](https://github.com/postlight/mercury-parser/commit/9b371e51ac)] - **feat**: gothamist extractor (#151) (Silas Burton)
-- [[`afbef9bc39`](https://github.com/postlight/mercury-parser/commit/afbef9bc39)] - **fix**: Encoding on Body (#143) (Kevin Ngao)
-- [[`9d4c883d51`](https://github.com/postlight/mercury-parser/commit/9d4c883d51)] - **release**: 1.0.6 (#142) (Adam Pash)
-
-### 1.0.6 (Feb 9, 2017)
-
-##### Commits
-
-- [[`93d2baf5cf`](https://github.com/postlight/mercury-parser/commit/93d2baf5cf)] - **feat**: news.natgeo parser (#88) (Janet)
-- [[`2279c2d486`](https://github.com/postlight/mercury-parser/commit/2279c2d486)] - **feat**: natgeo parser (#89) (Janet)
-- [[`08b5bb7ff1`](https://github.com/postlight/mercury-parser/commit/08b5bb7ff1)] - **feat**: allow parser to define custom date formats (#141) (Adam Pash)
-- [[`11f466ccb3`](https://github.com/postlight/mercury-parser/commit/11f466ccb3)] - **feat**: latimes parser (#92) (Janet)
-- [[`26a8e4f75a`](https://github.com/postlight/mercury-parser/commit/26a8e4f75a)] - **feat**: macrumors parser (#120) (Kevin Ngao)
-- [[`b4fec6af98`](https://github.com/postlight/mercury-parser/commit/b4fec6af98)] - **feat**: androidcentral parser (#119) (Kevin Ngao)
-- [[`beb0b89a4f`](https://github.com/postlight/mercury-parser/commit/beb0b89a4f)] - **feat**: pagesix parser (#97) (Janet)
-- [[`f2160eb5b6`](https://github.com/postlight/mercury-parser/commit/f2160eb5b6)] - **feat**: si parser (#118) (Janet)
-- [[`2af0f6179a`](https://github.com/postlight/mercury-parser/commit/2af0f6179a)] - **feat**: rawstory parser (#109) (Janet)
-- [[`765032452d`](https://github.com/postlight/mercury-parser/commit/765032452d)] - **feat**: thefederalistpapers parser (#101) (Janet)
-- [[`fb5eb2e104`](https://github.com/postlight/mercury-parser/commit/fb5eb2e104)] - **feat**: cnet parser (#104) (Janet)
-- [[`3c5fa28f10`](https://github.com/postlight/mercury-parser/commit/3c5fa28f10)] - **feat**: cbs sports parser (#98) (Janet)
-- [[`3cf2d0d3ef`](https://github.com/postlight/mercury-parser/commit/3cf2d0d3ef)] - **feat**: msnbc parser (#100) (Janet)
-- [[`f9ab9eb885`](https://github.com/postlight/mercury-parser/commit/f9ab9eb885)] - **feat**: howtogeek extractor (#108) (Janet)
-- [[`258acdfd02`](https://github.com/postlight/mercury-parser/commit/258acdfd02)] - **feat**: opposing views parser (#103) (Janet)
-- [[`b63dd33579`](https://github.com/postlight/mercury-parser/commit/b63dd33579)] - **feat**: today parser (#106) (Janet)
-- [[`c94eee7f92`](https://github.com/postlight/mercury-parser/commit/c94eee7f92)] - **feat**: cinema blend parser (#105) (Janet)
-- [[`64e3c205e8`](https://github.com/postlight/mercury-parser/commit/64e3c205e8)] - **feat**: the political insider parser (#99) (Janet)
-- [[`7b52d3d1fc`](https://github.com/postlight/mercury-parser/commit/7b52d3d1fc)] - **feat**: al.com parser (#110) (Janet)
-- [[`15df58496f`](https://github.com/postlight/mercury-parser/commit/15df58496f)] - **feat**: westernjournalism parser (#113) (Janet)
-- [[`ae12a1d701`](https://github.com/postlight/mercury-parser/commit/ae12a1d701)] - **feat**: mental floss parser (#94) (Janet)
-- [[`bf29291395`](https://github.com/postlight/mercury-parser/commit/bf29291395)] - **feat**: thepennyhoarder parser (#112) (Janet)
-- [[`fadd198d04`](https://github.com/postlight/mercury-parser/commit/fadd198d04)] - **feat**: abcnewsgo parser (#90) (Janet)
-- [[`25d9642ff9`](https://github.com/postlight/mercury-parser/commit/25d9642ff9)] - **feat**: support cleaning and transforms for all fields (#138) (Adam Pash)
-- [[`1054d854dd`](https://github.com/postlight/mercury-parser/commit/1054d854dd)] - **feat**: america now parser (#114) (Janet)
-- [[`4c48acba59`](https://github.com/postlight/mercury-parser/commit/4c48acba59)] - **feat**: fusion parser (Janet)
-- [[`d292d8ef3a`](https://github.com/postlight/mercury-parser/commit/d292d8ef3a)] - **feat**: ny daily news parser (#87) (Janet)
-- [[`a53587acef`](https://github.com/postlight/mercury-parser/commit/a53587acef)] - **feat**: adds www.polygon.com to list of www.theverge.com supportedDomains (dviramontes)
-- [[`385b9d76a3`](https://github.com/postlight/mercury-parser/commit/385b9d76a3)] - **feat**: sciencefly extractor (#116) (Janet)
-- [[`601b0fac16`](https://github.com/postlight/mercury-parser/commit/601b0fac16)] - **release**: 1.0.5 (#136) (Adam Pash)
-
-### 1.0.5 (Feb 1, 2017)
-
-##### Commits
-
-- [[`6bd6278a07`](https://github.com/postlight/mercury-parser/commit/6bd6278a07)] - **feat**: custom parser for wh blog (#130) (Adam Pash)
-- [[`aa682d71e8`](https://github.com/postlight/mercury-parser/commit/aa682d71e8)] - **fix**: medium bug (#129) (Adam Pash)
-- [[`4e049de61a`](https://github.com/postlight/mercury-parser/commit/4e049de61a)] - **fix**: i put a bad comment in .gitattributes (#125) (Adam Pash)
-- [[`8aa215c4c2`](https://github.com/postlight/mercury-parser/commit/8aa215c4c2)] - **chore**: marking html fixtures as "vendored" (#124) (Adam Pash)
-- [[`31eb4f9222`](https://github.com/postlight/mercury-parser/commit/31eb4f9222)] - **feat**: LinkedIn parser (#123) (Adam Pash)
-- [[`dbc706410b`](https://github.com/postlight/mercury-parser/commit/dbc706410b)] - **release**: 1.0.4 (#122) (Adam Pash)
-
-### 1.0.4 (Jan 26, 2017)
-
-##### Commits
-
-- [[`8662474d8a`](https://github.com/postlight/mercury-parser/commit/8662474d8a)] - **feat**: changed user agent to latest chrome (#121) (Adam Pash)
-- [[`7709d69379`](https://github.com/postlight/mercury-parser/commit/7709d69379)] - **feat**: npr parser (#86) (Janet)
-- [[`8a82f2c0ab`](https://github.com/postlight/mercury-parser/commit/8a82f2c0ab)] - **feat**: recode parser (#85) (Janet)
-- [[`ad29acd7b7`](https://github.com/postlight/mercury-parser/commit/ad29acd7b7)] - **feat**: fortune parser (#84) (Janet)
-- [[`c133ddf614`](https://github.com/postlight/mercury-parser/commit/c133ddf614)] - **feat**: qz parser (#81) (Janet)
-- [[`84312b6ef1`](https://github.com/postlight/mercury-parser/commit/84312b6ef1)] - **feat**: dmagazine parser (#80) (Janet)
-- [[`e035f36361`](https://github.com/postlight/mercury-parser/commit/e035f36361)] - **feat**: reuters parser (#78) (Janet)
-- [[`dec49ab073`](https://github.com/postlight/mercury-parser/commit/dec49ab073)] - **feat**: mashable parser (#76) (Janet)
-- [[`cddc1afb69`](https://github.com/postlight/mercury-parser/commit/cddc1afb69)] - **feat**: chicago tribune parser (#75) (Janet)
-- [[`aff651c2d8`](https://github.com/postlight/mercury-parser/commit/aff651c2d8)] - **feat**: hellogiggles parser (#107) (Janet)
-- [[`11ad7b9a92`](https://github.com/postlight/mercury-parser/commit/11ad7b9a92)] - **feat**: thought catalog parser (#102) (Janet)
-- [[`aa43a6091c`](https://github.com/postlight/mercury-parser/commit/aa43a6091c)] - **feat**: cnbc parser (#96) (Janet)
-- [[`cd245f7980`](https://github.com/postlight/mercury-parser/commit/cd245f7980)] - **feat**: popsugar parser (#93) (Janet)
-- [[`a8ab7135e1`](https://github.com/postlight/mercury-parser/commit/a8ab7135e1)] - **feat**: observer parser (#91) (Janet)
-- [[`3bee7224cb`](https://github.com/postlight/mercury-parser/commit/3bee7224cb)] - **feat**: nbc news parser (#74) (Janet)
-- [[`88242dd233`](https://github.com/postlight/mercury-parser/commit/88242dd233)] - **feat**: nj.com parser (#73) (Janet)
-- [[`1ac5670a54`](https://github.com/postlight/mercury-parser/commit/1ac5670a54)] - **feat**: inquisitor parser (#72) (Janet)
-- [[`9e5b91ed8b`](https://github.com/postlight/mercury-parser/commit/9e5b91ed8b)] - **feat**: refinery29 parser (#71) (Janet)
-- [[`b78c58c43a`](https://github.com/postlight/mercury-parser/commit/b78c58c43a)] - **feat**: miami herald parser (#69) (Janet)
-- [[`aedf83edc6`](https://github.com/postlight/mercury-parser/commit/aedf83edc6)] - **feat**: eonline parser (#68) (Janet)
-- [[`a20da5eb31`](https://github.com/postlight/mercury-parser/commit/a20da5eb31)] - **feat**: uproxx extractor (#66) (Janet)
-- [[`87c42b6358`](https://github.com/postlight/mercury-parser/commit/87c42b6358)] - **feat**: 247sports.com extractor (#64) (Janet)
-- [[`22e6c884fb`](https://github.com/postlight/mercury-parser/commit/22e6c884fb)] - **feat**: rolling stone extractor (#65) (Janet)
-- [[`6337231697`](https://github.com/postlight/mercury-parser/commit/6337231697)] - **feat**: usmagazine extractor (#63) (Janet)
-- [[`c06b19efe7`](https://github.com/postlight/mercury-parser/commit/c06b19efe7)] - **feat**: people extractor (#70) (Janet)
-- [[`3cf2bb78c4`](https://github.com/postlight/mercury-parser/commit/3cf2bb78c4)] - **feat**: vox custom parser (#67) (Janet)
-- [[`a710efd2d5`](https://github.com/postlight/mercury-parser/commit/a710efd2d5)] - **release**: 1.0.3 (#62) (Adam Pash)
-
-### 1.0.3 (Dec 9, 2016)
-
-##### Commits
-
-- [[`861c5f0dcb`](https://github.com/postlight/mercury-parser/commit/861c5f0dcb)] - **feat**: bustle extractor (#60) (Janet)
-- [[`06397a4360`](https://github.com/postlight/mercury-parser/commit/06397a4360)] - **feat**: browser-friendly selector for medium (#61) (Adam Pash)
-- [[`3297ab079d`](https://github.com/postlight/mercury-parser/commit/3297ab079d)] - **feat**: bloomberg extractor (#59) (Adam Pash)
-- [[`e55e9da534`](https://github.com/postlight/mercury-parser/commit/e55e9da534)] - **feat**: sbnation extractor (#55) (Janet)
-- [[`8070e4790b`](https://github.com/postlight/mercury-parser/commit/8070e4790b)] - **test**: streamlined guardian tests w/new single-extraction (#58) (Adam Pash)
-- [[`bdb751fb53`](https://github.com/postlight/mercury-parser/commit/bdb751fb53)] - **feat**: more cleaning for wired (#56) (Adam Pash)
-- [[`e7e41bd242`](https://github.com/postlight/mercury-parser/commit/e7e41bd242)] - **feat**: the guardian custom extractor (#41) (Janet)
-- [[`332f85928f`](https://github.com/postlight/mercury-parser/commit/332f85928f)] - **release**: 1.0.2 (#54) (Adam Pash)
-
-### 1.0.2 (Dec 6, 2016)
-
-##### Commits
-
-- [[`81aa89f2c1`](https://github.com/postlight/mercury-parser/commit/81aa89f2c1)] - **feat**: youtube custom extractor (#53) (Adam Pash)
-- [[`2fb47640f2`](https://github.com/postlight/mercury-parser/commit/2fb47640f2)] - **feat**: detect platforms (#52) (Adam Pash)
-- [[`64c0fad2fd`](https://github.com/postlight/mercury-parser/commit/64c0fad2fd)] - **fix**: preserve whitespace (#51) (Adam Pash)
-- [[`15656cb3e1`](https://github.com/postlight/mercury-parser/commit/15656cb3e1)] - **Refactor**: running tests more efficiently (#49) (Adam Pash)
-- [[`edcb7295d1`](https://github.com/postlight/mercury-parser/commit/edcb7295d1)] - **release**: 1.0.1 (#48) (Adam Pash)
-
-### 1.0.1 (Dec 2, 2016)
-
-##### Commits
-
-- [[`19ed035382`](https://github.com/postlight/mercury-parser/commit/19ed035382)] - **release**: 1.0.1 (Adam Pash)
-- [[`f9902cfa05`](https://github.com/postlight/mercury-parser/commit/f9902cfa05)] - **Fix**: extension bugs (#47) (Adam Pash)
-- [[`16860f1d85`](https://github.com/postlight/mercury-parser/commit/16860f1d85)] - **feat**: improved nyt parser (#46) (Adam Pash)
-- [[`d0453efbf8`](https://github.com/postlight/mercury-parser/commit/d0453efbf8)] - **feat**: improvements for nyer magazine articles (#45) (Adam Pash)
-- [[`00f8965c1f`](https://github.com/postlight/mercury-parser/commit/00f8965c1f)] - **fix**: cleaning up deks (#44) (Adam Pash)
-- [[`b415d1d37c`](https://github.com/postlight/mercury-parser/commit/b415d1d37c)] - **feat**: aol custom extractor (#42) (Janet)
-- [[`4cc3b68b5e`](https://github.com/postlight/mercury-parser/commit/4cc3b68b5e)] - **feat**: remove footer links (#40) (Matt)
-- [[`e9a36d6ebd`](https://github.com/postlight/mercury-parser/commit/e9a36d6ebd)] - **release**: 1.0.0 so we can start doing proper releaes (#39) (Adam Pash)
+## v2.3.3
+
+- bump version v2.3.2 -> v2.3.3 by @jocmp
+- fix: Retain h2 for channelnewsasia.com by @jocmp in [#47](https://github.com/jocmp/mercury-parser/pull/47)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.2...v2.3.3
+
+## v2.3.2
+
+- bump version v2.3.1 -> v2.3.2 by @jocmp
+- Fix android authority parser by @jocmp in [#46](https://github.com/jocmp/mercury-parser/pull/46)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.1...v2.3.2
+
+## v2.3.1
+
+- bump version v2.3.0 -> v2.3.1 by @jocmp
+- feat: Add custom parser - wccftech.com by @jocmp in [#45](https://github.com/jocmp/mercury-parser/pull/45)
+- feat: Add custom parser - channelnewsasia.com by @jocmp in [#44](https://github.com/jocmp/mercury-parser/pull/44)
+- chore: Fix references to Postlight Parser in README by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.0...v2.3.1
+
+## v2.3.0
+
+- bump version v2.2.10 -> v2.3.0 by @jocmp
+- Fix changelog by @jocmp
+- chore: Fix bumpver config by @jocmp
+- chore: Update changelog by @jocmp
+- fix: androidauthority.com - Retain heading tags by @jocmp in [#41](https://github.com/jocmp/mercury-parser/pull/41)
+- fix: Update versants.com to parse figures by @jocmp in [#42](https://github.com/jocmp/mercury-parser/pull/42)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.10...v2.3.0
+
+## v2.2.10
+
+- bump version v2.2.9 -> v2.2.10 by @jocmp
+- feat: Add custom parser for mobilesyrup.com by @jocmp in [#39](https://github.com/jocmp/mercury-parser/pull/39)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.9...v2.2.10
+
+## v2.2.9
+
+- bump version v2.2.8 -> v2.2.9 by @jocmp
+- [skip ci] Update changelog by @jocmp
+- feat: Add custom parser - spiegel.de by @jocmp in [#38](https://github.com/jocmp/mercury-parser/pull/38)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.8...v2.2.9
+
+## v2.2.8
+
+- bump version v2.2.7 -> v2.2.8 by @jocmp
+- [skip ci] Update changelog by @jocmp
+- feat: Add custom parser - hardwarezone.com.sg by @jocmp in [#37](https://github.com/jocmp/mercury-parser/pull/37)
+- [skip ci] Update changelog by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.7...v2.2.8
+
+## v2.2.7
+
+- bump version v2.2.6 -> v2.2.7 by @jocmp
+- fix: Hide author thumbnail in techcrunch feed by @jocmp
+- feat: Add custom parser - techcrunch.com by @jocmp in [#34](https://github.com/jocmp/mercury-parser/pull/34)
+- Allow any article in preview by @jocmp
+- Update changelog by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.6...v2.2.7
+
+## v2.2.6
+
+- bump version v2.2.5 -> v2.2.6 by @jocmp
+- feat: Update phoronix.com custom extractor by @jocmp in [#29](https://github.com/jocmp/mercury-parser/pull/29)
+- chore(deps-dev): Bump brfs from 2.0.1 to 2.0.2 by @dependabot[bot] in [#26](https://github.com/jocmp/mercury-parser/pull/26)
+- chore(deps): Bump iconv-lite from 0.5.0 to 0.6.3 by @dependabot[bot] in [#24](https://github.com/jocmp/mercury-parser/pull/24)
+- chore(deps-dev): Bump watchify from 3.11.1 to 4.0.0 by @dependabot[bot] in [#23](https://github.com/jocmp/mercury-parser/pull/23)
+- chore: Update changelog by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.5...v2.2.6
+
+## v2.2.5
+
+- bump version v2.2.4 -> v2.2.5 by @jocmp
+- chore: Update bump-version.yml by @jocmp
+- feat: support headers in Android Authority parser by @jocmp in [#28](https://github.com/jocmp/mercury-parser/pull/28)
+- feat: android authority extractor by @jocmp in [#27](https://github.com/jocmp/mercury-parser/pull/27)
+- Prefix version in bumpver config by @jocmp
+- Update README.md by @jocmp
+- Update publish step by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.4...v2.2.5
+
+## v2.2.4
+
+- bump version 2.2.3 -> 2.2.4 by @jocmp
+- Revert "bump version 2.2.3 -> 2.2.4" by @jocmp
+- Use yarn in publish by @jocmp
+- bump version 2.2.3 -> 2.2.4 by @jocmp
+- Revert "bump version 2.2.3 -> 2.2.4" by @jocmp
+- Publish on tag by @jocmp
+- bump version 2.2.3 -> 2.2.4 by @jocmp
+- Update release workflow by @jocmp
+- Split out release step by @jocmp
+- Use release ssh key by @jocmp
+- Commit on bumpver by @jocmp
+- Simplify build step by @jocmp
+- Run yarn install in create-release by @jocmp
+- Fix workflow paths by @jocmp
+- Create FUNDING.yml by @jocmp
+- Add release actions by @jocmp in [#22](https://github.com/jocmp/mercury-parser/pull/22)
+- chore(deps): Bump postman-request from 2.88.1-postman.31 to 2.88.1-postman.40 by @dependabot[bot] in [#20](https://github.com/jocmp/mercury-parser/pull/20)
+- chore(deps-dev): Bump eslint-config-prettier from 6.11.0 to 6.15.0 by @dependabot[bot] in [#19](https://github.com/jocmp/mercury-parser/pull/19)
+- chore(deps-dev): Bump remark-preset-lint-recommended from 3.0.2 to 7.0.0 by @dependabot[bot] in [#17](https://github.com/jocmp/mercury-parser/pull/17)
+- chore(deps-dev): Bump karma-chrome-launcher from 3.1.0 to 3.2.0 by @dependabot[bot] in [#21](https://github.com/jocmp/mercury-parser/pull/21)
+- Add custom parser - 1pezeshk.com by @jocmp in [#15](https://github.com/jocmp/mercury-parser/pull/15)
+- Update dist by @jocmp
+- Add custom parser - www.versants.com by @jocmp in [#13](https://github.com/jocmp/mercury-parser/pull/13)
+- Clean up docs by @jocmp
+- chore(deps): Bump moment-timezone from 0.5.37 to 0.5.46 by @dependabot[bot] in [#8](https://github.com/jocmp/mercury-parser/pull/8)
+- chore(deps-dev): Bump rollup-plugin-uglify from 6.0.1 to 6.0.4 by @dependabot[bot] in [#7](https://github.com/jocmp/mercury-parser/pull/7)
+- chore(deps): Bump @postlight/ci-failed-test-reporter from 1.0.22 to 1.0.26 by @dependabot[bot] in [#11](https://github.com/jocmp/mercury-parser/pull/11)
+- chore(deps-dev): Bump rollup-plugin-terser from 6.1.0 to 7.0.2 by @dependabot[bot] in [#12](https://github.com/jocmp/mercury-parser/pull/12)
+- chore(deps-dev): Bump changelog-maker from 2.3.0 to 4.3.1 by @dependabot[bot] in [#10](https://github.com/jocmp/mercury-parser/pull/10)
+- chore(deps-dev): Bump babel-eslint from 10.0.1 to 10.1.0 by @dependabot[bot] in [#5](https://github.com/jocmp/mercury-parser/pull/5)
+- Clean up README, add CI badge by @jocmp
+- Bump deps by @jocmp in [#1](https://github.com/jocmp/mercury-parser/pull/1)
+- fix: select extended types before content by @touchRED
+- fix: update gif to match rebrand by @touchRED
+- feat: update all fixtures and custom parsers to match by @sdoire
+- feat: remove obsolete custom extractors by @sdoire
+- fixed and improved extraction for latest layout of politico.com by @zhemaituk
+- custom parser for www.investmentexecutive.com by @zhemaituk
+- custom parser for cbc.ca by @zhemaituk
+- fix: postlight parser test by @sdoire
+- adjust postlight insights custom selectors by @austinmbrown
+- release: 2.2.3 by @johnholdun
+- fix: handle sec & ms timestamps properly by @austinmbrown
+- maintenance update - october 2022 by @mtashley
+- feat: add postlight.com custom extractor by @sdoire
+- release: 2.2.2 by @johnholdun
+- Update README.md by @johnholdun
+- Change Name by @johnholdun
+- Update more dependencies by @johnholdun
+- chore: Inline test fixtures by @johnholdun
+- chore: Update builds by @johnholdun
+- Added custom extractor for www.spektrum.de by @Shepard
+- feat: Add figcaption to list of non-convertible span parents by @johnholdun
+- Add li to the list of non-convertible parents for spans by @Wevah
+- feat: Add a custom extractor for www.ndtv.com. by @jbrayton
+- feat: arstechnica.com extractor by @jbrayton
+- feat: Add a custom extractor for www.engadget.com. by @jbrayton
+- Custom extractor for www.gruene.de by @svenwiegand
+- chore(deps): Bump ws from 5.2.2 to 5.2.3 by @dependabot[bot]
+- chore(deps): Bump moment from 2.29.2 to 2.29.4 by @dependabot[bot]
+- chore(deps): Bump terser from 4.8.0 to 4.8.1 by @dependabot[bot]
+- chore: Update CircleCI config by @johnholdun
+- modifies check-build to differentiate between test env by @jaehanley
+- chore: Update jQuery to 3.5.0 by @johnholdun
+- chore(deps): Bump shell-quote from 1.6.1 to 1.7.3 by @dependabot[bot]
+- Update CHANGELOG.md by @samuelclay
+- support build of es modules by @jimniels
+- Add a new custom extractor for www.abendblatt.de by @mwiedemeyer
+- feat: Add a custom extractor for pastebin.com by @Canejo
+- feat: ma.ttias.be extractor by @jbrayton
+- Feat: update qz.com selectors and tests by @jshakes
+- fix: updating generate-parser dist by @mtashley
+- fix: don't try to re-decode prepared response by @ejucovy
+- chore: update node version in .nvmrc & CONTRIBUTING.md by @PeterDaveHello
+- Bugfix new yorker wired extractors by @sodiumjoe
+- Add --version CLI flag by @pirate
+- chore(deps-dev): bump karma from 3.1.4 to 6.3.16 by @dependabot[bot]
+- chore(deps): bump moment from 2.23.0 to 2.29.2 by @dependabot[bot]
+- feat: Add date formats to two extractors by @johnholdun
+- chore(deps): bump jquery from 3.4.1 to 3.5.0 by @dependabot[bot]
+- chore(deps): bump cached-path-relative from 1.0.2 to 1.1.0 by @dependabot[bot]
+- chore(deps): bump async from 2.6.1 to 2.6.4 by @dependabot[bot]
+- chore(deps): bump tmpl from 1.0.4 to 1.0.5 by @dependabot[bot]
+- chore(deps): bump tar from 4.4.8 to 4.4.19 by @dependabot[bot]
+- chore(deps): bump path-parse from 1.0.5 to 1.0.7 by @dependabot[bot]
+- chore(deps): bump y18n from 3.2.1 to 3.2.2 by @dependabot[bot]
+- chore(deps): bump mixin-deep from 1.3.1 to 1.3.2 by @dependabot[bot]
+- chore(deps): bump browserslist from 4.4.0 to 4.20.3 by @dependabot[bot]
+- chore(deps): bump ajv from 6.7.0 to 6.12.6 by @dependabot[bot]
+- chore(deps): bump pathval from 1.1.0 to 1.1.1 by @dependabot[bot]
+- chore(deps): bump node-fetch from 2.3.0 to 2.6.7 by @dependabot[bot]
+- chore(deps): bump hosted-git-info from 2.1.5 to 2.8.9 by @dependabot[bot]
+- chore(deps): bump ini from 1.3.4 to 1.3.8 by @dependabot[bot]
+- chore(deps): bump handlebars from 4.7.6 to 4.7.7 by @dependabot[bot]
+- chore(deps): bump elliptic from 6.3.2 to 6.5.4 by @dependabot[bot]
+- chore(deps): bump http-proxy from 1.15.2 to 1.18.1 by @dependabot[bot]
+- chore(deps): bump eslint-utils from 1.3.1 to 1.4.3 by @dependabot[bot]
+- chore(deps): bump yargs-parser from 14.0.0 to 15.0.1 by @dependabot[bot]
+- chore(deps): bump static-eval from 2.0.0 to 2.1.0 by @dependabot[bot]
+- release: 2.2.1 by @JadTermsani
+- feat: Ladbible.com extractor by @nitinthewiz
+- feat: Times of India extractor by @nitinthewiz
+- chore(deps): bump lodash from 4.17.2 to 4.17.21 by @dependabot[bot]
+- chore(deps): bump handlebars from 4.1.2 to 4.7.6 by @dependabot[bot]
+- chore: remove greenkeeper configs by @JadTermsani
+- chore: update node version by @JadTermsani
+- feat: update nytimes extractor by @WajeehZantout
+- chore(package): update ora to version 4.0.0 by @greenkeeper[bot]
+- fix(package): update yargs-parser to version 14.0.0 by @greenkeeper[bot]
+- release: 2.2.0 by @mtashley
+- feat: ability to add custom extractors via api by @mtashley
+- Implemented custom extractor epaper.zeit.de by @svenwiegand
+- fix: incorrect parsing on medium.com by @mtashley
+- chore(package): update inquirer to version 7.0.0 by @greenkeeper[bot]
+- chore(package): update karma-chrome-launcher to version 3.0.0 by @greenkeeper[bot]
+- chore(package): update eslint-config-prettier to version 6.1.0 by @greenkeeper[bot]
+- deps: Update wuzzy to fix vulnerability by @malob
+- doc: correct link that points to wrong line by @jfix
+- fix: incorrect parsing on theatlantic.com by @mtashley
+- chore: minifying biorxiv.com fixture by @mtashley
+- Add custom extractor for biorxiv.org by @kennyle3377
+- doc: correct internal page links by @jfix
+- chore(deps): bump lodash.merge from 4.6.1 to 4.6.2 by @dependabot[bot]
+- chore(deps): bump cached-path-relative from 1.0.0 to 1.0.2 by @dependabot[bot]
+- chore(deps): bump merge from 1.2.0 to 1.2.1 by @dependabot[bot]
+- chore(package): update brfs-babel to version 2.0.0 by @greenkeeper[bot]
+- Update moment-timezone to the latest version 🚀 by @greenkeeper[bot]
+- chore(package): update remark-cli to version 7.0.0 by @greenkeeper[bot]
+- deps: update husky to the latest version 🚀 by @greenkeeper[bot]
+- deps: update iconv-lite to the latest version 🚀 by @greenkeeper[bot]
+- tests: remove a duplicate test by @kirillDanshin
+- release: 2.1.1 by @adampash
+- deps: update eslint-config-prettier to version 5.0.0 by @greenkeeper[bot]
+- chore: prevent adding phantomjs-prebuilt as a dependency in CI.
+- fix: support query strings in lazy-loaded srcsets by @toufic-m
+- feat: custom parser for phoronix.com. by @benubois
+- feat: pitchfork extractor by @mgeraci
+- deps: Update moment-timezone to the latest version 🚀 by @greenkeeper[bot]
+- deps: bump handlebars from 4.0.6 to 4.1.2 by @dependabot[bot]
+- chore(deps): bump sshpk from 1.10.1 to 1.16.1 by @dependabot[bot]
+- Custom Extractor for clinicaltrials.gov by @kennyle3377
+- chore: update husky to version 2.3.0 by @toufic-m
+- docs: Add links to README by @ginatrapani
+- chore: update jquery to version 3.4.1 by @toufic-m
+- fix: new yorker extractor by @WajeehZantout
+- feat: add le monde extractor by @WajeehZantout
+- feat: add rbbtoday.com custom parser by @kik0220
+- feat: add japan.zdnet.com custom parser by @kik0220
+- feat: add wired.jp custom parser by @kik0220
+- feat: add techlog.iij.ad.jp custom parser by @kik0220
+- feat: add weekly.ascii.jp custom parser by @kik0220
+- feat: add www.ipa.go.jp custom parser by @kik0220
+- feat: add www.oreilly.co.jp custom parser by @kik0220
+- feat: add sect.iij.ad.jp custom parser by @kik0220
+- feat: add www.lifehacker.jp custom parser by @kik0220
+- feat: add getnews.jp custom parser by @kik0220
+- feat: add www.gizmodo.jp custom parser by @kik0220
+- feat: add deadline.com custom parser by @kik0220
+- feat: add japan.cnet.com custom parser by @kik0220
+- feat: add www.yomiuri.co.jp custom parser by @kik0220
+- fix: skip absolutizing invalid srcsets by @toufic-m
+- fix: add date_published selector in www.sanwa.co.jp extractor by @kik0220
+- fix: add date_published selector in www.elecom.co.jp extractor by @kik0220
+- fix: add date_published selector in www.ossnews.jp extractor by @kik0220
+- fix: add date_published selector in jvndb.jvn.jp extractor by @kik0220
+- feat: add bookwalker.jp custom parser by @kik0220
+- feat: add takagi-hiromitsu.jp custom parser by @kik0220
+- feat: add www.publickey1.jp custom parser by @kik0220
+- feat: add www.itmedia.co.jp custom parser by @kik0220
+- feat: add www.moongift.jp custom parser by @kik0220
+- feat: add www.infoq.com custom parser by @kik0220
+- feat: add phpspot.org custom parser by @kik0220
+- release: 2.1.0 by @adampash
+- fix: skip absolutizing empty hrefs by @toufic-m
+- feat: add www.jnsa.org custom parser by @kik0220
+- feat: custom genius parser. by @adampash
+- feat: add jvndb.jvn.jp custom parser by @kik0220
+- feat: add scan.netsecurity.ne.jp custom parser by @kik0220
+- feat: add www.elecom.co.jp custom parser by @kik0220
+- feat: add www.sanwa.co.jp custom parser by @kik0220
+- feat: add www.asahi.com custom parser by @kik0220
+- feat: add buzzap.jp custom parser by @kik0220
+- feat: add www.ossnews.jp custom parser by @kik0220
+- feat: add otrs.com custom parser by @kik0220
+- Include "src/shims" for webpack builds for web by @a2
+- chore: small CoC typofix by @fdsimms
+- fix: Initialize Content-Type as empty string if not present by @johnholdun
+- chore: remove unneeded import by @fdsimms
+- chore: set up ciftr for failed test reports by @fdsimms
+- fix: explicity reject non-200 status codes by @toufic-m
+- doc: fix extend typo in README by @droob
+- feat: Support passing custom headers in requests by @toufic-m
+- fix: Adapt CNBC extractor to article redesign by @toufic-m
+- docs: Add parsing custom HTML to README.md by @toufic-m
+- feat: extract custom types with extend option by @droob
+- feat: Return specific errors on failed parse attempts by @toufic-m
+- fix: Preserve whitespace in certain HTML elements by @toufic-m
+- fix: run parser preview by @adampash
+- Extract content from GitHub repos. by @benubois
+- docs: add content formats to README.md
+- fix: better handling for responsive images by @toufic-m
+- feat: switch from forked request to postman-request by @droob
+- feat: Add custom parser for Reddit by @toufic-m
+- feat: upgrade watchify to remove vulnerable hoek dep by @droob
+- fix: update parse signature in tests by @droob
+- docs: add usage gif by @adampash
+- feat: Use Deadspin parser for all Kinja websites by @toufic-m
+- feat: add custom extractor for blisterreview.com by @jhotmann
+- feat: add news.mynavi.jp custom parser by @kik0220
+- docs: typofix by @ollisulopuisto
+- fix: ci artifact paths by @adampash
+- dx: comment on custom parser pr fix by @adampash
+- fix: return early if creating the resource failed. by @benubois
+- Update mocha to the latest version 🚀 by @greenkeeper[bot]
+- release: 2.0.0 by @adampash
+- fix: jquery doesn't like the case insensitive selector by @adampash
+- chore: refactor format output adjustments by @adampash
+- chore: add files to package.json by @xavdid
+- fix: custom parser generator by @adampash
+- feat: Various Character Encoding Improvements by @benubois
+- docs: delete extra semicolon by @Madisonkanna
+- fix: parse signature in cli by @adampash
+- dx: add .prettierignore by @adampash
+- dx: add .prettierignore by @adampash
+- feat: add content format output options by @adampash
+- release: 1.1.1 by @adampash
+- chore: remove all-contributors-cli deps and script since no longer used by @george-haddad
+- docs: add instructions for cli to README by @adampash
+- feat: handle cli errors/timeout by @adampash
+- docs: added gitter badge
+- docs: add custom parsers to README by @ftrain
+- chor: remove appveyor yml and badge by @adampash
+- fix: ci config by @adampash
+- release: 1.1.0 by @adampash
+- feat: add mercury-parser cli by @adampash
+- deps: update dependencies to enable Greenkeeper 🌴 by @greenkeeper[bot]
+- docs: add npm install instructions by @adampash
+- docs: add hero to README by @ginatrapani
+- a more explicit .prettierrc by @adampash
+- docs: cleanup and update docs by @adampash
+- docs: remove contributors (github already has this covered) by @adampash
+- docs: add gitter room text and link by @george-haddad
+- docs: change text to include AMP and Reader by @george-haddad
+- docs: add mit license badge by @george-haddad
+- feat: hook up ci to publish to npm by @george-haddad
+- fresh run of prettier; remove NOTES.md by @adampash
+- fix: proxy browser in build tests by @adampash
+- docs: add instructions for browser usage to parse current page by @toufic-m
+- chore: update node rollup config by @JadTermsani
+- feat: add fortinet custom parser by @WajeehZantout
+- feat: add fastcompany custom parser by @WajeehZantout
+- Docs contributors by @RalphJbeily
+- docs: update mercury parser installation by @RalphJbeily
+- dx: include test results in comment by @adampash
+- fix: Transform relative URLs in srcset attributes to absolute URLs by @toufic-m
+- fix: womansay.net image urls by @JadTermsani
+- fix: non-forked packages breaking web build by @adampash
+- fix: author and date published selectors by @RalphJbeily
+- docs: add code of conduct path by @RalphJbeily
+- fix: Create CI-specific script commands to allow for cross-platform linting by @toufic-m
+- chore: remove forked packages by @JadTermsani
+- fix: timezone comparison by @JadTermsani
+- docs: add license files by @e55o
+- feat: update package.json scripts to work on windows by @RalphJbeily
+- docs: add install build and test guide by @RalphJbeily
+- feat: add remarklint for md docs by @RalphJbeily
+- docs: add contributing.md by @RalphJbeily
+- docs: PR and Issue templates by @e55o
+- deps: upgrade by @adampash
+- docs: add code of conduct by @JadTermsani
+- dx: remove unnec comments in source by @george-haddad
+- fix: pre-commit hook on js by @adampash
+- chore: update node and some deps by @adampash
+- fix: auto-pr by @adampash
+- dx: automate fixture updates by @adampash
+- dx: one-line comment links by @adampash
+- dx: add image to preview and link to original article by @adampash
+- dx: test/finish bot preview by @adampash
+- dx: comment on PRs when fixtures have been added/changed by @adampash
+- fix: failing fetchResource test by @adampash
+- docs: document release process by @adampash
+- dx: add nvmrc file by @adampash
+- docs: Update README.md by @adampash
+- release: 1.0.13 by @adampash
+- chore: update circle config.yml to 2.0 by @adampash
+- fix: nytimes custom parser title selector by @adampash
+- release: 1.0.12 by @adampash
+- fix: PARSING_NODE undefined by @mutewinter
+- release: 1.0.11 by @adampash
+- fix: viewport tags leaking to parent page by @mutewinter
+- release: 1.0.10 by @adampash
+- feat: improve wh parser by @adampash
+- release: 1.0.9 by @adampash
+- fix: kept elements being removed by @adampash
+- docs: update changelog by @adampash
+- release: 1.0.8 by @adampash
+- feat: improve wh.gov parser by @adampash
+- release: 1.0.7 by @adampash
+- feat: prospect magazine parser by @janetleekim
+- feat: fool.com parser by @kev5873
+- feat: forward.com parser by @janetleekim
+- feat: qdaily parser by @janetleekim
+- feat: newrepublic parser shows image on page by @silasburton
+- Feat: Slate extractor by @silasburton
+- feat: ici.radio-canada.ca extractor by @silasburton
+- feat: better cleanup of atlantic articles by @silasburton
+- Fixes an issue with encoding by @kev5873
+- Feat: gothamist extractor by @silasburton
+- Fix Encoding on Body by @kev5873
+- release: 1.0.6 by @adampash
+- feat: news.natgeo parser by @janetleekim
+- feat: natgeo parser by @janetleekim
+- feat: allow parser to define custom date formats by @adampash
+- feat: latimes parser by @janetleekim
+- feat: macrumors parser by @kev5873
+- feat: androidcentral parser by @kev5873
+- feat: pagesix parser by @janetleekim
+- feat: si parser by @janetleekim
+- feat: rawstory parser by @janetleekim
+- feat: thefederalistpapers parser by @janetleekim
+- feat: cnet parser by @janetleekim
+- feat: cbs sports parser by @janetleekim
+- feat: msnbc parser by @janetleekim
+- feat: howtogeek extractor by @janetleekim
+- feat: opposing views parser by @janetleekim
+- feat: today parser by @janetleekim
+- feat: cinema blend parser by @janetleekim
+- feat: the political insider parser by @janetleekim
+- feat: al.com parser by @janetleekim
+- feat: westernjournalism parser by @janetleekim
+- feat: mental floss parser by @janetleekim
+- feat: thepennyhoarder parser by @janetleekim
+- feat: abcnewsgo parser by @janetleekim
+- feat: support cleaning and transforms for all fields by @adampash
+- feat: america now parser by @janetleekim
+- Merge pull request #115 from postlight/feat-fusion-extractor by @dviramontes
+- feat: adds selector for lead image by @dviramontes
+- feat: adds video embed transform by @dviramontes
+- fix: author selector, less brittle by @dviramontes
+- feat: fusion parser by @janetleekim
+- Merge pull request #137 from postlight/feat-the-verge-polygon-supported-domain by @dviramontes
+- Merge branch 'master' into feat-the-verge-polygon-supported-domain by @dviramontes
+- feat: ny daily news parser by @janetleekim
+- feat: adds www.polygon.com to list of www.theverge.com supportedDomains by @dviramontes
+- feat: sciencefly extractor by @janetleekim
+- release: 1.0.5 by @adampash
+- feat: custom parser for wh blog by @adampash
+- fix: medium bug by @adampash
+- fix: i put a bad comment in .gitattributes by @adampash
+- chore: marking html fixtures as "vendored" by @adampash
+- Feat: LinkedIn parser by @adampash
+- release: 1.0.4 by @adampash
+- feat: changed user agent to latest chrome by @adampash
+- feat: npr parser by @janetleekim
+- feat: recode parser by @janetleekim
+- feat: fortune parser by @janetleekim
+- feat: qz parser by @janetleekim
+- feat: dmagazine parser by @janetleekim
+- feat: reuters parser by @janetleekim
+- feat: mashable parser by @janetleekim
+- feat: chicago tribune parser by @janetleekim
+- feat: hellogiggles parser by @janetleekim
+- feat: thought catalog parser by @janetleekim
+- feat: cnbc parser by @janetleekim
+- feat: popsugar parser by @janetleekim
+- feat: observer parser by @janetleekim
+- feat: nbc news parser by @janetleekim
+- feat: nj.com parser by @janetleekim
+- feat: inquisitor parser by @janetleekim
+- feat: refinery29 parser by @janetleekim
+- feat: miami herald parser by @janetleekim
+- feat: eonline parser by @janetleekim
+- uproxx extractor by @janetleekim
+- feat: 247sports.com extractor by @janetleekim
+- feat: rolling stone extractor by @janetleekim
+- feat: usmagazine extractor by @janetleekim
+- feat: people extractor by @janetleekim
+- feat: vox custom parser by @janetleekim
+- release: 1.0.3 by @adampash
+- feat: bustle extractor by @janetleekim
+- feat: browser-friendly selector for medium by @adampash
+- feat: bloomberg extractor by @adampash
+- feat: sbnation extractor by @janetleekim
+- test: streamlined guardian tests w/new single-extraction by @adampash
+- feat: more cleaning for wired by @adampash
+- feat: the guardian custom extractor by @janetleekim
+- release: 1.0.2 by @adampash
+- feat: youtube custom extractor by @adampash
+- Feat: detect platforms by @adampash
+- fix: preserve whitespace by @adampash
+- Refactor: running tests more efficiently by @adampash
+- release: 1.0.1 by @adampash
+- Fix: extension bugs by @adampash
+- feat: improved nyt parser by @adampash
+- feat: improvements for nyer magazine articles by @adampash
+- fix: cleaning up deks by @adampash
+- feat: aol custom extractor by @janetleekim
+- feat: remove footer links by @mattq
+- release: 1.0.0 so we can start doing proper releaes by @adampash
+- feat: new cleaner for wapo by @adampash
+- fix: browser cleanup by @adampash
+- feat: preview with optional rebuild by @adampash
+- feat: ci speedup by @adampash
+- Feat cnn extractor by @silasburton
+- feat: extractor for the verge by @silasburton
+- fix: added timezone to new republic date by @adampash
+- fix: normalizing spaces for authors/dek/title by @adampash
+- feat: adjustment for huffpo. skipping overly aggressive default cleaners by @adampash
+- Feat: huffington post extractor by @silasburton
+- feat: new republic custom extractor by @adampash
+- feat: add money.cnn custom parser by @janetleekim
+- Feat: custom timezones by @adampash
+- feat: test builds are created for preview purposes so we aren't committing dist every time by @adampash
+- Fix extension bugs by @adampash
+- feat: added tmz custom parser by @adampash
+- fix: changed overly liberal regex for removing transparent images by @adampash
+- feat: encoding response body based on content-type charset by @adampash
+- chore: package upgrades by @adampash
+- chore: updated readme by @adampash
+- Feat: browser support by @adampash
+- fix: servers returning bad headers was breaking request. temporarily by @adampash
+- feat: recording/playing back network requests with nock by @adampash
+- feat: making yarn-friendly for package manager by @adampash
+- Feat: improving ci by @adampash
+- chore: added repo by @adampash
+- fix: circle test passing badge by @adampash
+- Feat: adding circle ci by @adampash
+- feat: parser auto-generates name; lint is more specific by @adampash
+- feat: enforcing line break rules in linter by @adampash
+- updated generator templates for new style of import/export. also some by @adampash
+- making all.js export a generic function to decrease possiblity of error by @adampash
+- feat: allowing extractors to support multiple domains by @adampash
+- feat: custom medium extractor by @adampash
+- feat: allowing iframes from src domain by @adampash
+- feat: supporting all GMG sites using DeadspinExtractor by @adampash
+- feat: quicker lint by being more specific by @adampash
+- fix: increased avatar size by @adampash
+- feat: added all-contributors by @adampash
+- Add @mutewinter as a contributor by @adampash
+- Add @droob as a contributor by @adampash
+- Add @spiffytoy as a contributor by @adampash
+- Update @adampash as a contributor by @adampash
+- Add @adampash as a contributor by @adampash
+- fix: bug that stopped proper attr cleaning in certain cases by @adampash
+- feat: support lazy loading video on deadspin by @adampash
+- fix: removeEmpty shouldn't remove elements with images or iframes inside by @adampash
+- fix: narrowed selector to fix blogspot title selector by @adampash
+- feat: keeping youtube and vimeo iframe embeds by @adampash
+- fix: better selector for nytimes authors by @adampash
+- feat: pulling score from whitelist by @adampash
+- Merge pull request #13 from postlight/feat-apartmenttherapy-parser by @adampash
+- feat: Add custom extrator for Apartment Therapy
+- Merge pull request #12 from postlight/feat-broadwayworld-extractor by @adampash
+- feat: Add custom parser for broadwayworld.com
+- feat: added deadspin custom parser by @adampash
+- feat: generator generates potential selectors for all custom selectable fields by @adampash
+- feat: dek returns null if it's basically the same as the excerpt by @adampash
+- fix: babel-polyfill mess (I think) by @adampash
+- feat: some small tweaks to toy's excellent parsers ☺️ by @adampash
+- Merge pull request #11 from postlight/feat-politico-extractor by @spiffytoy
+- feat: added politico extractor by @spiffytoy
+- Merge pull request #10 from postlight/feat-littlethings-extractor by @spiffytoy
+- feat: added littlethings extractor by @spiffytoy
+- Merge remote-tracking branch 'origin/master' by @spiffytoy
+- Merge pull request #9 from postlight/feat-wikia-extractor by @spiffytoy
+- feat: added wikia extractor by @spiffytoy
+- Merge pull request #8 from postlight/feat-buzzfeed-extractor by @spiffytoy
+- feat: added incomplete buzzfeed extractor by @spiffytoy
+- Merge pull request #7 from postlight/feat-yahoo-extractor by @spiffytoy
+- feat: added incomplete yahoo extractor by @spiffytoy
+- Merge pull request #6 from postlight/feat-msn-extractor by @spiffytoy
+- Merge branch 'feat-msn-extractor' by @spiffytoy
+- feat: added incomplete msn extractor by @spiffytoy
+- chore: small doc fixes by @adampash
+- Merge pull request #5 from postlight/feat-wired-extractor by @adampash
+- feat: added wired custom extractor by @spiffytoy
+- chore: fix a few typos/links by @adampash
+- feat: custom parser + generator + detailed readme instructions by @adampash
+- chore: readme improvement by @adampash
+- feat: content cleaner still runs, but can disable some cleaners by @adampash
+- chore: cleaned up unused files, slight reorg by @adampash
+- feat: switched test framework to jest by @adampash
+- feat: generator for custom parsers and some documentation by @adampash
+- fix: .babelrc was still referencing iris by @adampash
+- fix: including babel-runtime as a bandaid for polyfill error by @adampash
+- fix: using transform-runtime to avoid babel-polyfill conflicts when used by @adampash
+- chore: barebones readme by @adampash
+- refactor: slightly better preview by @adampash
+- feat: improve wikipedia parser by @adampash
+- feat: added preview script to test urls on-the-fly by @adampash
+- chore: renamed iris to mercury by @adampash
+- fix: wikpedia transform only grabs one image from .infobox by @adampash
+- fix: added dist back to git by @adampash
+- build for comparisons by @adampash
+- feat: test runner takes args for wildcard search on individual test for easier testing by @adampash
+- chore: cleaned up python and other unneeded comments by @adampash
+- feat: some basic error handling for bad urls by @adampash
+- Merge pull request #3 from postlight/fix-date-not-local by @adampash
+- fix: some improvements to date parsing. punting on localization issues by @adampash
+- feat: added twitter custom extractor by @adampash
+- feat: added text direction to response by @adampash
+- feat: add option to allow custom extractors to skip default cleaners by @adampash
+- test: added sanity test for get-extractor by @adampash
+- chore: cleanup by @adampash
+- fix: encodeURI before fetching by @adampash
+- fix: explicit/better decoding of gzipped content by @adampash
+- push new build for testing by @adampash
+- refactor: renamed child to sibling for clarity by @adampash
+- fix: handling case where node.get(0) returns null by @adampash
+- chore: disable camelcase for linting by @adampash
+- chore: change result keys to match python api by @adampash
+- fix: wordcount calling excerpt by @adampash
+- checking in dist by @adampash
+- updated name in package.json by @adampash
+- chore: removed TODO.md by @adampash
+- feat: generic extractor for word count by @adampash
+- chore: cleanup by @adampash
+- feat: generic excerpt extraction by @adampash
+- fix: selection should not be empty by @adampash
+- feat: improve nymag.com extractor to grab deks from features by @adampash
+- feat: added page counts by @adampash
+- feat: added domain and url extractor (using same extractor) by @adampash
+- refactor: page collection by @adampash
+- chore: clean up junk tests by @adampash
+- Merge pull request #1 from postlight/test-fix-fixture-locations by @adampash
+- test: fix fixture locations by @mutewinter
+- fix: bug in scoring and converting to paragraphs by @adampash
+- chore: improve linter/babelrc by @adampash
+- chore: refactored and linted by @adampash
+- chore: moved content scoring out of utils, removed no-longer-necessary utils by @adampash
+- feat: nextPageUrl handles multi-page articles by @adampash
+- feat: small improvement to author selectors by @adampash
+- fix: scorePs parent scoring was overwriting child scoring by @adampash
+- fix: accepting cookies with request (required for sites like by @adampash
+- debugging: cheerio isn't always consistent in setting scores by @adampash
+- refactor: limiting calls to \$ function by @adampash
+- feat: whitelisting attrs to keep by @adampash
+- chore: remove logic for fetching meta tags with custom attrs (resource by @adampash
+- chore: code reorganization by @adampash
+- improved wiki extractor by @adampash
+- fix: cleaning embed and object nodes by @adampash
+- feat: links are rewritten to absolute in cleaner by @adampash
+- feat: can now fetch attrs in RootExtractor's select method by @adampash
+- feat: Improved dateString parsing to handle more; first trying to parse without cleaning by @adampash
+- refactor: cleaners now run on custom extractors by @adampash
+- feat: basic wikipedia custom extractor by @adampash
+- feat: blogspot.com custom extractor by @adampash
+- fix: duplicate key bug by @adampash
+- fix: dek and leadImg should not be html by @adampash
+- fix: brought .html fixtures into project dir by @adampash
+- feat: RootExtractor performs extraction using custom and generic by @adampash
+- refactor: improve extractor args; passing as object by @adampash
+- Some good basic restructuring by @adampash
+- basic merging of extracting sources by @adampash
+- refactor: preparing for extraction merging by @adampash
+- feat: getExtractor returns generic extractor by @adampash
+- clean formatting by @adampash
+- fix: encoding request response as null by @adampash
+- updated constants by @adampash
+- cleanup by @adampash
+- fix: pre-loading html in resource by @adampash
+- cleanup by @adampash
+- feat: can pass in raw html if already fetched by @adampash
+- feat: resource fetches content from a URL and prepares for parsing by @adampash
+- fix: better scoring for iamge extensions by @adampash
+- notes, cleanup by @adampash
+- feat: bundling with rollup by @adampash
+- feat: GenericExtractLeadImageUrl by @adampash
+- feat: extract dek stubbed (not currently functional) by @adampash
+- fix: title wasn't cleaning html tags by @adampash
+- feat: GenericDatePublishedExtractor by @adampash
+- feat: extract author by @adampash
+- chore: plumbing by @adampash
+- feat: title extraction and scaffolding for more by @adampash
+- refactor: restructuring for metadata extraction by @adampash
+- ignore npm-debug.log by @adampash
+- chore: cleanup by @adampash
+- fix: added babel-polyfill for bug in Reflect by @adampash
+- feat: implemented extractBestNode functionality by @adampash
+- feat: find top candidate function by @adampash
+- feat: added linkDensity function by @adampash
+- fix: changed parseInt to parseFloat by @adampash
+- feat: added scoreContent function by @adampash
+- Lots of progress on score-content by @adampash
+- chore: cleaned up repetative testing for dom by @adampash
+- chore: refactored tests by @adampash
+- feat: ported scoring methods with unit tests by @adampash
+- chore: refactored to slightly cleaner file structure (more to do here) by @adampash
+- feat: convertToParagraphs function working by @adampash
+- Converting multiple line breaks to p by @adampash
+- simple logic in place for brsToPs by @adampash
+- updated todo by @adampash
+- Stripping unlikely candidates from DOM by @adampash
+- getWeight with tests by @adampash
+- Functions in need of porting by @adampash
+- Basic testing in place by @adampash
+- bringing in cheerio by @adampash
+- basic structure by @adampash
+- add gitignore by @adampash
+- using rollup by @adampash
+- Quick port of constants file by @adampash
+
+## New Contributors
+
+- @jocmp made their first contribution
+- @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
+- @touchRED made their first contribution
+- @sdoire made their first contribution
+- @zhemaituk made their first contribution
+- @austinmbrown made their first contribution
+- @johnholdun made their first contribution
+- @mtashley made their first contribution
+- @Shepard made their first contribution
+- @Wevah made their first contribution
+- @jbrayton made their first contribution
+- @svenwiegand made their first contribution
+- @jaehanley made their first contribution
+- @samuelclay made their first contribution
+- @jimniels made their first contribution
+- @mwiedemeyer made their first contribution
+- @Canejo made their first contribution
+- @jshakes made their first contribution
+- @ejucovy made their first contribution
+- @PeterDaveHello made their first contribution
+- @sodiumjoe made their first contribution
+- @pirate made their first contribution
+- @JadTermsani made their first contribution
+- @nitinthewiz made their first contribution
+- @WajeehZantout made their first contribution
+- @greenkeeper[bot] made their first contribution
+- @malob made their first contribution
+- @jfix made their first contribution
+- @kennyle3377 made their first contribution
+- @kirillDanshin made their first contribution
+- @adampash made their first contribution
+- @ made their first contribution
+- @toufic-m made their first contribution
+- @benubois made their first contribution
+- @mgeraci made their first contribution
+- @ginatrapani made their first contribution
+- @kik0220 made their first contribution
+- @a2 made their first contribution
+- @fdsimms made their first contribution
+- @droob made their first contribution
+- @jhotmann made their first contribution
+- @ollisulopuisto made their first contribution
+- @xavdid made their first contribution
+- @Madisonkanna made their first contribution
+- @george-haddad made their first contribution
+- @ftrain made their first contribution
+- @RalphJbeily made their first contribution
+- @e55o made their first contribution
+- @mutewinter made their first contribution
+- @janetleekim made their first contribution
+- @kev5873 made their first contribution
+- @silasburton made their first contribution
+- @dviramontes made their first contribution
+- @mattq made their first contribution
+- @spiffytoy made their first contribution
