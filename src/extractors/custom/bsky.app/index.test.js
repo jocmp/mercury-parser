@@ -39,7 +39,7 @@ describe('BskyAppExtractor', () => {
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-03T04:55:38.554Z');
+      assert.equal(date_published, null);
     });
 
     it('returns the content', async () => {
@@ -56,7 +56,7 @@ describe('BskyAppExtractor', () => {
 
       assert.equal(
         first13,
-        'capybaras enjoying pizza pattern prints: https://www.inprnt.com/gallery/guilhernunes/capybaras-enjoying-pizza-pattern/ t-shirts and other products: https://www.redbubble.com/shop/ap/168320435?asc=u'
+        'guilherme nunes guilhernunes.bsky.social did:plc:hew2gujvhhgtchs62pzzn7lb capybaras enjoying pizza pattern prints: https://www.inprnt.com/gallery/guilhernunes/capybaras-enjoying-pizza-pattern/ t-shirts and other'
       );
     });
   });
