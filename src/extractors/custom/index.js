@@ -155,3 +155,4 @@ export * from './tldr.tech';
 export * from './bsky.app';
 export * from './www.n-tv.de';
 export * from './sport.se.pl';
+export * from './www.se.pl';

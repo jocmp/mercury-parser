@@ -1,12 +1,12 @@
-export const SportSePlExtractor = {
-  domain: 'sport.se.pl',
+export const WwwSePlExtractor = {
+  domain: 'www.se.pl',
 
   title: {
     selectors: [['meta[name="og:title"]', 'value']],
   },
 
   author: {
-    selectors: ['.article_author'],
+    selectors: ['.article_author:first-of-type'],
   },
 
   date_published: {
@@ -25,6 +25,11 @@ export const SportSePlExtractor = {
 
     clean: [
       '.article__author__croppimg', // author photo
+      '.related_articles__elements',
+      '.gl_plugin.socials',
+      '.gl_plugin.player',
+      '.gl_plugin.video_player',
+      '.gl_plugin + video',
     ],
   },
 };
