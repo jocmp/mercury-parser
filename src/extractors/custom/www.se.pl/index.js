@@ -21,7 +21,9 @@ export const WwwSePlExtractor = {
   content: {
     selectors: ['article'],
 
-    transforms: {},
+    transforms: {
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+    },
 
     clean: [
       '.article__author__croppimg', // author photo
