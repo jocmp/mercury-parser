@@ -68,7 +68,7 @@ describe('SportSePlExtractor', () => {
 
       assert.equal(
         first13,
-        'Trener Ante Simundża podjął się misji ratowania Śląska. Słoweniec zapewne nie spodziewał się,'
+        'Autor: Cyfrasport Rafał Leszczyński, bramkarz Śląska Wrocław Trener Ante Simundża podjął się misji'
       );
     });
   });
