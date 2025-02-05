@@ -26,7 +26,9 @@ export const WwwSePlExtractor = {
     },
 
     clean: [
-      '.article__author__croppimg', // author photo
+      '#timezone',
+      '.article__author__croppimg',
+      '.article_authors_with_thumbnail',
       '.related_articles__elements',
       '.gl_plugin.socials',
       '.gl_plugin.player',

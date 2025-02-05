@@ -8,14 +8,16 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('BskyAppExtractor', () => {
+describe('SuperserialeSePlExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
       url =
-        'https://bsky.app/profile/guilhernunes.bsky.social/post/3lhco34pdss2j';
-      const html = fs.readFileSync('./fixtures/bsky.app/1738632955411.html');
+        'https://superseriale.se.pl/barwy-szczescia/barwy-szczescia-odcinek-3122-rozmowa-miedzy-jozefina-a-cezarym-wyjasni-wszystko-nigdy-dotad-nie-byla-z-nim-tak-szczera-zdjecia-aa-1iTt-uHSL-6tRa.html';
+      const html = fs.readFileSync(
+        './fixtures/superseriale.se.pl/1738720194653.html'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 
@@ -27,19 +29,22 @@ describe('BskyAppExtractor', () => {
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(title, `guilherme nunes (@guilhernunes.bsky.social)`);
+      assert.equal(
+        title,
+        `Barwy szczęścia, odcinek 3122: Rozmowa między Józefiną a Cezarym wyjaśni wszystko. Nigdy dotąd nie była z nim tak szczera - ZDJĘCIA`
+      );
     });
 
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, null);
+      assert.equal(author, 'Anna Kilian');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, null);
+      assert.equal(date_published, '2025-02-04T21:53:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -47,7 +52,7 @@ describe('BskyAppExtractor', () => {
 
       assert.equal(
         lead_image_url,
-        `https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:hew2gujvhhgtchs62pzzn7lb/bafkreibejxm6dhz7e244nf57bqtur6ctmbtavus7yr3ghp5udzgderkhay@jpeg`
+        `https://cdn.galleries.smcloud.net/t/galleries/gf-SpMP-Atg1-RJaU_barwy-szczescia-odcinek-3122-cezary-marcel-opalinski-jozefina-elzbieta-jarosik-1280x960.jpg`
       );
     });
 
@@ -62,10 +67,9 @@ describe('BskyAppExtractor', () => {
           .text(),
         13
       );
-
       assert.equal(
         first13,
-        'capybaras enjoying pizza pattern prints: https://www.inprnt.com/gallery/guilhernunes/capybaras-enjoying-pizza-pattern/ t-shirts and other products: https://www.redbubble.com/shop/ap/168320435?asc=u'
+        'W 3122. odcinku serialu "Barwy szczęścia" dojdzie do szczerej rozmowy między Józefiną (Elżbieta'
       );
     });
   });
