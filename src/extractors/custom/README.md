@@ -198,7 +198,7 @@ Now that you know the basics of how custom extractors work, let's walk through t
 First, you'll need to clone Mercury Parser repository and install dependencies.
 
 ```bash
-git clone git@github.com:postlight/parser.git
+git clone git@github.com:jocmp/mercury-parser.git
 
 cd parser
 

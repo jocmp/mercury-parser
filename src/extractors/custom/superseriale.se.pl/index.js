@@ -1,12 +1,12 @@
-export const SportSePlExtractor = {
-  domain: 'sport.se.pl',
+export const SuperserialeSePlExtractor = {
+  domain: 'superseriale.se.pl',
 
   title: {
     selectors: [['meta[name="og:title"]', 'value']],
   },
 
   author: {
-    selectors: ['.article_author'],
+    selectors: ['.article_author:first-of-type'],
   },
 
   date_published: {
@@ -27,8 +27,7 @@ export const SportSePlExtractor = {
 
     clean: [
       '#timezone',
-      '.article__author__croppimg',
-      '.article_authors_with_thumbnail',
+      '.article__author__croppimg', // author photo
       '.related_articles__elements',
       '.gl_plugin.socials',
       '.gl_plugin.player',

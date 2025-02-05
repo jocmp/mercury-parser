@@ -9,12 +9,23 @@ export const BskyAppExtractor = {
 
   date_published: null,
 
-  lead_image_url: null,
+  lead_image_url: {
+    selectors: [
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="og:image"]', 'value'],
+    ],
+  },
 
   content: {
-    selectors: ['#bsky_post_text'],
+    selectors: ['noscript'],
 
-    transforms: {},
+    transforms: {
+      noscript: ($node, $) => {
+        const innerHtml = $.browser ? $node.text() : $node.html();
+        const summary = $(innerHtml).find('#bsky_post_text');
+        $node.replaceWith(summary.html());
+      },
+    },
 
     clean: [],
   },
