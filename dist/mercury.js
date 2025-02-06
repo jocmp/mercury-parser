@@ -6453,20 +6453,20 @@ var WwwHeiseDeExtractor = {
         return $node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: []
+    clean: ['.ad-mobile-group-1', '.branding', '[data-component="RecommendationBox"]']
   }
 };
 
 var TldrTechExtractor = {
   domain: 'tldr.tech',
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'title']
+    selectors: ['h1']
   },
   lead_image_url: {
     selectors: [['meta[name="twitter:image"]', 'value']]
   },
   content: {
-    selectors: ['body'],
+    selectors: ['.content-center', 'body'],
     transforms: {
       h2: function h2($node) {
         return $node.attr('class', 'mercury-parser-keep');
@@ -6476,6 +6476,153 @@ var TldrTechExtractor = {
       }
     },
     clean: []
+  }
+};
+
+var BskyAppExtractor = {
+  domain: 'bsky.app',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: null,
+  date_published: null,
+  lead_image_url: {
+    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['noscript'],
+    transforms: {
+      noscript: function noscript($node, $) {
+        var innerHtml = $.browser ? $node.text() : $node.html();
+        var summary = $(innerHtml).find('#bsky_post_text');
+        $node.replaceWith(summary.html());
+      }
+    },
+    clean: []
+  }
+};
+
+var WwwNtvDeExtractor = {
+  domain: 'www.n-tv.de',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="date"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article__text', 'article'],
+    transforms: {},
+    clean: ['.article__share-main']
+  }
+};
+
+var SportSePlExtractor = {
+  domain: 'sport.se.pl',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article_author']
+  },
+  date_published: {
+    selectors: ['#timezone'],
+    timezone: 'Europe/Warsaw'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['#timezone', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
+  }
+};
+
+var WwwSePlExtractor = {
+  domain: 'www.se.pl',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article_author:first-of-type']
+  },
+  date_published: {
+    selectors: ['#timezone'],
+    timezone: 'Europe/Warsaw'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['#timezone', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
+  }
+};
+
+var PolitykaSePlExtractor = {
+  domain: 'polityka.se.pl',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article_author:first-of-type']
+  },
+  date_published: {
+    selectors: ['#timezone'],
+    timezone: 'Europe/Warsaw'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.article__author__croppimg', // author photo
+    '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
+  }
+};
+
+var SuperserialeSePlExtractor = {
+  domain: 'superseriale.se.pl',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article_author:first-of-type']
+  },
+  date_published: {
+    selectors: ['#timezone'],
+    timezone: 'Europe/Warsaw'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['#timezone', '.article__author__croppimg', // author photo
+    '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
   }
 };
 
@@ -6635,7 +6782,13 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
   WccftechComExtractor: WccftechComExtractor,
   WwwHeiseDeExtractor: WwwHeiseDeExtractor,
-  TldrTechExtractor: TldrTechExtractor
+  TldrTechExtractor: TldrTechExtractor,
+  BskyAppExtractor: BskyAppExtractor,
+  WwwNtvDeExtractor: WwwNtvDeExtractor,
+  SportSePlExtractor: SportSePlExtractor,
+  WwwSePlExtractor: WwwSePlExtractor,
+  PolitykaSePlExtractor: PolitykaSePlExtractor,
+  SuperserialeSePlExtractor: SuperserialeSePlExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
