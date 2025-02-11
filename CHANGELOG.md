@@ -5,20 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.3.6
+
+- fix: Update arstechnica custom parser
+- Add more se.pl parsers by @jocmp in [#53](https://github.com/jocmp/mercury-parser/pull/53)
+- feat: Add parser for portalobronny.se.pl by @jocmp
+- feat: Add custom parser for superbiz.se.pl by @jocmp
+- feat: Add parser for szczecin.se.pl by @jocmp
+
 ## v2.3.5
 
-- feat: Add custom parser for superseriale.se.pl
-- feat: Add custom parser for polityka.se.pl
-- feat: Add custom parser for polityka.se.pl
-- feat: Add custom parser for www.se.pl
-- feat: Add custom parser for sport.se.pl
-- Fix bsky selectors
+- bump version v2.3.4 -> v2.3.5 by @jocmp
+- Add custom parsers for se.pl by @jocmp in [#52](https://github.com/jocmp/mercury-parser/pull/52)
+- feat: Add custom parser for polityka.se.pl by @jocmp
+- feat: Add custom parser for polityka.se.pl by @jocmp
+- feat: Add custom parser for www.se.pl by @jocmp
+- feat: Add custom parser for sport.se.pl by @jocmp
+- Fix bsky selectors by @jocmp
 - Update CHANGELOG by @jocmp
 - feat: Add custom parser for n-tv.de by @jocmp in [#51](https://github.com/jocmp/mercury-parser/pull/51)
 - feat: Add custom parser for n-tv.de by @jocmp
 - feat: Add custom parser for bsky.app by @jocmp in [#50](https://github.com/jocmp/mercury-parser/pull/50)
 - fix: Hide ads on heise.de by @jocmp
 - fix: Keep nested h3's in tldr.tech by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.4...v2.3.5
 
 ## v2.3.4
 
