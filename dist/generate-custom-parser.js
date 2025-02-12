@@ -6006,9 +6006,14 @@ var ArstechnicaComExtractor = {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['main'],
-    transforms: {},
-    clean: ['.upper-deck__text', '.text-settings-dropdown-story']
+    selectors: ['.post-content', 'main'],
+    transforms: {
+      img: function img($node) {
+        $node.removeAttr("width");
+        $node.removeAttr("sizes");
+      }
+    },
+    clean: ['header', '.upper-deck__text', '.text-settings-dropdown-story']
   }
 };
 var WwwNdtvComExtractor = {

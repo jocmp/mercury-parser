@@ -10,10 +10,15 @@ export const ArstechnicaComExtractor = {
   },
 
   content: {
-    selectors: ['main'],
+    selectors: ['.post-content', 'main'],
 
-    transforms: {},
+    transforms: {
+      img: $node => {
+        $node.removeAttr('width');
+        $node.removeAttr('sizes');
+      },
+    },
 
-    clean: ['.upper-deck__text', '.text-settings-dropdown-story'],
+    clean: ['header', '.upper-deck__text', '.text-settings-dropdown-story'],
   },
 };
