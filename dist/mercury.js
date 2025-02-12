@@ -5965,46 +5965,16 @@ var WwwEngadgetComExtractor = {
 
 var ArstechnicaComExtractor = {
   domain: 'arstechnica.com',
-  // Articles from this site are often paginated, but I was unable to write a CSS
-  // selector to find the next page. On the last page, there will be a link with a CSS
-  // selector indicating that the previous page is next. But the parser appears to find
-  // the next page without this extractor finding it, as long as the fallback option is
-  // left at its default value of true.
   title: {
-    selectors: ['title']
-  },
-  author: {
-    selectors: ['*[rel="author"] *[itemprop="name"]']
-  },
-  date_published: {
-    selectors: [['.byline time', 'datetime']]
-  },
-  dek: {
-    selectors: ['h2[itemprop="description"]']
+    selectors: ['title', 'h1']
   },
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['div[itemprop="articleBody"]'],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {
-      h2: function h2($node) {
-        // Some pages have an element h2 that is significant, and that the parser will
-        // remove if not following a paragraph. Adding this empty paragraph fixes it, and
-        // the empty paragraph will be removed anyway.
-        $node.before('<p></p>');
-      }
-    },
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result.
-    clean: [// Remove enlarge links and separators inside image captions.
-    'figcaption .enlarge-link', 'figcaption .sep', // I could not transform the video into usable elements, so I
-    // removed them.
-    'figure.video', // Image galleries that do not work.
-    '.gallery', 'aside', '.sidebar']
+    selectors: ['main'],
+    transforms: {},
+    clean: ['.upper-deck__text', '.text-settings-dropdown-story']
   }
 };
 
@@ -6520,32 +6490,6 @@ var WwwNtvDeExtractor = {
   }
 };
 
-var SportSePlExtractor = {
-  domain: 'sport.se.pl',
-  title: {
-    selectors: [['meta[name="og:title"]', 'value']]
-  },
-  author: {
-    selectors: ['.article_author']
-  },
-  date_published: {
-    selectors: ['#timezone'],
-    timezone: 'Europe/Warsaw'
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  content: {
-    selectors: ['article'],
-    transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
-    },
-    clean: ['#timezone', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
-  }
-};
-
 var WwwSePlExtractor = {
   domain: 'www.se.pl',
   title: {
@@ -6568,36 +6512,17 @@ var WwwSePlExtractor = {
         return node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: ['#timezone', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
+    clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
   }
 };
 
-var PolitykaSePlExtractor = {
-  domain: 'polityka.se.pl',
-  title: {
-    selectors: [['meta[name="og:title"]', 'value']]
-  },
-  author: {
-    selectors: ['.article_author:first-of-type']
-  },
-  date_published: {
-    selectors: ['#timezone'],
-    timezone: 'Europe/Warsaw'
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  content: {
-    selectors: ['article'],
-    transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
-    },
-    clean: ['.article__author__croppimg', // author photo
-    '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
-  }
-};
+var SportSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'sport.se.pl'
+});
+
+var PolitykaSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'polityka.se.pl'
+});
 
 var SuperserialeSePlExtractor = {
   domain: 'superseriale.se.pl',
@@ -6621,8 +6546,42 @@ var SuperserialeSePlExtractor = {
         return node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: ['#timezone', '.article__author__croppimg', // author photo
+    clean: ['#timezone', '.author', '.article__author__croppimg', // author photo
     '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
+  }
+};
+
+var SzczecinSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'szczecin.se.pl'
+});
+
+var SuperbizSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'superbiz.se.pl'
+});
+
+var PortalobronnySePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'portalobronny.se.pl'
+});
+
+var PolskisamorzadSePlExtractor = {
+  domain: 'polskisamorzad.se.pl',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.article_author:first-of-type', '.article-author', ['meta[name="og:article:author"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article-single'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
   }
 };
 
@@ -6788,7 +6747,11 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   SportSePlExtractor: SportSePlExtractor,
   WwwSePlExtractor: WwwSePlExtractor,
   PolitykaSePlExtractor: PolitykaSePlExtractor,
-  SuperserialeSePlExtractor: SuperserialeSePlExtractor
+  SuperserialeSePlExtractor: SuperserialeSePlExtractor,
+  SzczecinSePlExtractor: SzczecinSePlExtractor,
+  SuperbizSePlExtractor: SuperbizSePlExtractor,
+  PortalobronnySePlExtractor: PortalobronnySePlExtractor,
+  PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
