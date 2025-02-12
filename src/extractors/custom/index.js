@@ -161,3 +161,4 @@ export * from './superseriale.se.pl';
 export * from './szczecin.se.pl';
 export * from './superbiz.se.pl';
 export * from './portalobronny.se.pl';
+export * from './polskisamorzad.se.pl';
