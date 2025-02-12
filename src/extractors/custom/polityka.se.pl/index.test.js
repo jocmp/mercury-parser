@@ -66,7 +66,7 @@ describe('PolitykaSePlExtractor', () => {
       );
       assert.equal(
         first13,
-        'Autor: SE Kamila Biedrzycka, prowadząca "Express Biedrzyckiej" We wtorek (4 lutego) w "Expressie'
+        'Kamila Biedrzycka, prowadząca "Express Biedrzyckiej" We wtorek (4 lutego) w "Expressie Biedrzyckiej" gośćmi'
       );
     });
   });

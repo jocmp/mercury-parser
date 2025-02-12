@@ -8,14 +8,16 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('SportSePlExtractor', () => {
+describe('SzczecinSePlExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
       url =
-        'https://sport.se.pl/pilka-nozna/ekstraklasa/kolejna-katastrofa-slaska-ogromny-zawod-z-piastem-ale-co-zrobil-rafal-leszczynski-wideo-aa-orCp-ajk6-8ada.html';
-      const html = fs.readFileSync('./fixtures/sport.se.pl/1738679563886.html');
+        'https://szczecin.se.pl/czterdziesci-wysokich-wygranych-w-eurojackpot-w-polsce-ale-to-w-tym-kraju-rozbili-wielka-kumulacje-aa-Vtns-Mgcv-RZmj.html';
+      const html = fs.readFileSync(
+        './fixtures/szczecin.se.pl/1739329179505.html'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 
@@ -29,20 +31,20 @@ describe('SportSePlExtractor', () => {
 
       assert.equal(
         title,
-        `Kolejne rozczarowanie dla Śląska. Piast go wypunktował. I jeszcze ten KOSZMARNY błąd Rafała Leszczyńskiego!`
+        `40 wysokich wygranych w Eurojackpot w Polsce. Ale to w tym kraju rozbili bank`
       );
     });
 
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Marcin Szczepański`);
+      assert.equal(author, 'Grzegorz Kluczyński');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-03T20:02:00.000Z');
+      assert.equal(date_published, '2025-02-11T21:14:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -50,7 +52,7 @@ describe('SportSePlExtractor', () => {
 
       assert.equal(
         lead_image_url,
-        `https://cdn.galleries.smcloud.net/t/galleries/gf-rdUk-X5iW-9qQh_rafal-leszczynski-1920x1080-nocrop.jpg`
+        `https://cdn.galleries.smcloud.net/t/galleries/gf-gXFW-ycoc-gAtS_czterdziesci-wysokich-wygranych-w-eurojackpot-w-polsce-ale-to-w-tym-kraju-rozbili-wielka-kumulacje-1280x960.jpg`
       );
     });
 
@@ -68,7 +70,7 @@ describe('SportSePlExtractor', () => {
 
       assert.equal(
         first13,
-        'Rafał Leszczyński, bramkarz Śląska Wrocław Trener Ante Simundża podjął się misji ratowania Śląska.'
+        'Czterdzieści wysokich wygranych w Eurojackpot w Polsce. Ale to w tym kraju rozbili'
       );
     });
   });

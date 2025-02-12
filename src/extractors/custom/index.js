@@ -158,3 +158,4 @@ export * from './sport.se.pl';
 export * from './www.se.pl';
 export * from './polityka.se.pl';
 export * from './superseriale.se.pl';
+export * from './szczecin.se.pl';

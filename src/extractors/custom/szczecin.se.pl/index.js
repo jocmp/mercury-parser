@@ -1,6 +1,6 @@
 import { WwwSePlExtractor } from '../www.se.pl';
 
-export const PolitykaSePlExtractor = {
+export const SzczecinSePlExtractor = {
   ...WwwSePlExtractor,
-  domain: 'polityka.se.pl',
+  domain: 'szczecin.se.pl',
 };
