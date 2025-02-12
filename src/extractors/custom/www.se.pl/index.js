@@ -27,6 +27,7 @@ export const WwwSePlExtractor = {
 
     clean: [
       '#timezone',
+      '.author',
       '.article__author__croppimg',
       '.article_authors_with_thumbnail',
       '.related_articles__elements',

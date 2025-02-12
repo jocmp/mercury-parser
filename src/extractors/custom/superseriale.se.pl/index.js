@@ -27,6 +27,7 @@ export const SuperserialeSePlExtractor = {
 
     clean: [
       '#timezone',
+      '.author',
       '.article__author__croppimg', // author photo
       '.related_articles__elements',
       '.gl_plugin.socials',
