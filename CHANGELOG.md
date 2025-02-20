@@ -5,13 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.3.7
+
+- feat: Add custom parser for bialystok.se.pl
+- feat: Add custom parser for lublin.se.pl
+- feat: Add custom parser for wroclaw.se.pl
+- feat: Add custom parser for lodz.se.pl
+- fix: Hide extra header content for Ars Technica by @jocmp
+
 ## v2.3.6
 
-- fix: Update arstechnica custom parser
+- bump version v2.3.5 -> v2.3.6 by @jocmp
+- fix: Update arstechnica custom parser by @jocmp in [#54](https://github.com/jocmp/mercury-parser/pull/54)
 - Add more se.pl parsers by @jocmp in [#53](https://github.com/jocmp/mercury-parser/pull/53)
 - feat: Add parser for portalobronny.se.pl by @jocmp
 - feat: Add custom parser for superbiz.se.pl by @jocmp
 - feat: Add parser for szczecin.se.pl by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.5...v2.3.6
 
 ## v2.3.5
 
