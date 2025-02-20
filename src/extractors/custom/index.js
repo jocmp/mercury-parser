@@ -162,3 +162,4 @@ export * from './szczecin.se.pl';
 export * from './superbiz.se.pl';
 export * from './portalobronny.se.pl';
 export * from './polskisamorzad.se.pl';
+export * from './lodz.se.pl';
