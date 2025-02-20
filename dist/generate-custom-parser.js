@@ -6009,8 +6009,8 @@ var ArstechnicaComExtractor = {
     selectors: ['.post-content', 'main'],
     transforms: {
       img: function img($node) {
-        $node.removeAttr("width");
-        $node.removeAttr("sizes");
+        $node.removeAttr('width');
+        $node.removeAttr('sizes');
       }
     },
     clean: ['header', '.upper-deck__text', '.text-settings-dropdown-story']
@@ -6606,6 +6606,22 @@ var PolskisamorzadSePlExtractor = {
   }
 };
 
+var LodzSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'lodz.se.pl'
+});
+
+var WroclawSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'wroclaw.se.pl'
+});
+
+var LublinSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'lublin.se.pl'
+});
+
+var BialystokSePlExtractor = _objectSpread({}, WwwSePlExtractor, {
+  domain: 'bialystok.se.pl'
+});
+
 var CustomExtractors =
 /*#__PURE__*/
 _Object$freeze({
@@ -6772,7 +6788,11 @@ _Object$freeze({
   SzczecinSePlExtractor: SzczecinSePlExtractor,
   SuperbizSePlExtractor: SuperbizSePlExtractor,
   PortalobronnySePlExtractor: PortalobronnySePlExtractor,
-  PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor
+  PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor,
+  LodzSePlExtractor: LodzSePlExtractor,
+  WroclawSePlExtractor: WroclawSePlExtractor,
+  LublinSePlExtractor: LublinSePlExtractor,
+  BialystokSePlExtractor: BialystokSePlExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
