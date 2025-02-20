@@ -165,3 +165,4 @@ export * from './polskisamorzad.se.pl';
 export * from './lodz.se.pl';
 export * from './wroclaw.se.pl';
 export * from './lublin.se.pl';
+export * from './bialystok.se.pl';
