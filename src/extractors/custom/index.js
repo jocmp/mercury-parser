@@ -163,3 +163,4 @@ export * from './superbiz.se.pl';
 export * from './portalobronny.se.pl';
 export * from './polskisamorzad.se.pl';
 export * from './lodz.se.pl';
+export * from './wroclaw.se.pl';
