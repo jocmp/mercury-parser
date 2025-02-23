@@ -5,13 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.3.8
+
+- feat: Add custom extractor for lebensmittelwarnung.de
+
 ## v2.3.7
 
-- feat: Add custom parser for bialystok.se.pl
-- feat: Add custom parser for lublin.se.pl
-- feat: Add custom parser for wroclaw.se.pl
-- feat: Add custom parser for lodz.se.pl
+- bump version v2.3.6 -> v2.3.7 by @jocmp
+- Add support for additional se.pl city sites by @jocmp in [#56](https://github.com/jocmp/mercury-parser/pull/56)
+- feat: Add custom parser for lublin.se.pl by @jocmp
+- feat: Add custom parser for wroclaw.se.pl by @jocmp
+- feat: Add custom parser for lodz.se.pl by @jocmp
 - fix: Hide extra header content for Ars Technica by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.6...v2.3.7
 
 ## v2.3.6
 
