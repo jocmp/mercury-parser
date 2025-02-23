@@ -24,7 +24,7 @@ describe('WwwRawstoryComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwRawstoryComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `These 6 celebrities are refusing to play Trump's inauguration as team scrambles to secure talent`
       );
@@ -47,7 +47,7 @@ describe('WwwRawstoryComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Tana Ganeva');
+      assert.strictEqual(author, 'Tana Ganeva');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwRawstoryComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-22T19:27:41.000Z');
+      assert.strictEqual(date_published, '2016-12-22T19:27:41.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwRawstoryComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.rawstory.com/media-library/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy8yNDk4MDQwMC9vcmlnaW4uanBnIiwiZXhwaXJlc19hdCI6MTcwODk2ODc0NH0.CAuDKCrYnLogkIrRCoHwZj7vOQ_5oq7DyFBijbdG0dE/image.jpg?width=210'
       );
@@ -91,7 +91,7 @@ describe('WwwRawstoryComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         `As Inauguration Day approaches, Donald Trump's team is reportedly having such a hard`
       );

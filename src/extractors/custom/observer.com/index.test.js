@@ -24,7 +24,7 @@ describe('ObserverComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Archaeologists Just Discovered a 2,500-Year-Old Lost City Atop a Greek Mountain Peak'
       );
@@ -47,7 +47,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Sage Lazzaro');
+      assert.strictEqual(author, 'Sage Lazzaro');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-16T17:21:02.000Z');
+      assert.strictEqual(date_published, '2016-12-16T17:21:02.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "'The fact that nobody has never explored the hill before is a mystery'"
       );
@@ -80,7 +80,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://observer.com/wp-content/uploads/sites/2/2016/12/extra_large-1481648730-cover-image-2.jpg?quality=80&strip'
       );
@@ -104,7 +104,7 @@ describe('ObserverComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The city’s acropolis is barely visible during a cloudy day on the Thessalian'
       );

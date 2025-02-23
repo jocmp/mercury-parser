@@ -23,7 +23,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         '7 Unexpected Places You Could Find Cash and Valuables Around Your House'
       );
@@ -46,7 +46,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Steve Gillman');
+      assert.strictEqual(author, 'Steve Gillman');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-06-21T19:50:00.000Z');
+      assert.strictEqual(date_published, '2017-06-21T19:50:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cdn.thepennyhoarder.com/wp-content/uploads/2016/12/22181000/treasurejpg.jpg'
       );
@@ -90,7 +90,7 @@ describe('WwwThepennyhoarderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'While most people associate treasure hunting with pirates, Penny Hoarders know better. There’s'
       );

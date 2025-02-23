@@ -9,8 +9,8 @@ describe('Scoring utils', () => {
       const $ = cheerio.load('<div score="25"><p score="40">Foo</p></div>');
       const $node = addToParent($('p').first(), $, 40);
 
-      assert.equal(getScore($node.parent()), 35);
-      assert.equal(getScore($node), 40);
+      assert.strictEqual(getScore($node.parent()), 35);
+      assert.strictEqual(getScore($node), 40);
     });
   });
 });

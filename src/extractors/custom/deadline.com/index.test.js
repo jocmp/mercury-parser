@@ -27,7 +27,7 @@ describe('DeadlineComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title.split('Twitter')[0],
         `Donald Trump Advises Boeing To Rebrand Max 737, Tweeting “But What The Hell Do I Know?”; `
       );
@@ -50,7 +50,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Lisa de Moraes');
+      assert.strictEqual(author, 'Lisa de Moraes');
     });
 
     it('returns the date_published', async () => {
@@ -60,7 +60,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-15T13:18:34.000Z`);
+      assert.strictEqual(date_published, `2019-04-15T13:18:34.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -70,7 +70,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -80,7 +80,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://deadline.com/wp-content/uploads/2019/01/donald-trump-2-e1561600955862.jpg?w=1024`
       );
@@ -104,7 +104,7 @@ describe('DeadlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Twitter erupted Monday morning when President Donald Trump shared his branding expertise with'
       );

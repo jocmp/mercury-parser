@@ -23,7 +23,7 @@ describe('WwwCbcCaExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Housing market slowdown continues with sales and average prices well down from last year`
       );
@@ -46,7 +46,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `Pete Evans`);
+      assert.strictEqual(author, `Pete Evans`);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2022-10-14T16:20:52.800Z');
+      assert.strictEqual(date_published, '2022-10-14T16:20:52.800Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Average price of a home that sold in September was $640,479'
       );
@@ -79,7 +79,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://i.cbc.ca/1.6616381.1665753066!/fileImage/httpImage/image.JPG_gen/derivatives/16x9_620/real-estate-sign.JPG`
       );
@@ -103,7 +103,7 @@ describe('WwwCbcCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'New numbers from the Canadian Real Estate Association confirm what buyers, sellers and'
       );

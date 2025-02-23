@@ -24,7 +24,7 @@ describe('WwwSlateComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Broken Pledge');
+      assert.strictEqual(title, 'Broken Pledge');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Jamelle Bouie');
+      assert.strictEqual(author, 'Jamelle Bouie');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-03-09T21:21:00.000Z');
+      assert.strictEqual(date_published, '2017-03-09T21:21:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -64,7 +64,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Trump’s promises to “take care” of inner city, rural, and Rust Belt voters have officially proved to be a con.'
       );
@@ -77,7 +77,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://www.slate.com/content/dam/slate/articles/news_and_politics/politics/2017/03/170309_POL_trumpRally.jpg.CROP.cq5dam_web_1280_1280_jpeg.jpg'
       );
@@ -101,7 +101,7 @@ describe('WwwSlateComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Then-nominee Donald Trump speaks at a rally on Sept. 28 in Waukesha, Wisconsin.'
       );

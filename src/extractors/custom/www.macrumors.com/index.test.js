@@ -23,7 +23,7 @@ describe('WwwMacrumorsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Second-Generation Apple Pencil Rumored for March of 2017'
       );
@@ -46,7 +46,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Juli Clover');
+      assert.strictEqual(author, 'Juli Clover');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-18T19:44:11.000Z');
+      assert.strictEqual(date_published, '2017-01-18T19:44:11.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Apple may be planning to introduce a second-generation Apple Pencil this year, according to rumors out of the Asian supply chain. The new Apple...'
       );
@@ -79,7 +79,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images.macrumors.com/t/EN8cNLYLkjyiQXEOq65hBnAVS6k=/1600x/article-new/2014/11/applepencil2.jpg'
       );
@@ -103,7 +103,7 @@ describe('WwwMacrumorsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Apple may be planning to introduce a second-generation Apple Pencil this year, according'
       );

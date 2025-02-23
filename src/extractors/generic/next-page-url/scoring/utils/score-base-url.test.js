@@ -9,7 +9,7 @@ describe('scoreBaseUrl(href, baseRegex)', () => {
     const badUrl = 'http://foo.com/foo/bar';
     const baseRegex = makeBaseRegex(baseUrl);
 
-    assert.equal(scoreBaseUrl(badUrl, baseRegex), -25);
+    assert.strictEqual(scoreBaseUrl(badUrl, baseRegex), -25);
   });
 
   it('returns 0 if url contains the base url', () => {
@@ -17,6 +17,6 @@ describe('scoreBaseUrl(href, baseRegex)', () => {
     const badUrl = 'http://example.com/foo/bar/bat';
     const baseRegex = makeBaseRegex(baseUrl);
 
-    assert.equal(scoreBaseUrl(badUrl, baseRegex), 0);
+    assert.strictEqual(scoreBaseUrl(badUrl, baseRegex), 0);
   });
 });

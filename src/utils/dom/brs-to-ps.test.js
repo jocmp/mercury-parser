@@ -14,7 +14,7 @@ describe('Generic Extractor Utils', () => {
       `;
       let $ = cheerio.load(html);
       $ = brsToPs($);
-      assert.equal($.html(), html);
+      assert.strictEqual($.html(), html);
     });
 
     it('does nothing when a single BR is present', () => {

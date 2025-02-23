@@ -17,7 +17,7 @@ describe('fetchResource(url)', () => {
     const url = 'http://www.nytimes.com/500';
     const { error } = await fetchResource(url);
 
-    assert.equal(error, true);
+    assert.strictEqual(error, true);
   });
 
   it('passes custom headers in requests', async () => {
@@ -30,7 +30,7 @@ describe('fetchResource(url)', () => {
     const result = await fetchResource(url, parsedUrl, headers);
     const body = JSON.parse(result.body.toString());
 
-    assert.equal(
+    assert.strictEqual(
       body.headers['my-custom-header'],
       'Lorem ipsum dolor sit amet'
     );
@@ -41,7 +41,7 @@ describe('fetchResource(url)', () => {
       'http://www.nytimes.com/2016/08/16/upshot/the-state-of-the-clinton-trump-race-is-it-over.html?_r=0';
     const result = await fetchResource(url);
 
-    assert.equal(typeof result.body, 'object');
+    assert.strictEqual(typeof result.body, 'object');
   });
 
   it('fetches nyt', async () => {
@@ -49,14 +49,14 @@ describe('fetchResource(url)', () => {
       'http://www.nytimes.com/2016/08/16/upshot/the-state-of-the-clinton-trump-race-is-it-over.html?_r=0';
     const { response } = await fetchResource(url);
 
-    assert.equal(response.statusCode, 200);
+    assert.strictEqual(response.statusCode, 200);
   });
 
   it('fetches domains', async () => {
     const url = 'http://theconcourse.deadspin.com/1786177057';
     const { response } = await fetchResource(url);
 
-    assert.equal(response.statusCode, 200);
+    assert.strictEqual(response.statusCode, 200);
   });
 
   it('fetches nyt', async () => {
@@ -64,7 +64,7 @@ describe('fetchResource(url)', () => {
       'http://www.nytimes.com/2016/08/16/upshot/the-state-of-the-clinton-trump-race-is-it-over.html?_r=0';
     const { response } = await fetchResource(url);
 
-    assert.equal(response.statusCode, 200);
+    assert.strictEqual(response.statusCode, 200);
   });
 
   it('handles this gzip error', async () => {
@@ -72,7 +72,7 @@ describe('fetchResource(url)', () => {
       'http://www.redcross.ca/blog/2016/11/photo-of-the-day--one-year-anniversary-of-the-end-of-ebola-in-sierra-leone';
     const { response } = await fetchResource(url);
 
-    assert.equal(response.statusCode, 200);
+    assert.strictEqual(response.statusCode, 200);
   });
 });
 
@@ -87,7 +87,7 @@ describe('validateResponse(response)', () => {
       },
     };
 
-    assert.equal(validateResponse(validResponse), true);
+    assert.strictEqual(validateResponse(validResponse), true);
   });
 
   it('throws an error if there is no status code', () => {
@@ -144,13 +144,13 @@ describe('baseDomain(parsedUrl)', () => {
     const url = 'https://www.npmjs.com/package/request#streaming';
     const parsedUrl = URL.parse(url);
 
-    assert.equal(baseDomain(parsedUrl), 'npmjs.com');
+    assert.strictEqual(baseDomain(parsedUrl), 'npmjs.com');
   });
 
   it('returns the base domain as is if no subdomain', () => {
     const url = 'https://npmjs.com/package/request#streaming';
     const parsedUrl = URL.parse(url);
 
-    assert.equal(baseDomain(parsedUrl), 'npmjs.com');
+    assert.strictEqual(baseDomain(parsedUrl), 'npmjs.com');
   });
 });

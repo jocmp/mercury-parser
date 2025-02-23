@@ -27,7 +27,7 @@ describe('WiredExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('WiredExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'An Ode to the Rosetta Spacecraft as It Flings Itself Into a Comet'
       );
@@ -50,7 +50,7 @@ describe('WiredExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Emma Grey Ellis');
+      assert.strictEqual(author, 'Emma Grey Ellis');
     });
 
     it('returns the date_published', async () => {
@@ -60,7 +60,7 @@ describe('WiredExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published.split('T')[0], '2016-09-30');
+      assert.strictEqual(date_published.split('T')[0], '2016-09-30');
     });
 
     it('returns the lead_image_url', async () => {
@@ -70,7 +70,7 @@ describe('WiredExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media.wired.com/photos/5926b676af95806129f50602/191:100/w_1280,c_limit/Rosetta_impact-1.jpg'
       );
@@ -94,7 +94,7 @@ describe('WiredExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "Today, the European Space Agency's Rosetta spacecraft will engage its thrusters for one"
       );

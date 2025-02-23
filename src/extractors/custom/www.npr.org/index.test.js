@@ -24,7 +24,7 @@ describe('WwwNprOrgExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwNprOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Jury Finds Dylann Roof Guilty In S.C. Church Shooting'
       );
@@ -47,7 +47,7 @@ describe('WwwNprOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Rebecca Hersher');
+      assert.strictEqual(author, 'Rebecca Hersher');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwNprOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-15T20:33:00.000Z');
+      assert.strictEqual(date_published, '2016-12-15T20:33:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwNprOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media.npr.org/assets/img/2016/12/15/ap_16342669033405_wide-e76ba54ba052acbbbe4b9bd73bd429e8d5ca58c7.jpg?s=1400'
       );
@@ -91,7 +91,7 @@ describe('WwwNprOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Dylann Roof is escorted from the Shelby Police Department in Shelby, N.C., on'
       );

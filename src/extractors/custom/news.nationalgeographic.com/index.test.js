@@ -26,7 +26,7 @@ describe('NewsNationalgeographicComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('NewsNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Here’s Why Your Office May Be Too Hot or Cold: Gender Bias'
       );
@@ -49,7 +49,7 @@ describe('NewsNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2015-08-03T17:45:00.000Z');
+      assert.strictEqual(date_published, '2015-08-03T17:45:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -59,7 +59,7 @@ describe('NewsNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Do you argue about the temperature in your office or home? Find out what often decides it, and tell us your preference.'
       );
@@ -72,7 +72,7 @@ describe('NewsNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://news.nationalgeographic.com/content/dam/news/2015/08/03/temperaturegenderbias/02tempgenderbias.ngsversion.1438795800319.jpg'
       );
@@ -96,7 +96,7 @@ describe('NewsNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Many couples fight about it at home. No, it’s not money, sex, or'
       );

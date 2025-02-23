@@ -22,7 +22,7 @@ describe('PitchforkComExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -30,13 +30,13 @@ describe('PitchforkComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Lust for Youth: Lust for Youth`);
+      assert.strictEqual(title, `Lust for Youth: Lust for Youth`);
     });
 
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Larry Fitzmaurice');
+      assert.strictEqual(author, 'Larry Fitzmaurice');
     });
 
     it('returns the date_published', async () => {
@@ -45,13 +45,13 @@ describe('PitchforkComExtractor', () => {
         .format()
         .split('T')[0];
 
-      assert.equal(new_date_published, '2019-06-07');
+      assert.strictEqual(new_date_published, '2019-06-07');
     });
 
     it('returns the dek', async () => {
       const { dek } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         dek,
         "Hannes Norrvide's long-running coldwave synth project breaks into the greener pastures of Depeche Mode-style new wave."
       );
@@ -60,7 +60,7 @@ describe('PitchforkComExtractor', () => {
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://media.pitchfork.com/photos/5cefef2693a53659ed1ee6b8/16:9/w_1280,c_limit/LustForYouth_LustForYouth.jpg`
       );
@@ -78,7 +78,7 @@ describe('PitchforkComExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Coldwave never cared about you. The minimalistic, machine-driven sound that bubbled up twice'
       );
@@ -87,7 +87,7 @@ describe('PitchforkComExtractor', () => {
     it('returns the score', async () => {
       const { score } = await result;
 
-      assert.equal(score, '6.2');
+      assert.strictEqual(score, '6.2');
     });
   });
 });

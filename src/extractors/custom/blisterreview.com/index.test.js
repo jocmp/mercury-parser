@@ -23,7 +23,7 @@ describe('BlisterreviewComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('BlisterreviewComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `2021-2022 Line Outline`);
+      assert.strictEqual(title, `2021-2022 Line Outline`);
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('BlisterreviewComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `Luke Koppa`);
+      assert.strictEqual(author, `Luke Koppa`);
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('BlisterreviewComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-09T14:00:15.000Z`);
+      assert.strictEqual(date_published, `2019-04-09T14:00:15.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
@@ -63,7 +63,7 @@ describe('BlisterreviewComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://blisterreview.com/wp-content/uploads/2019/02/featured-1.jpg`
       );
@@ -87,7 +87,7 @@ describe('BlisterreviewComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Ski: 2021-2022 Line Outline, 186 cmAvailable Lengths: 178, 186 cmBlister’s Measured Tip-to-Tail Length:'
       );

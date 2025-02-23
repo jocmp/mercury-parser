@@ -14,7 +14,7 @@ describe('Generic Extractor Utils', () => {
       `;
       let $ = cheerio.load(html);
       $ = stripUnlikelyCandidates($);
-      assert.equal($.html(), html);
+      assert.strictEqual($.html(), html);
     });
 
     it('strips unlikely matches from the doc', () => {

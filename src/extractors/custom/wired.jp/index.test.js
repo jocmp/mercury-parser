@@ -26,7 +26,7 @@ describe('WiredJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `あの有名フォント「Helvetica」は、こうしてデジタル時代に生まれ変わった`
       );
@@ -49,7 +49,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Arielle Pardes');
+      assert.strictEqual(author, 'Arielle Pardes');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-25T07:00:25.000Z`);
+      assert.strictEqual(date_published, `2019-04-25T07:00:25.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         '世界で最も多く使われているであろうフォントのひとつ「Helvetica」が、このほどリニューアルを遂げた。まるで水のように生活に浸透しているフォントのデザインは、いかに伝統を守りながら、デジタル時代に合わせて最適化されたのか。'
       );
@@ -82,7 +82,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://media.wired.jp/photos/61ce7c3feca9c13f76376390/16:9/w_1280,c_limit/5d08c7d457813df29e12d93c9b6f869f.jpg`
       );
@@ -106,7 +106,7 @@ describe('WiredJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '「Helvetica」は、おそらく世界で最もよく使われているフォントだろう。1957年に誕生したこの書体を紹介する動画は、「Helveticaは水のようだ」というナレーションで始まる。サンセリフの簡素な字形には「ユビキタス」という形容詞がぴったりで、ニューヨーク市の地下鉄の案内表示や、アメリカン航空、アメリカンアパレルといった企業のロゴに採用されている。このフォントで「John'
       );

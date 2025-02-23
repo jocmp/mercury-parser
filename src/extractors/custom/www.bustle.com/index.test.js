@@ -24,7 +24,7 @@ describe('WwwBustleComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,10 @@ describe('WwwBustleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'The Transformative Power Of Feminist Compliments');
+      assert.strictEqual(
+        title,
+        'The Transformative Power Of Feminist Compliments'
+      );
     });
 
     it('returns the author', async () => {
@@ -44,7 +47,7 @@ describe('WwwBustleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Teresa Newsome');
+      assert.strictEqual(author, 'Teresa Newsome');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +57,7 @@ describe('WwwBustleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-02T18:28:24.000Z');
+      assert.strictEqual(date_published, '2016-12-02T18:28:24.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -64,7 +67,7 @@ describe('WwwBustleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://imgix.bustle.com/rehost/2016/12/12/e2e85084-7022-487b-87ea-8b4e826e1fb8.jpg?w=1200&h=630&fit=crop&crop=faces&fm=jpg'
       );
@@ -88,7 +91,7 @@ describe('WwwBustleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "When I log into my Facebook these days, I'm pretty much prepared for"
       );

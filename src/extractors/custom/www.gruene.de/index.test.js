@@ -23,7 +23,7 @@ describe('WwwGrueneDeExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Wir kämpfen für gute Arbeit`);
+      assert.strictEqual(title, `Wir kämpfen für gute Arbeit`);
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, null);
+      assert.strictEqual(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -63,7 +63,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     // BUG: Out of a reason I don't understand, the lead_image_url is no longer found
@@ -76,7 +76,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.gruene.de/images/20190423-Arbeit-chris-ralston-unsplash.jpg?quality=85&width=1360&height=960&mode=crop&signature=58842ccbf3ef01c62bd1f79b66e0dce8743cd017`
       );
@@ -101,7 +101,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Auf dem Arbeitsmarkt hat sich einiges verbessert, aber es ist lange nicht alles'
       );
@@ -116,7 +116,7 @@ describe('WwwGrueneDeExtractor', () => {
           .text(),
         7
       );
-      assert.equal(
+      assert.strictEqual(
         lastParagraphText,
         'Wir Grüne wollen den Arbeitsmarkt so gestalten,'
       );

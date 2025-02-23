@@ -13,7 +13,7 @@ describe('cleanTitle(title, { url, $ })', () => {
       </div>
     `);
 
-    assert.equal(cleanTitle(title, { url: '', $ }), title);
+    assert.strictEqual(cleanTitle(title, { url: '', $ }), title);
   });
 
   it('removes HTML tags from titles', () => {
@@ -22,7 +22,10 @@ describe('cleanTitle(title, { url, $ })', () => {
     );
     const title = $('h1').html();
 
-    assert.equal(cleanTitle(title, { url: '', $ }), 'This Is the Real Title');
+    assert.strictEqual(
+      cleanTitle(title, { url: '', $ }),
+      'This Is the Real Title'
+    );
   });
 
   it('trims extraneous spaces', () => {
@@ -31,6 +34,6 @@ describe('cleanTitle(title, { url, $ })', () => {
       '<div><h1>This Is the <em>Real</em> Title</h1></div>'
     );
 
-    assert.equal(cleanTitle(title, { url: '', $ }), title.trim());
+    assert.strictEqual(cleanTitle(title, { url: '', $ }), title.trim());
   });
 });

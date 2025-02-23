@@ -24,7 +24,7 @@ describe('WwwAmericanowComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwAmericanowComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Kellyanne Conway Named Counselor To Trump');
+      assert.strictEqual(title, 'Kellyanne Conway Named Counselor To Trump');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwAmericanowComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Ray Brown');
+      assert.strictEqual(author, 'Ray Brown');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwAmericanowComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-22T14:22:19.000Z');
+      assert.strictEqual(date_published, '2016-12-22T14:22:19.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -64,7 +64,7 @@ describe('WwwAmericanowComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://americanow.s3-us-west-1.amazonaws.com/an_prod/s3fs-public/admin/ANDefault.jpg'
       );
@@ -88,7 +88,7 @@ describe('WwwAmericanowComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'President-elect Donald Trump has named Kellyanne Conway, the campaign manager who helped him'
       );

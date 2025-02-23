@@ -26,7 +26,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `China snubs Imran Khan, says resolve J&K bilaterally`
       );
@@ -49,7 +49,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `Saibal Dasgupta`);
+      assert.strictEqual(author, `Saibal Dasgupta`);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-10-09T05:35:00.000Z');
+      assert.strictEqual(date_published, '2019-10-09T05:35:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -69,7 +69,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://static.toiimg.com/thumb/msid-71496420,width-1070,height-580,imgsize-83878,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg`
       );
@@ -93,7 +93,7 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'This story is from October 9, 2019AA+Text SizeSmallMediumLargeChina snubs Imran Khan, says resolve'
       );

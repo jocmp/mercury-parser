@@ -9,21 +9,21 @@ describe('Scoring utils', () => {
       const $ = cheerio.load('<p><em>Foo</em> bar</p>');
       const score = scoreParagraph($('p').first());
 
-      assert.equal(score, 0);
+      assert.strictEqual(score, 0);
     });
 
     it('returns 1 if text is > 25 chars and has 0 commas', () => {
       const $ = cheerio.load('<p>Lorem ipsum dolor sit amet</p>');
       const score = scoreParagraph($('p').first());
 
-      assert.equal(score, 1);
+      assert.strictEqual(score, 1);
     });
 
     it('returns 3 if text is > 25 chars and has 2 commas', () => {
       const $ = cheerio.load('<p>Lorem ipsum, dolor sit, amet</p>');
       const score = scoreParagraph($('p').first());
 
-      assert.equal(score, 3);
+      assert.strictEqual(score, 3);
     });
 
     it('returns 19 if text has 15 commas, ~600 chars', () => {
@@ -32,7 +32,7 @@ describe('Scoring utils', () => {
       );
       const score = scoreParagraph($('p').first());
 
-      assert.equal(score, 19);
+      assert.strictEqual(score, 19);
     });
   });
 });

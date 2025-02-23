@@ -26,7 +26,7 @@ describe('JapanZdnetComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,10 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Raspberry Pi競合--Ubuntuが動く「UP Core」を見る`);
+      assert.strictEqual(
+        title,
+        `Raspberry Pi競合--Ubuntuが動く「UP Core」を見る`
+      );
     });
 
     it('returns the author', async () => {
@@ -46,7 +49,7 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `ZDNet Japan Staff`);
+      assert.strictEqual(author, `ZDNet Japan Staff`);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +59,7 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-27T23:00:00.000Z`);
+      assert.strictEqual(date_published, `2019-04-27T23:00:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +69,7 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +79,7 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://japan.zdnet.com/storage/2019/04/26/97670c9f883bf3f9e11a492df245717c/190426_original_1280x960.jpg`
       );
@@ -100,7 +103,7 @@ describe('JapanZdnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '2017年にリリース予定の低価格ポケットサイズコンピュータは、「Android'
       );

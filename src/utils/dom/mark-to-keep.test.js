@@ -19,7 +19,7 @@ describe('markToKeep($)', () => {
 
     const result = markToKeep($('*').first(), $);
 
-    assert.equal(result('iframe.mercury-parser-keep').length, 2);
+    assert.strictEqual(result('iframe.mercury-parser-keep').length, 2);
 
     if (!$.browser) {
       assertClean(

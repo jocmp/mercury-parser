@@ -25,7 +25,7 @@ describe('ApartmentTherapyExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -35,7 +35,7 @@ describe('ApartmentTherapyExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'A Light Filled LA Loft');
+      assert.strictEqual(title, 'A Light Filled LA Loft');
     });
 
     it('returns the author', async () => {
@@ -45,7 +45,7 @@ describe('ApartmentTherapyExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Apartment Therapy Submissions');
+      assert.strictEqual(author, 'Apartment Therapy Submissions');
     });
 
     it('returns the date_published', async () => {
@@ -55,7 +55,7 @@ describe('ApartmentTherapyExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-10-13T21:00:00.000Z');
+      assert.strictEqual(date_published, '2016-10-13T21:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -65,7 +65,7 @@ describe('ApartmentTherapyExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://atmedia.imgix.net/9332fdca908b1fcc5c9a6891b458820718239950?w=1500&fit=max'
       );
@@ -89,7 +89,7 @@ describe('ApartmentTherapyExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Name: Ashley Location: Downtown — Los Angeles, California Welcome to our sunny and'
       );

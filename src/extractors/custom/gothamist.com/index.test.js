@@ -23,7 +23,7 @@ describe('GothamistComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Helter Shelter: NYC's Fallout Shelters Basically Don't Exist Anymore"
       );
@@ -46,7 +46,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Nathan\xa0Tempey');
+      assert.strictEqual(author, 'Nathan\xa0Tempey');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-03-09T15:15:00.000Z');
+      assert.strictEqual(date_published, '2017-03-09T15:15:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +76,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cms.prod.nypr.digital/images/42584/fill-1200x650/'
       );
@@ -100,7 +100,7 @@ describe('GothamistComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "You've seen the placards around town, beside the front door on apartment buildings,"
       );

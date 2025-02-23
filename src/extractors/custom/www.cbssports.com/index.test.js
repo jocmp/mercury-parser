@@ -24,7 +24,7 @@ describe('WwwCbssportsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Why, despite the complaints of many, MLB players are actually not overpaid'
       );
@@ -47,7 +47,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Matt Snyder');
+      assert.strictEqual(author, 'Matt Snyder');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-19T19:19:00.000Z');
+      assert.strictEqual(date_published, '2016-12-19T19:19:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Fan backlash against league-wide salaries is wholly misguided'
       );
@@ -80,7 +80,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://sportshub.cbsistatic.com/i/r/2016/12/19/4afa0e8e-b3b8-4c44-aca2-688cd11e9b39/thumbnail/1200x675/eb0d69f0915472ba34ac3490d52d2233/yoenis-cespedes-121916.jpg'
       );
@@ -104,7 +104,7 @@ describe('WwwCbssportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "Once the World Series ends, we know we're going to be treated to"
       );

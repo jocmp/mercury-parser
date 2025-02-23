@@ -27,7 +27,7 @@ describe('WwwNationalgeographicComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,10 @@ describe('WwwNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'How Today’s Toys May Be Harming Your Daughter');
+      assert.strictEqual(
+        title,
+        'How Today’s Toys May Be Harming Your Daughter'
+      );
     });
 
     it('returns the date_published', async () => {
@@ -50,7 +53,7 @@ describe('WwwNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(new_date_published, '2016-12-15');
+      assert.strictEqual(new_date_published, '2016-12-15');
     });
 
     it('returns the dek', async () => {
@@ -60,7 +63,7 @@ describe('WwwNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The long history of separate toys for girls and boys shows that marketing by gender has a profound impact on children.'
       );
@@ -73,7 +76,7 @@ describe('WwwNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://i.natgeofe.com/n/2d5941b3-34f7-4db7-a8d7-eca792637b79/gendertoysOG_16x9.jpg?w=1200'
       );
@@ -97,7 +100,7 @@ describe('WwwNationalgeographicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'For adults, play is a break from life. For children, especially in the'
       );

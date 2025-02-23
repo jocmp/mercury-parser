@@ -26,7 +26,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `パスワードロック未実施のUSBメモリを電車内で紛失の可能性（阪南大学）`
       );
@@ -49,7 +49,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-03-04T23:15:11.000Z`);
+      assert.strictEqual(date_published, `2019-03-04T23:15:11.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         '阪南大学は3月4日、同学の専任教員が学生情報等を保存したUSBメモリを紛失したことが判明したと発表した。'
       );
@@ -82,7 +82,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://scan.netsecurity.ne.jp/imgs/ogp_f/26698.jpg`
       );
@@ -106,7 +106,7 @@ describe('ScanNetsecurityNeJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '公式サイト リリース（個人情報を含むUSBメモリ紛失のお詫びとお知らせ）'
       );

@@ -15,7 +15,7 @@ describe('findTopCandidate($)', () => {
 
     const $$topCandidate = findTopCandidate($);
 
-    assert.equal(getScore($$topCandidate), 100);
+    assert.strictEqual(getScore($$topCandidate), 100);
   });
 
   it('finds the top candidate from a nested case', () => {
@@ -30,7 +30,7 @@ describe('findTopCandidate($)', () => {
     const $$topCandidate = findTopCandidate($);
 
     // this is wrapped in a div so checking the score of the first child
-    assert.equal(getScore($$topCandidate.first()), 50);
+    assert.strictEqual(getScore($$topCandidate.first()), 50);
   });
 
   it('ignores tags like BR', () => {
@@ -43,7 +43,7 @@ describe('findTopCandidate($)', () => {
 
     const $topCandidate = findTopCandidate($);
 
-    assert.equal(getScore($topCandidate), 50);
+    assert.strictEqual(getScore($topCandidate), 50);
   });
 
   it('returns BODY if no candidates found', () => {
@@ -61,7 +61,7 @@ describe('findTopCandidate($)', () => {
     // browser won't allow body tag to be placed arbitrarily/loaded on the page,
     // so we tranform it in cheerio-query, so this test would fail.
     if (!$.browser) {
-      assert.equal($topCandidate.get(0).tagName, 'body');
+      assert.strictEqual($topCandidate.get(0).tagName, 'body');
     }
   });
 
@@ -75,6 +75,6 @@ describe('findTopCandidate($)', () => {
     $ = scoreContent($);
 
     const $topCandidate = findTopCandidate($);
-    assert.equal($($topCandidate).text().length, 3652);
+    assert.strictEqual($($topCandidate).text().length, 3652);
   });
 });

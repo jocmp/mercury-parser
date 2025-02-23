@@ -24,7 +24,7 @@ describe('WwwAlComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwAlComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Two arrested in multi-state debit card skimming scheme'
       );
@@ -47,7 +47,7 @@ describe('WwwAlComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Mike Cason | mcason@al.com');
+      assert.strictEqual(author, 'Mike Cason | mcason@al.com');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwAlComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-22T23:47:00.000Z');
+      assert.strictEqual(date_published, '2016-12-22T23:47:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwAlComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.al.com/resizer/YO-Vb3V3oDljjYrYT6GRgALxIDE=/1280x0/smart/advancelocal-adapter-image-uploads.s3.amazonaws.com/image.al.com/home/bama-media/width2048/img/news_birmingham_impact/photo/skimming-scheme-seized-cash-and-cardsjpg-db415ce3fd130cd1.jpg'
       );
@@ -91,7 +91,7 @@ describe('WwwAlComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'skimming scheme seized cash and cards.jpgCash and cards seized during the arrest of'
       );

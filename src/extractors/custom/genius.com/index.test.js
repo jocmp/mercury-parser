@@ -24,7 +24,7 @@ describe('GeniusComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('GeniusComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Purple Rain`);
+      assert.strictEqual(title, `Purple Rain`);
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('GeniusComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Prince and the Revolution');
+      assert.strictEqual(author, 'Prince and the Revolution');
     });
 
     it('returns the date_published', async () => {
@@ -55,7 +55,7 @@ describe('GeniusComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(newDatePublished.split('T')[0], '1984-06-25');
+      assert.strictEqual(newDatePublished.split('T')[0], '1984-06-25');
     });
 
     it('returns the lead_image_url', async () => {
@@ -65,7 +65,7 @@ describe('GeniusComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://images.genius.com/da3381a38218928924c94db9ea59543b.1000x1000x1.jpg`
       );
@@ -89,7 +89,7 @@ describe('GeniusComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '[Verse 1] I never meant to cause you any sorrow I never meant'
       );

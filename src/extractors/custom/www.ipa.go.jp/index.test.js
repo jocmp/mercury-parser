@@ -26,7 +26,7 @@ describe('WwwIpaGoJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `ゴールデンウィークにおける情報セキュリティに関する注意喚起`
       );
@@ -49,7 +49,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-04-01T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-04-01T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +79,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -100,7 +100,7 @@ describe('WwwIpaGoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'ゴールデンウィークまで1ヶ月を切りました。今年は5月1日に平成から令和に改元されることに伴い、10日間の超大型連休が控えています。その前後には、改元に便乗した新たな手口が発生することが懸念されます。そこで、例年より早く「ゴールデンウィークにおける情報セキュリティに関する注意喚起」を行います。'
       );

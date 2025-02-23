@@ -25,7 +25,7 @@ describe('WwwTodayComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -35,7 +35,7 @@ describe('WwwTodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Take a tour inside Zsa Zsa Gabor's former Palm Springs retreat — it's for sale!"
       );
@@ -48,7 +48,7 @@ describe('WwwTodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Melissa Allison');
+      assert.strictEqual(author, 'Melissa Allison');
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +61,7 @@ describe('WwwTodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(new_date_published, '2016-12-22');
+      assert.strictEqual(new_date_published, '2016-12-22');
     });
 
     it('returns the lead_image_url', async () => {
@@ -71,7 +71,7 @@ describe('WwwTodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1200x630_center,f_auto,q_auto:best/newscms/2016_51/1183946/zsa-zsa-pool-2-today-161222-tease.jpg'
       );
@@ -95,7 +95,7 @@ describe('WwwTodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '“I am a marvelous housekeeper. Every time I leave a man, I keep'
       );

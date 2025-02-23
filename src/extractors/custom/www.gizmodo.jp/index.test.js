@@ -26,7 +26,7 @@ describe('WwwGizmodoJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Suicaでガシャれる。電子マネー対応ガシャポンが稼働開始`
       );
@@ -49,7 +49,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '小暮ひさのり');
+      assert.strictEqual(author, '小暮ひさのり');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-19T11:00:00.000Z`);
+      assert.strictEqual(date_published, `2019-04-19T11:00:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +79,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://assets.media-platform.com/gizmodo/dist/images/2019/04/18/190418gak00-w960.jpg`
       );
@@ -103,7 +103,7 @@ describe('WwwGizmodoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, 'Image:');
+      assert.strictEqual(first13, 'Image:');
     });
   });
 });

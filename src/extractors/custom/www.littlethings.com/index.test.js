@@ -27,7 +27,7 @@ describe('LittleThingsExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('LittleThingsExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Amazon Has A Private Food Brand That Just Launched 100 New Products For Fall'
       );
@@ -50,7 +50,7 @@ describe('LittleThingsExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Bethany Braun-Silva');
+      assert.strictEqual(author, 'Bethany Braun-Silva');
     });
 
     it('returns the lead_image_url', async () => {
@@ -60,7 +60,7 @@ describe('LittleThingsExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images.ctfassets.net/f60q1anpxzid/6qQL1s7jrdjipeebu7wkNB/80ba587f55cc9f3673582f493dc611f1/04764069-41b3-48d3-be5a-4cde1c41.jpeg?w=1800&q=50&fm=jpg&fl=progressive'
       );
@@ -84,7 +84,7 @@ describe('LittleThingsExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "One of the best things about fall is all the food offerings. What's"
       );

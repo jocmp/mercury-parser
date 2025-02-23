@@ -23,7 +23,7 @@ describe('HellogigglesComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('HellogigglesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Your comfy-chic holiday outfit, illustrated');
+      assert.strictEqual(title, 'Your comfy-chic holiday outfit, illustrated');
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('HellogigglesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Cindy mangomini');
+      assert.strictEqual(author, 'Cindy mangomini');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('HellogigglesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-21T21:05:23.000Z');
+      assert.strictEqual(date_published, '2016-12-21T21:05:23.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -63,7 +63,7 @@ describe('HellogigglesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static.onecms.io/wp-content/uploads/sites/13/2016/12/21/HG-Xmas-NY-Cindy-Mangomini1.jpg'
       );
@@ -87,7 +87,7 @@ describe('HellogigglesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'It’s almost that time! The time to quietly panic and throw all the'
       );

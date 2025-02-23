@@ -23,7 +23,7 @@ describe('WwwAolComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwAolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Son of slain police officer given teddy bears made from dad's uniform"
       );
@@ -46,7 +46,7 @@ describe('WwwAolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'AOL Staff');
+      assert.strictEqual(author, 'AOL Staff');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwAolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-01T18:01:00.000Z');
+      assert.strictEqual(date_published, '2016-12-01T18:01:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('WwwAolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://o.aolcdn.com/dims-shared/dims3/GLOB/crop/475x312+0+0/resize/1028x675!/format/jpg/quality/85/http%3A%2F%2Fo.aolcdn.com%2Fhss%2Fstorage%2Fmidas%2Fc8242ab14e089c284b031379d025d64%2F204656928%2FScreen%2BShot%2B2016-12-01%2Bat%2B1.15.51%2BPM.png'
       );
@@ -90,7 +90,7 @@ describe('WwwAolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'ST. LOUIS, MO (KTVI) – Amid unimaginable grief, the widow of slain Saint'
       );

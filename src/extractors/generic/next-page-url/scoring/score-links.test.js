@@ -20,7 +20,7 @@ describe('scoreLinks(links)', () => {
       $,
     });
 
-    assert.equal(typeof scoredPages, 'object');
+    assert.strictEqual(typeof scoredPages, 'object');
   });
 
   it('returns null if no possible pages', () => {
@@ -36,6 +36,6 @@ describe('scoreLinks(links)', () => {
       $,
     });
 
-    assert.equal(scoredPages, null);
+    assert.strictEqual(scoredPages, null);
   });
 });

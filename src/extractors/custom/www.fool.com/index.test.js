@@ -24,7 +24,7 @@ describe('WwwFoolComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Why Amazon and Activision Blizzard Are Betting on eSports As Gaming's Next Big Thing"
       );
@@ -47,7 +47,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Keith Noonan');
+      assert.strictEqual(author, 'Keith Noonan');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-09T15:05:00.000Z');
+      assert.strictEqual(date_published, '2017-01-09T15:05:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "Some of tech's biggest players see huge potential in the global reach and accessibility of eSports."
       );
@@ -80,7 +80,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://g.foolcdn.com/editorial/images/420446/gettyimages-502549392-1.jpg'
       );
@@ -104,7 +104,7 @@ describe('WwwFoolComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Image source: Getty Images. The idea that video games are on track to'
       );

@@ -10,7 +10,7 @@ describe('GenericDekExtractor', () => {
       const metaCache = [];
       const result = GenericDekExtractor.extract({ $, metaCache });
 
-      assert.equal(result, null);
+      assert.strictEqual(result, null);
     });
   });
 });

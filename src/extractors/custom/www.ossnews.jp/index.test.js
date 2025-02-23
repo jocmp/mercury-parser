@@ -26,7 +26,7 @@ describe('WwwOssnewsJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `【OSS】2018年のオープンソースプロジェクト10選---「Visual Studio Code」「Vault」「Angular CLI」`
       );
@@ -49,7 +49,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-03-15T00:43:00.000Z');
+      assert.strictEqual(date_published, '2019-03-15T00:43:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +79,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.ossnews.jp/upload/contents/d31621685b4315555b30c2b16a66fd3b.jpg`
       );
@@ -103,7 +103,7 @@ describe('WwwOssnewsJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, 'OSS×クラウド最新TOPICS 2019年3月15日 09:43');
+      assert.strictEqual(first13, 'OSS×クラウド最新TOPICS 2019年3月15日 09:43');
     });
   });
 });

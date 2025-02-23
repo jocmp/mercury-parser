@@ -25,7 +25,7 @@ describe('WwwChicagotribuneComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -35,7 +35,7 @@ describe('WwwChicagotribuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Energy Department rejects Trump's request to name climate change workers, who remain worried"
       );
@@ -48,7 +48,7 @@ describe('WwwChicagotribuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Joe Davidson');
+      assert.strictEqual(author, 'Joe Davidson');
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +61,7 @@ describe('WwwChicagotribuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(new_date_published, '2016-12-13');
+      assert.strictEqual(new_date_published, '2016-12-13');
     });
 
     it('returns the lead_image_url', async () => {
@@ -71,7 +71,7 @@ describe('WwwChicagotribuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.chicagotribune.com/resizer/tP-TOTSSCwh-DB2Tl_zeREXAVqc=/1200x630/filters:format(jpg):quality(70)/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/LNQKCWO2SFHNLEVJV7AIVSBPWA.jpg'
       );
@@ -95,7 +95,7 @@ describe('WwwChicagotribuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Global warming - "it\'s a hoax."Donald Trump has said that more than once.So'
       );

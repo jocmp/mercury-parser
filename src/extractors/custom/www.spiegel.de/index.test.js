@@ -23,13 +23,13 @@ describe('WwwSpiegelDeExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `CES 2025: Nvidia stellt KI-Supercomputer im Schreibtisch-Format vor`
       );
@@ -38,19 +38,19 @@ describe('WwwSpiegelDeExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'DER SPIEGEL');
+      assert.strictEqual(author, 'DER SPIEGEL');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2025-01-07T08:41:00.000Z`);
+      assert.strictEqual(date_published, `2025-01-07T08:41:00.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.prod.www.spiegel.de/images/8fb25d3c-b196-43b7-bf9d-ad56918e35d5_w1200_r1.778_fpx56.57_fpy50.88.jpg`
       );
@@ -68,7 +68,7 @@ describe('WwwSpiegelDeExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Der Chipkonzern Nvidia will einen KI-Supercomputer auf Schreibtische bringen. Firmenchef Jensen Huang stellte'
       );

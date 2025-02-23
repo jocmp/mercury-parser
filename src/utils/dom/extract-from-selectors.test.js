@@ -11,7 +11,7 @@ describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
       </html>
     `);
 
-    assert.equal(extractFromSelectors($, ['.author']), 'Adam');
+    assert.strictEqual(extractFromSelectors($, ['.author']), 'Adam');
   });
 
   it('ignores comments', () => {
@@ -22,7 +22,7 @@ describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
         </div>
       </html>`);
 
-    assert.equal(extractFromSelectors($, ['.author']), null);
+    assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
 
   it('skips a selector if it matches multiple nodes', () => {
@@ -35,7 +35,7 @@ describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
       </html>
     `);
 
-    assert.equal(extractFromSelectors($, ['.author']), null);
+    assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
 
   it('skips a node with too many children', () => {
@@ -50,6 +50,6 @@ describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
       </html>
     `);
 
-    assert.equal(extractFromSelectors($, ['.author']), null);
+    assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
 });

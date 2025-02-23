@@ -16,7 +16,7 @@ describe('WwwUsmagazineComExtractor', () => {
     const url =
       'http://www.usmagazine.com/celebrity-news/news/lady-gaga-shares-pic-of-ex-taylor-kinney-with-her-mom-w454419';
     const extractor = getExtractor(url);
-    assert.equal(extractor.domain, URL.parse(url).hostname);
+    assert.strictEqual(extractor.domain, URL.parse(url).hostname);
   });
 
   it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwUsmagazineComExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(
+    assert.strictEqual(
       title,
       'Lady Gaga Shares Photo of Ex Taylor Kinney Hanging With Her Mom and Now We’re Confused'
     );
@@ -53,7 +53,7 @@ describe('WwwUsmagazineComExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(author, 'Megan French');
+    assert.strictEqual(author, 'Megan French');
   });
 
   it('returns the date_published', async () => {
@@ -70,7 +70,7 @@ describe('WwwUsmagazineComExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(date_published, '2016-12-07T20:53:36.000Z');
+    assert.strictEqual(date_published, '2016-12-07T20:53:36.000Z');
   });
 
   it('returns the lead_image_url', async () => {
@@ -87,7 +87,7 @@ describe('WwwUsmagazineComExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(
+    assert.strictEqual(
       lead_image_url,
       'https://i0.wp.com/www.usmagazine.com/wp-content/uploads/lady-gaga-taylor-kinney-9662aa39-cb01-4b53-9aa0-7aa8c6e3e94f.jpg?crop=0px%2C0px%2C1500px%2C788px&resize=1200%2C630&ssl=1&quality=82&strip=all'
     );
@@ -115,7 +115,7 @@ describe('WwwUsmagazineComExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(
+    assert.strictEqual(
       first13,
       'The Little Monsters are praying for a reunion. Lady Gaga shared a photo'
     );

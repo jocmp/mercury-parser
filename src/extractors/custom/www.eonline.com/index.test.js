@@ -24,7 +24,7 @@ describe('WwwEonlineComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwEonlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Ryan Gosling's Feelings About Fatherhood Will Make Your Heart Sing"
       );
@@ -47,7 +47,7 @@ describe('WwwEonlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Zach Johnson');
+      assert.strictEqual(author, 'Zach Johnson');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwEonlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-12T14:00:00.000Z');
+      assert.strictEqual(date_published, '2016-12-12T14:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwEonlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://akns-images.eonline.com/eol_images/Entire_Site/2016117/rs_600x600-161207101544-600.ryan-gosling-gq.12716.jpg?fit=around%7C1080:1080&output-quality=90&crop=1080:1080;center,top'
       );
@@ -91,7 +91,7 @@ describe('WwwEonlineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "Ryan Gosling's most cherished role won't win him any Hollywood awards. With his"
       );

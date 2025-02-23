@@ -23,7 +23,7 @@ describe('MoneyCnnComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Hundreds of Chicago O'Hare airport workers go on strike"
       );
@@ -46,7 +46,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Julia Horowitz');
+      assert.strictEqual(author, 'Julia Horowitz');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-11-29T03:33:08.000Z');
+      assert.strictEqual(date_published, '2016-11-29T03:33:08.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "Heads up, travelers: Hundreds of workers are striking at Chicago O'Hare International Airport on Tuesday."
       );
@@ -79,7 +79,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://i2.cdn.turner.com/money/dam/assets/161118102423-ohare-airport-strike-780x439.jpg'
       );
@@ -103,7 +103,7 @@ describe('MoneyCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Janitors, baggage handlers, cabin cleaners and wheelchair attendants are asking for a $15'
       );

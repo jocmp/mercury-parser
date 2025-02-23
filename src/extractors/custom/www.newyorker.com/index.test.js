@@ -26,7 +26,7 @@ describe('NewYorkerExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Hacking, Cryptography, and the Countdown to Quantum Computing'
       );
@@ -49,7 +49,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Alex Hutchinson');
+      assert.strictEqual(author, 'Alex Hutchinson');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-09-26T14:04:22.000Z');
+      assert.strictEqual(date_published, '2016-09-26T14:04:22.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -69,7 +69,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media.newyorker.com/photos/59097a5e8b51cf59fc4239f5/16:9/w_1280,c_limit/Hutchinson-Quantum-Computing.jpg'
       );
@@ -93,7 +93,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'In a laboratory in Shanghai, researchers work on developing a quantum computer—a new'
       );
@@ -115,7 +115,7 @@ describe('NewYorkerExtractor', () => {
     it('returns the dek when present', async () => {
       const { dek } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         dek,
         'I had a sense that she was a good teacher, but I had no idea that she was such an influential one, and in the very area I had chosen.'
       );
@@ -124,7 +124,7 @@ describe('NewYorkerExtractor', () => {
     it('returns the date for magazine content', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2016-11-28T00:00:00.000Z');
+      assert.strictEqual(date_published, '2016-11-28T00:00:00.000Z');
     });
   });
 
@@ -143,7 +143,7 @@ describe('NewYorkerExtractor', () => {
     it('returns multiple authors', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Ysabel Yates Illustration by Claire Lordon');
+      assert.strictEqual(author, 'Ysabel Yates Illustration by Claire Lordon');
     });
   });
 });

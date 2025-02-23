@@ -27,7 +27,7 @@ describe('TakagihiromitsuJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `■ 改正NICT法がプチ炎上、工場出荷時共通初期パスワードが識別符号に当たらないことが理解されていない`
       );
@@ -50,7 +50,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '高木浩光');
+      assert.strictEqual(author, '高木浩光');
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +61,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(newDatePublished.split('T')[0], '2019-02-17');
+      assert.strictEqual(newDatePublished.split('T')[0], '2019-02-17');
     });
 
     it('returns the dek', async () => {
@@ -71,7 +71,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -81,7 +81,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -102,7 +102,7 @@ describe('TakagihiromitsuJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, '先月のこと、NHKニュースが「総務省');
+      assert.strictEqual(first13, '先月のこと、NHKニュースが「総務省');
     });
   });
 });

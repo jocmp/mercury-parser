@@ -24,7 +24,7 @@ describe('WwwCnnComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Why Donald Trump won’t change');
+      assert.strictEqual(title, 'Why Donald Trump won’t change');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Stephen Collinson');
+      assert.strictEqual(author, 'Stephen Collinson');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-11-29T10:39:35.000Z');
+      assert.strictEqual(date_published, '2016-11-29T10:39:35.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -64,7 +64,7 @@ describe('WwwCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media.cnn.com/api/v1/images/stellar/prod/161128072443-01-trump-1128.jpg?q=x_823,y_333,h_874,w_1554,c_crop/w_800'
       );
@@ -88,7 +88,7 @@ describe('WwwCnnComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Winning the presidency didn’t change Donald Trump – and it’s increasingly clear that'
       );

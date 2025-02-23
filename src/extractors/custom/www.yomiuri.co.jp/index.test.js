@@ -26,7 +26,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `バルセロナ、マンＵに先勝…ＣＬ準々決勝第１戦`);
+      assert.strictEqual(title, `バルセロナ、マンＵに先勝…ＣＬ準々決勝第１戦`);
     });
 
     it('returns the author', async () => {
@@ -46,7 +46,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-11T13:22:00.000Z`);
+      assert.strictEqual(date_published, `2019-04-11T13:22:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +76,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.yomiuri.co.jp/media/2019/04/20190411-OYT1I50076-1.jpg?type=ogp`
       );
@@ -100,7 +100,7 @@ describe('WwwYomiuriCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '先制点が決まり、喜ぶバルセロナのメッシ（左）とスアレス＝ロイター'
       );

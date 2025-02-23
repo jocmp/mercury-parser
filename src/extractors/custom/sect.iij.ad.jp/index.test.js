@@ -23,7 +23,7 @@ describe('SectIijAdJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Masscan と ZMap によるスキャンの違い`);
+      assert.strictEqual(title, `Masscan と ZMap によるスキャンの違い`);
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Masafumi Negishi');
+      assert.strictEqual(author, 'Masafumi Negishi');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-02-12T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-02-12T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -63,7 +63,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -73,7 +73,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://sect.iij.ad.jp/wp-content/uploads/2021/03/20190213_fig1-500x250.png`
       );
@@ -97,7 +97,7 @@ describe('SectIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'インターネット上の全アドレス空間を高速にスキャンするツールとして、Masscan'
       );

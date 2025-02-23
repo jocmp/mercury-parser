@@ -23,7 +23,7 @@ describe('PostlightComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Three Ways to Be the Thermostat`);
+      assert.strictEqual(title, `Three Ways to Be the Thermostat`);
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Gina Trapani');
+      assert.strictEqual(author, 'Gina Trapani');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2022-10-05T16:00:00.000Z`);
+      assert.strictEqual(date_published, `2022-10-05T16:00:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -63,7 +63,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Great leaders set the temperature, especially when stress is high.'
       );
@@ -76,7 +76,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://postlight.com/wp-content/uploads/2022/09/Be-The-Thermostat-1200-1.png?fit=1200%2C675`
       );
@@ -100,7 +100,7 @@ describe('PostlightComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Image: Brian Weaver One of the best pieces of advice I’ve ever received'
       );

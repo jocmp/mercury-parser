@@ -6,7 +6,7 @@ describe('cleanAuthor(author)', () => {
   it('removes the By from an author string', () => {
     const author = cleanAuthor('By Bob Dylan');
 
-    assert.equal(author, 'Bob Dylan');
+    assert.strictEqual(author, 'Bob Dylan');
   });
 
   it('trims trailing whitespace and line breaks', () => {
@@ -16,6 +16,6 @@ describe('cleanAuthor(author)', () => {
     `;
     const author = cleanAuthor(text);
 
-    assert.equal(author, 'Bob Dylan');
+    assert.strictEqual(author, 'Bob Dylan');
   });
 });

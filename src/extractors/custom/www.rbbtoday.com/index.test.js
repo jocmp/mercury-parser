@@ -26,7 +26,7 @@ describe('WwwRbbtodayComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `小さいのに高性能！Ankerのモバイルプロジェクターで我が家がホームシアターに`
       );
@@ -49,7 +49,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '《KT》');
+      assert.strictEqual(author, '《KT》');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-19T00:39:34.000Z`);
+      assert.strictEqual(date_published, `2019-04-19T00:39:34.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'もっぱら映画は映画館で見る派の筆者だが、最近、HuluやNetflixなどの映像配信サービスで魅力的なドラマや映画、それもオリジナル作品が増えてきているように思う。'
       );
@@ -82,7 +82,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.rbbtoday.com/imgs/ogp_f/634815.jpg`
       );
@@ -106,7 +106,7 @@ describe('WwwRbbtodayComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'もっぱら映画は映画館で見る派の筆者だが、最近、HuluやNetflixなどの映像配信サービスで魅力的なドラマや映画、それもオリジナル作品が増えてきているように思う。'
       );

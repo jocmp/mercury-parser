@@ -22,13 +22,13 @@ describe('WwwPhoronixComExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review`
       );
@@ -37,19 +37,19 @@ describe('WwwPhoronixComExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Michael Larabel`);
+      assert.strictEqual(author, `Michael Larabel`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2024-12-21T14:31:00.000Z`);
+      assert.strictEqual(date_published, `2024-12-21T14:31:00.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&image=raspberrypi_5_1`
       );
@@ -67,7 +67,7 @@ describe('WwwPhoronixComExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The latest work that Raspberry Pi is working to upstream to the mainline'
       );

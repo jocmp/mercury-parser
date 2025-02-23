@@ -24,7 +24,7 @@ describe('QzComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('QzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Nigeria’s economy is making a comeback—but it’s still not happening fast enough'
       );
@@ -48,7 +48,7 @@ describe('QzComExtractor', () => {
 
     //   // Update these values with the expected values from
     //   // the article.
-    //   assert.equal(author, 'Yomi Kazeem');
+    //   assert.strictEqual(author, 'Yomi Kazeem');
     // });
 
     it('returns the date_published', async () => {
@@ -58,7 +58,7 @@ describe('QzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2020-02-24T16:26:29.000Z');
+      assert.strictEqual(date_published, '2020-02-24T16:26:29.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -68,7 +68,7 @@ describe('QzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://i.kinja-img.com/gawker-media/image/upload/q_75,w_1200,h_630,c_fill/e88c932321f288c23cf86931e591aa71.JPG'
       );
@@ -92,7 +92,7 @@ describe('QzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Since suffering a recession and full year of negative growth in 2016, Nigeria,'
       );

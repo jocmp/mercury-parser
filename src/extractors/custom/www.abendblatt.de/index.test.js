@@ -24,7 +24,7 @@ describe('WwwAbendblattDeExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Warum Mangos und Papayas jetzt teurer sind`);
+      assert.strictEqual(title, `Warum Mangos und Papayas jetzt teurer sind`);
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Melanie Wassink');
+      assert.strictEqual(author, 'Melanie Wassink');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2020-05-15T05:11:00.000Z');
+      assert.strictEqual(date_published, '2020-05-15T05:11:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -64,7 +64,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Obst wird auch in Corona-Zeiten weltweit transportiert. Doch es gibt Probleme, wie ein Besuch auf dem Hamburger Großmarkt zeigt'
       );
@@ -77,7 +77,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://img.abendblatt.de/img/wirtschaft/crop229123088/4422608426-w820-cv16_9-q85/Fruchtgrossmarkt.jpg`
       );
@@ -101,7 +101,7 @@ describe('WwwAbendblattDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Hamburg. Gabi Eutemüller und Eliane Steinmeyer stehen in einer Halle auf dem Gelände'
       );

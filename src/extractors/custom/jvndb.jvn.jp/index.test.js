@@ -23,7 +23,7 @@ describe('JvndbJvnJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `JVNDB-2018-013542 - JVN iPedia - 脆弱性対策情報データベース`
       );
@@ -46,7 +46,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-02-21T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-02-21T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +76,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -97,7 +97,7 @@ describe('JvndbJvnJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '概要 NETWAVE MNG6200 デバイスには、証明書・パスワードの管理に関する脆弱性が存在します。 CVSS による深刻度 (CVSS とは?) CVSS v3 による深刻度基本値: 9.8 (緊急)'
       );

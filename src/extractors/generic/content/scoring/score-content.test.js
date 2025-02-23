@@ -17,7 +17,7 @@ describe('scoreContent($, weightNodes)', () => {
     `);
     scoreContent($);
 
-    assert.equal(getScore($('div').first()), 140);
+    assert.strictEqual(getScore($('div').first()), 140);
   });
 
   it('is so-so about non-hNews content', () => {
@@ -29,7 +29,7 @@ describe('scoreContent($, weightNodes)', () => {
     `);
     scoreContent($);
 
-    assert.equal(getScore($('div').first()), 65);
+    assert.strictEqual(getScore($('div').first()), 65);
   });
 
   it('scores this Wired article the same', () => {
@@ -40,7 +40,7 @@ describe('scoreContent($, weightNodes)', () => {
     const $ = cheerio.load(html);
     scoreContent($);
 
-    assert.equal(getScore($('article').first()), 65.5);
+    assert.strictEqual(getScore($('article').first()), 65.5);
   });
 
   it('scores this Vulture article', () => {
@@ -51,12 +51,12 @@ describe('scoreContent($, weightNodes)', () => {
     let $ = cheerio.load(html);
     $ = scoreContent($);
 
-    assert.equal($('p[score]').length, 62);
+    assert.strictEqual($('p[score]').length, 62);
     const itemprop = $('[itemprop=articleBody]').first();
 
     // fuzzines of test below addressing minor
     // discrepancy b/w node and browser
-    assert.equal(getScore(itemprop) > 500, true);
+    assert.strictEqual(getScore(itemprop) > 500, true);
   });
 
   it('gives its parent all of the children scores', () => {
@@ -90,12 +90,12 @@ describe('scoreContent($, weightNodes)', () => {
     const $ = cheerio.load(html);
     scoreContent($);
 
-    assert.equal(
+    assert.strictEqual(
       $('p')
         .first()
         .attr('score'),
       '5'
     );
-    assert.equal($('div div').attr('score'), '30');
+    assert.strictEqual($('div div').attr('score'), '30');
   });
 });

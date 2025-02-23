@@ -16,7 +16,7 @@ describe('GenericAuthorExtractor', () => {
         metaCache: ['dc.author', 'something-else'],
       });
 
-      assert.equal(result, 'Adam');
+      assert.strictEqual(result, 'Adam');
     });
 
     it('extracts author from author selectors', () => {
@@ -32,7 +32,7 @@ describe('GenericAuthorExtractor', () => {
         metaCache: ['dc.author', 'something-else'],
       });
 
-      assert.equal(result, 'Adam');
+      assert.strictEqual(result, 'Adam');
     });
 
     it('extracts author with regex selectors', () => {
@@ -48,7 +48,7 @@ describe('GenericAuthorExtractor', () => {
         metaCache: ['dc.author', 'something-else'],
       });
 
-      assert.equal(result, 'Adam');
+      assert.strictEqual(result, 'Adam');
     });
 
     it('returns null if no author found', () => {
@@ -58,7 +58,7 @@ describe('GenericAuthorExtractor', () => {
         metaCache: ['dc.author', 'something-else'],
       });
 
-      assert.equal(result, null);
+      assert.strictEqual(result, null);
     });
   });
 });

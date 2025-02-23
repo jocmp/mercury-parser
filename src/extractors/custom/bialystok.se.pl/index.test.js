@@ -23,13 +23,13 @@ describe('BialystokSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Dramat na Podlasiu! Na widok policjantów wyskoczył z okna`
       );
@@ -38,19 +38,19 @@ describe('BialystokSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Jacek Chlewicki`);
+      assert.strictEqual(author, `Jacek Chlewicki`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-17T11:01:00.000Z');
+      assert.strictEqual(date_published, '2025-02-17T11:01:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-Qi54-k7Ye-55qk_poszukiwany-31-latek-na-widok-policjantow-wyskoczyl-z-okna-1920x1080-nocrop.jpg`
       );
@@ -68,7 +68,7 @@ describe('BialystokSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Poszukiwany 31-latek na widok policjantów wyskoczył z okna Policjanci zatrzymali poszukiwanego 31-latka. Mężczyzna'
       );

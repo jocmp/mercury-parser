@@ -24,7 +24,7 @@ describe('WwwAndroidcentralComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Motorola is announcing a new phone at Mobile World Congress in February'
       );
@@ -47,7 +47,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Daniel Bader');
+      assert.strictEqual(author, 'Daniel Bader');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-13T21:45:08.000Z');
+      assert.strictEqual(date_published, '2017-01-13T21:45:08.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, 'Motorola teases a new phone to launch at MWC.');
+      assert.strictEqual(dek, 'Motorola teases a new phone to launch at MWC.');
     });
 
     it('returns the lead_image_url', async () => {
@@ -77,7 +77,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cdn.mos.cms.futurecdn.net/Qd5tPg9Tg4goHQcBE7eZJ5-1200-80.jpg'
       );
@@ -101,7 +101,7 @@ describe('WwwAndroidcentralComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Motorola is set to launch a new phone in Barcelona next month prior'
       );

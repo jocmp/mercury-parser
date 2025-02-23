@@ -21,13 +21,13 @@ describe('SportSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Kolejne rozczarowanie dla Śląska. Piast go wypunktował. I jeszcze ten KOSZMARNY błąd Rafała Leszczyńskiego!`
       );
@@ -36,19 +36,19 @@ describe('SportSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Marcin Szczepański`);
+      assert.strictEqual(author, `Marcin Szczepański`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-03T20:02:00.000Z');
+      assert.strictEqual(date_published, '2025-02-03T20:02:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-rdUk-X5iW-9qQh_rafal-leszczynski-1920x1080-nocrop.jpg`
       );
@@ -66,7 +66,7 @@ describe('SportSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Rafał Leszczyński, bramkarz Śląska Wrocław Trener Ante Simundża podjął się misji ratowania Śląska.'
       );

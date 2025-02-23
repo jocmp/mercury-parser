@@ -21,31 +21,31 @@ describe('BskyAppExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(title, `guilherme nunes (@guilhernunes.bsky.social)`);
+      assert.strictEqual(title, `guilherme nunes (@guilhernunes.bsky.social)`);
     });
 
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, null);
+      assert.strictEqual(date_published, null);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:hew2gujvhhgtchs62pzzn7lb/bafkreibejxm6dhz7e244nf57bqtur6ctmbtavus7yr3ghp5udzgderkhay@jpeg`
       );
@@ -63,7 +63,7 @@ describe('BskyAppExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'capybaras enjoying pizza pattern prints: https://www.inprnt.com/gallery/guilhernunes/capybaras-enjoying-pizza-pattern/ t-shirts and other products: https://www.redbubble.com/shop/ap/168320435?asc=u'
       );

@@ -23,13 +23,13 @@ describe('SzczecinSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `40 wysokich wygranych w Eurojackpot w Polsce. Ale to w tym kraju rozbili bank`
       );
@@ -38,19 +38,19 @@ describe('SzczecinSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Grzegorz Kluczyński');
+      assert.strictEqual(author, 'Grzegorz Kluczyński');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-11T21:14:00.000Z');
+      assert.strictEqual(date_published, '2025-02-11T21:14:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-gXFW-ycoc-gAtS_czterdziesci-wysokich-wygranych-w-eurojackpot-w-polsce-ale-to-w-tym-kraju-rozbili-wielka-kumulacje-1280x960.jpg`
       );
@@ -68,7 +68,7 @@ describe('SzczecinSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Czterdzieści wysokich wygranych w Eurojackpot w Polsce. Ale to w tym kraju rozbili'
       );

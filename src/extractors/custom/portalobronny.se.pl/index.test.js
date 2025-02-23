@@ -23,13 +23,13 @@ describe('PortalobronnySePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Rosyjski samolot wojskowy naruszył granicę Polski na 6,5 km. Służby zareagowały`
       );
@@ -38,19 +38,19 @@ describe('PortalobronnySePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Juliusz Sabak');
+      assert.strictEqual(author, 'Juliusz Sabak');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-11T19:00:00.000Z');
+      assert.strictEqual(date_published, '2025-02-11T19:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-uqSS-Th99-6VHZ_su-24mr-rosja-1920x1080-nocrop.jpg`
       );
@@ -68,7 +68,7 @@ describe('PortalobronnySePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Rosyjski samolot rozpoznawczy Su-24MR, który wykonywał lot z Obwodu Królewieckiego, „naruszył polską przestrzeń'
       );

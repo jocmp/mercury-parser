@@ -24,7 +24,7 @@ describe('EpaperZeitDeExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,10 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Was heißt Sozialismus für Sie, Kevin Kühnert?`);
+      assert.strictEqual(
+        title,
+        `Was heißt Sozialismus für Sie, Kevin Kühnert?`
+      );
     });
 
     it('returns the author', async () => {
@@ -44,7 +47,7 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Politik · Jochen Bittner, Tina Hildebrandt');
+      assert.strictEqual(author, 'Politik · Jochen Bittner, Tina Hildebrandt');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +57,7 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, null);
+      assert.strictEqual(date_published, null);
     });
 
     it('returns the excerpt', async () => {
@@ -64,7 +67,7 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         excerpt,
         'Zum Beispiel die Kollektivierung von Firmen wie BMW, sagt der Chef der Jusos. In der Wirtschaftsordnung, die er sich vorstellt, gäbe es auch kein Eigentum an Wohnraum mehr. Ein Gespräch über eine radikale Alternative'
       );
@@ -77,7 +80,7 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -98,7 +101,7 @@ describe('EpaperZeitDeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Politik · Jochen Bittner, Tina Hildebrandt Zum Beispiel die Kollektivierung von Firmen wie'
       );

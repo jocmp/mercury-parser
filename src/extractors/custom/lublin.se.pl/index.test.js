@@ -23,13 +23,13 @@ describe('LublinSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Tajemniczy rozbłysk na niebie, a potem huk. Internauci nagrali niepokojące zjawisko`
       );
@@ -38,19 +38,19 @@ describe('LublinSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Katarzyna Kapusta - Gruchlik');
+      assert.strictEqual(author, 'Katarzyna Kapusta - Gruchlik');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-18T20:58:00.000Z');
+      assert.strictEqual(date_published, '2025-02-18T20:58:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-KFrZ-xVXW-9Fop_meteor-1920x1080-nocrop.jpg`
       );
@@ -68,7 +68,7 @@ describe('LublinSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Mieszkańcy najpierw zobaczyli na niebie intensywnie zieloną smugę, a chwile później usłyszeli głośny'
       );

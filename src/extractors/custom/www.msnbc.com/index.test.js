@@ -24,7 +24,7 @@ describe('WwwMsnbcComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwMsnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'A bizarre election ends with a bizarre Electoral College tally'
       );
@@ -47,7 +47,7 @@ describe('WwwMsnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Steve Benen');
+      assert.strictEqual(author, 'Steve Benen');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwMsnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-20T12:44:32.000Z');
+      assert.strictEqual(date_published, '2016-12-20T12:44:32.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwMsnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/msnbc/2016_49/510386/trump.jpeg-99fbe.jpg'
       );
@@ -91,7 +91,7 @@ describe('WwwMsnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "On Election Day, Donald Trump earned 306 electoral votes to Hillary Clinton's 232,"
       );

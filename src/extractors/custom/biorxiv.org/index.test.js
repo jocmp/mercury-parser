@@ -24,7 +24,7 @@ describe('BiorxivOrgExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('BiorxivOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Sub-nucleosomal organization in urine cell-free DNA`
       );
@@ -47,7 +47,7 @@ describe('BiorxivOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         author,
         'Havell Markus, Jun Zhao, Tania Contente-Cuomo, View ORCID ProfileElizabeth Raupach, Ahuva Odenheimer-Bergman, Sydney Connor, Bradon R. McDonald, Elizabeth Hutchins, Marissa McGilvery, Michelina C. de la Maza, Kendall Van Keuren-Jensen, Patrick Pirrotte, Ajay Goel, Carlos Becerra, Daniel D. Von Hoff, Scott A. Celinski, Pooja Hingorani, View ORCID ProfileMuhammed Murtaza'
       );
@@ -71,7 +71,7 @@ describe('BiorxivOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Cell-free DNA (cfDNA) in urine is a promising analyte for noninvasive diagnostics. However,'
       );

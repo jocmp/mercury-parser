@@ -26,7 +26,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Hillary Clinton Gets More Faithless Electors Than Trump'
       );
@@ -49,7 +49,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Editor');
+      assert.strictEqual(author, 'Editor');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-20T13:38:46.000Z');
+      assert.strictEqual(date_published, '2016-12-20T13:38:46.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -69,7 +69,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://www.thepoliticalinsider.com/wp-content/uploads/2016/12/hillarysad2.jpg'
       );
@@ -93,7 +93,7 @@ describe('WwwThepoliticalinsiderComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'I don’t want 2016 to end. I can’t describe how happy I’ve been'
       );

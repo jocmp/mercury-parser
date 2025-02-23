@@ -24,7 +24,7 @@ describe('WwwRollingstoneComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         '‘La La Land’: How a Young Filmmaker Resurrected the Hollywood Musical'
       );
@@ -47,7 +47,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'David Fear');
+      assert.strictEqual(author, 'David Fear');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-09T14:50:00.000Z');
+      assert.strictEqual(date_published, '2016-12-09T14:50:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Inside the story of how director Damien Chazelle and two movie stars attempted to modernize the genre – and made the movie of the year'
       );
@@ -80,7 +80,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.rollingstone.com/wp-content/uploads/2018/06/rs-la-la-land-3d3a431a-8329-4539-b953-51e2d61a396c.jpg'
       );
@@ -104,7 +104,7 @@ describe('WwwRollingstoneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Ask most folks what the most iconic thing about Los Angeles is, and'
       );

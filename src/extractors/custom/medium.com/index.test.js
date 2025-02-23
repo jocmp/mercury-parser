@@ -26,31 +26,31 @@ describe('MediumExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(title, 'WTF? What’s The Future?');
+      assert.strictEqual(title, 'WTF? What’s The Future?');
     });
 
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, "Tim O'Reilly");
+      assert.strictEqual(author, "Tim O'Reilly");
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2016-10-19T14:30:56.529Z');
+      assert.strictEqual(date_published, '2016-10-19T14:30:56.529Z');
     });
 
     it('returns the dek', async () => {
       const { dek } = await result;
 
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -60,7 +60,7 @@ describe('MediumExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://miro.medium.com/max/540/1*3Gzaug9mRc8vvx1cuQWkog.png'
       );
@@ -78,7 +78,7 @@ describe('MediumExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Last Thursday, I had the honor to be one of the warmup acts'
       );
@@ -102,7 +102,7 @@ describe('MediumExtractor', () => {
 
       const first13 = excerptContent($.text(), 13);
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'I’m sure you have seen something like the following line very often while'
       );

@@ -16,7 +16,7 @@ describe('normalizeSpaces(text)', () => {
         .first()
         .text()
     );
-    assert.equal(result, 'What do you think?');
+    assert.strictEqual(result, 'What do you think?');
   });
 
   it('preserves spaces in preformatted text blocks', () => {
@@ -28,7 +28,7 @@ describe('normalizeSpaces(text)', () => {
     `);
 
     const result = normalizeSpaces($.html());
-    assert.equal(
+    assert.strictEqual(
       result,
       '<div> <p>What do you think?</p> <pre>  What     happens to        spaces?    </pre> </div>'
     );

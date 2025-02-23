@@ -14,7 +14,7 @@ if (
   typeof Mercury === 'undefined' && require('../dist/mercury');
   describe('Tests', () => {
     it('do not run because this is CI and we do not want network requests', () => {
-      assert.equal(true, true);
+      assert.strictEqual(true, true);
     });
   });
 } else {
@@ -52,12 +52,12 @@ if (
       it(`gets this title right ${article.title}`, done => {
         Merc.parse(article.url)
           .then(result => {
-            assert.equal(article.title, result.title);
+            assert.strictEqual(article.title, result.title);
             done();
           })
           .catch(e => {
             console.log(e.name, e.message); // eslint-disable-line no-console
-            assert.equal(true, false);
+            assert.strictEqual(true, false);
             done();
           });
       }, 15000)

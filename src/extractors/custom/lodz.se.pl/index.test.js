@@ -21,13 +21,13 @@ describe('LodzSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Taksówkarz otrzymał 8 ciosów nożem w czasie kursu! Przerażający atak w Łodzi`
       );
@@ -36,19 +36,19 @@ describe('LodzSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Michał Michalak`);
+      assert.strictEqual(author, `Michał Michalak`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-19T09:35:00.000Z');
+      assert.strictEqual(date_published, '2025-02-19T09:35:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.media.smcloud.net/t/videos/7B0FDAA62041416882CCEAC2A4216792_1-664x442.jpg`
       );
@@ -66,7 +66,7 @@ describe('LodzSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Prokuratura poinformowała w piątek, 14 lutego, o zatrzymaniu mężczyzny, który usiłował zabić taksówkarza'
       );

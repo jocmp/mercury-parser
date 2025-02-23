@@ -26,7 +26,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'The Obama Administration Digital Transition: Moving Forward'
       );
@@ -49,7 +49,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Kori Schulman');
+      assert.strictEqual(author, 'Kori Schulman');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-17T23:08:47.000Z');
+      assert.strictEqual(date_published, '2017-01-17T23:08:47.000Z');
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek
           .split(/\s/)
           .slice(0, 4)
@@ -85,7 +85,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://obamawhitehouse.archives.gov/sites/obamawhitehouse.archives.gov/files/digitaltransition.jpeg'
       );
@@ -109,7 +109,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Over the past eight years, the President, the First Lady, and the Obama'
       );
@@ -133,7 +133,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      assert.equal($('iframe[src*="youtube"]').length, 1);
+      assert.strictEqual($('iframe[src*="youtube"]').length, 1);
     });
   });
 
@@ -163,11 +163,11 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'In this week’s address, the President and the First Lady wished all Americans'
       );
-      assert.equal($('iframe[src*="youtube"]').length, 1);
+      assert.strictEqual($('iframe[src*="youtube"]').length, 1);
     });
   });
 
@@ -195,7 +195,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'September 11th has been designated as a National Day of Service and Remembrance.'
       );

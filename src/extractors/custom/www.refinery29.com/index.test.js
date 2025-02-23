@@ -24,7 +24,7 @@ describe('WwwRefinery29ComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwRefinery29ComExtractor', () => {
 
       // Up  these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'For Holiday Parties This Year, Let’s Get Behind The Conversation-Starter Tee'
       );
@@ -47,7 +47,7 @@ describe('WwwRefinery29ComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Connie Wang');
+      assert.strictEqual(author, 'Connie Wang');
     });
 
     // As of 10-7-22, The HTML no longer returns a parseable date
@@ -58,7 +58,7 @@ describe('WwwRefinery29ComExtractor', () => {
 
     //   // Update these values with the expected values from
     //   // the article.
-    //   assert.equal(date_published, '2016-12-13T01:00:00.000Z');
+    //   assert.strictEqual(date_published, '2016-12-13T01:00:00.000Z');
     // });
 
     it('returns the lead_image_url', async () => {
@@ -68,7 +68,7 @@ describe('WwwRefinery29ComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://s1.r29static.com/bin/entry/c60/0,675,2000,1050/x,80/1708221/image.jpg'
       );
@@ -92,7 +92,7 @@ describe('WwwRefinery29ComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "In a year when so much (too much?) happened that we're all still"
       );

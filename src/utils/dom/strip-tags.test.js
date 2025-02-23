@@ -9,7 +9,7 @@ describe('stripTags(title, $)', () => {
 
     const result = stripTags('What a <em>Wonderful</em> Day', $);
 
-    assert.equal(result, 'What a Wonderful Day');
+    assert.strictEqual(result, 'What a Wonderful Day');
   });
 
   it('returns the original text if no tags found', () => {
@@ -17,6 +17,6 @@ describe('stripTags(title, $)', () => {
 
     const result = stripTags('What a Wonderful Day', $);
 
-    assert.equal(result, 'What a Wonderful Day');
+    assert.strictEqual(result, 'What a Wonderful Day');
   });
 });

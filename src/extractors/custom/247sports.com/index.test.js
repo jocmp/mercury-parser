@@ -24,7 +24,7 @@ describe('twofortysevensportsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('twofortysevensportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Breaking: Houston hires Major Applewhite as head coach'
       );
@@ -47,7 +47,7 @@ describe('twofortysevensportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Travis Haney');
+      assert.strictEqual(author, 'Travis Haney');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('twofortysevensportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-09T09:13:00.000Z');
+      assert.strictEqual(date_published, '2016-12-09T09:13:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('twofortysevensportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://s3media.247sports.com/Uploads/Assets/149/971/4971149.jpg?fit=bounds&crop=1200:630,offset-y0.50&width=1200&height=630'
       );
@@ -91,7 +91,7 @@ describe('twofortysevensportsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '(Photo: Brett Davis, USA TODAY Sports) Houston has promoted offensive coordinator Major Applewhite'
       );

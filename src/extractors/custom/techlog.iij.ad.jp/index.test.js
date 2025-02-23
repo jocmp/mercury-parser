@@ -23,7 +23,7 @@ describe('TechlogIijAdJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `2019年のスマホ・DNSフィルタリング・スマホ政策 (IIJmio meeting 23資料公開)`
       );
@@ -46,7 +46,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `doumae`);
+      assert.strictEqual(author, `doumae`);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-13T07:08:44.000Z`);
+      assert.strictEqual(date_published, `2019-04-13T07:08:44.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +76,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://techlog.iij.ad.jp/images/og-icon.png`
       );
@@ -89,7 +89,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(rendered_pages, 1);
+      assert.strictEqual(rendered_pages, 1);
     });
 
     it('returns the content', async () => {
@@ -110,7 +110,7 @@ describe('TechlogIijAdJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, 'IIJmio meetingの発表資料を公開します。');
+      assert.strictEqual(first13, 'IIJmio meetingの発表資料を公開します。');
     });
   });
 });

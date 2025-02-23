@@ -24,7 +24,7 @@ describe('WwwNdtvComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `COVID-19: Trump Talks "Retaliation" If India Rejects Export Of Key Drug`
       );
@@ -47,7 +47,7 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Swati Bhasin');
+      assert.strictEqual(author, 'Swati Bhasin');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2020-04-07T10:19:34.000Z');
+      assert.strictEqual(date_published, '2020-04-07T10:19:34.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Amid rising pressure, the government is likely to take a decision on the matter today and clear the move after calculating sufficient stocks for the country, sources have told NDTV.'
       );
@@ -80,7 +80,7 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://c.ndtvimg.com/2020-04/u9vkhue_donald-trump-white-house-afp_625x300_04_April_20.jpg`
       );
@@ -104,15 +104,15 @@ describe('WwwNdtvComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Washington/ New Delhi: US President Donald Trump has said "there may be retaliation"'
       );
 
       // Confirm that the dateline is moved.
       const dateline = $('.place_cont');
-      assert.equal(dateline.length, 1);
-      assert.equal(dateline.get(0).parent.tagName, 'p');
+      assert.strictEqual(dateline.length, 1);
+      assert.strictEqual(dateline.get(0).parent.tagName, 'p');
     });
   });
 });

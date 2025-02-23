@@ -24,7 +24,7 @@ describe('AbcnewsGoComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('AbcnewsGoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Hillary Clinton: Putin's Alleged Involvement in Democratic Hack Stems From 'Personal Beef'"
       );
@@ -47,7 +47,10 @@ describe('AbcnewsGoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'JOSH HASKELL, DAVID CAPLAN and PATRICK REEVELL');
+      assert.strictEqual(
+        author,
+        'JOSH HASKELL, DAVID CAPLAN and PATRICK REEVELL'
+      );
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +60,7 @@ describe('AbcnewsGoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-16T21:19:00.000Z');
+      assert.strictEqual(date_published, '2016-12-16T21:19:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +70,7 @@ describe('AbcnewsGoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://s.abcnews.com/images/Politics/AP-hillary-clinton-01-as-161216_16x9_992.jpg'
       );
@@ -91,7 +94,7 @@ describe('AbcnewsGoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "&#151; -- Hillary Clinton has an explanation for Vladimir Putin's alleged involvement in"
       );

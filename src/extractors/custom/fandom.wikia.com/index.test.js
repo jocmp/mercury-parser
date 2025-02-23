@@ -26,7 +26,7 @@ describe('WikiaExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WikiaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Box Office: It’s Good to Be ‘Peculiar’');
+      assert.strictEqual(title, 'Box Office: It’s Good to Be ‘Peculiar’');
     });
 
     it('returns the author', async () => {
@@ -46,7 +46,7 @@ describe('WikiaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Drew Dietsch');
+      assert.strictEqual(author, 'Drew Dietsch');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WikiaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-10-03T02:30:57.000Z');
+      assert.strictEqual(date_published, '2016-10-03T02:30:57.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('WikiaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://fandom.wikia.com/wp-content/uploads/2016/10/box-office-peculiar-feature-hero.jpg'
       );
@@ -90,7 +90,7 @@ describe('WikiaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Tim Burton once again claimed the top spot at the box office. Miss'
       );

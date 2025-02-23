@@ -8,7 +8,7 @@ export function clean(string) {
 }
 
 export function assertClean(a, b) {
-  assert.equal(clean(a), clean(b));
+  assert.strictEqual(clean(a), clean(b));
 }
 
 export class MockDomNode {
