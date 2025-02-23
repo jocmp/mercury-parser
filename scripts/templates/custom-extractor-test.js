@@ -23,7 +23,7 @@ function testFor(key, value, dir) {
 
             // Update these values with the expected values from
             // the article.
-            assert.equal(${key}, ${value ? `\`${value}\`` : "''"})
+            assert.strictEqual(${key}, ${value ? `\`${value}\`` : "''"})
           });
     `;
 }
@@ -58,7 +58,7 @@ export default function(file, url, dir, result, name) {
           // It sanity checks that the correct parser
           // is being selected for URLs from this domain
           const extractor = getExtractor(url);
-          assert.equal(extractor.domain, URL.parse(url).hostname)
+          assert.strictEqual(extractor.domain, URL.parse(url).hostname)
         })
 
           ${Reflect.ownKeys(result)
@@ -78,7 +78,7 @@ export default function(file, url, dir, result, name) {
 
           // Update these values with the expected values from
           // the article.
-          assert.equal(first13, 'Add the first 13 words of the article here');
+          assert.strictEqual(first13, 'Add the first 13 words of the article here');
         });
       });
     });
