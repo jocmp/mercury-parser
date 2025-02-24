@@ -23,7 +23,7 @@ describe('FortuneComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('FortuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Here Are 6 Can’t-Miss Gadgets Powered by Amazon’s Alexa Assistant'
       );
@@ -46,7 +46,7 @@ describe('FortuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'John Patrick Pullen, TIME');
+      assert.strictEqual(author, 'John Patrick Pullen, TIME');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('FortuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-15T14:57:00.000Z');
+      assert.strictEqual(date_published, '2016-12-15T14:57:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('FortuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://fortunedotcom.files.wordpress.com/2016/05/amazon-echo-2.jpg?w=720'
       );
@@ -90,7 +90,7 @@ describe('FortuneComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The Amazon Echo Dot, the retailer’s puck-shaped smart speaker, is is killing it'
       );

@@ -28,7 +28,7 @@ describe('PoliticoExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -38,7 +38,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Insiders: Trump will sink Pence in VP debate');
+      assert.strictEqual(title, 'Insiders: Trump will sink Pence in VP debate');
     });
 
     it('returns the author', async () => {
@@ -48,7 +48,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Steven Shepard');
+      assert.strictEqual(author, 'Steven Shepard');
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +61,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(new_date_published, '2016-10-04');
+      assert.strictEqual(new_date_published, '2016-10-04');
     });
 
     it('returns the lead_image_url', async () => {
@@ -71,7 +71,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static.politico.com/0f/e7/5ee9a89044d1a01f74140bcd5b9e/caucus-vp-preview.jpg'
       );
@@ -95,7 +95,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Tim Kaine isn’t Mike Pence’s only opponent Tuesday night in the only debate'
       );
@@ -121,7 +121,7 @@ describe('PoliticoExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -131,7 +131,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Biden’s student debt relief draws 8M+ applications in first two days'
       );
@@ -144,7 +144,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Michael Stratford');
+      assert.strictEqual(author, 'Michael Stratford');
     });
 
     it('returns the date_published', async () => {
@@ -154,7 +154,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2022-10-17T20:01:26.000Z');
+      assert.strictEqual(date_published, '2022-10-17T20:01:26.000Z');
     });
 
     it('returns the dek', async () => {
@@ -164,7 +164,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The president urged Americans to apply for relief through ‘easy, simple and fast’ application process.'
       );
@@ -177,7 +177,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cf-images.us-east-1.prod.boltdns.net/v1/static/1155968404/79588bde-a378-49fd-b4b4-856d31662aca/35b02a16-1bc3-4d53-b660-4abadfbc14d8/1280x720/match/image.jpg'
       );
@@ -201,7 +201,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'More than 8 million Americans have applied for federal student debt relief since'
       );
@@ -227,7 +227,7 @@ describe('PoliticoExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -237,7 +237,10 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Grim global outlook for IMF-World Bank meetings');
+      assert.strictEqual(
+        title,
+        'Grim global outlook for IMF-World Bank meetings'
+      );
     });
 
     it('returns the author', async () => {
@@ -247,7 +250,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Kate Davidson');
+      assert.strictEqual(author, 'Kate Davidson');
     });
 
     it('returns the date_published', async () => {
@@ -257,7 +260,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2022-10-11T12:00:00.000Z');
+      assert.strictEqual(date_published, '2022-10-11T12:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -267,7 +270,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Fed rate hikes have caused spillover effects around the world, prompting a number of central banks to follow suit or intervene to prop up their currency in the face of a stronger U.S. dollar.'
       );
@@ -280,7 +283,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static.politico.com/da/f5/44342c424c68b675719324b1106b/politico.jpg'
       );
@@ -304,7 +307,7 @@ describe('PoliticoExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Editor’s note: Morning Money is a free version of POLITICO Pro Financial Services'
       );

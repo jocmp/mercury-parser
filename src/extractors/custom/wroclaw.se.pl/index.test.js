@@ -23,13 +23,13 @@ describe('WroclawSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Policjanci zawieźli zatrzymanego mężczyznę do sklepu. Zaskakując cel wizyty`
       );
@@ -38,19 +38,19 @@ describe('WroclawSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Artur Szkudlarek`);
+      assert.strictEqual(author, `Artur Szkudlarek`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-14T17:43:00.000Z');
+      assert.strictEqual(date_published, '2025-02-14T17:43:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-cxbM-risz-JRMu_policjanci-zawiezli-zatrzymanego-mezczyzne-do-sklepu-1920x1080-nocrop.jpg`
       );
@@ -68,7 +68,7 @@ describe('WroclawSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Niecodzienna interwencja policjantów z Oleśnicy. Zawieźli oni zatrzymanego mężczyznę do sklepu, dzięki czemu'
       );

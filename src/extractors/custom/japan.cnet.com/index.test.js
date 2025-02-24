@@ -26,7 +26,7 @@ describe('JapanCnetComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `セキュリティとAI進化の両立なるか？--Appleニュース一気読み`
       );
@@ -49,7 +49,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '松村太郎');
+      assert.strictEqual(author, '松村太郎');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-13T00:00:00.000Z`);
+      assert.strictEqual(date_published, `2019-04-13T00:00:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +79,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://japan.cnet.com/storage/2018/04/17/ff31ccbe32e0093ce9e0613e80f4bb2e/t/640/480/d/applenes_1280.png`
       );
@@ -103,7 +103,7 @@ describe('JapanCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, '4月1日～4月7日のAppleに関連するCNET');
+      assert.strictEqual(first13, '4月1日～4月7日のAppleに関連するCNET');
     });
   });
 });

@@ -24,7 +24,7 @@ describe('WwwCnbcComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Coal's big US stronghold is losing steam, even as Trump aims for a revival"
       );
@@ -47,7 +47,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Tom DiChristopher');
+      assert.strictEqual(author, 'Tom DiChristopher');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-20T15:32:57.000Z');
+      assert.strictEqual(date_published, '2016-12-20T15:32:57.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://image.cnbcfm.com/api/v1/image/104178390-RTR3H5O9.jpg?v=1529452197&w=1920&h=1080'
       );
@@ -91,7 +91,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The U.S. Mountain States are moving away from coal, even as President-elect Donald'
       );
@@ -115,7 +115,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Desperate to get through to executives, some cybersecurity vendors are resorting to lies and blackmail'
       );
@@ -139,7 +139,7 @@ describe('WwwCnbcComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The cybersecurity vendor marketplace is growing so crowded that some companies have been'
       );

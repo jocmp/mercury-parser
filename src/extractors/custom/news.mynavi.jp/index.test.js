@@ -23,7 +23,7 @@ describe('NewsMynaviJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `人気の圧縮・解凍ソフト「WinRAR」に脆弱性、アップデートを`
       );
@@ -46,7 +46,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '著者：後藤大地');
+      assert.strictEqual(author, '著者：後藤大地');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-02-22T08:23:44.000Z`);
+      assert.strictEqual(date_published, `2019-02-22T08:23:44.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Check Point Software Technologiesは2月20日(米国時間)、人気の高い圧縮・解凍ソフトウェアであるWinRARに長年にわたって脆弱性が存在していると伝えた。この脆弱性の影響で、細工されたファイルを展開する段階でマルウェアに感染させられる可能性があるという。'
       );
@@ -79,7 +79,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://news.mynavi.jp/techplus/article/20190222-775563/index_images/index.jpg`
       );
@@ -103,7 +103,7 @@ describe('NewsMynaviJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Check Point Software Technologiesは2月20日(米国時間)、「Extracting a 19 Year Old Code Execution from WinRAR -'
       );

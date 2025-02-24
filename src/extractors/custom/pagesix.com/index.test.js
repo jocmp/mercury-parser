@@ -24,7 +24,7 @@ describe('PagesixComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('PagesixComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Sofía Vergara and Nick Loeb’s embryo drama taking a detour'
       );
@@ -47,7 +47,7 @@ describe('PagesixComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Oli Coleman');
+      assert.strictEqual(author, 'Oli Coleman');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('PagesixComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-20T00:08:44.000Z');
+      assert.strictEqual(date_published, '2016-12-20T00:08:44.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('PagesixComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://pagesix.com/wp-content/uploads/sites/3/2016/12/sofia-vergara4.jpg?quality=75&strip=all&w=1200'
       );
@@ -92,7 +92,7 @@ describe('PagesixComExtractor', () => {
       // Update these values with the expected values from
       // the article.
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Nick Loeb and Sofia Vergara Shutterstock / Getty Images (Composite) In the latest'
       );

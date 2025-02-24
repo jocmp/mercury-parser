@@ -13,7 +13,7 @@ describe('scoreByParents($link)', () => {
       </div>
     `);
 
-    assert.equal(scoreByParents($('a').first()), 25);
+    assert.strictEqual(scoreByParents($('a').first()), 25);
   });
 
   it('returns -25 if parent sig looks like a comment', () => {
@@ -25,6 +25,6 @@ describe('scoreByParents($link)', () => {
       </div>
     `);
 
-    assert.equal(scoreByParents($('a').first()), -25);
+    assert.strictEqual(scoreByParents($('a').first()), -25);
   });
 });

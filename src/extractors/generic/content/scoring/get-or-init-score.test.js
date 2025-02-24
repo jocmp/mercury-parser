@@ -9,7 +9,7 @@ describe('getOrInitScore(node, $)', () => {
       const $ = cheerio.load('<p score="40">Foo</p>');
       const score = getOrInitScore($('p').first(), $);
 
-      assert.equal(score, 40);
+      assert.strictEqual(score, 40);
     });
   });
 
@@ -18,7 +18,7 @@ describe('getOrInitScore(node, $)', () => {
       const $ = cheerio.load('<p>Foo</p>');
       const score = getOrInitScore($('p').first(), $);
 
-      assert.equal(score, 0);
+      assert.strictEqual(score, 0);
     });
 
     it('returns score if no class/id and has commas/length', () => {
@@ -27,7 +27,7 @@ describe('getOrInitScore(node, $)', () => {
       );
       const score = getOrInitScore($('p').first(), $);
 
-      assert.equal(score, 19);
+      assert.strictEqual(score, 19);
     });
 
     it('returns greater score if weighted class/id is set', () => {
@@ -36,7 +36,7 @@ describe('getOrInitScore(node, $)', () => {
       );
       const score = getOrInitScore($('p').first(), $);
 
-      assert.equal(score, 44);
+      assert.strictEqual(score, 44);
     });
 
     it('gives 1/4 of its score to its parent', () => {
@@ -48,7 +48,7 @@ describe('getOrInitScore(node, $)', () => {
 
       const $node = $('p').first();
       getOrInitScore($node, $);
-      assert.equal(getScore($node.parent()), 16);
+      assert.strictEqual(getScore($node.parent()), 16);
     });
   });
 });

@@ -13,8 +13,8 @@ describe('TwitterExtractor', () => {
       html,
     });
 
-    assert.equal(title, 'Lina Morgana on Twitter');
-    assert.equal(author, '@KingBeyonceStan');
-    assert.equal(date_published, '2016-06-21T15:27:25.000Z');
+    assert.strictEqual(title, 'Lina Morgana on Twitter');
+    assert.strictEqual(author, '@KingBeyonceStan');
+    assert.strictEqual(date_published, '2016-06-21T15:27:25.000Z');
   });
 });

@@ -21,17 +21,17 @@ describe('SpektrumExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
-      assert.equal(title, 'Das Geheimnis der parasitischen Riesenblumen');
+      assert.strictEqual(title, 'Das Geheimnis der parasitischen Riesenblumen');
     });
 
     it('returns the author', async () => {
       const { author } = await result;
-      assert.equal(author, 'Christie Wilcox');
+      assert.strictEqual(author, 'Christie Wilcox');
     });
 
     it('returns the date_published', async () => {
@@ -40,12 +40,12 @@ describe('SpektrumExtractor', () => {
       // (we help it along by providing a timezone in our extractor that should match the location of the website)
       // and then converts to a UTC ISO string, so the result is 10 pm on the day before.
       // See also https://github.com/postlight/mercury-parser/issues/549
-      assert.equal(date_published, '2022-07-18T22:00:00.000Z');
+      assert.strictEqual(date_published, '2022-07-18T22:00:00.000Z');
     });
 
     it('returns the dek', async () => {
       const { dek } = await result;
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Das bizarre Genom der größten Blütenpflanze der Welt offenbart, zu was Parasiten alles fähig sind: Sie stehlen, ' +
           'löschen und duplizieren DNA und manipulieren vielleicht sogar die Gene ihres Wirts. Etliche Details sind aber noch ungeklärt.'
@@ -54,7 +54,7 @@ describe('SpektrumExtractor', () => {
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static.spektrum.de/fm/912/f1920x1080/Rafflesia-arnoldii_AdobeStock_317147924_Maizal.jpeg'
       );
@@ -75,8 +75,8 @@ describe('SpektrumExtractor', () => {
       // This would be the true beginning of the content. But since we have to include the dek in the content
       // in order to be able to find it (see https://github.com/postlight/mercury-parser/issues/676),
       // the content will start with the dek instead.
-      // assert.equal(first13, 'Auf den ersten Blick sind sie unsichtbar. In ihrer Heimat, den Wäldern Südostasiens,');
-      assert.equal(
+      // assert.strictEqual(first13, 'Auf den ersten Blick sind sie unsichtbar. In ihrer Heimat, den Wäldern Südostasiens,');
+      assert.strictEqual(
         first13,
         'Das bizarre Genom der größten Blütenpflanze der Welt offenbart, zu was Parasiten alles'
       );

@@ -24,7 +24,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'The FAILURE Of Public Schooling In One Chart');
+      assert.strictEqual(title, 'The FAILURE Of Public Schooling In One Chart');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Bushrod Washington');
+      assert.strictEqual(author, 'Bushrod Washington');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-21T16:31:34.000Z');
+      assert.strictEqual(date_published, '2016-12-21T16:31:34.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -64,7 +64,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://thefederalistpapers.org/wp-content/uploads/2016/12/trends-in-public-schooling-1.jpg'
       );
@@ -88,7 +88,7 @@ describe('ThefederalistpapersOrgExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'America’s public schools are failing… miserably. We pump more and more money into'
       );

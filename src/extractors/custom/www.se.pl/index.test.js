@@ -21,13 +21,13 @@ describe('WwwSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Romuald Lipko - TVP zabiera nas w czasy jego niezapomnianych melodii!`
       );
@@ -36,19 +36,19 @@ describe('WwwSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Anna Kobryń`);
+      assert.strictEqual(author, `Anna Kobryń`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-04T16:47:00.000Z');
+      assert.strictEqual(date_published, '2025-02-04T16:47:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-YZoe-jXwL-mtfR_romuald-lipko-1920x1080-nocrop.jpg`
       );
@@ -65,7 +65,7 @@ describe('WwwSePlExtractor', () => {
           .text(),
         13
       );
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Romuald Lipko, lider zespołu Budka Suflera we wspomnieniach najbliższej rodziny i przyjaciół. W'
       );

@@ -24,7 +24,7 @@ describe('WwwWesternjournalismComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Berlin Terrorist Shot Dead In Milan By Rookie Police Officer'
       );
@@ -47,7 +47,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Jack Davis');
+      assert.strictEqual(author, 'Jack Davis');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-23T14:18:32.000Z');
+      assert.strictEqual(date_published, '2016-12-23T14:18:32.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, '"... awaiting someone.”');
+      assert.strictEqual(dek, '"... awaiting someone.”');
     });
 
     it('returns the lead_image_url', async () => {
@@ -77,7 +77,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://static.westernjournalism.com/wp-content/uploads/2016/05/breakingnews.png'
       );
@@ -101,7 +101,7 @@ describe('WwwWesternjournalismComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'A rookie Italian police officer shot Europe’s most wanted terrorist to death, Berlin'
       );

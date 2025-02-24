@@ -9,14 +9,14 @@ describe('Scoring utils', () => {
       const $ = cheerio.load('<p score="25">Foo</p>');
       const $node = $('p').first();
       addScore($node, $, 25);
-      assert.equal(getScore($node), 50);
+      assert.strictEqual(getScore($node), 50);
     });
 
     it('adds score if score not yet set (assumes score is 0)', () => {
       const $ = cheerio.load('<p>Foo</p>');
       const $node = $('p').first();
       addScore($node, $, 25);
-      assert.equal(getScore($node), 25);
+      assert.strictEqual(getScore($node), 25);
     });
   });
 });

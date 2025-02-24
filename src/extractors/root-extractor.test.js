@@ -30,7 +30,7 @@ describe('RootExtractor', () => {
       fallback: false,
     });
 
-    assert.equal(url, null);
+    assert.strictEqual(url, null);
   });
 });
 
@@ -51,8 +51,8 @@ describe('cleanBySelectors($content, $, { clean })', () => {
     let $content = $('.body');
     $content = cleanBySelectors($content, $, opts);
 
-    assert.equal($content.find('.ad').length, 0);
-    assert.equal($content.find('.share').length, 0);
+    assert.strictEqual($content.find('.ad').length, 0);
+    assert.strictEqual($content.find('.share').length, 0);
   });
 });
 
@@ -150,7 +150,7 @@ describe('select(opts)', () => {
     };
 
     const result = select(opts);
-    assert.equal(result, 'Bob');
+    assert.strictEqual(result, 'Bob');
   });
 
   it("returns a node's attr with an attr selector", () => {
@@ -171,7 +171,7 @@ describe('select(opts)', () => {
     };
 
     const result = select(opts);
-    assert.equal(result, '2016-09-07T09:07:59.000Z');
+    assert.strictEqual(result, '2016-09-07T09:07:59.000Z');
   });
 
   it("returns a node's html when it is a content selector", () => {
@@ -207,8 +207,8 @@ describe('select(opts)', () => {
     };
 
     const result = select(opts);
-    assert.equal($(result).find('img.lead-image').length, 1);
-    assert.equal($(result).find('.content-is-here').length, 1);
+    assert.strictEqual($(result).find('img.lead-image').length, 1);
+    assert.strictEqual($(result).find('.content-is-here').length, 1);
   });
 
   it('skips multi-match if not all selectors are present', () => {
@@ -227,7 +227,7 @@ describe('select(opts)', () => {
 
     const result = select(opts);
 
-    assert.equal(result, null);
+    assert.strictEqual(result, null);
   });
 
   it('returns an array of results if allowMultiple is true', () => {
@@ -247,7 +247,7 @@ describe('select(opts)', () => {
 
     const result = select(opts);
 
-    assert.equal(result.length, 2);
+    assert.strictEqual(result.length, 2);
     assert.deepEqual(result, [
       '<li class="item">One</li>',
       '<li class="item">Two</li>',
@@ -271,7 +271,7 @@ describe('select(opts)', () => {
 
     const result = select(opts);
 
-    assert.equal(
+    assert.strictEqual(
       result,
       '<div><a class="linky" href="http://example.com/foo">Bar</a></div>'
     );

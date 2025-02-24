@@ -24,7 +24,7 @@ describe('PeopleComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Jennifer Aniston on Leaving the Tags on Her Céline Coat: 'I Wore It Four Times and Didn't Notice!'"
       );
@@ -47,7 +47,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Emily Kirkpatrick');
+      assert.strictEqual(author, 'Emily Kirkpatrick');
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +61,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(new_date_published, '2016-12-12');
+      assert.strictEqual(new_date_published, '2016-12-12');
     });
 
     it('returns the lead_image_url', async () => {
@@ -71,7 +71,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://people.com/thmb/mKmBT1HGFXbCA_wJQGJFNNKdNjI=/1359x2000/filters:fill(auto,1)/jennifer-aniston5-2000-b3efb31fbb3b42c1a0d5872c91f574f7.jpg'
       );
@@ -84,7 +84,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The actress explained the story behind her minor wardrobe malfunction to Jimmy Kimmel'
       );
@@ -108,7 +108,7 @@ describe('PeopleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'People who don’t chronicle every item of clothing worn by the rich and'
       );

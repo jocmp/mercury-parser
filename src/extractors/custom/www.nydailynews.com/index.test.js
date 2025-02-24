@@ -25,7 +25,7 @@ describe('WwwNydailynewsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -35,7 +35,7 @@ describe('WwwNydailynewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Michelle Obama suggests America has lost hope since Donald Trump’s election'
       );
@@ -48,7 +48,7 @@ describe('WwwNydailynewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Meg Wagner');
+      assert.strictEqual(author, 'Meg Wagner');
     });
 
     it('returns the date_published', async () => {
@@ -62,7 +62,7 @@ describe('WwwNydailynewsComExtractor', () => {
       // Update these values with the expected values from
       // the article.
 
-      assert.equal(new_date_published, '2016-12-16');
+      assert.strictEqual(new_date_published, '2016-12-16');
     });
 
     it('returns the lead_image_url', async () => {
@@ -72,7 +72,7 @@ describe('WwwNydailynewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.nydailynews.com/resizer/Dtui1X7fI4gunqGF0rSp1_X-xwc=/1200x630/filters:format(jpg):quality(70)/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/Q3KUQ3K4VGF6733PRNTY36GQP4.jpg'
       );
@@ -96,7 +96,7 @@ describe('WwwNydailynewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Michelle Obama sees despair in America.The first lady suggested that the election of'
       );

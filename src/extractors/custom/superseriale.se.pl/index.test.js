@@ -23,13 +23,13 @@ describe('SuperserialeSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Barwy szczęścia, odcinek 3122: Rozmowa między Józefiną a Cezarym wyjaśni wszystko. Nigdy dotąd nie była z nim tak szczera - ZDJĘCIA`
       );
@@ -38,19 +38,19 @@ describe('SuperserialeSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Anna Kilian');
+      assert.strictEqual(author, 'Anna Kilian');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-04T21:53:00.000Z');
+      assert.strictEqual(date_published, '2025-02-04T21:53:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-SpMP-Atg1-RJaU_barwy-szczescia-odcinek-3122-cezary-marcel-opalinski-jozefina-elzbieta-jarosik-1280x960.jpg`
       );
@@ -67,7 +67,7 @@ describe('SuperserialeSePlExtractor', () => {
           .text(),
         13
       );
-      assert.equal(
+      assert.strictEqual(
         first13,
         'W 3122. odcinku serialu "Barwy szczęścia" dojdzie do szczerej rozmowy między Józefiną (Elżbieta'
       );

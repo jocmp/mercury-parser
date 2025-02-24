@@ -24,7 +24,7 @@ describe('MashableComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('MashableComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Mysterious plane circling Manhattan sparks concern and intrigue'
       );
@@ -47,7 +47,7 @@ describe('MashableComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Nicole Gallucci');
+      assert.strictEqual(author, 'Nicole Gallucci');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('MashableComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-13T22:33:06.000Z');
+      assert.strictEqual(date_published, '2016-12-13T22:33:06.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('MashableComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://helios-i.mashable.com/imagery/articles/04JdhZmvOs7mcfVf0jqvVxe/hero-image.fill.size_1200x675.v1611614732.jpg'
       );
@@ -91,7 +91,7 @@ describe('MashableComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'A large military-style plane, which looked remarkably like a C-130, circled Manhattan for'
       );

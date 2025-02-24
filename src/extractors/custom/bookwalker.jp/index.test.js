@@ -26,7 +26,7 @@ describe('BookwalkerJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,10 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `異世界おもいで食堂 ～偉人と和食のあったかゴハン～`);
+      assert.strictEqual(
+        title,
+        `異世界おもいで食堂 ～偉人と和食のあったかゴハン～`
+      );
     });
 
     it('returns the author', async () => {
@@ -46,7 +49,7 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '著者 お米ゴハン イラスト 汐街コナ');
+      assert.strictEqual(author, '著者 お米ゴハン イラスト 汐街コナ');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +59,7 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-03-04T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-03-04T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +69,7 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +79,7 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://c.bookwalker.jp/7775823/t_700x780.jpg`
       );
@@ -100,7 +103,7 @@ describe('BookwalkerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '著者 お米ゴハン イラスト 汐街コナ 偉人の“おもいで”が紡ぐ、心あたたまるストーリーを召し上がれ！ 古今東西の偉人たちが転生し、暮らしている異世界――さくら小町。その一角に「おもいで食堂」と呼ばれる和食店があった。 板前の天宮勇士（あまみや・ゆうじ）は、この世界に転生してきた、平凡な青年。 ただの料理好きだった彼は、オーナーである《勝海舟》との奇妙な縁からこの食堂で働くことになり、現代ではなれなかった料理人としての人生を謳歌する。 味はもとより、料理で客の“おもいで”を刺激し、懐かしさを想起させる事もあって、店は徐々に知られていき、今ではすっかりさくら小町の隠れた名店となっていた。'
       );

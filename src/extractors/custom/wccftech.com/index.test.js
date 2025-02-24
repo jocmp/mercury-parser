@@ -23,13 +23,13 @@ describe('WccftechComExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Nintendo Switch 2 Reveal Hit All the Right Notes, According to Analyst`
       );
@@ -38,19 +38,19 @@ describe('WccftechComExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Alessio Palumbo');
+      assert.strictEqual(author, 'Alessio Palumbo');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2025-01-17T20:00:30.000Z`);
+      assert.strictEqual(date_published, `2025-01-17T20:00:30.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.wccftech.com/wp-content/uploads/2025/01/16x9-NintendoSwitch2-HD-scaled.jpg`
       );
@@ -68,7 +68,7 @@ describe('WccftechComExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The Nintendo Switch 2 is finally official. After a couple of years of'
       );

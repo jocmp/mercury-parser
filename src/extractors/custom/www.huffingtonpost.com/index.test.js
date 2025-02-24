@@ -24,7 +24,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Trump Has Shown Receptiveness To Obama's Agenda. Does He Actually Mean It?"
       );
@@ -47,7 +47,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Sam Stein');
+      assert.strictEqual(author, 'Sam Stein');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-11-28T21:23:00.000Z');
+      assert.strictEqual(date_published, '2016-11-28T21:23:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "The $1 million question: Can you change the president-elect's worldview or is this all for show?"
       );
@@ -80,7 +80,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://img.huffingtonpost.com/asset/2000_1000/583c90681a00002500cca17a.jpeg'
       );
@@ -104,7 +104,7 @@ describe('WwwHuffingtonpostComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'ASSOCIATED PRESS Donald Trump has had several conversations with President Obama. How much'
       );

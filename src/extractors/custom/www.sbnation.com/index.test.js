@@ -23,7 +23,7 @@ describe('WwwSbnationComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'The Red Sox traded for Chris Sale, and they’re going to be ridiculously loaded for a long time'
       );
@@ -46,7 +46,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Grant Brisbee');
+      assert.strictEqual(author, 'Grant Brisbee');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-06T21:08:12.000Z');
+      assert.strictEqual(date_published, '2016-12-06T21:08:12.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The Chris Sale trade doesn’t mean that they’ve won the 2017 World Series, but they’re building a juggernaut in Boston.'
       );
@@ -79,7 +79,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cdn.vox-cdn.com/thumbor/EnCgXG3xHnUSyPoxG2k7uA0NJlo=/0x0:1710x962/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/52164267/592603330.0.jpeg'
       );
@@ -103,7 +103,7 @@ describe('WwwSbnationComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Chris Sale, whose delivery is reminiscent of a cyclone tearing through a tetherball'
       );

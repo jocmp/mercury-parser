@@ -24,7 +24,7 @@ describe('WwwMiamiheraldComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwMiamiheraldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'From Metrorail to bike paths, this is what CEOs think of public transit'
       );
@@ -47,7 +47,7 @@ describe('WwwMiamiheraldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-12T12:00:00.000Z');
+      assert.strictEqual(date_published, '2016-12-12T12:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -57,7 +57,7 @@ describe('WwwMiamiheraldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://www.miamiherald.com/news/local/community/miami-dade/5sz3wg/picture119645963/ALTERNATES/LANDSCAPE_1140/MGB19%20Metrorail%20News%20rk%20(2)'
       );
@@ -81,7 +81,7 @@ describe('WwwMiamiheraldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'This week’s question: When is the last time you took public transportation to'
       );

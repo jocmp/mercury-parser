@@ -24,7 +24,7 @@ describe('ForwardComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('ForwardComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'The Adorable Reason You Can Set Your Alert Sound to “Hummus” on Slack'
       );
@@ -47,7 +47,7 @@ describe('ForwardComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Laura E. Adkins');
+      assert.strictEqual(author, 'Laura E. Adkins');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('ForwardComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-29T01:32:00.000Z');
+      assert.strictEqual(date_published, '2016-12-29T01:32:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('ForwardComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images.forwardcdn.com/image/1300x/center/images/cropped/gettyimages-457536286-1482958420.jpg'
       );
@@ -91,7 +91,7 @@ describe('ForwardComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Sometimes (okay, a lot of the time), if I’m in the middle of'
       );

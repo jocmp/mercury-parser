@@ -24,7 +24,7 @@ describe('WwwEngadgetComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Lyft extends free scooter rides for critical workers through May`
       );
@@ -47,7 +47,7 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Jon Fingas');
+      assert.strictEqual(author, 'Jon Fingas');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, null);
+      assert.strictEqual(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "Emergency, healthcare and transit workers won't need to pay."
       );
@@ -80,7 +80,7 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -101,18 +101,18 @@ describe('WwwEngadgetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'REUTERS/Brendan McDermid Lyft isn’t waiting until the end of April to decide on'
       );
 
       // Ensure that the figure is present.
       const figure = $('figure');
-      assert.equal(figure.length, 1);
+      assert.strictEqual(figure.length, 1);
 
       // Ensure that there are 3 paragraphs
       const p = $('p');
-      assert.equal(p.length, 3);
+      assert.strictEqual(p.length, 3);
     });
   });
 });

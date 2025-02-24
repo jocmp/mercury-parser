@@ -24,7 +24,7 @@ describe('WwwOpposingviewsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwOpposingviewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Investor Icahn To Advise Trump On Finances, Regulation'
       );
@@ -47,7 +47,7 @@ describe('WwwOpposingviewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Lauren Briggs');
+      assert.strictEqual(author, 'Lauren Briggs');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwOpposingviewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-21T23:49:10.000Z');
+      assert.strictEqual(date_published, '2016-12-21T23:49:10.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwOpposingviewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.opposingviews.com/.image/t_share/MTU0MDAxMTEyNDA2ODkzNjUw/investor-icahn-to-advise-trump-on-finances-regulation-promo-image.jpg'
       );
@@ -91,7 +91,7 @@ describe('WwwOpposingviewsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "President-elect Donald Trump's transition team announced on Dec. 21 that investor Carl Icahn"
       );

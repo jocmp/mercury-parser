@@ -43,6 +43,6 @@ describe('stripJunkTags($)', () => {
     `);
 
     $ = stripJunkTags($('*').first(), $);
-    assert.equal($('iframe[src^="https://www.youtube.com"]').length, 1);
+    assert.strictEqual($('iframe[src^="https://www.youtube.com"]').length, 1);
   });
 });

@@ -23,7 +23,7 @@ describe('MaTtiasBeExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `cron.weekly issue #130: Github, keycloak, proc, redis6, cron & more`
       );
@@ -46,7 +46,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Mattias Geniar');
+      assert.strictEqual(author, 'Mattias Geniar');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2020-04-19T05:50:00.000Z`);
+      assert.strictEqual(date_published, `2020-04-19T05:50:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +76,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.strictEqual(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -90,22 +90,22 @@ describe('MaTtiasBeExtractor', () => {
       // Ensure that there are 3 h2 elements.
       const h2 = $('h2');
 
-      assert.equal(h2.length, 3);
+      assert.strictEqual(h2.length, 3);
 
       // Ensure that there are h2 h2 elements.
       const h3 = $('h3');
 
-      assert.equal(h3.length, 27);
+      assert.strictEqual(h3.length, 27);
 
       // Ensure that there is 1 ul element.
       const ul = $('ul');
 
-      assert.equal(ul.length, 1);
+      assert.strictEqual(ul.length, 1);
 
       // Ensure that there are no nav elements.
       const nav = $('nav');
 
-      assert.equal(nav.length, 0);
+      assert.strictEqual(nav.length, 0);
 
       // Check the first 13 words.
 
@@ -116,7 +116,7 @@ describe('MaTtiasBeExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Hi everyone! 👋 Welcome to cron.weekly issue #130. There’s quite a bit of'
       );

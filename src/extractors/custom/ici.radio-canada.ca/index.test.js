@@ -24,7 +24,7 @@ describe('IciRadioCanadaCaExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Affaire KPMG : un juge se récuse');
+      assert.strictEqual(title, 'Affaire KPMG : un juge se récuse');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         author,
         'Zone Justice et faits divers - ICI.Radio-Canada.ca'
       );
@@ -57,7 +57,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-03-13T23:18:00.000Z');
+      assert.strictEqual(date_published, '2017-03-13T23:18:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "Un juge de la Cour de l'impôt se récuse d'un dossier mettant en cause un stratagème du cabinet comptable KPMG. Selon les émissions Enquête et The Fifth Estate, le juge Bocock avait participé à une soirée cocktail organisée par un cabinet d'avocats lié à l'affaire."
       );
@@ -80,7 +80,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images.radio-canada.ca/v1/ici-info/16x9/randall-bocock-juge.jpg?im=Resize=(1250);Composite=(type=URL,url=https://images.radio-canada.ca/v1/assets/elements/16x9/outdated-content-2017.png),gravity=SouthEast,placement=Over,location=(0,0),scale=1'
       );
@@ -104,7 +104,7 @@ describe('IciRadioCanadaCaExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         "Un texte de Frédéric Zalac d'Enquête Jusqu’à la semaine dernière, le juge Randall"
       );

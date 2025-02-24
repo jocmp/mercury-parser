@@ -25,7 +25,7 @@ describe('AtlanticExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('works with a starter story', async () => {
@@ -42,17 +42,17 @@ describe('AtlanticExtractor', () => {
         .trim()
         .slice(0, 20);
 
-      assert.equal(
+      assert.strictEqual(
         title,
         'Why New Yorkers Received a Push Alert About a Manhunt'
       );
-      assert.equal(author, 'Kaveh Waddell');
-      assert.equal(text, 'The city has never b');
-      assert.equal(
+      assert.strictEqual(author, 'Kaveh Waddell');
+      assert.strictEqual(text, 'The city has never b');
+      assert.strictEqual(
         dek,
         'The city has never before used the emergency system the way it did Monday morning.'
       );
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cdn.theatlantic.com/thumbor/wSPiU9kRoAfi5S26nCy3rw5-P78=/0x102:4246x2313/1200x625/media/img/mt/2016/09/RTSO9RP/original.jpg'
       );

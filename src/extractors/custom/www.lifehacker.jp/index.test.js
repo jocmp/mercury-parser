@@ -27,7 +27,7 @@ describe('WwwLifehackerJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `ファインの新聞ストッカーは引越しにも使える！ 家具の固定も簡単`
       );
@@ -50,7 +50,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '島津健吾');
+      assert.strictEqual(author, '島津健吾');
     });
 
     it('returns the date_published', async () => {
@@ -60,7 +60,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-03-08T13:00:00.000Z`);
+      assert.strictEqual(date_published, `2019-03-08T13:00:00.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -70,7 +70,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -80,7 +80,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://media.loom-app.com/mpp/lifehacker/dist/images/2019/02/28/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%882019-02-2810.48.32.jpg?w=1280&h=630&f=jpg`
       );
@@ -104,7 +104,7 @@ describe('WwwLifehackerJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'ついつい溜めてしまい、気がつくとかさばって捨てるのにも苦労する新聞紙。そんな新聞紙を捨てる時には、ファインの「新聞ストッカー」が役に立ちます。新聞紙を簡単に、くるくるっとテープでまけちゃうんです。Image: Amazon.co.jp使い方は簡単。テープや包帯を巻くようにぐるぐると巻きつけるだけ。普通だったら紐でまとめますが、下に通して、結んで、切って…と、結構時間がかかります。でも、このアイテムはラップフィルム。テープのように新聞に吸着してくれるので、きつく締めたり、結ぶ必要がありません。サクサクっとまとめられるので、時短になること間違いなしですね。Image:'
       );

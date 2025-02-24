@@ -24,7 +24,7 @@ describe('WwwLatimesComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwLatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Report on L.A. school shutdown shows confusion over who was in charge, technology shortcomings'
       );
@@ -47,7 +47,7 @@ describe('WwwLatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Howard Blume');
+      assert.strictEqual(author, 'Howard Blume');
     });
 
     it('returns the date_published', async () => {
@@ -68,7 +68,7 @@ describe('WwwLatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://ca-times.brightspotcdn.com/dims4/default/0c0a70c/2147483647/strip/true/crop/2048x1075+0+38/resize/1200x630!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Ff7%2F58%2Fa6329ffd4ef9fb4992750ddfbe32%2Fla-hblume-1481909376-snap-photo'
       );
@@ -92,7 +92,7 @@ describe('WwwLatimesComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'An internal report on last year’s unprecedented one-day shutdown of Los Angeles schools'
       );

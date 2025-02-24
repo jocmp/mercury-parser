@@ -11,7 +11,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 25);
+      assert.strictEqual(getWeight($('div')), 25);
     });
 
     it('returns a score of -25 if node has negative id', () => {
@@ -20,7 +20,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), -25);
+      assert.strictEqual(getWeight($('div')), -25);
     });
 
     it('returns a score of 25 if node has positive class', () => {
@@ -29,7 +29,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 25);
+      assert.strictEqual(getWeight($('div')), 25);
     });
 
     it('returns a score of -25 if node has negative class', () => {
@@ -38,7 +38,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), -25);
+      assert.strictEqual(getWeight($('div')), -25);
     });
 
     it('returns a score of 25 if node has both positive id and class', () => {
@@ -47,7 +47,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 25);
+      assert.strictEqual(getWeight($('div')), 25);
     });
 
     it('returns a score of 25 if node has pos id and neg class', () => {
@@ -58,7 +58,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 25);
+      assert.strictEqual(getWeight($('div')), 25);
     });
 
     it('returns a score of 10 if node has pos img class', () => {
@@ -67,7 +67,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 10);
+      assert.strictEqual(getWeight($('div')), 10);
     });
 
     it('returns a score of 35 if node has pos id pos img class', () => {
@@ -76,7 +76,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 35);
+      assert.strictEqual(getWeight($('div')), 35);
     });
 
     it("adds an add'l 25 (total 50) if node uses entry-content-asset class", () => {
@@ -85,7 +85,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `);
-      assert.equal(getWeight($('div')), 50);
+      assert.strictEqual(getWeight($('div')), 50);
     });
   });
 });

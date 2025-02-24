@@ -23,7 +23,7 @@ describe('GenericExcerptExtractor', () => {
         metaCache,
       });
 
-      assert.equal(excerpt, actualExcerpt);
+      assert.strictEqual(excerpt, actualExcerpt);
     });
 
     it('returns twitter:description', () => {
@@ -44,7 +44,7 @@ describe('GenericExcerptExtractor', () => {
         metaCache,
       });
 
-      assert.equal(excerpt, actualExcerpt);
+      assert.strictEqual(excerpt, actualExcerpt);
     });
 
     it('falls back to the content', () => {
@@ -65,7 +65,7 @@ describe('GenericExcerptExtractor', () => {
         metaCache,
       });
 
-      assert.equal(excerpt, 'Wow this is going to be something good.');
+      assert.strictEqual(excerpt, 'Wow this is going to be something good.');
     });
   });
 });
@@ -73,11 +73,11 @@ describe('GenericExcerptExtractor', () => {
 describe('clean(text)', () => {
   it('truncates text longer than 200 chars and trims whitespance', () => {
     const longText = `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
       culpa qui officia deserunt mollit anim id est laborum.
     `;
     const text = clean(longText);
@@ -88,6 +88,6 @@ describe('clean(text)', () => {
     `;
     shouldBe = shouldBe.replace(/[\s\n]+/g, ' ').trim();
 
-    assert.equal(text, shouldBe);
+    assert.strictEqual(text, shouldBe);
   });
 });

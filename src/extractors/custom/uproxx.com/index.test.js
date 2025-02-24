@@ -23,7 +23,7 @@ describe('UproxxComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('UproxxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Rudy Giuliani Is No Longer In The Running To Become Donald Trump’s Secretary Of State'
       );
@@ -46,7 +46,7 @@ describe('UproxxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Andrew Husband');
+      assert.strictEqual(author, 'Andrew Husband');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('UproxxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-09T22:51:26.000Z');
+      assert.strictEqual(date_published, '2016-12-09T22:51:26.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('UproxxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://uproxx.com/wp-content/uploads/2016/12/rudy-giuliani-not-secretary-of-state.jpg?w=650'
       );
@@ -90,7 +90,7 @@ describe('UproxxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Getty Image Longtime Donald Trump advocate Rudy Giuliani has reportedly removed himself from'
       );

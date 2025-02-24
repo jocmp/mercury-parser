@@ -23,13 +23,13 @@ describe('SuperbizSePlExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Taką waloryzację emerytur seniorzy dostaną od Tuska! Oficjalny wskaźnik podwyżek`
       );
@@ -38,19 +38,19 @@ describe('SuperbizSePlExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Agnieszka Grotek`);
+      assert.strictEqual(author, `Agnieszka Grotek`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2025-02-11T14:25:00.000Z');
+      assert.strictEqual(date_published, '2025-02-11T14:25:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.galleries.smcloud.net/t/galleries/gf-iVUH-Pb5n-dSAE_nowa-najnizsza-emerytura-w-2025-w-polsce-tyle-pieniedzy-otrzymaja-emeryci-po-waloryzacji-od-marca-1280x960.jpg`
       );
@@ -68,7 +68,7 @@ describe('SuperbizSePlExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Waloryzacja emerytur 2025 roku wyniesie 5,5 proc. Dla porównania w 2024 było to'
       );

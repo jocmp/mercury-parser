@@ -26,7 +26,7 @@ describe('WwwItmediaCoJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Intel NUCで最新SSDを比較してみた：さらば平成、さらば水冷、いくぜNUC（1/2 ページ）`
       );
@@ -49,7 +49,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '[田中宏昌，ITmedia]');
+      assert.strictEqual(author, '[田中宏昌，ITmedia]');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-02-22T05:37:03.000Z');
+      assert.strictEqual(date_published, '2019-02-22T05:37:03.000Z');
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Intelの超小型PC「NUC」を手に入れたとあるユーザーが、ほぼ5年ぶりにPCを自作。今回は完成したNUCを使ってNVMe SSDの最新モデルをチェックしてみました。'
       );
@@ -82,7 +82,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://image.itmedia.co.jp/pcuser/articles/1902/22/cover_news089.jpg`
       );
@@ -106,7 +106,7 @@ describe('WwwItmediaCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'とある自作PCユーザーが平成最後の年にふと目覚め、ほぼ5年ぶりにPCを新調した経緯をまとめた本連載。前回の記事では、Intelが提唱したNext'
       );

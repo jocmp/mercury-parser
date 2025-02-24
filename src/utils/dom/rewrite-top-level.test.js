@@ -12,8 +12,8 @@ describe('rewriteTopLevel(node, $)', () => {
     `);
     const result = rewriteTopLevel($('html').first(), $);
 
-    assert.equal(result('html').length, 0);
-    assert.equal(result('body').length, 0);
+    assert.strictEqual(result('html').length, 0);
+    assert.strictEqual(result('body').length, 0);
 
     if (!cheerio.browser) {
       assertClean(

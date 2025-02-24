@@ -27,7 +27,7 @@ describe('WwwPublickey1JpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `インテル、1Uで容量1ペタバイトのSSD「Intel SSD D5-P4326」発売。QLC（1セルあたり4ビット）と64層の3D NAND技術を用いて大容量SSDを実現`
       );
@@ -50,7 +50,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         author,
         'Junichi Niino（jniino）\nIT系の雑誌編集者、オンラインメディア発行人を経て独立。2009年にPublickeyを開始しました。\n（詳しいプロフィール）'
       );
@@ -63,7 +63,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-04-03T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-04-03T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -73,7 +73,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -83,7 +83,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.publickey1.jp/2019/p4236ga01.gif`
       );
@@ -107,7 +107,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '2019年4月4日 米インテルは4月2日、イベント「Data-Centric Innovation Day」を開催。データセンター向けに1Uラックあたり1ペタバイトの容量を持つSSD「Intel SSD'
       );

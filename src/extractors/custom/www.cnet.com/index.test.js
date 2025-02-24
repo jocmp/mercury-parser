@@ -24,7 +24,7 @@ describe('WwwCnetComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Seven mobile trends to look for in 2017');
+      assert.strictEqual(title, 'Seven mobile trends to look for in 2017');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Marguerite Reardon');
+      assert.strictEqual(author, 'Marguerite Reardon');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-22T13:00:00.000Z');
+      assert.strictEqual(date_published, '2016-12-22T13:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -64,7 +64,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'An anti-regulation, pro-dealmaking US president could make for an interesting year for wireless and broadband companies.'
       );
@@ -77,7 +77,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.cnet.com/a/img/resize/b60fa8aec85660055988dbc589a0e8a1d73fb963/2016/12/16/48966e5f-87df-4915-ad68-ed70cdd37fdd/gettyimages-537252007.jpg?auto=webp&fit=crop&height=630&width=1200'
       );
@@ -101,7 +101,7 @@ describe('WwwCnetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Get ready for a wild 2017 when it comes to the world of'
       );

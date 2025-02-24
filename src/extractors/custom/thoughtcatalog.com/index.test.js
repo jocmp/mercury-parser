@@ -24,7 +24,7 @@ describe('ThoughtcatalogComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('ThoughtcatalogComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'One Day You Will Meet Someone Who Will Change Your Life For Good'
       );
@@ -47,7 +47,7 @@ describe('ThoughtcatalogComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Lauren Jarvis-Gibson');
+      assert.strictEqual(author, 'Lauren Jarvis-Gibson');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('ThoughtcatalogComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-16T18:05:39.000Z');
+      assert.strictEqual(date_published, '2016-12-16T18:05:39.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('ThoughtcatalogComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://thoughtcatalog.com/wp-content/uploads/2016/12/31565018766_4494e5f335_o.jpg?w=1536&h=768&crop=1'
       );
@@ -91,7 +91,7 @@ describe('ThoughtcatalogComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'One day you are going to meet someone in your life, that is'
       );

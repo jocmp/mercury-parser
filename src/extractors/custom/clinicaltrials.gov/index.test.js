@@ -26,7 +26,7 @@ describe('ClinicaltrialsGovExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('ClinicaltrialsGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Changes in Circulating Tumor-Specific DNA in Patients With Non-Metastatic Non-Small Cell Lung Cancer`
       );
@@ -49,7 +49,7 @@ describe('ClinicaltrialsGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Wake Forest University Health Sciences');
+      assert.strictEqual(author, 'Wake Forest University Health Sciences');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,10 @@ describe('ClinicaltrialsGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(moment(date_published).format('YYYY-MM-DD'), '2018-11-21');
+      assert.strictEqual(
+        moment(date_published).format('YYYY-MM-DD'),
+        '2018-11-21'
+      );
     });
 
     it('returns the content', async () => {
@@ -80,7 +83,7 @@ describe('ClinicaltrialsGovExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The purpose of this research study is to evaluate a blood test to'
       );

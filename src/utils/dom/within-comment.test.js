@@ -12,7 +12,7 @@ describe('withinComment(node)', () => {
         </div>
       </div>
     `);
-    assert.equal(withinComment($('.author').first()), false);
+    assert.strictEqual(withinComment($('.author').first()), false);
   });
 
   it('returns true if its parent has a class of comment', () => {
@@ -23,7 +23,7 @@ describe('withinComment(node)', () => {
         </div>
       </div>
     `);
-    assert.equal(withinComment($('.author').first()), true);
+    assert.strictEqual(withinComment($('.author').first()), true);
   });
 
   it('returns true if its parent has an id of comment', () => {
@@ -34,6 +34,6 @@ describe('withinComment(node)', () => {
         </div>
       </div>
     `);
-    assert.equal(withinComment($('.author').first()), true);
+    assert.strictEqual(withinComment($('.author').first()), true);
   });
 });

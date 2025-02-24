@@ -26,7 +26,7 @@ describe('WwwInfoqComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Google ChromeのNever-Slow Mode`);
+      assert.strictEqual(title, `Google ChromeのNever-Slow Mode`);
     });
 
     it('returns the author', async () => {
@@ -46,7 +46,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '作者： Diogo Carleto 翻訳者 中村 真子');
+      assert.strictEqual(author, '作者： Diogo Carleto 翻訳者 中村 真子');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-02-26T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-02-26T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'GoogleはNever-Slow Modeと呼ばれるプロトタイプ機能に取り組んでいる。このプロトタイプ機能はChromium プロジェクトでコミット作業進行中であり、ユーザーエクスペリエンスの向上、一貫性のある迅速なブラウジングの提供を目的としている。'
       );
@@ -79,7 +79,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.infoq.com/statics_s1_20220809063436/styles/static/images/logo/logo-big.jpg`
       );
@@ -103,7 +103,7 @@ describe('WwwInfoqComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '原文(投稿日：2019/02/16)へのリンク GoogleはNever-Slow'
       );

@@ -23,13 +23,13 @@ describe('ArstechnicaComExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `22 states sue to block new NIH funding policy—court puts it on hold`
       );
@@ -38,19 +38,19 @@ describe('ArstechnicaComExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, null);
+      assert.strictEqual(date_published, null);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://cdn.arstechnica.net/wp-content/uploads/2025/02/GettyImages-158649166-1152x648.jpg`
       );
@@ -68,7 +68,7 @@ describe('ArstechnicaComExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'On Friday, the National Institutes of Health (NIH) announced a sudden change to'
       );

@@ -24,7 +24,7 @@ describe('WwwDmagazineComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'NFL Concussion Settlement Payments Can Begin');
+      assert.strictEqual(title, 'NFL Concussion Settlement Payments Can Begin');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Kathy Wise');
+      assert.strictEqual(author, 'Kathy Wise');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-14T20:24:00.000Z');
+      assert.strictEqual(date_published, '2016-12-14T20:24:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -64,7 +64,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The Supreme Court defers. Tony Dorsett and other former players can get paid.'
       );
@@ -77,7 +77,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'http://www.dmagazine.com/wp-content/uploads/media/4/tony_dorsett_1.jpg'
       );
@@ -101,7 +101,7 @@ describe('WwwDmagazineComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'COLLISION COURSE: Dorsett, photographed in his home December 19, 2013, faces his old,'
       );

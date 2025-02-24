@@ -26,7 +26,7 @@ describe('OtrsComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Silver Society – The young old people`);
+      assert.strictEqual(title, `Silver Society – The young old people`);
     });
 
     it('returns the author', async () => {
@@ -46,7 +46,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'André Mindermann');
+      assert.strictEqual(author, 'André Mindermann');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-03-18T09:00:11.000Z`);
+      assert.strictEqual(date_published, `2019-03-18T09:00:11.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Older workers are often considered less efficient, less innovative in their thinking and not open to change. Is that true or do we have to change our attitude?'
       );
@@ -79,7 +79,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://otrs.com/wp-content/uploads/john-moeses-bauan-687723-unsplash-1-e1552668096960.jpg`
       );
@@ -103,7 +103,7 @@ describe('OtrsComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Older workers are often considered less efficient, less innovative in their thinking and'
       );

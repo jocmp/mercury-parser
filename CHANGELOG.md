@@ -7,7 +7,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 ## v2.3.8
 
-- feat: Add custom extractor for lebensmittelwarnung.de
+- Replace .equal with .strictEqual
+- feat: Add custom extractor for lebensmittelwarnung.de by @jocmp in [#57](https://github.com/jocmp/mercury-parser/pull/57)
 
 ## v2.3.7
 

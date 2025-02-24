@@ -21,13 +21,13 @@ describe('WwwLemondeFrExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Les sombres perspectives économiques de la Commission européenne`
       );
@@ -36,19 +36,19 @@ describe('WwwLemondeFrExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, `Cécile Ducourtieux`);
+      assert.strictEqual(author, `Cécile Ducourtieux`);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2019-05-07T11:59:43.000Z`);
+      assert.strictEqual(date_published, `2019-05-07T11:59:43.000Z`);
     });
 
     it('returns the dek', async () => {
       const { dek } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         dek,
         'L’institution abaisse ses prévisions pour 2019, avec un PIB à 1,4 % pour l’ensemble de l’UE, et à 1,2 % pour la zone euro.'
       );
@@ -57,7 +57,7 @@ describe('WwwLemondeFrExtractor', () => {
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://img.lemde.fr/2019/05/07/354/570/3246/2164/1440/960/60/0/d105b14_dfjDE1I-caggQrT4gvHf2nZP.jpg`
       );
@@ -75,7 +75,7 @@ describe('WwwLemondeFrExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Les dirigeants européens qui doivent se réunir, jeudi 9 mai à Sibiu (Roumanie),'
       );

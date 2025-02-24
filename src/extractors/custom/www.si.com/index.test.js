@@ -24,7 +24,7 @@ describe('WwwSiComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'A Breath of Fresh Heir: Stephen Jones following in the shadow cast by his father'
       );
@@ -47,7 +47,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Austin Murphy');
+      assert.strictEqual(author, 'Austin Murphy');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-12T15:10:14.000Z');
+      assert.strictEqual(date_published, '2017-01-12T15:10:14.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'How did the Cowboys half two decades of mediocrity and land the top playff seed in the NFC? Start with the one man who will stand up to owner Jerry Jones: his son Stephen, the EVP, CEO and Director of Player Personnel of the Dallas Cowboys.'
       );
@@ -80,7 +80,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.si.com/.image/t_share/MTY4MTA0MzMwMTAyMzg0MDAw/stephen-jerry-jones-dallas-cowboysjpg.jpg'
       );
@@ -104,7 +104,7 @@ describe('WwwSiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Stephen Jones already wears three hats for the Cowboys, but on a cloudy'
       );

@@ -25,7 +25,7 @@ describe('WwwAndroidauthorityComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -35,7 +35,7 @@ describe('WwwAndroidauthorityComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `The best new Android apps and games for December 2024`
       );
@@ -44,13 +44,13 @@ describe('WwwAndroidauthorityComExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Andy Walker');
+      assert.strictEqual(author, 'Andy Walker');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2024-11-30T17:02:18.000Z`);
+      assert.strictEqual(date_published, `2024-11-30T17:02:18.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
@@ -60,7 +60,7 @@ describe('WwwAndroidauthorityComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.androidauthority.com/wp-content/uploads/2024/11/clean-as-duck-icon-1.jpg`
       );
@@ -78,7 +78,7 @@ describe('WwwAndroidauthorityComExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Many new Android apps are out there. Keeping track of them is tough,'
       );

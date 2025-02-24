@@ -9,12 +9,12 @@ describe('detectByHtml', () => {
       '<head><meta name="al:ios:app_name" value="Medium" /></head>'
     );
 
-    assert.equal(detectByHtml($).domain, 'medium.com');
+    assert.strictEqual(detectByHtml($).domain, 'medium.com');
   });
 
   it('returns nothing if no match is found', () => {
     const $ = cheerio.load('<div></div>');
 
-    assert.equal(detectByHtml($), null);
+    assert.strictEqual(detectByHtml($), undefined);
   });
 });

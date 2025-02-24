@@ -24,7 +24,7 @@ describe('WwwLinkedinComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwLinkedinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'What will set your soul on fire in 2017');
+      assert.strictEqual(title, 'What will set your soul on fire in 2017');
     });
 
     it('returns the author', async () => {
@@ -44,7 +44,7 @@ describe('WwwLinkedinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Ellyn Shook');
+      assert.strictEqual(author, 'Ellyn Shook');
     });
 
     it('returns the date_published', async () => {
@@ -54,7 +54,7 @@ describe('WwwLinkedinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-19T08:00:00.000Z');
+      assert.strictEqual(date_published, '2016-12-19T08:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -64,7 +64,7 @@ describe('WwwLinkedinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://media-exp1.licdn.com/dms/image/C5612AQHh48YF28VJbA/article-cover_image-shrink_600_2000/0/1520113723041?e=1665619200&v=beta&t=DRTBiEEMzl6b3frwdw4_YEhh2xuIdCgtRqZR0pu_2Vg'
       );
@@ -88,7 +88,7 @@ describe('WwwLinkedinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'This article was originally published on The Huffington Post and can be read'
       );

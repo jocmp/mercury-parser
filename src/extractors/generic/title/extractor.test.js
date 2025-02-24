@@ -17,7 +17,7 @@ describe('GenericTitleExtractor', () => {
         metaCache: ['dc.title', 'something-else'],
       });
 
-      assert.equal(result, 'This Is the Title Okay');
+      assert.strictEqual(result, 'This Is the Title Okay');
     });
 
     it('pulls title from selectors lacking string meta', () => {
@@ -34,7 +34,7 @@ describe('GenericTitleExtractor', () => {
         metaCache: ['og:title', 'something-else'],
       });
 
-      assert.equal(result, 'This Is the Title Okay');
+      assert.strictEqual(result, 'This Is the Title Okay');
     });
 
     it('then falls back to weak meta title tags', () => {
@@ -49,7 +49,7 @@ describe('GenericTitleExtractor', () => {
         metaCache: ['og:title', 'something-else'],
       });
 
-      assert.equal(result, 'This Is the Title Okay');
+      assert.strictEqual(result, 'This Is the Title Okay');
     });
   });
 
@@ -63,6 +63,6 @@ describe('GenericTitleExtractor', () => {
     `);
     const result = GenericTitleExtractor.extract({ $, url: '', metaCache: [] });
 
-    assert.equal(result, 'This Is the Weak Title Okay');
+    assert.strictEqual(result, 'This Is the Weak Title Okay');
   });
 });

@@ -26,7 +26,7 @@ describe('WeeklyAsciiJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `普通に使える手のひらサイズの超小型スマホ「Palm Phone」の実機チェック`
       );
@@ -49,7 +49,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `文● オカモト／ASCII編集部`);
+      assert.strictEqual(author, `文● オカモト／ASCII編集部`);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-04-21T03:00:00.000Z');
+      assert.strictEqual(date_published, '2019-04-21T03:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +79,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://ascii.jp/img/2019/04/19/1643408/l/59bcecd731732273.jpg`
       );
@@ -103,7 +103,7 @@ describe('WeeklyAsciiJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'FOXが国内販売代理店となり、同社ECサイトやプラススタイルのほか、ヨドバシカメラ、ビックカメラ、Amazon.co.jpなどで、24日から販売される手のひらサイズのAndroidスマートフォン「Palm'
       );

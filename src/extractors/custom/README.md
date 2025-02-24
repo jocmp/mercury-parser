@@ -257,7 +257,7 @@ it('returns the title', async () => {
 
   // Update these values with the expected values from
   // the article.
-  assert.equal(title, 'Schrödinger’s Hack');
+  assert.strictEqual(title, 'Schrödinger’s Hack');
 });
 ```
 

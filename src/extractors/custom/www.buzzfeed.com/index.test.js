@@ -27,7 +27,7 @@ describe('BuzzfeedExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,7 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'People Are Calling Out This Edited Picture Of Demi Lovato For Body-Shaming Her'
       );
@@ -50,7 +50,7 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Ikran Dahir');
+      assert.strictEqual(author, 'Ikran Dahir');
     });
 
     it('returns the date_published', async () => {
@@ -60,7 +60,7 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-10-03T16:35:39.000Z');
+      assert.strictEqual(date_published, '2016-10-03T16:35:39.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -70,7 +70,7 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://img.buzzfeed.com/buzzfeed-static/static/2016-10/3/14/campaign_images/buzzfeed-prod-fastlane01/people-are-calling-out-this-edited-picture-of-dem-2-28558-1475518666-10_dblbig.jpg'
       );
@@ -83,7 +83,10 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, 'Lovato said: "Is that how my boobs should look?"');
+      assert.strictEqual(
+        dek,
+        'Lovato said: "Is that how my boobs should look?"'
+      );
     });
 
     it('returns the content', async () => {
@@ -104,7 +107,7 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'A few months ago, Vladimir Serbanescu, a 17-year-old artist from Romania, drew this'
       );
@@ -130,7 +133,7 @@ describe('BuzzfeedExtractor', () => {
         .first()
         .attr('src');
 
-      assert.equal(
+      assert.strictEqual(
         imgSrc,
         'https://img.buzzfeed.com/buzzfeed-static/static/2016-11/21/10/enhanced/buzzfeed-prod-fastlane03/longform-original-25748-1479741827-5.jpg?output-format=jpg&output-quality=auto'
       );
@@ -150,11 +153,11 @@ describe('BuzzfeedExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         imgSrc,
         'https://img.buzzfeed.com/buzzfeed-static/static/2016-11/21/10/enhanced/buzzfeed-prod-fastlane03/longform-original-25748-1479741827-5.jpg?output-format=jpg&output-quality=auto'
       );
-      assert.equal(
+      assert.strictEqual(
         figcaption,
         '\n                Adam Maida for BuzzFeed News\n              '
       );

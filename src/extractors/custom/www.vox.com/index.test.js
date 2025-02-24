@@ -24,7 +24,7 @@ describe('WwwVoxComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Donald Trump’s tweets fit a pattern of harassment Twitter has banned before'
       );
@@ -47,7 +47,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Aja Romano');
+      assert.strictEqual(author, 'Aja Romano');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-10T15:20:01.000Z');
+      assert.strictEqual(date_published, '2016-12-10T15:20:01.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +67,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'The President-elect’s targets may endure real-life threats from hordes of his supporters.'
       );
@@ -80,7 +80,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cdn.vox-cdn.com/thumbor/E4zA3smy2FKHl9BxfsfKjkNHfFc=/0x166:2500x1572/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/52223131/628656068.0.jpeg'
       );
@@ -104,7 +104,7 @@ describe('WwwVoxComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Photo by Steve Pope/Getty Images After the election, Twitter issued a statement to'
       );

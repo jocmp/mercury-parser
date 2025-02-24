@@ -12,7 +12,7 @@ describe('Utils', () => {
         </div>
       `);
 
-      assert.equal(nodeIsSufficient($.root()), false);
+      assert.strictEqual(nodeIsSufficient($.root()), false);
     });
 
     it('returns true if node text length > 100 chars', () => {
@@ -24,7 +24,7 @@ describe('Utils', () => {
         </div>
       `);
 
-      assert.equal(nodeIsSufficient($.root()), true);
+      assert.strictEqual(nodeIsSufficient($.root()), true);
     });
   });
 });

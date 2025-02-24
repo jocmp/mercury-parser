@@ -27,7 +27,7 @@ describe('WwwMoongiftJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -37,7 +37,10 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `wasm-module - RustのWebAssemblyの中でDOMを扱う`);
+      assert.strictEqual(
+        title,
+        `wasm-module - RustのWebAssemblyの中でDOMを扱う`
+      );
     });
 
     it('returns the author', async () => {
@@ -47,7 +50,7 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +60,7 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-04-03T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-04-03T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -67,7 +70,7 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'wasm-module - RustのWebAssemblyの中でDOMを扱うの使い方、日本語情報はMOONGIFTでチェック。個人的にWebAssemblyには強く期待しており、その中でもGoが有力だと感じています。それはGoのWebAssemblyではDOMやJavaScript APIが使えるからです。駆使すればWebアプリケーション全体のコードをGoで書けるのです。これがRustにもないのが残念でした。しかしwasm-moduleが新し...。MOONGIFTはオープンソース・ソフトウェアを毎日紹介'
       );
@@ -80,7 +83,7 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://s3-ap-northeast-1.amazonaws.com/moongift/attaches/16931/list.?1553229736`
       );
@@ -104,7 +107,7 @@ describe('WwwMoongiftJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         '個人的にWebAssemblyには強く期待しており、その中でもGoが有力だと感じています。それはGoのWebAssemblyではDOMやJavaScript'
       );

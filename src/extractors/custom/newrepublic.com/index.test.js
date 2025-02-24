@@ -23,7 +23,7 @@ describe('NewrepublicComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('article returns the title', async () => {
@@ -33,7 +33,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'Fantastic Beasts: A Nice Place to Visit');
+      assert.strictEqual(title, 'Fantastic Beasts: A Nice Place to Visit');
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Will Leitch');
+      assert.strictEqual(author, 'Will Leitch');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-11-18T05:00:00.000Z');
+      assert.strictEqual(date_published, '2016-11-18T05:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -63,7 +63,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         "The glorious world-building in the first Harry Potter spin-off isn't enough to keep viewers coming back."
       );
@@ -76,7 +76,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images.newrepublic.com/29020c1e6b108813cf65b54487ad2b5a65aa6079.jpeg?w=1109&h=577&crop=faces&fit=crop&fm=jpg'
       );
@@ -100,7 +100,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The eight Harry Potter films, which stretched out over nearly a decade, had'
       );
@@ -124,7 +124,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Maybe Donald Trump’s Twitter account is more than just a smoke screen.'
       );
@@ -137,7 +137,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Alex Shephard');
+      assert.strictEqual(author, 'Alex Shephard');
     });
 
     it('minute returns the content', async () => {
@@ -158,7 +158,7 @@ describe('NewrepublicComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'It’s been one of the most persistent narratives of the last year: Whenever'
       );

@@ -21,8 +21,8 @@ describe('Parser', () => {
         'http://deadspin.com/remember-when-donald-trump-got-booed-for-butchering-ta-1788216229'
       );
 
-      assert.equal(typeof result, 'object');
-      assert.equal(result.content.indexOf('score="') === -1, true);
+      assert.strictEqual(typeof result, 'object');
+      assert.strictEqual(result.content.indexOf('score="') === -1, true);
     });
 
     it('returns an error on non-200 responses', async () => {
@@ -46,7 +46,7 @@ describe('Parser', () => {
         'https://en.wikipedia.org/wiki/Brihadeeswarar_Temple_fire'
       );
 
-      assert.equal(typeof result, 'object');
+      assert.strictEqual(typeof result, 'object');
     });
 
     it('does washingtonpost', async () => {
@@ -55,9 +55,9 @@ describe('Parser', () => {
         'https://www.washingtonpost.com/news/opinions/wp/2018/10/29/enough-platitudes-lets-name-names/'
       );
 
-      assert.equal(typeof result, 'object');
-      assert.equal(result.total_pages, 1);
-      assert.equal(
+      assert.strictEqual(typeof result, 'object');
+      assert.strictEqual(result.total_pages, 1);
+      assert.strictEqual(
         result.url,
         'https://www.washingtonpost.com/news/opinions/wp/2018/10/29/enough-platitudes-lets-name-names/'
       );
@@ -68,8 +68,8 @@ describe('Parser', () => {
         'http://www.nytimes.com/2016/08/16/upshot/the-state-of-the-clinton-trump-race-is-it-over.html?_r=0'
       );
 
-      assert.equal(typeof result, 'object');
-      assert.equal(result.total_pages, 1);
+      assert.strictEqual(typeof result, 'object');
+      assert.strictEqual(result.total_pages, 1);
     });
 
     it('does ars pagination', async () => {
@@ -80,10 +80,10 @@ describe('Parser', () => {
 
       const { total_pages, rendered_pages } = result;
 
-      assert.equal(total_pages, 3);
-      assert.equal(rendered_pages, 3);
+      assert.strictEqual(total_pages, 3);
+      assert.strictEqual(rendered_pages, 3);
 
-      assert.equal(result.next_page_url, `${url}2`);
+      assert.strictEqual(result.next_page_url, `${url}2`);
     });
   });
 
@@ -98,7 +98,7 @@ describe('Parser', () => {
 
     const htmlRe = /<[a-z][\s\S]*>/g;
 
-    assert.equal(htmlRe.test(content), false);
+    assert.strictEqual(htmlRe.test(content), false);
   });
 
   it('returns markdown if markdown is passed as contentType', async () => {
@@ -116,8 +116,8 @@ describe('Parser', () => {
     const htmlRe = /<[a-z][\s\S]*>/;
     const markdownRe = /\[[\w\s]+\]\(.*\)/;
 
-    assert.equal(htmlRe.test(content), false);
-    assert.equal(markdownRe.test(content), true);
+    assert.strictEqual(htmlRe.test(content), false);
+    assert.strictEqual(markdownRe.test(content), true);
   });
 
   it('returns custom elements if an extend object is passed', async () => {
@@ -137,8 +137,8 @@ describe('Parser', () => {
       },
     });
     assert.ok(sites);
-    assert.equal(sites.length, 8);
-    assert.equal(sites[0], 'NYMag.com');
+    assert.strictEqual(sites.length, 8);
+    assert.strictEqual(sites[0], 'NYMag.com');
   });
 
   it('returns an array if a single element matches a custom extend', async () => {
@@ -158,7 +158,7 @@ describe('Parser', () => {
       },
     });
     assert.ok(sites);
-    assert.equal(sites.length, 1);
+    assert.strictEqual(sites.length, 1);
   });
 
   it('returns custom attributes if an extend object is passed', async () => {
@@ -178,8 +178,8 @@ describe('Parser', () => {
       },
     });
     assert.ok(sites);
-    assert.equal(sites.length, 8);
-    assert.equal(sites[1], 'http://nymag.com/daily/intelligencer/');
+    assert.strictEqual(sites.length, 8);
+    assert.strictEqual(sites[1], 'http://nymag.com/daily/intelligencer/');
   });
 
   it('is able to use custom extractors (with extension) added via api', async () => {
@@ -211,10 +211,10 @@ describe('Parser', () => {
     Parser.addExtractor(customExtractor);
 
     const result = await Parser.parse(url, { html });
-    assert.equal(typeof result, 'object');
-    assert.equal(result.author, 'Jennifer Van Grove');
-    assert.equal(result.domain, 'www.sandiegouniontribune.com');
-    assert.equal(result.total_pages, 1);
-    assert.equal(result.testContent, 'Growth & Development');
+    assert.strictEqual(typeof result, 'object');
+    assert.strictEqual(result.author, 'Jennifer Van Grove');
+    assert.strictEqual(result.domain, 'www.sandiegouniontribune.com');
+    assert.strictEqual(result.total_pages, 1);
+    assert.strictEqual(result.testContent, 'Growth & Development');
   });
 });

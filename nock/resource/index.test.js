@@ -15,7 +15,7 @@ describe('Resource', () => {
       const url = 'http://theconcourse.deadspin.com/1786177057';
       const $ = await Resource.create(url);
 
-      assert.equal(typeof $, 'function');
+      assert.strictEqual(typeof $, 'function');
     });
 
     it('returns an error message if the url is malformed', async () => {
@@ -31,11 +31,11 @@ describe('Resource', () => {
       const $ = await Resource.create(url);
       const metaContentType = $('meta[http-equiv=content-type]').attr('value');
 
-      assert.equal(getEncoding(metaContentType), 'iso-8859-1');
+      assert.strictEqual(getEncoding(metaContentType), 'iso-8859-1');
       const encodedU = /&#xFC;/g;
 
-      assert.equal(encodedU.test($.html()), true);
-      assert.equal(typeof $, 'function');
+      assert.strictEqual(encodedU.test($.html()), true);
+      assert.strictEqual(typeof $, 'function');
     });
 
     it('fetches with different encoding and case insensitive regex', async () => {
@@ -46,12 +46,12 @@ describe('Resource', () => {
         'value'
       );
 
-      assert.equal(getEncoding(metaContentType), 'windows-1251');
+      assert.strictEqual(getEncoding(metaContentType), 'windows-1251');
 
       const badEncodingRe = /&#xFFFD;/g;
 
-      assert.equal(badEncodingRe.test($.html()), false);
-      assert.equal(typeof $, 'function');
+      assert.strictEqual(badEncodingRe.test($.html()), false);
+      assert.strictEqual(typeof $, 'function');
     });
 
     it('fetches with different encoding and HTML5 charset tag', async () => {
@@ -60,12 +60,12 @@ describe('Resource', () => {
       const $ = await Resource.create(url);
       const metaContentType = $('meta[charset]').attr('charset');
 
-      assert.equal(getEncoding(metaContentType), 'windows-1250');
+      assert.strictEqual(getEncoding(metaContentType), 'windows-1250');
 
       const badEncodingRe = /&#xFFFD;/g;
 
-      assert.equal(badEncodingRe.test($.html()), false);
-      assert.equal(typeof $, 'function');
+      assert.strictEqual(badEncodingRe.test($.html()), false);
+      assert.strictEqual(typeof $, 'function');
     });
 
     it('handles special encoding', async () => {
@@ -75,8 +75,8 @@ describe('Resource', () => {
 
       const badEncodingRe = /�/g;
 
-      assert.equal(badEncodingRe.test($.html()), false);
-      assert.equal(typeof $, 'function');
+      assert.strictEqual(badEncodingRe.test($.html()), false);
+      assert.strictEqual(typeof $, 'function');
     });
 
     it('doesnt mangle non-ascii characters in prefetched response', async () => {
@@ -85,8 +85,8 @@ describe('Resource', () => {
         '<!DOCTYPE html><html lang="de"><head><meta charSet="UTF-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/></head><body><div id="___gatsby"><h1 class="styles-module--headline--niWjO">Wir gestalten die Digitalisierung</h1><p>Wir Grüne kämpfen für ein offenes, gemeinwohlorientiertes Netz. Wir wollen den digitalen Wandel gerecht gestalten und setzen uns für Verantwortung, Freiheit und Recht im Netz ein. Netzpolitik und Digitalisierung sind zentrale politische Querschnittsaufgaben für eine moderne Gesellschaft. Im Mittelpunkt stehen für uns eine zukunftsfähige digitale Infrastruktur, der freie und gleichberechtigte Zugang zum Netz für alle, der Schutz unserer Privatsphäre und persönlichen Daten, sowie eine modernisierte  Verwaltung.</p></div></body></html>';
 
       const $ = await Resource.create(url, prefetched);
-      assert.equal(/Gr&#xFC;ne/.test($.html()), true);
-      assert.equal(/&#xFFFD;/.test($.html()), false);
+      assert.strictEqual(/Gr&#xFC;ne/.test($.html()), true);
+      assert.strictEqual(/&#xFFFD;/.test($.html()), false);
     });
   });
 

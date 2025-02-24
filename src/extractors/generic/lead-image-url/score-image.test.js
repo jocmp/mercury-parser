@@ -14,37 +14,37 @@ describe('scoreImageUrlUrl(url)', () => {
   it('gets 20 points for a positive lead img hint', () => {
     const url = 'http://example.com/upload/img.png';
 
-    assert.equal(scoreImageUrl(url), 20);
+    assert.strictEqual(scoreImageUrl(url), 20);
   });
 
   it('loses 20 points for a negative lead img hint', () => {
     const url = 'http://example.com/sprite/foo/bar.png';
 
-    assert.equal(scoreImageUrl(url), -20);
+    assert.strictEqual(scoreImageUrl(url), -20);
   });
 
   it('loses 10 points for a gif', () => {
     const url = 'http://example.com/foo/bar.gif';
 
-    assert.equal(scoreImageUrl(url), -10);
+    assert.strictEqual(scoreImageUrl(url), -10);
 
     const url2 = 'http://example.com/foogif/bar';
 
-    assert.equal(scoreImageUrl(url2), 0);
+    assert.strictEqual(scoreImageUrl(url2), 0);
   });
 
   it('gains 10 points for a jpg', () => {
     const url = 'http://example.com/foo/bar.jpg';
-    assert.equal(scoreImageUrl(url), 10);
+    assert.strictEqual(scoreImageUrl(url), 10);
 
     const url2 = 'http://example.com/foo/bar.jpeg';
-    assert.equal(scoreImageUrl(url2), 10);
+    assert.strictEqual(scoreImageUrl(url2), 10);
 
     const url3 = 'http://example.com/foojpg/bar';
-    assert.equal(scoreImageUrl(url3), 0);
+    assert.strictEqual(scoreImageUrl(url3), 0);
 
     const url4 = 'http://example.com/foo.jpg?bar=baz';
-    assert.equal(scoreImageUrl(url4), 10);
+    assert.strictEqual(scoreImageUrl(url4), 10);
   });
 });
 
@@ -53,14 +53,14 @@ describe('scoreAttr($img)', () => {
     const $ = cheerio.load('<div><img alt="Wow" /></div>');
     const $img = $('img').first();
 
-    assert.equal(scoreAttr($img), 5);
+    assert.strictEqual(scoreAttr($img), 5);
   });
 
   it('gets 0 points if the img node has an alt attribute', () => {
     const $ = cheerio.load('<div><img /></div>');
     const $img = $('img').first();
 
-    assert.equal(scoreAttr($img), 0);
+    assert.strictEqual(scoreAttr($img), 0);
   });
 });
 
@@ -77,14 +77,14 @@ describe('scoreByParents($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByParents($img), 25);
+    assert.strictEqual(scoreByParents($img), 25);
   });
 
   it('gets 0 points if the img has no figure parent', () => {
     const $ = cheerio.load('<div><img /></div>');
     const $img = $('img').first();
 
-    assert.equal(scoreByParents($img), 0);
+    assert.strictEqual(scoreByParents($img), 0);
   });
 
   it('gets 15 points if parent or gparent has photo hints', () => {
@@ -99,7 +99,7 @@ describe('scoreByParents($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByParents($img), 15);
+    assert.strictEqual(scoreByParents($img), 15);
   });
 });
 
@@ -113,7 +113,7 @@ describe('scoreBySibling($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreBySibling($img), 25);
+    assert.strictEqual(scoreBySibling($img), 25);
   });
 
   it('gets 15 points if its sibling has photo hints', () => {
@@ -129,7 +129,7 @@ describe('scoreBySibling($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreBySibling($img), 15);
+    assert.strictEqual(scoreBySibling($img), 15);
   });
 });
 
@@ -142,7 +142,7 @@ describe('scoreByDimensions($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByDimensions($img), -50);
+    assert.strictEqual(scoreByDimensions($img), -50);
   });
 
   it('penalizes short images', () => {
@@ -153,7 +153,7 @@ describe('scoreByDimensions($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByDimensions($img), -50);
+    assert.strictEqual(scoreByDimensions($img), -50);
   });
 
   it('ignores sprites', () => {
@@ -164,7 +164,7 @@ describe('scoreByDimensions($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByDimensions($img), 0);
+    assert.strictEqual(scoreByDimensions($img), 0);
   });
 
   it('penalizes images with small areas', () => {
@@ -175,7 +175,7 @@ describe('scoreByDimensions($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByDimensions($img), -100);
+    assert.strictEqual(scoreByDimensions($img), -100);
   });
 
   it('prefers the largest images', () => {
@@ -186,7 +186,7 @@ describe('scoreByDimensions($img)', () => {
     `);
     const $img = $('img').first();
 
-    assert.equal(scoreByDimensions($img), 1000);
+    assert.strictEqual(scoreByDimensions($img), 1000);
   });
 });
 
@@ -204,6 +204,6 @@ describe('scoreByPosition($imgs, index)', () => {
     `);
     const $imgs = $('img');
 
-    assert.equal(scoreByPosition($imgs, 0), 3);
+    assert.strictEqual(scoreByPosition($imgs, 0), 3);
   });
 });

@@ -23,7 +23,7 @@ describe('GithubComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `steventroughtonsmith/marzipanify: Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP)`
       );
@@ -46,7 +46,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2020-07-07T12:10:51.000Z');
+      assert.strictEqual(date_published, '2020-07-07T12:10:51.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +66,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP) - steventroughtonsmith/marzipanify: Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP)'
       );
@@ -79,7 +79,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://opengraph.githubassets.com/269d23b56f85a1ea9bd3cf5b2f34ddbce8cfaff7a74c6561f59d84db67b8efc1/steventroughtonsmith/marzipanify`
       );
@@ -103,7 +103,7 @@ describe('GithubComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'marzipanify is an unsupported commandline tool to take an existing iOS Simulator binary'
       );

@@ -7,13 +7,16 @@ describe('cleanDatePublished(dateString)', () => {
   it('returns a date', () => {
     const datePublished = cleanDatePublished('published: 1/1/2020');
 
-    assert.equal(datePublished, moment('1/1/2020', 'MM/DD/YYYY').toISOString());
+    assert.strictEqual(
+      datePublished,
+      moment('1/1/2020', 'MM/DD/YYYY').toISOString()
+    );
   });
 
   it('returns null if date is invalid', () => {
     const datePublished = cleanDatePublished('blargh');
 
-    assert.equal(datePublished, null);
+    assert.strictEqual(datePublished, null);
   });
 
   it('handles timezones', () => {
@@ -22,7 +25,7 @@ describe('cleanDatePublished(dateString)', () => {
     const datePublished = cleanDatePublished('November 29, 2016: 8:18 AM ET', {
       timezone: 'America/New_York',
     });
-    assert.equal(datePublished, '2016-11-29T13:18:00.000Z');
+    assert.strictEqual(datePublished, '2016-11-29T13:18:00.000Z');
   });
 
   it('accepts a custom date format', () => {
@@ -32,7 +35,7 @@ describe('cleanDatePublished(dateString)', () => {
       timezone: 'America/New_York',
       format: 'ddd MMM DD HH:mm:ss zz YYYY',
     });
-    assert.equal(datePublished, '2015-08-03T16:45:00.000Z');
+    assert.strictEqual(datePublished, '2015-08-03T16:45:00.000Z');
   });
 
   it('can handle dates formatted as "[just|right] now"', () => {
@@ -43,7 +46,7 @@ describe('cleanDatePublished(dateString)', () => {
     const expectedDate1 = moment()
       .format()
       .split('T')[0];
-    assert.equal(newDate1, expectedDate1);
+    assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('just now');
     const newDate2 = moment(date2)
@@ -52,7 +55,7 @@ describe('cleanDatePublished(dateString)', () => {
     const expectedDate2 = moment()
       .format()
       .split('T')[0];
-    assert.equal(newDate2, expectedDate2);
+    assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('right now');
     const newDate3 = moment(date3)
@@ -61,7 +64,7 @@ describe('cleanDatePublished(dateString)', () => {
     const expectedDate3 = moment()
       .format()
       .split('T')[0];
-    assert.equal(newDate3, expectedDate3);
+    assert.strictEqual(newDate3, expectedDate3);
   });
 
   it('can handle dates formatted as "[amount] [time unit] ago"', () => {
@@ -76,7 +79,7 @@ describe('cleanDatePublished(dateString)', () => {
       .subtract(1, 'hour')
       .format()
       .split('T')[0];
-    assert.equal(newDate1, expectedDate1);
+    assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('5 days ago');
     const newDate2 = moment(date2)
@@ -86,7 +89,7 @@ describe('cleanDatePublished(dateString)', () => {
       .subtract(5, 'days')
       .format()
       .split('T')[0];
-    assert.equal(newDate2, expectedDate2);
+    assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('10 months ago');
     const newDate3 = moment(date3)
@@ -96,7 +99,7 @@ describe('cleanDatePublished(dateString)', () => {
       .subtract(10, 'months')
       .format()
       .split('T')[0];
-    assert.equal(newDate3, expectedDate3);
+    assert.strictEqual(newDate3, expectedDate3);
   });
 });
 
@@ -104,30 +107,30 @@ describe('cleanDateString(dateString)', () => {
   it('removes "published" text from an datePublished string', () => {
     const datePublished = cleanDateString('published: 1/1/2020');
 
-    assert.equal(datePublished, '1/1/2020');
+    assert.strictEqual(datePublished, '1/1/2020');
   });
 
   it('trims whitespace', () => {
     const datePublished = cleanDateString('    1/1/2020     ');
 
-    assert.equal(datePublished, '1/1/2020');
+    assert.strictEqual(datePublished, '1/1/2020');
   });
 
   it('puts a space b/w a time and am/pm', () => {
     // The JS date parser is forgiving, but
     // it needs am/pm separated from a time
     const date1 = cleanDateString('1/1/2020 8:30am');
-    assert.equal(date1, '1/1/2020 8:30 am');
+    assert.strictEqual(date1, '1/1/2020 8:30 am');
 
     const date2 = cleanDateString('8:30PM 1/1/2020');
-    assert.equal(date2, '8:30 PM   1/1/2020');
+    assert.strictEqual(date2, '8:30 PM   1/1/2020');
   });
 
   it('cleans the dots from a.m. or p.m.', () => {
     // The JS date parser is forgiving, but
     // it needs a.m./p.m. without dots
     const date1 = cleanDateString('1/1/2020 8:30 a.m.');
-    assert.equal(date1, '1/1/2020 8:30 am');
+    assert.strictEqual(date1, '1/1/2020 8:30 am');
   });
 
   it('can handle some tough timestamps', () => {
@@ -136,13 +139,13 @@ describe('cleanDateString(dateString)', () => {
     const date1 = cleanDateString(
       'This page was last modified on 15 April 2016, at 10:59.'
     );
-    assert.equal(date1, '15 Apr 2016 10:59');
+    assert.strictEqual(date1, '15 Apr 2016 10:59');
   });
 
   it('massages the T out', () => {
     // The JS date parser is forgiving, but
     // it needs am/pm separated from a time
     const date1 = cleanDateString('2016-11-22T08:57-500');
-    assert.equal(date1, '2016 11 22 08:57 -500');
+    assert.strictEqual(date1, '2016 11 22 08:57 -500');
   });
 });

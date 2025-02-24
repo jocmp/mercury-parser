@@ -21,7 +21,7 @@ describe('DeadspinExtractor', () => {
 
     it('is selected properly', async () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -30,7 +30,7 @@ describe('DeadspinExtractor', () => {
       // Update these values with the expected values from
       // the article.
       const { title } = await result;
-      assert.equal(
+      assert.strictEqual(
         title,
         'The Nationals Are Stuck With Danny Espinosa Tonight, Unless They Opt For The Only Thing Worse'
       );
@@ -43,7 +43,7 @@ describe('DeadspinExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Chris Thompson');
+      assert.strictEqual(author, 'Chris Thompson');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('DeadspinExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-10-13T16:34:00.918Z');
+      assert.strictEqual(date_published, '2016-10-13T16:34:00.918Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -63,7 +63,7 @@ describe('DeadspinExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/197xrjaz7466rpng.png'
       );
@@ -87,7 +87,7 @@ describe('DeadspinExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Washington’s Danny Espinosa problem is inextricably linked to its long-running center-field problem. If'
       );
@@ -111,6 +111,6 @@ describe('DeadspinExtractor', () => {
 
     // Update these values with the expected values from
     // the article.
-    assert.equal(youtube.length, 1);
+    assert.strictEqual(youtube.length, 1);
   });
 });

@@ -23,7 +23,7 @@ describe('WwwTmzComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwTmzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Prince -- Woman Warns Estate ... Step Aside, I'm His Wife!"
       );
@@ -46,7 +46,7 @@ describe('WwwTmzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'TMZ STAFF');
+      assert.strictEqual(author, 'TMZ STAFF');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwTmzComExtractor', () => {
       // Note: This is actually wrong, but the error is from TMZ's very bad
       // markup. Currently the parser will get it close but not the correct
       // timezone. This could be fixed by better markup)
-      assert.equal(date_published, '2016-11-28T19:00:00.000Z');
+      assert.strictEqual(date_published, '2016-11-28T19:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -69,7 +69,7 @@ describe('WwwTmzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://imagez.tmz.com/image/b5/16by9/2016/11/28/b5f68d4fb1dc57c89f1ab2113eab4832_xl.jpg'
       );
@@ -93,7 +93,7 @@ describe('WwwTmzComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Prince was married when he died and wanted all of his money to'
       );

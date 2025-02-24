@@ -23,7 +23,7 @@ describe('PastebinComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('PastebinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'atg 1700');
+      assert.strictEqual(title, 'atg 1700');
     });
 
     it('returns the author', async () => {
@@ -43,7 +43,7 @@ describe('PastebinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'EvilSpark');
+      assert.strictEqual(author, 'EvilSpark');
     });
 
     it('returns the date_published', async () => {
@@ -53,7 +53,7 @@ describe('PastebinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2020-04-27T04:00:00.000Z');
+      assert.strictEqual(date_published, '2020-04-27T04:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -63,7 +63,7 @@ describe('PastebinComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, 'https://pastebin.com/i/facebook.png');
+      assert.strictEqual(lead_image_url, 'https://pastebin.com/i/facebook.png');
     });
 
     it('returns the content', async () => {
@@ -84,7 +84,10 @@ describe('PastebinComExtractor', () => {
       // Update these values with the expected values from
       // the article.
 
-      assert.equal(text, `Yun Che didn't think much about his title for the`);
+      assert.strictEqual(
+        text,
+        `Yun Che didn't think much about his title for the`
+      );
     });
   });
 });

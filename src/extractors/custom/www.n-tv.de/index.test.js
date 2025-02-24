@@ -21,13 +21,13 @@ describe('WwwNtvDeExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `Gespräche zum Opernneubau in Hamburg dauern weiter an`
       );
@@ -36,19 +36,19 @@ describe('WwwNtvDeExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, null);
+      assert.strictEqual(author, null);
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, `2025-02-03T15:38:07.000Z`);
+      assert.strictEqual(date_published, `2025-02-03T15:38:07.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.n-tv.de/img/Bilder_dpa_Import/crop25536026/9581321679-cImg_16_9-w1200/Der-Baakenhoft-in-der-Hamburger-Hafencity.jpg`
       );
@@ -65,7 +65,7 @@ describe('WwwNtvDeExtractor', () => {
           .text(),
         13
       );
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Milliardär Klaus-Michael Kühne will seiner Heimatstadt eine Oper schenken. Das Gebäude soll architektonisch'
       );

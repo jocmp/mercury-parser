@@ -26,7 +26,7 @@ describe('NYTimesExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('NYTimesExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Ahmad Khan Rahami Is Arrested in Manhattan and New Jersey Bombings'
       );
@@ -49,7 +49,7 @@ describe('NYTimesExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         author,
         'Marc Santora, William K. Rashbaum, Al Baker and Adam Goldman'
       );
@@ -62,7 +62,7 @@ describe('NYTimesExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-09-19T11:46:01.000Z');
+      assert.strictEqual(date_published, '2016-09-19T11:46:01.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -72,7 +72,7 @@ describe('NYTimesExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static01.nyt.com/images/2016/09/20/nyregion/Manhunt/Manhunt-facebookJumbo-v2.jpg?year=2016&h=549&w=1050&s=a40dd9bd69012d95e8a76943424679f17908af4c8f7ad3a6585e0d50632fff4b&k=ZQJBKqZ0VN'
       );
@@ -96,7 +96,7 @@ describe('NYTimesExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The man who the police said sowed terror across two states, setting off'
       );
@@ -117,9 +117,9 @@ describe('NYTimesExtractor', () => {
       13
     );
 
-    assert.equal(title, 'I, Too, Sing America');
-    assert.equal(author, 'The New York Times');
-    assert.equal(
+    assert.strictEqual(title, 'I, Too, Sing America');
+    assert.strictEqual(author, 'The New York Times');
+    assert.strictEqual(
       text,
       'T he Smithsonian’s National Museum of African American History and Culture opens on'
     );
@@ -132,7 +132,7 @@ describe('NYTimesExtractor', () => {
 
     const { title } = await Mercury.parse(uri, { html });
 
-    assert.equal(
+    assert.strictEqual(
       title,
       'Nikki Haley to Resign as Trump’s Ambassador to the U.N.'
     );

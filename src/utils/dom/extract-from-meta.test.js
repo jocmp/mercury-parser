@@ -12,7 +12,7 @@ describe('extractFromMeta($, metaNames, cachedNames, cleanTags)', () => {
     `);
     const result = extractFromMeta($, ['foo', 'baz'], ['foo', 'bat']);
 
-    assert.equal(result, 'bar');
+    assert.strictEqual(result, 'bar');
   });
 
   it('returns nothing if a meta name is duplicated', () => {
@@ -24,7 +24,7 @@ describe('extractFromMeta($, metaNames, cachedNames, cleanTags)', () => {
     `);
     const result = extractFromMeta($, ['foo', 'baz'], ['foo', 'bat']);
 
-    assert.equal(result, null);
+    assert.strictEqual(result, null);
   });
 
   it('ignores duplicate meta names with empty values', () => {
@@ -36,6 +36,6 @@ describe('extractFromMeta($, metaNames, cachedNames, cleanTags)', () => {
     `);
     const result = extractFromMeta($, ['foo', 'baz'], ['foo', 'bat']);
 
-    assert.equal(result, 'bar');
+    assert.strictEqual(result, 'bar');
   });
 });

@@ -26,7 +26,7 @@ describe('WwwOreillyCoJpExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `Head First はじめてのプログラミング`);
+      assert.strictEqual(title, `Head First はじめてのプログラミング`);
     });
 
     it('returns the author', async () => {
@@ -46,7 +46,10 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Eric Freeman　著、嶋田 健志　監訳、木下 哲也　訳');
+      assert.strictEqual(
+        author,
+        'Eric Freeman　著、嶋田 健志　監訳、木下 哲也　訳'
+      );
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +59,7 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-04-25T15:00:00.000Z');
+      assert.strictEqual(date_published, '2019-04-25T15:00:00.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +69,7 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, null);
+      assert.strictEqual(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -76,7 +79,7 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.oreilly.co.jp/books/images/picture_large978-4-87311-874-1.jpeg`
       );
@@ -100,7 +103,7 @@ describe('WwwOreillyCoJpExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'TOPICS Head First , Programming , Python 発行年月日'
       );

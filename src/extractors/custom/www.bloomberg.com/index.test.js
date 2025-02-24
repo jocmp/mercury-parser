@@ -24,7 +24,7 @@ describe('WwwBloombergComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Air Force One Costs Billions of Dollars Because It’s a Flying White House'
       );
@@ -47,7 +47,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Margaret Talev');
+      assert.strictEqual(author, 'Margaret Talev');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-07T10:00:00.011Z');
+      assert.strictEqual(date_published, '2016-12-07T10:00:00.011Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ioUAfA1V2nzk/v0/1200x675.jpg'
       );
@@ -91,7 +91,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Donald Trump took aim at one of the most visible emblems of the'
       );
@@ -114,7 +114,7 @@ describe('WwwBloombergComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -124,7 +124,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'Americans Are Paying Apple Millions to Shelter Overseas Profits'
       );
@@ -137,7 +137,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Andrea Wong');
+      assert.strictEqual(author, 'Andrea Wong');
     });
 
     it('returns the date_published', async () => {
@@ -147,7 +147,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-07T10:00:00.000Z');
+      assert.strictEqual(date_published, '2016-12-07T10:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -157,7 +157,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.bloomberg.com/graphics/2016-apple-profits/img/2016-apple-profits-facebook.png'
       );
@@ -181,7 +181,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Over the years, Apple Inc. has become the poster child for U.S. multinationals'
       );
@@ -203,7 +203,7 @@ describe('WwwBloombergComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -213,7 +213,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'U.S. Stocks Rise to Records, Bonds Gain on ECB Stimulus Optimism'
       );
@@ -226,7 +226,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Jeremy Herron');
+      assert.strictEqual(author, 'Jeremy Herron');
     });
 
     it('returns the date_published', async () => {
@@ -236,7 +236,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-06T23:22:22.402Z');
+      assert.strictEqual(date_published, '2016-12-06T23:22:22.402Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -246,7 +246,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://assets.bwbx.io/javelin/public/images/social-markets-3d32d2f713.jpg'
       );
@@ -270,7 +270,7 @@ describe('WwwBloombergComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The Dow Jones Industrial Average rose 220 points as U.S. stock indexes powered'
       );

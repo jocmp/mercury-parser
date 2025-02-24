@@ -26,7 +26,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'American Theatre Wing Launches Andrew Lloyd Webber Training Scholarships'
       );
@@ -49,7 +49,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'BWW News Desk');
+      assert.strictEqual(author, 'BWW News Desk');
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-10-13T15:35:00.000Z');
+      assert.strictEqual(date_published, '2016-10-13T15:35:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -69,7 +69,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://cloudimages.broadwayworld.com/columnpic7/6807B5FD766-A644-E386-19DE07017A3AD79C.jpg'
       );
@@ -93,7 +93,7 @@ describe('WwwBroadwayWorldComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The American Theatre Wing announced today that their Andrew Lloyd Webber Initiative has'
       );

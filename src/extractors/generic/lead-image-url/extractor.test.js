@@ -22,7 +22,7 @@ describe('GenericLeadImageUrlExtractor', () => {
         metaCache,
       });
 
-      assert.equal(result, 'http://example.com/lead.jpg');
+      assert.strictEqual(result, 'http://example.com/lead.jpg');
     });
 
     it('returns twitter:image', () => {
@@ -42,7 +42,7 @@ describe('GenericLeadImageUrlExtractor', () => {
         metaCache,
       });
 
-      assert.equal(result, 'http://example.com/lead.jpg');
+      assert.strictEqual(result, 'http://example.com/lead.jpg');
     });
 
     it('finds images based on scoring', () => {
@@ -62,7 +62,7 @@ describe('GenericLeadImageUrlExtractor', () => {
         metaCache,
       });
 
-      assert.equal(result, 'http://example.com/upload/goodpic.jpg');
+      assert.strictEqual(result, 'http://example.com/upload/goodpic.jpg');
     });
 
     it('returns image based on selectors', () => {
@@ -80,7 +80,7 @@ describe('GenericLeadImageUrlExtractor', () => {
         metaCache,
       });
 
-      assert.equal(result, 'http://example.com/upload/goodpic.jpg');
+      assert.strictEqual(result, 'http://example.com/upload/goodpic.jpg');
     });
   });
 });

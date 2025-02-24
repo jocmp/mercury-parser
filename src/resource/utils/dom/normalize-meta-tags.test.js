@@ -13,7 +13,7 @@ describe('normalizeMetaTags($)', () => {
     const $ = cheerio.load('<html><meta name="foo" content="bar"></html>');
     const result = normalizeMetaTags($).html();
 
-    assert.equal(result, test);
+    assert.strictEqual(result, test);
   });
 
   it('replaces "property" attributes with "name"', () => {
@@ -24,6 +24,6 @@ describe('normalizeMetaTags($)', () => {
     const $ = cheerio.load('<html><meta property="foo" value="bar"></html>');
     const result = normalizeMetaTags($).html();
 
-    assert.equal(result, test);
+    assert.strictEqual(result, test);
   });
 });

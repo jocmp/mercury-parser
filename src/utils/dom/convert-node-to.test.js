@@ -11,7 +11,7 @@ describe('convertNodeTo(node, $)', () => {
     const result = convertNodeTo(node, $).html();
     const after = '<p>Should become a p</p>';
 
-    assert.equal(result, after);
+    assert.strictEqual(result, after);
   });
 
   it('retains attributes on conversion', () => {
@@ -23,7 +23,7 @@ describe('convertNodeTo(node, $)', () => {
     const result = convertNodeTo(node, $, 'div').html();
     const after = '<div class="foo" score="100">Should keep its attrs</div>';
 
-    assert.equal(result, after);
+    assert.strictEqual(result, after);
   });
 
   it('does nothing if node.get returns null', () => {
@@ -35,7 +35,7 @@ describe('convertNodeTo(node, $)', () => {
 
     const result = convertNodeTo(node, $, 'div').html();
 
-    assert.equal(result, html);
+    assert.strictEqual(result, html);
   });
 
   // In the browser, the contents of noscript tags aren't rendered, therefore
@@ -50,6 +50,6 @@ describe('convertNodeTo(node, $)', () => {
     const result = convertNodeTo(node, $, 'figure', 'noscript').html();
 
     const resultHtml = '<figure><img src="http://example.com"></figure>';
-    assert.equal(result, resultHtml);
+    assert.strictEqual(result, resultHtml);
   });
 });

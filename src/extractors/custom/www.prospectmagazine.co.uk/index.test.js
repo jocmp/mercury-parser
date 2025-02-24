@@ -26,7 +26,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,10 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, 'The Anglosphere: new enthusiasm for an old dream');
+      assert.strictEqual(
+        title,
+        'The Anglosphere: new enthusiasm for an old dream'
+      );
     });
 
     it('returns the author', async () => {
@@ -46,7 +49,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Duncan Bell');
+      assert.strictEqual(author, 'Duncan Bell');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +59,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2017-01-19T08:05:40.000Z');
+      assert.strictEqual(date_published, '2017-01-19T08:05:40.000Z');
     });
 
     it('returns the dek', async () => {
@@ -66,7 +69,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         dek,
         'Having cut Britain adrift of Europe, Brexiters are indulging in an old fantasy about a new national role in the world—as the hub of a far-flung Anglosphere'
       );
@@ -79,7 +82,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.prospectmagazine.co.uk/content/uploads/2017/01/64344_web.jpg'
       );
@@ -103,7 +106,7 @@ describe('WwwProspectmagazineCoUkExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'Leading Brexiteers proposed Britain should reinforce its relationship with "natural allies" Australia, Canada'
       );

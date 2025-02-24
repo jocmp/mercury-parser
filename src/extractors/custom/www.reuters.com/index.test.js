@@ -23,7 +23,7 @@ describe('WwwReutersComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -33,7 +33,7 @@ describe('WwwReutersComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "Fed lifts rates, sees faster pace of hikes in Trump's first year"
       );
@@ -46,7 +46,7 @@ describe('WwwReutersComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Howard Schneider, Lindsay Dunsmuir');
+      assert.strictEqual(author, 'Howard Schneider, Lindsay Dunsmuir');
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +56,7 @@ describe('WwwReutersComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-14T06:02:15.000Z');
+      assert.strictEqual(date_published, '2016-12-14T06:02:15.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -66,7 +66,7 @@ describe('WwwReutersComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://static.reuters.com/resources/r/?m=02&d=20161215&t=2&i=1165535950&r=LYNXMPECBD1EH&w=800'
       );
@@ -90,7 +90,7 @@ describe('WwwReutersComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'WASHINGTON (Reuters) - The U.S. Federal Reserve raised interest rates on Wednesday and'
       );

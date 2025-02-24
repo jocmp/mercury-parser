@@ -21,18 +21,18 @@ describe('TldrTechExtractor', () => {
     it('is selected properly', () => {
       const extractor = getExtractor(url);
 
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(title, `TLDR 2025-01-31`);
+      assert.strictEqual(title, `TLDR 2025-01-31`);
     });
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(lead_image_url, `https://tldr.tech/logo-jpg.jpg`);
+      assert.strictEqual(lead_image_url, `https://tldr.tech/logo-jpg.jpg`);
     });
 
     it('returns the content', async () => {
@@ -47,7 +47,7 @@ describe('TldrTechExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'OpenAI eyes $340B valuation 💰, Gemini 2.0 🤖, Javascript Temporal 👨‍💻AI Coding Agents'
       );

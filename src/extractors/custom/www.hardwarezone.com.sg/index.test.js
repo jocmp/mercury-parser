@@ -23,13 +23,13 @@ describe('WwwHardwarezoneComSgExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         title,
         `How to spot potential scam messages on iOS and Android`
       );
@@ -38,19 +38,19 @@ describe('WwwHardwarezoneComSgExtractor', () => {
     it('returns the author', async () => {
       const { author } = await result;
 
-      assert.equal(author, 'Team HardwareZone');
+      assert.strictEqual(author, 'Team HardwareZone');
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.equal(date_published, '2024-12-21T00:00:00.000Z');
+      assert.strictEqual(date_published, '2024-12-21T00:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.hardwarezone.com.sg/thumbs/714207/og.jpg?b3c6`
       );
@@ -68,7 +68,7 @@ describe('WwwHardwarezoneComSgExtractor', () => {
         13
       );
 
-      assert.equal(
+      assert.strictEqual(
         first13,
         'This article is contributed by Carmen Sin, and a version of it first'
       );

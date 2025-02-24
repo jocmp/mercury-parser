@@ -26,7 +26,7 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -36,7 +36,7 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `IMF dims outlook for 2023 global economy amid Ukraine war`
       );
@@ -49,7 +49,10 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Paul WisemanFatima Hussein, The Associated Press');
+      assert.strictEqual(
+        author,
+        'Paul WisemanFatima Hussein, The Associated Press'
+      );
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +62,7 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2022-10-11T19:11:05.000Z`);
+      assert.strictEqual(date_published, `2022-10-11T19:11:05.000Z`);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +72,10 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, "``The worst is yet to come,'' chief economist says");
+      assert.strictEqual(
+        dek,
+        "``The worst is yet to come,'' chief economist says"
+      );
     });
 
     it('returns the lead_image_url', async () => {
@@ -79,7 +85,7 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.investmentexecutive.com/wp-content/uploads/sites/3/2021/01/SB05-Feature-Image-800x600-1.jpg`
       );
@@ -103,7 +109,7 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The International Monetary Fund is downgrading its outlook for the world economy for'
       );

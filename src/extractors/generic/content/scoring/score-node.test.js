@@ -11,8 +11,8 @@ describe('scoreNode(node)', () => {
     const score = scoreNode(node);
     const pScore = scoreParagraph(node);
 
-    assert.equal(score, pScore);
-    assert.equal(score, 0);
+    assert.strictEqual(score, pScore);
+    assert.strictEqual(score, 0);
   });
 
   it('scores P, LI, SPAN, and PRE using scoreParagraph', () => {
@@ -24,8 +24,8 @@ describe('scoreNode(node)', () => {
     const score = scoreNode(node);
     const pScore = scoreParagraph(node);
 
-    assert.equal(score, pScore);
-    assert.equal(score, 1);
+    assert.strictEqual(score, pScore);
+    assert.strictEqual(score, 1);
   });
 
   it('scores P, LI, SPAN, and PRE using scoreParagraph', () => {
@@ -37,8 +37,8 @@ describe('scoreNode(node)', () => {
     const score = scoreNode(node);
     const pScore = scoreParagraph(node);
 
-    assert.equal(score, pScore);
-    assert.equal(score, 3);
+    assert.strictEqual(score, pScore);
+    assert.strictEqual(score, 3);
   });
 
   it('scores P, LI, SPAN, and PRE using scoreParagraph', () => {
@@ -50,8 +50,8 @@ describe('scoreNode(node)', () => {
     const score = scoreNode(node);
     const pScore = scoreParagraph(node);
 
-    assert.equal(score, pScore);
-    assert.equal(score, 19);
+    assert.strictEqual(score, pScore);
+    assert.strictEqual(score, 19);
   });
 
   it('scores divs with 5', () => {
@@ -62,7 +62,7 @@ describe('scoreNode(node)', () => {
 
     const score = scoreNode(node);
 
-    assert.equal(score, 5);
+    assert.strictEqual(score, 5);
   });
 
   it('scores the blockquote family with 3', () => {
@@ -73,7 +73,7 @@ describe('scoreNode(node)', () => {
 
     const score = scoreNode(node);
 
-    assert.equal(score, 3);
+    assert.strictEqual(score, 3);
   });
 
   it('scores a form with negative 3', () => {
@@ -84,7 +84,7 @@ describe('scoreNode(node)', () => {
 
     const score = scoreNode(node);
 
-    assert.equal(score, -3);
+    assert.strictEqual(score, -3);
   });
 
   it('scores a TH element with negative 5', () => {
@@ -95,6 +95,6 @@ describe('scoreNode(node)', () => {
 
     const score = scoreNode(node);
 
-    assert.equal(score, -5);
+    assert.strictEqual(score, -5);
   });
 });

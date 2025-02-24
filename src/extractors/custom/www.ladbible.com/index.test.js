@@ -24,7 +24,7 @@ describe('WwwLadbibleComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwLadbibleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         `Aussie Government Sparks Fury Over 'Graphic' And Confronting Covid-19 Ad`
       );
@@ -47,7 +47,7 @@ describe('WwwLadbibleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Stewart Perrie');
+      assert.strictEqual(author, 'Stewart Perrie');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwLadbibleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2021-07-11T21:00:00.000Z');
+      assert.strictEqual(date_published, '2021-07-11T21:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwLadbibleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         `https://www.ladbible.com/cdn-cgi/image/width=1200,quality=70,format=jpeg,fit=contain,dpr=1/https%3A%2F%2Fs3-images.ladbible.com%2Fs3%2Fcontent%2F788d729460eb11aa5ceadb28b93c0f8a.png`
       );
@@ -91,7 +91,7 @@ describe('WwwLadbibleComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'The Australian government has copped backlash for publishing a confronting and graphic advertisement'
       );

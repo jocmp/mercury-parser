@@ -24,7 +24,7 @@ describe('WwwMentalflossComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwMentalflossComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         "It's Not Too Late to Holiday Shop With These Amazon Deals"
       );
@@ -47,7 +47,7 @@ describe('WwwMentalflossComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Smart Shopping Team');
+      assert.strictEqual(author, 'Smart Shopping Team');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwMentalflossComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2016-12-19T12:29:00.000Z');
+      assert.strictEqual(date_published, '2016-12-19T12:29:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwMentalflossComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/35hk53jh53-4509b8146d8e06da952fe862fd3874ad.jpg'
       );
@@ -91,7 +91,7 @@ describe('WwwMentalflossComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'As a recurring feature, our team combs the Web and shares some amazing'
       );

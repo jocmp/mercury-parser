@@ -24,7 +24,7 @@ describe('WwwFortinetComExtractor', () => {
       // It sanity checks that the correct parser
       // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.equal(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
     it('returns the title', async () => {
@@ -34,7 +34,7 @@ describe('WwwFortinetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         title,
         'How-to Guide: Defeating an Android Packer with FRIDA'
       );
@@ -47,7 +47,7 @@ describe('WwwFortinetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Dario Durando');
+      assert.strictEqual(author, 'Dario Durando');
     });
 
     it('returns the date_published', async () => {
@@ -57,7 +57,7 @@ describe('WwwFortinetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2018-11-02T07:00:00.000Z');
+      assert.strictEqual(date_published, '2018-11-02T07:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
@@ -67,7 +67,7 @@ describe('WwwFortinetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         lead_image_url,
         'https://www.fortinet.com/content/dam/fortinet-blog/article-images/defeating_an_android_packer_with_frida/frida_02.png'
       );
@@ -91,7 +91,7 @@ describe('WwwFortinetComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
+      assert.strictEqual(
         first13,
         'A FortiGuard Labs How-To Guide for Cybersecurity Threat Researchers Here at FortiGuard Labs'
       );
@@ -107,8 +107,8 @@ describe('WwwFortinetComExtractor', () => {
 
       // there were six lazy-loaded images
       // noscript tags should be replaced by figures
-      assert.equal($lazyImages.length, 0);
-      assert.equal($figures.length, 6);
+      assert.strictEqual($lazyImages.length, 0);
+      assert.strictEqual($figures.length, 6);
     });
   });
 });
