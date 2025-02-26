@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
-## v2.3.8
+## v2.4.0
 
-- Replace .equal with .strictEqual
+- feat: Add custom parser for qbitai.com
+- Update parser dist
+- Replace .equal with .strictEqual by @jocmp in [#58](https://github.com/jocmp/mercury-parser/pull/58)
 - feat: Add custom extractor for lebensmittelwarnung.de by @jocmp in [#57](https://github.com/jocmp/mercury-parser/pull/57)
 
 ## v2.3.7
