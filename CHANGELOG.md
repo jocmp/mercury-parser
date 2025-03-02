@@ -5,12 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.1
+
+- feat: Add custom parser for 9to5google.com
+- Replace URL.parse in generator
+- feat: Add custom parser for tagesschau.de by @jocmp in [#62](https://github.com/jocmp/mercury-parser/pull/62)
+- feat: Add economictimes.indiatimes.com parser by @jocmp in [#61](https://github.com/jocmp/mercury-parser/pull/61)
+- feat: Add factorio.com parser by @jocmp in [#60](https://github.com/jocmp/mercury-parser/pull/60)
+
 ## v2.4.0
 
-- feat: Add custom parser for qbitai.com
-- Update parser dist
+- bump version v2.3.7 -> v2.4.0 by @jocmp
+- Add parser for qbitai com by @jocmp in [#59](https://github.com/jocmp/mercury-parser/pull/59)
 - Replace .equal with .strictEqual by @jocmp in [#58](https://github.com/jocmp/mercury-parser/pull/58)
 - feat: Add custom extractor for lebensmittelwarnung.de by @jocmp in [#57](https://github.com/jocmp/mercury-parser/pull/57)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.3.7...v2.4.0
 
 ## v2.3.7
 
