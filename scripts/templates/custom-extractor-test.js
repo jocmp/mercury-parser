@@ -31,7 +31,6 @@ function testFor(key, value, dir) {
 export default function(file, url, dir, result, name) {
   return template`
     import assert from 'assert';
-    import URL from 'url';
     import cheerio from 'cheerio';
 
     import Parser from 'mercury';
@@ -58,7 +57,7 @@ export default function(file, url, dir, result, name) {
           // It sanity checks that the correct parser
           // is being selected for URLs from this domain
           const extractor = getExtractor(url);
-          assert.strictEqual(extractor.domain, URL.parse(url).hostname)
+          assert.strictEqual(extractor.domain, new URL(url).hostname)
         })
 
           ${Reflect.ownKeys(result)

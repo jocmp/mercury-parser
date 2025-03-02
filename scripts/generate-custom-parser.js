@@ -2,7 +2,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-console */
 import fs from 'fs';
-import URL from 'url';
 import inquirer from 'inquirer';
 import ora from 'ora';
 import { exec } from 'child_process';
@@ -19,7 +18,7 @@ const questions = [
     message:
       "Paste a url to an article you'd like to create or extend a parser for:",
     validate(value) {
-      const { hostname } = URL.parse(value);
+      const { hostname } = new URL(value);
       if (hostname) return true;
 
       return false;
@@ -49,13 +48,13 @@ function confirmCreateDir(dir, msg) {
 }
 
 function getDir(url) {
-  const { hostname } = URL.parse(url);
+  const { hostname } = new URL(url);
   return `./src/extractors/custom/${hostname}`;
 }
 
 function scaffoldCustomParser(url) {
   const dir = getDir(url);
-  const { hostname } = URL.parse(url);
+  const { hostname } = new URL(url);
   let newParser = false;
 
   if (!fs.existsSync(dir)) {
@@ -78,7 +77,7 @@ if (urlArg) {
 }
 
 function generateScaffold(url, file, result) {
-  const { hostname } = URL.parse(url);
+  const { hostname } = new URL(url);
   const extractor = extractorTemplate(hostname, extractorName(hostname));
   const extractorTest = extractorTestTemplate(
     file,
@@ -95,7 +94,7 @@ function generateScaffold(url, file, result) {
 }
 
 function savePage($, [url], newParser) {
-  const { hostname } = URL.parse(url);
+  const { hostname } = new URL(url);
 
   spinner.succeed();
 
@@ -136,7 +135,7 @@ function savePage($, [url], newParser) {
 }
 
 function exportString(url) {
-  const { hostname } = URL.parse(url);
+  const { hostname } = new URL(url);
   return `export * from './${hostname}';`;
 }
 
