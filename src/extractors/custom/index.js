@@ -168,3 +168,4 @@ export * from './lublin.se.pl';
 export * from './bialystok.se.pl';
 export * from './www.lebensmittelwarnung.de';
 export * from './www.qbitai.com';
+export * from './economictimes.indiatimes.com';
