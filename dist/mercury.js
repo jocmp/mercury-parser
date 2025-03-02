@@ -6662,6 +6662,94 @@ var WwwQbitaiComExtractor = {
   }
 };
 
+var EconomictimesIndiatimesComExtractor = {
+  domain: 'economictimes.indiatimes.com',
+  title: {
+    selectors: ['title', ['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['a[rel="author"]']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {},
+    clean: ['span.imgAgency']
+  }
+};
+
+var FactorioComExtractor = {
+  domain: 'factorio.com',
+  title: {
+    selectors: ['title']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: [['.blog-post', 'div:nth-child(2)']],
+    transforms: {
+      h3: function h3(node) {
+        var author = node.find('author');
+
+        if (author.text()) {
+          node.after("<p>".concat(author.text(), "</p>"));
+          author.remove();
+        }
+      }
+    },
+    clean: ['.logo-expansion-space-age']
+  }
+};
+
+var WwwTagesschauDeExtractor = {
+  domain: 'www.tagesschau.de',
+  title: {
+    selectors: ['.seitenkopf__headline--text', 'title']
+  },
+  author: {
+    selectors: ['.authorline__author authorline__link:first-child']
+  },
+  date_published: {
+    selectors: [['meta[name="date"]', 'value'], '.metatextline'],
+    timezone: 'UTC'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    clean: ['[data-config]', '.seitenkopf__headline', '.authorline__author', '.metatextline']
+  }
+};
+
+var Nineto5googleComExtractor = {
+  domain: '9to5google.com',
+  title: {
+    selectors: ['title', 'h1']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    transforms: {
+      img: function img(node) {
+        node.removeAttr('sizes');
+      }
+    },
+    clean: ['.post-meta']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6834,7 +6922,11 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   LublinSePlExtractor: LublinSePlExtractor,
   BialystokSePlExtractor: BialystokSePlExtractor,
   WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
-  WwwQbitaiComExtractor: WwwQbitaiComExtractor
+  WwwQbitaiComExtractor: WwwQbitaiComExtractor,
+  EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
+  FactorioComExtractor: FactorioComExtractor,
+  WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
+  Nineto5googleComExtractor: Nineto5googleComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
