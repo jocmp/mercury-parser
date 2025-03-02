@@ -5,12 +5,12 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var _slicedToArray = _interopDefault(require('@babel/runtime-corejs2/helpers/slicedToArray'));
 var _toConsumableArray = _interopDefault(require('@babel/runtime-corejs2/helpers/toConsumableArray'));
 var fs = _interopDefault(require('fs'));
-var URL$1 = _interopDefault(require('url'));
 var inquirer = _interopDefault(require('inquirer'));
 var ora = _interopDefault(require('ora'));
 var child_process = require('child_process');
 var _Reflect$ownKeys = _interopDefault(require('@babel/runtime-corejs2/core-js/reflect/own-keys'));
 var _parseInt = _interopDefault(require('@babel/runtime-corejs2/core-js/parse-int'));
+var URL$1 = _interopDefault(require('url'));
 var defineProperty = _interopDefault(require('@babel/runtime-corejs2/helpers/defineProperty'));
 var objectSpread = _interopDefault(require('@babel/runtime-corejs2/helpers/objectSpread'));
 var _parseFloat = _interopDefault(require('@babel/runtime-corejs2/core-js/parse-float'));
@@ -8786,7 +8786,7 @@ function extractorTemplate (hostname, name) {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    import assert from 'assert';\n    import URL from 'url';\n    import cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, URL.parse(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from\n          // the article.\n          assert.strictEqual(first13, 'Add the first 13 words of the article here');\n        });\n      });\n    });\n  "]);
+  var data = _taggedTemplateLiteral(["\n    import assert from 'assert';\n    import cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, new URL(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from\n          // the article.\n          assert.strictEqual(first13, 'Add the first 13 words of the article here');\n        });\n      });\n    });\n  "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -8824,8 +8824,8 @@ var questions = [{
   name: 'website',
   message: "Paste a url to an article you'd like to create or extend a parser for:",
   validate: function validate(value) {
-    var _URL$parse = URL$1.parse(value),
-        hostname = _URL$parse.hostname;
+    var _URL = new URL(value),
+        hostname = _URL.hostname;
 
     if (hostname) return true;
     return false;
@@ -8858,8 +8858,8 @@ function confirmCreateDir(dir, msg) {
 }
 
 function getDir(url) {
-  var _URL$parse2 = URL$1.parse(url),
-      hostname = _URL$parse2.hostname;
+  var _URL2 = new URL(url),
+      hostname = _URL2.hostname;
 
   return "./src/extractors/custom/".concat(hostname);
 }
@@ -8867,8 +8867,8 @@ function getDir(url) {
 function scaffoldCustomParser(url) {
   var dir = getDir(url);
 
-  var _URL$parse3 = URL$1.parse(url),
-      hostname = _URL$parse3.hostname;
+  var _URL3 = new URL(url),
+      hostname = _URL3.hostname;
 
   var newParser = false;
 
@@ -8893,8 +8893,8 @@ if (urlArg) {
 }
 
 function generateScaffold(url, file, result) {
-  var _URL$parse4 = URL$1.parse(url),
-      hostname = _URL$parse4.hostname;
+  var _URL4 = new URL(url),
+      hostname = _URL4.hostname;
 
   var extractor = extractorTemplate(hostname, extractorName(hostname));
   var extractorTest = extractorTestTemplate(file, url, getDir(url), result, extractorName(hostname));
@@ -8908,8 +8908,8 @@ function savePage($, _ref, newParser) {
   var _ref2 = _slicedToArray(_ref, 1),
       url = _ref2[0];
 
-  var _URL$parse5 = URL$1.parse(url),
-      hostname = _URL$parse5.hostname;
+  var _URL5 = new URL(url),
+      hostname = _URL5.hostname;
 
   spinner.succeed();
   var filename = new Date().getTime();
@@ -8939,8 +8939,8 @@ function savePage($, _ref, newParser) {
 }
 
 function exportString(url) {
-  var _URL$parse6 = URL$1.parse(url),
-      hostname = _URL$parse6.hostname;
+  var _URL6 = new URL(url),
+      hostname = _URL6.hostname;
 
   return "export * from './".concat(hostname, "';");
 }
