@@ -2,52 +2,37 @@ export const WwwEngadgetComExtractor = {
   domain: 'www.engadget.com',
 
   title: {
-    selectors: [['meta[name="og:title"]', 'value']],
+    selectors: ['title', 'h1'],
   },
 
   author: {
-    selectors: ['a.th-meta[data-ylk*="subsec:author"]'],
+    selectors: ['.caas-attr-item-author'],
   },
 
-  // Engadget stories have publish dates, but the only representation of them on the page
-  // is in a format like "2h ago". There are also these tags with blank values:
-  // <meta class="swiftype" name="published_at" data-type="date" value="">
   date_published: {
-    selectors: [
-      // enter selectors
-    ],
+    selectors: [['time', 'datetime']],
   },
 
-  dek: {
-    selectors: ['div[class*="o-title_mark"] div'],
-  },
-
-  // Engadget stories do have lead images specified by an og:image meta tag, but selecting
-  // the value attribute of that tag fails. I believe the "&#x2111;" sequence of characters
-  // is triggering this inability to select the attribute value.
   lead_image_url: {
-    selectors: [
-      // enter selectors
-    ],
+    selectors: [['meta[name="og:image"]', 'value']],
   },
 
   content: {
-    selectors: [
-      [
-        // Some figures will be inside div.article-text, but some header figures/images
-        // will not.
-        '#page_body figure:not(div.article-text figure)',
-        'div.article-text',
-      ],
-    ],
+    selectors: ['.caas-body'],
 
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
+    transforms: {
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      // '.youtube iframe': node => node.attr('class', 'mercury-parser-keep'),
+      noscript: node => {
+        const iframe = node.find('iframe');
+        const noscriptParent = node.parent();
 
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
+        if (iframe != null && noscriptParent.prop('tagName') === 'BLOCKQUOTE') {
+          node.parent().replaceWith(iframe);
+        }
+      },
+    },
+
     clean: [],
   },
 };
