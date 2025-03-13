@@ -134,7 +134,6 @@ export * from './ma.ttias.be';
 export * from './pastebin.com';
 export * from './www.abendblatt.de';
 export * from './www.gruene.de';
-export * from './www.engadget.com';
 export * from './arstechnica.com';
 export * from './www.ndtv.com';
 export * from './www.spektrum.de';
