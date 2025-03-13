@@ -171,3 +171,4 @@ export * from './economictimes.indiatimes.com';
 export * from './factorio.com';
 export * from './www.tagesschau.de';
 export * from './9to5google.com';
+export * from './www.engadget.com';
