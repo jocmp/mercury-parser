@@ -22,14 +22,15 @@ export const WwwEngadgetComExtractor = {
 
     transforms: {
       h2: node => node.attr('class', 'mercury-parser-keep'),
-      // '.youtube iframe': node => node.attr('class', 'mercury-parser-keep'),
-      noscript: node => {
-        const iframe = node.find('iframe');
-        const noscriptParent = node.parent();
 
-        if (iframe != null && noscriptParent.prop('tagName') === 'BLOCKQUOTE') {
-          node.parent().replaceWith(iframe);
+      'blockquote noscript': node => {
+        const iframe = node.find('iframe');
+
+        if (iframe != null) {
+          return 'div';
         }
+
+        return null;
       },
     },
 
