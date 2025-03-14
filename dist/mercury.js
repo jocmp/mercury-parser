@@ -5924,45 +5924,6 @@ var WwwGrueneDeExtractor = {
   }
 };
 
-var WwwEngadgetComExtractor = {
-  domain: 'www.engadget.com',
-  title: {
-    selectors: [['meta[name="og:title"]', 'value']]
-  },
-  author: {
-    selectors: ['a.th-meta[data-ylk*="subsec:author"]']
-  },
-  // Engadget stories have publish dates, but the only representation of them on the page
-  // is in a format like "2h ago". There are also these tags with blank values:
-  // <meta class="swiftype" name="published_at" data-type="date" value="">
-  date_published: {
-    selectors: [// enter selectors
-    ]
-  },
-  dek: {
-    selectors: ['div[class*="o-title_mark"] div']
-  },
-  // Engadget stories do have lead images specified by an og:image meta tag, but selecting
-  // the value attribute of that tag fails. I believe the "&#x2111;" sequence of characters
-  // is triggering this inability to select the attribute value.
-  lead_image_url: {
-    selectors: [// enter selectors
-    ]
-  },
-  content: {
-    selectors: [[// Some figures will be inside div.article-text, but some header figures/images
-    // will not.
-    '#page_body figure:not(div.article-text figure)', 'div.article-text']],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: []
-  }
-};
-
 var ArstechnicaComExtractor = {
   domain: 'arstechnica.com',
   title: {
@@ -6750,6 +6711,65 @@ var Nineto5googleComExtractor = {
   }
 };
 
+var WwwEngadgetComExtractor = {
+  domain: 'www.engadget.com',
+  title: {
+    selectors: ['title', 'h1']
+  },
+  author: {
+    selectors: ['.caas-attr-item-author']
+  },
+  date_published: {
+    selectors: [['time', 'datetime']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.caas-body'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      'blockquote noscript': function blockquoteNoscript(node) {
+        var iframe = node.find('iframe');
+
+        if (iframe != null) {
+          return 'div';
+        }
+
+        return null;
+      }
+    },
+    clean: []
+  }
+};
+
+var TarnkappeInfoExtractor = {
+  domain: 'tarnkappe.info',
+  title: {
+    selectors: ['title', 'h1']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['section#author']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6889,7 +6909,6 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   PastebinComExtractor: PastebinComExtractor,
   WwwAbendblattDeExtractor: WwwAbendblattDeExtractor,
   WwwGrueneDeExtractor: WwwGrueneDeExtractor,
-  WwwEngadgetComExtractor: WwwEngadgetComExtractor,
   ArstechnicaComExtractor: ArstechnicaComExtractor,
   WwwNdtvComExtractor: WwwNdtvComExtractor,
   SpektrumExtractor: SpektrumExtractor,
@@ -6926,7 +6945,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
   FactorioComExtractor: FactorioComExtractor,
   WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
-  Nineto5googleComExtractor: Nineto5googleComExtractor
+  Nineto5googleComExtractor: Nineto5googleComExtractor,
+  WwwEngadgetComExtractor: WwwEngadgetComExtractor,
+  TarnkappeInfoExtractor: TarnkappeInfoExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
