@@ -5,10 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+# v2.4.3
+
+- feat: Add custom parser for vortez.net by @jocmp in [#66](https://github.com/jocmp/mercury-parser/pull/66)
+
 ## v2.4.2
 
+- bump version v2.4.1 -> v2.4.2 by @jocmp
+- Update changelog by @jocmp
 - feat: Add custom parser for tarnkappe.info by @jocmp in [#65](https://github.com/jocmp/mercury-parser/pull/65)
 - fix: Update Engadget parser by @jocmp in [#64](https://github.com/jocmp/mercury-parser/pull/64)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.1...v2.4.2
 
 ## v2.4.1
 
