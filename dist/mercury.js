@@ -6770,6 +6770,38 @@ var TarnkappeInfoExtractor = {
   }
 };
 
+var WwwVortezNetExtractor = {
+  domain: 'www.vortez.net',
+  title: {
+    selectors: ['title']
+  },
+  author: {
+    selectors: []
+  },
+  date_published: {
+    selectors: []
+  },
+  dek: {
+    selectors: []
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  next_page_url: {
+    selectors: ['.pagelink:nth-child(2) > a']
+  },
+  content: {
+    selectors: ['.main-content', '.the-article-content'],
+    transforms: {
+      strong: 'p',
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.article-header', '.panel-title', 'select', 'br']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6947,7 +6979,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
   Nineto5googleComExtractor: Nineto5googleComExtractor,
   WwwEngadgetComExtractor: WwwEngadgetComExtractor,
-  TarnkappeInfoExtractor: TarnkappeInfoExtractor
+  TarnkappeInfoExtractor: TarnkappeInfoExtractor,
+  WwwVortezNetExtractor: WwwVortezNetExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
