@@ -2792,49 +2792,6 @@ var MoneyCnnComExtractor = {
     clean: ['.inStoryHeading']
   }
 };
-var WwwThevergeComExtractor = {
-  domain: 'www.theverge.com',
-  supportedDomains: ['www.polygon.com'],
-  title: {
-    selectors: ['h1']
-  },
-  author: {
-    selectors: [['meta[name="author"]', 'value']]
-  },
-  date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
-  },
-  dek: {
-    selectors: ['.p-dek']
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  content: {
-    selectors: [// feature template multi-match
-    ['.c-entry-hero .e-image', '.c-entry-intro', '.c-entry-content'], // regular post multi-match
-    ['.e-image--hero', '.c-entry-content'], // feature template fallback
-    '.l-wrapper .l-feature', // regular post fallback
-    'div.c-entry-content'],
-    // Transform lazy-loaded images
-    transforms: {
-      noscript: function noscript($node) {
-        var $children = $node.children();
-
-        if ($children.length === 1 && $children.get(0).tagName === 'img') {
-          return 'span';
-        }
-
-        return null;
-      }
-    },
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: ['.aside', 'img.c-dynamic-image' // images come from noscript transform
-    ]
-  }
-};
 var WwwCnnComExtractor = {
   domain: 'www.cnn.com',
   title: {
@@ -6810,6 +6767,85 @@ var WwwVortezNetExtractor = {
     clean: ['.article-header', '.panel-title', 'select', 'br']
   }
 };
+var WwwPolygonComExtractor = {
+  domain: 'www.polygon.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article'],
+    transforms: {
+      h2: function h2($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      img: function img($node) {
+        var srcset = $node.attr('srcset');
+
+        var _split = (srcset || '').split(','),
+            _split2 = _slicedToArray$1(_split, 1),
+            src = _split2[0];
+
+        if (src) {
+          $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
+        }
+      }
+    },
+    clean: ['cite', '.duet--ad--native-ad-rail', '.duet--layout--rail', '.duet--article--table-of-contents']
+  }
+};
+var WwwThevergeComExtractor = {
+  domain: 'www.theverge.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['#zephr-anchor', 'article'],
+    transforms: {
+      h2: function h2($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h4: function h4($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      img: function img($node) {
+        var srcset = $node.attr('srcset');
+
+        var _split = (srcset || '').split(','),
+            _split2 = _slicedToArray$1(_split, 1),
+            src = _split2[0];
+
+        if (src) {
+          $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
+        }
+      }
+    },
+    clean: []
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -6837,7 +6873,6 @@ _Object$freeze({
   WwwHuffingtonpostComExtractor: WwwHuffingtonpostComExtractor,
   NewrepublicComExtractor: NewrepublicComExtractor,
   MoneyCnnComExtractor: MoneyCnnComExtractor,
-  WwwThevergeComExtractor: WwwThevergeComExtractor,
   WwwCnnComExtractor: WwwCnnComExtractor,
   WwwAolComExtractor: WwwAolComExtractor,
   WwwYoutubeComExtractor: WwwYoutubeComExtractor,
@@ -6989,7 +7024,9 @@ _Object$freeze({
   Nineto5googleComExtractor: Nineto5googleComExtractor,
   WwwEngadgetComExtractor: WwwEngadgetComExtractor,
   TarnkappeInfoExtractor: TarnkappeInfoExtractor,
-  WwwVortezNetExtractor: WwwVortezNetExtractor
+  WwwVortezNetExtractor: WwwVortezNetExtractor,
+  WwwPolygonComExtractor: WwwPolygonComExtractor,
+  WwwThevergeComExtractor: WwwThevergeComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
