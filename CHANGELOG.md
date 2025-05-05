@@ -5,9 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
-# v2.4.3
+## v2.4.4
+
+- feat: Update extractor for theverge.com by @jocmp in [#68](https://github.com/jocmp/mercury-parser/pull/68)
+- feat: Add custom extractor for polygon.com by @jocmp in [#67](https://github.com/jocmp/mercury-parser/pull/67)
+
+## v2.4.3
 
 - feat: Add custom parser for vortez.net by @jocmp in [#66](https://github.com/jocmp/mercury-parser/pull/66)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.2...v2.4.3
 
 ## v2.4.2
 
