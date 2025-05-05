@@ -1,10 +1,8 @@
 export const WwwThevergeComExtractor = {
   domain: 'www.theverge.com',
 
-  supportedDomains: ['www.polygon.com'],
-
   title: {
-    selectors: ['h1'],
+    selectors: [['meta[name="og:title"]', 'value']],
   },
 
   author: {
@@ -15,44 +13,34 @@ export const WwwThevergeComExtractor = {
     selectors: [['meta[name="article:published_time"]', 'value']],
   },
 
-  dek: {
-    selectors: ['.p-dek'],
-  },
-
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']],
   },
 
   content: {
-    selectors: [
-      // feature template multi-match
-      ['.c-entry-hero .e-image', '.c-entry-intro', '.c-entry-content'],
-      // regular post multi-match
-      ['.e-image--hero', '.c-entry-content'],
-      // feature template fallback
-      '.l-wrapper .l-feature',
-      // regular post fallback
-      'div.c-entry-content',
-    ],
+    selectors: ['#zephr-anchor', 'article'],
 
-    // Transform lazy-loaded images
     transforms: {
-      noscript: $node => {
-        const $children = $node.children();
-        if ($children.length === 1 && $children.get(0).tagName === 'img') {
-          return 'span';
-        }
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
 
-        return null;
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h4: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      img: $node => {
+        const srcset = $node.attr('srcset');
+        const [src] = (srcset || '').split(',');
+
+        if (src) {
+          $node
+            .parent()
+            .replaceWith(
+              `<figure><img srcset="${srcset}" src="${src}"/></figure>`
+            );
+        }
       },
     },
 
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: [
-      '.aside',
-      'img.c-dynamic-image', // images come from noscript transform
-    ],
+    clean: [],
   },
 };
