@@ -21,7 +21,6 @@ export * from './www.washingtonpost.com';
 export * from './www.huffingtonpost.com';
 export * from './newrepublic.com';
 export * from './money.cnn.com';
-export * from './www.theverge.com';
 export * from './www.cnn.com';
 export * from './www.aol.com';
 export * from './www.youtube.com';
