@@ -6846,6 +6846,33 @@ var WwwThevergeComExtractor = {
     clean: []
   }
 };
+var WwwTechpowerupComExtractor = {
+  domain: 'www.techpowerup.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.byline address']
+  },
+  date_published: {
+    selectors: [['.byline time[datetime]', 'datetime']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.contnt'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['header', 'footer']
+  },
+  next_page_url: {
+    selectors: [['.nextpage-bottom', 'href']]
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -7026,7 +7053,8 @@ _Object$freeze({
   TarnkappeInfoExtractor: TarnkappeInfoExtractor,
   WwwVortezNetExtractor: WwwVortezNetExtractor,
   WwwPolygonComExtractor: WwwPolygonComExtractor,
-  WwwThevergeComExtractor: WwwThevergeComExtractor
+  WwwThevergeComExtractor: WwwThevergeComExtractor,
+  WwwTechpowerupComExtractor: WwwTechpowerupComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
