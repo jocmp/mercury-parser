@@ -175,3 +175,4 @@ export * from './tarnkappe.info';
 export * from './www.vortez.net';
 export * from './www.polygon.com';
 export * from './www.theverge.com';
+export * from './www.techpowerup.com';
