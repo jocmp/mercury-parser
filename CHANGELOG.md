@@ -5,9 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.6
+
+- feat: Add custom extractor for 9to5mac.com by @jocmp in [#72](https://github.com/jocmp/mercury-parser/pull/72)
+- feat: Add custom extractor for flatpanelshd.com by @jocmp in [#71](https://github.com/jocmp/mercury-parser/pull/71)
+
 ## v2.4.5
 
+- bump version v2.4.4 -> v2.4.5 by @jocmp
+- Update changelog by @jocmp
 - feat: Add custom extractor for techpowerup.com by @jocmp in [#69](https://github.com/jocmp/mercury-parser/pull/69)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.4...v2.4.5
 
 ## v2.4.4
 
