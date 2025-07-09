@@ -5,10 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.7
+
+- feat: Update parser for notebookcheck.net
+- Update node version by @jocmp
+
 ## v2.4.6
 
+- bump version v2.4.5 -> v2.4.6 by @jocmp
+- Update changelog by @jocmp
 - feat: Add custom extractor for 9to5mac.com by @jocmp in [#72](https://github.com/jocmp/mercury-parser/pull/72)
 - feat: Add custom extractor for flatpanelshd.com by @jocmp in [#71](https://github.com/jocmp/mercury-parser/pull/71)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.5...v2.4.6
 
 ## v2.4.5
 
@@ -185,9 +194,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 - bump version v2.2.5 -> v2.2.6 by @jocmp
 - feat: Update phoronix.com custom extractor by @jocmp in [#29](https://github.com/jocmp/mercury-parser/pull/29)
-- chore(deps-dev): Bump brfs from 2.0.1 to 2.0.2 by @dependabot[bot] in [#26](https://github.com/jocmp/mercury-parser/pull/26)
-- chore(deps): Bump iconv-lite from 0.5.0 to 0.6.3 by @dependabot[bot] in [#24](https://github.com/jocmp/mercury-parser/pull/24)
-- chore(deps-dev): Bump watchify from 3.11.1 to 4.0.0 by @dependabot[bot] in [#23](https://github.com/jocmp/mercury-parser/pull/23)
 - chore: Update changelog by @jocmp
 
 **Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.2.5...v2.2.6
@@ -222,20 +228,10 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Fix workflow paths by @jocmp
 - Create FUNDING.yml by @jocmp
 - Add release actions by @jocmp in [#22](https://github.com/jocmp/mercury-parser/pull/22)
-- chore(deps): Bump postman-request from 2.88.1-postman.31 to 2.88.1-postman.40 by @dependabot[bot] in [#20](https://github.com/jocmp/mercury-parser/pull/20)
-- chore(deps-dev): Bump eslint-config-prettier from 6.11.0 to 6.15.0 by @dependabot[bot] in [#19](https://github.com/jocmp/mercury-parser/pull/19)
-- chore(deps-dev): Bump remark-preset-lint-recommended from 3.0.2 to 7.0.0 by @dependabot[bot] in [#17](https://github.com/jocmp/mercury-parser/pull/17)
-- chore(deps-dev): Bump karma-chrome-launcher from 3.1.0 to 3.2.0 by @dependabot[bot] in [#21](https://github.com/jocmp/mercury-parser/pull/21)
 - Add custom parser - 1pezeshk.com by @jocmp in [#15](https://github.com/jocmp/mercury-parser/pull/15)
 - Update dist by @jocmp
 - Add custom parser - www.versants.com by @jocmp in [#13](https://github.com/jocmp/mercury-parser/pull/13)
 - Clean up docs by @jocmp
-- chore(deps): Bump moment-timezone from 0.5.37 to 0.5.46 by @dependabot[bot] in [#8](https://github.com/jocmp/mercury-parser/pull/8)
-- chore(deps-dev): Bump rollup-plugin-uglify from 6.0.1 to 6.0.4 by @dependabot[bot] in [#7](https://github.com/jocmp/mercury-parser/pull/7)
-- chore(deps): Bump @postlight/ci-failed-test-reporter from 1.0.22 to 1.0.26 by @dependabot[bot] in [#11](https://github.com/jocmp/mercury-parser/pull/11)
-- chore(deps-dev): Bump rollup-plugin-terser from 6.1.0 to 7.0.2 by @dependabot[bot] in [#12](https://github.com/jocmp/mercury-parser/pull/12)
-- chore(deps-dev): Bump changelog-maker from 2.3.0 to 4.3.1 by @dependabot[bot] in [#10](https://github.com/jocmp/mercury-parser/pull/10)
-- chore(deps-dev): Bump babel-eslint from 10.0.1 to 10.1.0 by @dependabot[bot] in [#5](https://github.com/jocmp/mercury-parser/pull/5)
 - Clean up README, add CI badge by @jocmp
 - Bump deps by @jocmp in [#1](https://github.com/jocmp/mercury-parser/pull/1)
 - fix: select extended types before content by @touchRED
@@ -264,13 +260,9 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - feat: arstechnica.com extractor by @jbrayton
 - feat: Add a custom extractor for www.engadget.com. by @jbrayton
 - Custom extractor for www.gruene.de by @svenwiegand
-- chore(deps): Bump ws from 5.2.2 to 5.2.3 by @dependabot[bot]
-- chore(deps): Bump moment from 2.29.2 to 2.29.4 by @dependabot[bot]
-- chore(deps): Bump terser from 4.8.0 to 4.8.1 by @dependabot[bot]
 - chore: Update CircleCI config by @johnholdun
 - modifies check-build to differentiate between test env by @jaehanley
 - chore: Update jQuery to 3.5.0 by @johnholdun
-- chore(deps): Bump shell-quote from 1.6.1 to 1.7.3 by @dependabot[bot]
 - Update CHANGELOG.md by @samuelclay
 - support build of es modules by @jimniels
 - Add a new custom extractor for www.abendblatt.de by @mwiedemeyer
@@ -282,34 +274,10 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: update node version in .nvmrc & CONTRIBUTING.md by @PeterDaveHello
 - Bugfix new yorker wired extractors by @sodiumjoe
 - Add --version CLI flag by @pirate
-- chore(deps-dev): bump karma from 3.1.4 to 6.3.16 by @dependabot[bot]
-- chore(deps): bump moment from 2.23.0 to 2.29.2 by @dependabot[bot]
 - feat: Add date formats to two extractors by @johnholdun
-- chore(deps): bump jquery from 3.4.1 to 3.5.0 by @dependabot[bot]
-- chore(deps): bump cached-path-relative from 1.0.2 to 1.1.0 by @dependabot[bot]
-- chore(deps): bump async from 2.6.1 to 2.6.4 by @dependabot[bot]
-- chore(deps): bump tmpl from 1.0.4 to 1.0.5 by @dependabot[bot]
-- chore(deps): bump tar from 4.4.8 to 4.4.19 by @dependabot[bot]
-- chore(deps): bump path-parse from 1.0.5 to 1.0.7 by @dependabot[bot]
-- chore(deps): bump y18n from 3.2.1 to 3.2.2 by @dependabot[bot]
-- chore(deps): bump mixin-deep from 1.3.1 to 1.3.2 by @dependabot[bot]
-- chore(deps): bump browserslist from 4.4.0 to 4.20.3 by @dependabot[bot]
-- chore(deps): bump ajv from 6.7.0 to 6.12.6 by @dependabot[bot]
-- chore(deps): bump pathval from 1.1.0 to 1.1.1 by @dependabot[bot]
-- chore(deps): bump node-fetch from 2.3.0 to 2.6.7 by @dependabot[bot]
-- chore(deps): bump hosted-git-info from 2.1.5 to 2.8.9 by @dependabot[bot]
-- chore(deps): bump ini from 1.3.4 to 1.3.8 by @dependabot[bot]
-- chore(deps): bump handlebars from 4.7.6 to 4.7.7 by @dependabot[bot]
-- chore(deps): bump elliptic from 6.3.2 to 6.5.4 by @dependabot[bot]
-- chore(deps): bump http-proxy from 1.15.2 to 1.18.1 by @dependabot[bot]
-- chore(deps): bump eslint-utils from 1.3.1 to 1.4.3 by @dependabot[bot]
-- chore(deps): bump yargs-parser from 14.0.0 to 15.0.1 by @dependabot[bot]
-- chore(deps): bump static-eval from 2.0.0 to 2.1.0 by @dependabot[bot]
 - release: 2.2.1 by @JadTermsani
 - feat: Ladbible.com extractor by @nitinthewiz
 - feat: Times of India extractor by @nitinthewiz
-- chore(deps): bump lodash from 4.17.2 to 4.17.21 by @dependabot[bot]
-- chore(deps): bump handlebars from 4.1.2 to 4.7.6 by @dependabot[bot]
 - chore: remove greenkeeper configs by @JadTermsani
 - chore: update node version by @JadTermsani
 - feat: update nytimes extractor by @WajeehZantout
@@ -328,9 +296,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: minifying biorxiv.com fixture by @mtashley
 - Add custom extractor for biorxiv.org by @kennyle3377
 - doc: correct internal page links by @jfix
-- chore(deps): bump lodash.merge from 4.6.1 to 4.6.2 by @dependabot[bot]
-- chore(deps): bump cached-path-relative from 1.0.0 to 1.0.2 by @dependabot[bot]
-- chore(deps): bump merge from 1.2.0 to 1.2.1 by @dependabot[bot]
 - chore(package): update brfs-babel to version 2.0.0 by @greenkeeper[bot]
 - Update moment-timezone to the latest version 🚀 by @greenkeeper[bot]
 - chore(package): update remark-cli to version 7.0.0 by @greenkeeper[bot]
@@ -345,7 +310,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - feat: pitchfork extractor by @mgeraci
 - deps: Update moment-timezone to the latest version 🚀 by @greenkeeper[bot]
 - deps: bump handlebars from 4.0.6 to 4.1.2 by @dependabot[bot]
-- chore(deps): bump sshpk from 1.10.1 to 1.16.1 by @dependabot[bot]
 - Custom Extractor for clinicaltrials.gov by @kennyle3377
 - chore: update husky to version 2.3.0 by @toufic-m
 - docs: Add links to README by @ginatrapani
