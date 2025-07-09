@@ -75,9 +75,9 @@ export default function(file, url, dir, result, name) {
 
           const first13 = excerptContent($('*').first().text(), 13)
 
-          // Update these values with the expected values from
-          // the article.
-          assert.strictEqual(first13, 'Add the first 13 words of the article here');
+          // Update these values with the expected values from the article.
+          // Add the first 13 words of the article here
+          assert.strictEqual(first13, null);
         });
       });
     });

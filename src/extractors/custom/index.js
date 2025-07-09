@@ -179,3 +179,4 @@ export * from './www.techpowerup.com';
 export * from './www.flatpanelshd.com';
 export * from './9to5mac.com';
 export * from './www.notebookcheck.net';
+export * from './www.futura-sciences.com';

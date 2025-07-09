@@ -23,12 +23,6 @@ export default function(hostname, name) {
         ],
       },
 
-      dek: {
-        selectors: [
-          // enter selectors
-        ],
-      },
-
       lead_image_url: {
         selectors: [
           // enter selectors
