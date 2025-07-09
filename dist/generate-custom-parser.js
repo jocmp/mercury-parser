@@ -6928,6 +6928,39 @@ var Nineto5macComExtractor = {
     clean: ['.post-meta']
   }
 };
+var WwwFuturaSciencesComExtractor = {
+  domain: 'www.futura-sciences.com',
+  title: {
+    selectors: ['title', 'h1']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['#article-anchor-article-main-content', '.article-text'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      h4: function h4(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      ul: function ul($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.cWHWfD']
+  }
+};
 
 var CustomExtractors =
 /*#__PURE__*/
@@ -7111,7 +7144,8 @@ _Object$freeze({
   WwwThevergeComExtractor: WwwThevergeComExtractor,
   WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
   WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
-  Nineto5macComExtractor: Nineto5macComExtractor
+  Nineto5macComExtractor: Nineto5macComExtractor,
+  WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
@@ -9035,7 +9069,7 @@ function template(strings) {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    export const ", " = {\n      domain: '", "',\n\n      title: {\n        selectors: [\n          // enter title selectors\n        ],\n      },\n\n      author: {\n        selectors: [\n          // enter author selectors\n        ],\n      },\n\n      date_published: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      dek: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      lead_image_url: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      content: {\n        selectors: [\n          // enter content selectors\n        ],\n\n        // Is there anything in the content you selected that needs transformed\n        // before it's consumable content? E.g., unusual lazy loaded images\n        transforms: {\n        },\n\n        // Is there anything that is in the result that shouldn't be?\n        // The clean selectors will remove anything that matches from\n        // the result\n        clean: [\n\n        ]\n      },\n    }\n  "]);
+  var data = _taggedTemplateLiteral(["\n    export const ", " = {\n      domain: '", "',\n\n      title: {\n        selectors: [\n          // enter title selectors\n        ],\n      },\n\n      author: {\n        selectors: [\n          // enter author selectors\n        ],\n      },\n\n      date_published: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      lead_image_url: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      content: {\n        selectors: [\n          // enter content selectors\n        ],\n\n        // Is there anything in the content you selected that needs transformed\n        // before it's consumable content? E.g., unusual lazy loaded images\n        transforms: {\n        },\n\n        // Is there anything that is in the result that shouldn't be?\n        // The clean selectors will remove anything that matches from\n        // the result\n        clean: [\n\n        ]\n      },\n    }\n  "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -9048,7 +9082,7 @@ function extractorTemplate (hostname, name) {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    import assert from 'assert';\n    import cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, new URL(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from\n          // the article.\n          assert.strictEqual(first13, 'Add the first 13 words of the article here');\n        });\n      });\n    });\n  "]);
+  var data = _taggedTemplateLiteral(["\n    import assert from 'assert';\n    import cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, new URL(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from the article.\n          // Add the first 13 words of the article here\n          assert.strictEqual(first13, null);\n        });\n      });\n    });\n  "]);
 
   _templateObject2 = function _templateObject2() {
     return data;

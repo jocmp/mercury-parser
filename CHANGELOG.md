@@ -7,7 +7,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 ## v2.4.7
 
-- feat: Update parser for notebookcheck.net
+- feat: Add custom parser for futura-sciences.com
+- feat: Update parser for notebookcheck.net by @jocmp in [#73](https://github.com/jocmp/mercury-parser/pull/73)
 - Update node version by @jocmp
 
 ## v2.4.6
