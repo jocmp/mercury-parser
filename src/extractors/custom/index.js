@@ -178,3 +178,4 @@ export * from './www.theverge.com';
 export * from './www.techpowerup.com';
 export * from './www.flatpanelshd.com';
 export * from './9to5mac.com';
+export * from './www.notebookcheck.net';
