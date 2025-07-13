@@ -6928,6 +6928,37 @@ var Nineto5macComExtractor = {
     clean: ['.post-meta']
   }
 };
+var WwwNotebookcheckNetExtractor = {
+  domain: 'www.notebookcheck.net',
+  title: {
+    selectors: ['h1']
+  },
+  author: {
+    selectors: ['.intro-author a']
+  },
+  date_published: {
+    selectors: [['.intro-author time', 'datetime']],
+    timezone: 'GMT'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['#content'],
+    transforms: {
+      h2: function h2($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      },
+      h4: function h4($node) {
+        return $node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.ttcl_3', '.socialarea', '.tx-nbc2fe-relatedarticles', 'aside']
+  }
+};
 var WwwFuturaSciencesComExtractor = {
   domain: 'www.futura-sciences.com',
   title: {
@@ -6959,6 +6990,27 @@ var WwwFuturaSciencesComExtractor = {
       }
     },
     clean: ['.cWHWfD']
+  }
+};
+var SgNewsYahooComExtractor = {
+  domain: 'sg.news.yahoo.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value'], 'title']
+  },
+  author: {
+    selectors: ['.caas-attr-provider', 'meta[name="author"]']
+  },
+  date_published: {
+    selectors: ['time[datetime]', 'meta[property="article:published_time"]'],
+    timezone: 'UTC'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.caas-body-content', 'article'],
+    transforms: {},
+    clean: ['.caas-header', '.caas-logo', '.caas-title-wrapper', 'button', '.advertisement', '.sda-*', '[data-content="Advertisement"]']
   }
 };
 
@@ -7145,7 +7197,9 @@ _Object$freeze({
   WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
   WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
   Nineto5macComExtractor: Nineto5macComExtractor,
-  WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor
+  WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
+  WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
+  SgNewsYahooComExtractor: SgNewsYahooComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
