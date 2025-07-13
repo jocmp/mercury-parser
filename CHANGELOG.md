@@ -7,7 +7,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 ## v2.4.7
 
-- feat: Add custom parser for futura-sciences.com
+- feat: Add custom extractor for sg.news.yahoo.com
+- feat: Add custom parser for futura-sciences.com by @jocmp in [#74](https://github.com/jocmp/mercury-parser/pull/74)
 - feat: Update parser for notebookcheck.net by @jocmp in [#73](https://github.com/jocmp/mercury-parser/pull/73)
 - Update node version by @jocmp
 
