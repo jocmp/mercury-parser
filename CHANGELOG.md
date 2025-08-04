@@ -5,12 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.8
+
+- fix: Fix hardwarezone.com.sg missing paragraphs
+
 ## v2.4.7
 
-- feat: Add custom extractor for sg.news.yahoo.com
+- bump version v2.4.6 -> v2.4.7 by @jocmp
+- feat: Add custom extractor for sg.news.yahoo.com by @jocmp in [#75](https://github.com/jocmp/mercury-parser/pull/75)
 - feat: Add custom parser for futura-sciences.com by @jocmp in [#74](https://github.com/jocmp/mercury-parser/pull/74)
 - feat: Update parser for notebookcheck.net by @jocmp in [#73](https://github.com/jocmp/mercury-parser/pull/73)
 - Update node version by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.6...v2.4.7
 
 ## v2.4.6
 
