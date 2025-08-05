@@ -19,8 +19,15 @@ export const WwwHardwarezoneComSgExtractor = {
   },
 
   content: {
-    selectors: ['.content'],
-    transforms: {},
+    selectors: ['.content', 'article'],
+    transforms: {
+      img: node => {
+        node.removeAttr('sizes');
+      },
+      p: node => {
+        node.attr('class', 'mercury-parser-keep');
+      },
+    },
     clean: [],
   },
 };
