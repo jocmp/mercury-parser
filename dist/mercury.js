@@ -6213,8 +6213,15 @@ var WwwHardwarezoneComSgExtractor = {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['.content'],
-    transforms: {},
+    selectors: ['.content', 'article'],
+    transforms: {
+      img: function img(node) {
+        node.removeAttr('sizes');
+      },
+      p: function p(node) {
+        node.attr('class', 'mercury-parser-keep');
+      }
+    },
     clean: []
   }
 };
