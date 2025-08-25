@@ -181,3 +181,4 @@ export * from './9to5mac.com';
 export * from './www.notebookcheck.net';
 export * from './www.futura-sciences.com';
 export * from './sg.news.yahoo.com';
+export * from './www.thehindu.com';
