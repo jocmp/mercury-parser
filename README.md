@@ -1,7 +1,11 @@
 # Mercury Parser - Extracting content from chaos
 
-> [!IMPORTANT]
-> This repository is archived as of September 2025. If you're looking for modern content extraction via JavaScript, check out <https://github.com/kepano/defuddle> instead.
+<a href="https://www.npmjs.com/package/@jocmp/mercury-parser">
+  <img src="https://img.shields.io/npm/v/@jocmp/mercury-parser.svg" alt="npm version">
+</a>
+<a href="https://github.com/jocmp/mercury-parser/actions/workflows/ci.yml">
+  <img src="https://github.com/jocmp/mercury-parser/actions/workflows/ci.yml/badge.svg" alt="CI">
+</a>
 
 Mercury Parser extracts the bits that humans care about from any URL you give it. That includes article content, titles, authors, published dates, excerpts, lead images, and more.
 
