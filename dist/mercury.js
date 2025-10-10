@@ -6993,7 +6993,7 @@ var WwwFuturaSciencesComExtractor = {
         return $node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: ['.cWHWfD']
+    clean: ['.cWHWfD', 'span[class*="wrappers__Span"]']
   }
 };
 
