@@ -5,9 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.9
+
+- fix: Clean up wrappers in futura-sciences.com
+- Revert "Add note" by @jocmp
+- Add note by @jocmp
+
 ## v2.4.8
 
-- fix: Fix hardwarezone.com.sg missing paragraphs
+- bump version v2.4.7 -> v2.4.8 by @jocmp
+- fix: Fix hardwarezone.com.sg missing paragraphs by @jocmp in [#76](https://github.com/jocmp/mercury-parser/pull/76)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.7...v2.4.8
 
 ## v2.4.7
 
