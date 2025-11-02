@@ -7019,6 +7019,43 @@ var SgNewsYahooComExtractor = {
   }
 };
 
+var GonintendoComExtractor = {
+  domain: 'gonintendo.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="og:article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.content'],
+    transforms: {},
+    clean: ['.text-brand-gray-600']
+  }
+};
+
+var OrfAtExtractor = {
+  domain: 'orf.at',
+  title: {
+    selectors: ['title']
+  },
+  date_published: {
+    selectors: [['meta[name="dc.date"]', 'value']],
+    timezone: 'Europe/Vienna'
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    transforms: {},
+    clean: ['.story-meta']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -7204,7 +7241,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   Nineto5macComExtractor: Nineto5macComExtractor,
   WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
   WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
-  SgNewsYahooComExtractor: SgNewsYahooComExtractor
+  SgNewsYahooComExtractor: SgNewsYahooComExtractor,
+  GonintendoComExtractor: GonintendoComExtractor,
+  OrfAtExtractor: OrfAtExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
