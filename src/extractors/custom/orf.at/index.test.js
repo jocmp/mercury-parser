@@ -7,18 +7,13 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-// Flaky
-// eslint-disable-next-line no-undef
-xdescribe('WwwTechpowerupComExtractor', () => {
+describe('OrfAtExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
-      url =
-        'https://www.techpowerup.com/review/valkyrie-v240-lite-aio-liquid-cpu-cooler/';
-      const html = fs.readFileSync(
-        './fixtures/www.techpowerup.com/1747598930208.html'
-      );
+      url = 'https://orf.at/stories/3409547/';
+      const html = fs.readFileSync('./fixtures/orf.at/1762108926494.html');
       result = Parser.parse(url, { html, fallback: false });
     });
 
@@ -30,19 +25,16 @@ xdescribe('WwwTechpowerupComExtractor', () => {
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.strictEqual(title, `Valkyrie V240 LITE Review`);
-    });
-
-    it('returns the author', async () => {
-      const { author } = await result;
-
-      assert.strictEqual(author, `crazyeyesreaper`);
+      assert.strictEqual(
+        title,
+        `Pilnacek-U-Ausschuss: Debatte über Liveübertragung neu entfacht`
+      );
     });
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
 
-      assert.strictEqual(date_published, '2025-05-16T14:15:00.000Z');
+      assert.strictEqual(date_published, `2025-10-24T22:00:00.000Z`);
     });
 
     it('returns the lead_image_url', async () => {
@@ -50,7 +42,7 @@ xdescribe('WwwTechpowerupComExtractor', () => {
 
       assert.strictEqual(
         lead_image_url,
-        `https://www.techpowerup.com/review/valkyrie-v240-lite-aio-liquid-cpu-cooler/images/title.jpg`
+        `https://ibs.orf.at/news?image=https%3A%2F%2Fassets.orf.at%2Fmims%2F2025%2F43%2F41%2Fcrops%2Fw%3D1200%2Ch%3D630%2Cq%3D75%2F2812373_master_1085341_u_ausschuss_uebertragungen_debatte_luk.jpg%3Fs%3D8fe00bea37ad656987b778e7f3e5a5f6721340ff`
       );
     });
 
@@ -68,7 +60,7 @@ xdescribe('WwwTechpowerupComExtractor', () => {
 
       assert.strictEqual(
         first13,
-        'Introduction A big thank you to Valkyrie for providing the review sample! Valkyrie'
+        'ORF/Lukas Krummholz Im Jänner sollen die Befragungen im Untersuchungsausschuss zur Causa Pilnacek starten.'
       );
     });
   });

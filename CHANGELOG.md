@@ -5,11 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.10
+
+- feat: Add custom extractor for orf.at
+- feat: Add custom parser for gonintendo.com by @jocmp in [#83](https://github.com/jocmp/mercury-parser/pull/83)
+
 ## v2.4.9
 
-- fix: Clean up wrappers in futura-sciences.com
+- bump version v2.4.8 -> v2.4.9 by @jocmp
+- fix: Clean up wrappers in futura-sciences.com by @jocmp in [#81](https://github.com/jocmp/mercury-parser/pull/81)
 - Revert "Add note" by @jocmp
 - Add note by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.8...v2.4.9
 
 ## v2.4.8
 
