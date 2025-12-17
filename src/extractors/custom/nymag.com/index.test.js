@@ -15,7 +15,11 @@ describe('NYMagExtractor', () => {
       'How Fox News women took down the most powerful, and predatory, man in media.';
 
     assert.strictEqual(dek, actualDek);
-    assert.strictEqual(title, 'The Revenge of Roger’s Angels');
+    // The fixture contains a curly apostrophe (U+2019)
+    assert.strictEqual(
+      title,
+      `The Revenge of Roger${String.fromCharCode(8217)}s Angels`
+    );
     assert.strictEqual(author, 'Gabriel Sherman');
   });
 });
