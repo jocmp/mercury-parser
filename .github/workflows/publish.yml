@@ -5,6 +5,9 @@ on:
   push:
     tags:
       - "*"
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   npm:
@@ -19,3 +22,5 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: yarn install
       - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
