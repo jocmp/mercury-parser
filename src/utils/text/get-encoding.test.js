@@ -14,13 +14,13 @@ describe('getEncoding(str)', () => {
     assert.strictEqual(getEncoding(contentType), 'iso-8859-15');
   });
 
-  it('returns utf-8 as a default if no encoding found', () => {
+  it('returns utf8 as a default if no encoding found', () => {
     const contentType = 'text/html';
-    assert.strictEqual(getEncoding(contentType), 'utf-8');
+    assert.strictEqual(getEncoding(contentType), 'utf8');
   });
 
-  it('returns utf-8 if there is an invalid encoding', () => {
+  it('returns utf8 if there is an invalid encoding', () => {
     const contentType = 'text/html; charset=fake-charset';
-    assert.strictEqual(getEncoding(contentType), 'utf-8');
+    assert.strictEqual(getEncoding(contentType), 'utf8');
   });
 });
