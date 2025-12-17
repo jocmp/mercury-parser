@@ -5,10 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v2.4.11
+
+- fix: Handle link-heavy pages for Phoronix
+
 ## v2.4.10
 
-- feat: Add custom extractor for orf.at
+- bump version v2.4.9 -> v2.4.10 by @jocmp
+- feat: Add custom extractor for orf.at by @jocmp in [#82](https://github.com/jocmp/mercury-parser/pull/82)
 - feat: Add custom parser for gonintendo.com by @jocmp in [#83](https://github.com/jocmp/mercury-parser/pull/83)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.9...v2.4.10
 
 ## v2.4.9
 
@@ -262,12 +269,12 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Bump deps by @jocmp in [#1](https://github.com/jocmp/mercury-parser/pull/1)
 - fix: select extended types before content by @touchRED
 - fix: update gif to match rebrand by @touchRED
-- feat: update all fixtures and custom parsers to match by @sdoire
-- feat: remove obsolete custom extractors by @sdoire
+- feat: update all fixtures and custom parsers to match
+- feat: remove obsolete custom extractors
 - fixed and improved extraction for latest layout of politico.com by @zhemaituk
 - custom parser for www.investmentexecutive.com by @zhemaituk
 - custom parser for cbc.ca by @zhemaituk
-- fix: postlight parser test by @sdoire
+- fix: postlight parser test
 - adjust postlight insights custom selectors by @austinmbrown
 - release: 2.2.3 by @johnholdun
 - fix: handle sec & ms timestamps properly by @austinmbrown
@@ -803,11 +810,12 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - @jocmp made their first contribution
 - @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
 - @touchRED made their first contribution
-- @sdoire made their first contribution
+- @ made their first contribution
 - @zhemaituk made their first contribution
 - @austinmbrown made their first contribution
 - @johnholdun made their first contribution
 - @mtashley made their first contribution
+- @sdoire made their first contribution
 - @Shepard made their first contribution
 - @Wevah made their first contribution
 - @jbrayton made their first contribution
@@ -831,7 +839,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - @kennyle3377 made their first contribution
 - @kirillDanshin made their first contribution
 - @adampash made their first contribution
-- @ made their first contribution
 - @toufic-m made their first contribution
 - @benubois made their first contribution
 - @mgeraci made their first contribution
