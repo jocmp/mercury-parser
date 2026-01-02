@@ -33,15 +33,15 @@
     "lint:ci": "remark . && eslint .",
     "lint-fix-quiet": "eslint --fix --quiet",
     "build": "rollup -c",
-    "build:ci": "rollup -c && yarn test:build",
+    "build:ci": "rollup -c && npm run test:build",
     "build:web": "rollup -c rollup.config.web.js",
-    "build:esm": "yarn lint && rollup -c rollup.config.esm.js && yarn test:build:esm",
-    "build:esm:ci": "rollup -c rollup.config.esm.js && yarn test:build:esm",
-    "build:web:ci": "rollup -c rollup.config.web.js && yarn test:build:web",
-    "release": "yarn build && yarn build:web",
+    "build:esm": "npm run lint && rollup -c rollup.config.esm.js && npm run test:build:esm",
+    "build:esm:ci": "rollup -c rollup.config.esm.js && npm run test:build:esm",
+    "build:web:ci": "rollup -c rollup.config.web.js && npm run test:build:web",
+    "release": "npm run build && npm run build:web",
     "build:generator": "rollup -c scripts/rollup.config.js",
     "test_build": "rollup -c",
-    "test": "yarn test:node && yarn test:web",
+    "test": "npm run test:node && npm run test:web",
     "test:node": "jest --json --outputFile test-output.json --forceExit",
     "test:web": "node ./node_modules/karma/bin/karma start karma.conf.js --auto-watch",
     "test:build": "cd ./scripts && jest check-build.test.js",
@@ -153,8 +153,12 @@
       "prettier --write",
       "git add"
     ],
-    "*.{json,css,md}": [
-      "remark .",
+    "*.md": [
+      "remark",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,css}": [
       "prettier --write",
       "git add"
     ]
