@@ -43,9 +43,6 @@ describe('BskyAppExtractor', () => {
     });
 
     it('returns the lead_image_url', async () => {
-      // Browser strips meta tags when parsed in body context
-      if (cheerio.browser) return;
-
       const { lead_image_url } = await result;
 
       assert.strictEqual(

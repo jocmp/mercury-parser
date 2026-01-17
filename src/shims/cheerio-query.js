@@ -94,17 +94,25 @@ $.load = (html, opts = {}, returnHtml = false) => {
     if (typeof html !== 'string') {
       html = html.toString ? html.toString() : String(html);
     }
-    // Only use DOMParser for full HTML documents (with <head> or <html> tags)
-    // to preserve meta tags. For small HTML snippets, use the jQuery approach
-    // to avoid DOM normalization issues (whitespace stripping, noscript handling).
+    // For full HTML documents, use DOMParser and append nodes directly to preserve
+    // meta tags. jQuery's .html() uses innerHTML which strips meta in body context.
+    // For small snippets, use jQuery's .html() to avoid DOMParser overhead.
     const isFullDocument = /<head[\s>]/i.test(html) || /<html[\s>]/i.test(html);
     if (isFullDocument) {
       // eslint-disable-next-line no-undef
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-      // Use documentElement.innerHTML to preserve complete structure including
-      // both head (meta tags) and body content
-      html = $('<container />').html(doc.documentElement.innerHTML);
+      const container = $('<container />');
+      const containerEl = container.get(0);
+      // Append head elements (meta, title, etc.) as DOM nodes - bypasses innerHTML
+      Array.from(doc.head.children).forEach(el => {
+        containerEl.appendChild(el.cloneNode(true));
+      });
+      // Append body children as DOM nodes
+      Array.from(doc.body.childNodes).forEach(node => {
+        containerEl.appendChild(node.cloneNode(true));
+      });
+      html = container;
     } else {
       html = $('<container />').html(html);
     }
@@ -126,7 +134,11 @@ $.load = (html, opts = {}, returnHtml = false) => {
         $(this).remove();
       }
     });
-  PARSING_NODE.html(html);
+
+  // Use DOM appendChild instead of .html() to preserve meta tags
+  const parsingEl = PARSING_NODE.get(0);
+  parsingEl.innerHTML = '';
+  parsingEl.appendChild(html.get(0));
 
   if (returnHtml) return { $, html: html.html() };
 

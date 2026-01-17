@@ -27,9 +27,6 @@ describe('WwwJnsaOrgExtractor', () => {
     });
 
     it('returns the title', async () => {
-      // Browser strips meta tags when parsed in body context
-      if (cheerio.browser) return;
-
       const { title } = await result;
 
       assert.strictEqual(

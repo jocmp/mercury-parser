@@ -98,9 +98,6 @@ describe('WwwFortinetComExtractor', () => {
     });
 
     it('converts lazy-loaded noscript images to figures', async () => {
-      // Browser doesn't parse noscript content as DOM when JS is enabled
-      if (cheerio.browser) return;
-
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
