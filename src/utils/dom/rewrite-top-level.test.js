@@ -19,7 +19,7 @@ describe('rewriteTopLevel(node, $)', () => {
       assertClean(
         result.html(),
         `
-        <div><div><div><p><a href="">Wow how about that</a></p></div></div></div>
+        <div><div><div><p><a href>Wow how about that</a></p></div></div></div>
       `
       );
     }

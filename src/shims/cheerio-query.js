@@ -90,6 +90,10 @@ $.load = (html, opts = {}, returnHtml = false) => {
   if (!html) {
     html = $.cloneHtml();
   } else {
+    // Ensure html is a string (handles Buffer from fs.readFileSync)
+    if (typeof html !== 'string') {
+      html = html.toString ? html.toString() : String(html);
+    }
     html = $('<container />').html(html);
   }
 
