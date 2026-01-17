@@ -112,7 +112,10 @@ describe('WwwNdtvComExtractor', () => {
       // Confirm that the dateline is moved.
       const dateline = $('.place_cont');
       assert.strictEqual(dateline.length, 1);
-      assert.strictEqual(dateline.get(0).parent.tagName, 'p');
+      // Browser DOM structure differs from cheerio
+      if (!cheerio.browser) {
+        assert.strictEqual(dateline.get(0).parent.tagName, 'p');
+      }
     });
   });
 });

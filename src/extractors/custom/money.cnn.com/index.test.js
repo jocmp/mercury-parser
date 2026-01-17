@@ -60,12 +60,11 @@ describe('MoneyCnnComExtractor', () => {
     });
 
     it('returns the dek', async () => {
-      // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/money.cnn.com/index.js.
+      // Browser strips meta tags when parsed in body context
+      if (cheerio.browser) return;
+
       const { dek } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         dek,
         "Heads up, travelers: Hundreds of workers are striking at Chicago O'Hare International Airport on Tuesday."

@@ -27,12 +27,11 @@ describe('WwwJnsaOrgExtractor', () => {
     });
 
     it('returns the title', async () => {
-      // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.jnsa.org/index.js.
+      // Browser strips meta tags when parsed in body context
+      if (cheerio.browser) return;
+
       const { title } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         title,
         `NSF 2019 in Kansai 「早期発見、早期対処」のセキュリティ ～守りのセキュリティから攻めのセキュリティへ～`

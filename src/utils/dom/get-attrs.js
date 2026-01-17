@@ -5,7 +5,8 @@ export default function getAttrs(node) {
     const attrs = Reflect.ownKeys(attributes).reduce((acc, index) => {
       const attr = attributes[index];
 
-      if (!attr.name || !attr.value) return acc;
+      // In browser, Reflect.ownKeys includes non-numeric keys like 'length', 'item', etc.
+      if (!attr || !attr.name || !attr.value) return acc;
 
       acc[attr.name] = attr.value;
       return acc;

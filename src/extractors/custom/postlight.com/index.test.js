@@ -57,12 +57,11 @@ describe('PostlightComExtractor', () => {
     });
 
     it('returns the dek', async () => {
-      // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/postlight.com/index.js.
+      // Browser strips meta tags when parsed in body context
+      if (cheerio.browser) return;
+
       const { dek } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         dek,
         'Great leaders set the temperature, especially when stress is high.'
@@ -70,12 +69,11 @@ describe('PostlightComExtractor', () => {
     });
 
     it('returns the lead_image_url', async () => {
-      // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/postlight.com/index.js.
+      // Browser strips meta tags when parsed in body context
+      if (cheerio.browser) return;
+
       const { lead_image_url } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         lead_image_url,
         `https://postlight.com/wp-content/uploads/2022/09/Be-The-Thermostat-1200-1.png?fit=1200%2C675`

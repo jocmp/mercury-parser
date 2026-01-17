@@ -120,16 +120,24 @@ describe('makeLinksAbsolute($)', () => {
         makeLinksAbsolute($content, $, 'http://example.com')
       );
 
-      assertClean(
-        result,
-        `<div>
-        <picture>
-          <source srcset media="(max-width: 450px)">
-          <source srcset=" ">
-          <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
-        </picture>
-      </div>`
-      );
+      // Cheerio serializes empty srcset as 'srcset', browser as 'srcset=""'
+      const expected = cheerio.browser
+        ? `<div>
+          <picture>
+            <source srcset="" media="(max-width: 450px)">
+            <source srcset=" ">
+            <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
+          </picture>
+        </div>`
+        : `<div>
+          <picture>
+            <source srcset media="(max-width: 450px)">
+            <source srcset=" ">
+            <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
+          </picture>
+        </div>`;
+
+      assertClean(result, expected);
     });
 
     it('handles comma separated (with whitespace) srcset files with device-pixel-ratio descriptors', () => {

@@ -13,6 +13,7 @@ jobs:
           node-version-file: '.tool-versions'
       - run: npm install --legacy-peer-deps
       - run: npm run test:node
+        timeout-minutes: 10
 
   test-web:
     runs-on: ubuntu-latest
