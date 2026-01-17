@@ -29,6 +29,6 @@ $(CHANGELOG):
 changelog:
 	git cliff > CHANGELOG.md
 
-.PHONY: preview
-preview:
-	yarn preview
+.PHONY: dev
+dev:
+	cd demo && npm install && npm run dev
