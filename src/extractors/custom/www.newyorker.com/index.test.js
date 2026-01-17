@@ -113,9 +113,6 @@ describe('NewYorkerExtractor', () => {
     });
 
     it('returns the dek when present', async () => {
-      // Browser strips meta tags when parsed in body context
-      if (cheerio.browser) return;
-
       const { dek } = await result;
 
       assert.strictEqual(

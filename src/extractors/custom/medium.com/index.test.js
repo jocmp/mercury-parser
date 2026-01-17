@@ -107,12 +107,9 @@ describe('MediumExtractor', () => {
         13
       );
 
-      // The fixture contains a curly apostrophe (U+2019)
       assert.strictEqual(
         first13,
-        `I${String.fromCharCode(
-          8217
-        )}m sure you have seen something like the following line very often while`
+        'I’m sure you have seen something like the following line very often while'
       );
     });
   });

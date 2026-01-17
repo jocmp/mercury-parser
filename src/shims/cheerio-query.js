@@ -94,7 +94,20 @@ $.load = (html, opts = {}, returnHtml = false) => {
     if (typeof html !== 'string') {
       html = html.toString ? html.toString() : String(html);
     }
-    html = $('<container />').html(html);
+    // Only use DOMParser for full HTML documents (with <head> or <html> tags)
+    // to preserve meta tags. For small HTML snippets, use the jQuery approach
+    // to avoid DOM normalization issues (whitespace stripping, noscript handling).
+    const isFullDocument = /<head[\s>]/i.test(html) || /<html[\s>]/i.test(html);
+    if (isFullDocument) {
+      // eslint-disable-next-line no-undef
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      // Use documentElement.innerHTML to preserve complete structure including
+      // both head (meta tags) and body content
+      html = $('<container />').html(doc.documentElement.innerHTML);
+    } else {
+      html = $('<container />').html(html);
+    }
   }
 
   PARSING_NODE =

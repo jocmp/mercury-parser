@@ -136,7 +136,6 @@ export * from './www.gruene.de';
 export * from './arstechnica.com';
 export * from './www.ndtv.com';
 export * from './www.spektrum.de';
-export * from './postlight.com';
 export * from './www.investmentexecutive.com';
 export * from './www.cbc.ca';
 export * from './www.versants.com';
