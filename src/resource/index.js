@@ -71,7 +71,11 @@ const Resource = {
     }
 
     const encoding = getEncoding(contentType);
-    let decodedContent = iconv.decode(content, encoding);
+    // UTF-8 is handled natively by Node.js, skip iconv-lite
+    let decodedContent =
+      encoding === 'utf-8'
+        ? content.toString('utf-8')
+        : iconv.decode(content, encoding);
     let $ = cheerio.load(decodedContent);
     // after first cheerio.load, check to see if encoding matches
     const contentTypeSelector = cheerio.browser
@@ -84,7 +88,10 @@ const Resource = {
 
     // if encodings in the header/body dont match, use the one in the body
     if (metaContentType && properEncoding !== encoding) {
-      decodedContent = iconv.decode(content, properEncoding);
+      decodedContent =
+        properEncoding === 'utf-8'
+          ? content.toString('utf-8')
+          : iconv.decode(content, properEncoding);
       $ = cheerio.load(decodedContent);
     }
 
