@@ -249,8 +249,12 @@ function createCheerioWrapper(elements, context) {
     elements.forEach(el => {
       if (el.parentNode) {
         const temp = document.createElement('div');
-        temp.innerHTML = typeof content === 'string' ? content : content.html();
-        const newNodes = toArray(temp.childNodes);
+        const htmlContent =
+          typeof content === 'string' ? content : content.html() || '';
+        temp.innerHTML = htmlContent;
+        const newNodes = toArray(temp.childNodes).filter(
+          node => node && node.nodeType
+        );
         newNodes.forEach(node => el.parentNode.insertBefore(node, el));
         el.parentNode.removeChild(el);
       }
@@ -295,7 +299,7 @@ function createCheerioWrapper(elements, context) {
       const temp = document.createElement('div');
       temp.innerHTML = wrapperHtml;
       const wrapperEl = temp.firstElementChild;
-      if (el.parentNode) {
+      if (el.parentNode && wrapperEl) {
         el.parentNode.insertBefore(wrapperEl, el);
         wrapperEl.appendChild(el);
       }
