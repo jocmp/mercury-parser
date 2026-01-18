@@ -112,7 +112,7 @@ describe('MediumExtractor', () => {
 
       assert.strictEqual(
         first13,
-        'I’m sure you have seen something like the following line very often while'
+        `I’m sure you have seen something like the following line very often while`
       );
     });
   });

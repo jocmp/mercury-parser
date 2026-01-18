@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: "npm"
-          node-version-file: ".tool-versions"
+          node-version-file: ".node-version"
       - name: Setup build dependencies
         run: |
           make deps
