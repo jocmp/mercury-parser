@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -107,7 +107,7 @@ describe('NewrepublicComExtractor', () => {
     });
   });
 
-  describe('minutes', async () => {
+  describe('minutes', () => {
     let result;
     let url;
     beforeAll(async () => {

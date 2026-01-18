@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import assert from 'assert';
 
 import { assertClean } from 'test-helpers';
@@ -7,7 +7,8 @@ import { stripJunkTags } from './index';
 
 describe('stripJunkTags($)', () => {
   it('strips script and other junk tags', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <style>.red { color: 'red'; }</style>
         <title>WOW</title>
@@ -17,7 +18,10 @@ describe('stripJunkTags($)', () => {
         <noscript>Don't got it</noscript>
         <hr />
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = stripJunkTags($('*').first(), $);
     assertClean(
@@ -31,7 +35,8 @@ describe('stripJunkTags($)', () => {
   });
 
   it('keeps youtube embeds', () => {
-    let $ = cheerio.load(`
+    let $ = cheerio.load(
+      `
       <div>
         <style>.red { color: 'red'; }</style>
         <title>WOW</title>
@@ -40,7 +45,10 @@ describe('stripJunkTags($)', () => {
         <iframe class="mercury-parser-keep" src="https://www.youtube.com/embed/_2AqQV8wDvY" frameborder="0" allowfullscreen></iframe>
         <hr />
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     $ = stripJunkTags($('*').first(), $);
     assert.strictEqual($('iframe[src^="https://www.youtube.com"]').length, 1);

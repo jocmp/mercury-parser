@@ -23,8 +23,18 @@ export const WwwFortinetComExtractor = {
     ],
 
     transforms: {
-      noscript: $node => {
-        const $children = $node.children();
+      // Cheerio 1.x treats noscript content as text, not parsed HTML
+      // so we need to parse it manually
+      noscript: ($node, $) => {
+        const noscriptHtml = $node.html();
+        if (!noscriptHtml) return null;
+
+        // Parse the noscript content to check if it's a single img
+        const $parsed = $.load
+          ? $.load(noscriptHtml, null, false)
+          : $(`<div>${noscriptHtml}</div>`);
+        const $children = $.load ? $parsed('*') : $parsed.children();
+
         if ($children.length === 1 && $children.get(0).tagName === 'img') {
           return 'figure';
         }

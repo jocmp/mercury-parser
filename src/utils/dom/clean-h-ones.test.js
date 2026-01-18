@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 
@@ -6,13 +6,17 @@ import { cleanHOnes } from './index';
 
 describe('cleanHOnes($)', () => {
   it('removes H1s if there are less than 3 of them', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <h1>Look at this!</h1>
         <p>What do you think?</p>
         <h1>Can you believe it?!</h1>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHOnes($('*').first(), $);
     assertClean(
@@ -26,7 +30,8 @@ describe('cleanHOnes($)', () => {
   });
 
   it('converts H1s to H2s if there are 3 or more of them', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <h1>Look at this!</h1>
         <p>What do you think?</p>
@@ -34,7 +39,10 @@ describe('cleanHOnes($)', () => {
         <p>What do you think?</p>
         <h1>Can you believe it?!</h1>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHOnes($('*').first(), $);
     assertClean(

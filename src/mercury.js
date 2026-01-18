@@ -1,9 +1,10 @@
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import TurndownService from 'turndown';
 
 import Resource from 'resource';
 import { validateUrl } from 'utils';
+import isBrowser from 'utils/is-browser';
 import addCustomExtractor from 'extractors/add-extractor';
 import getExtractor from 'extractors/get-extractor';
 import RootExtractor, { selectExtendedTypes } from 'extractors/root-extractor';
@@ -23,7 +24,7 @@ const Parser = {
     // if no url was passed and this is the browser version,
     // set url to window.location.href and load the html
     // from the current page
-    if (!url && cheerio.browser) {
+    if (!url && isBrowser) {
       url = window.location.href; // eslint-disable-line no-undef
       html = html || cheerio.html();
     }
@@ -112,7 +113,7 @@ const Parser = {
     return { ...result, ...extendedTypes };
   },
 
-  browser: !!cheerio.browser,
+  browser: isBrowser,
 
   // A convenience method for getting a resource
   // to work with, e.g., for custom extractor generator

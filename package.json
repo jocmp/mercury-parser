@@ -51,7 +51,7 @@
     "generate-parser": "node ./dist/generate-custom-parser.js"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=22"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -67,7 +67,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "^30.2.0",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-module-resolver": "^3.1.2",
     "babelify": "^10.0.0",
@@ -87,8 +87,7 @@
     "husky": "^3.0.0",
     "inquirer": "^7.0.0",
     "jasmine-core": "^2.5.2",
-    "jest": "^23.6.0",
-    "jest-cli": "^23.6.0",
+    "jest": "^30.2.0",
     "karma": "^6.3.16",
     "karma-browserify": "8.1.0",
     "karma-chrome-launcher": "^3.0.0",
@@ -113,11 +112,10 @@
   "dependencies": {
     "@babel/runtime-corejs2": "^7.2.0",
     "browser-request": "github:postlight/browser-request#feat-add-headers-to-response",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.1.2",
     "difflib": "github:postlight/difflib.js",
     "ellipsize": "0.1.0",
     "iconv-lite": "0.6.3",
-    "jquery": "^3.5.0",
     "moment": "^2.23.0",
     "moment-parseformat": "3.0.0",
     "moment-timezone": "0.5.46",
@@ -128,14 +126,12 @@
     "yargs-parser": "^15.0.1"
   },
   "bundleDependencies": [
-    "jquery",
     "moment-timezone",
     "browser-request"
   ],
   "browser": {
     "main": "./dist/mercury.web.js",
     "cheerio": "./src/shims/cheerio-query",
-    "jquery": "./node_modules/jquery/dist/jquery.min.js",
     "postman-request": "browser-request",
     "iconv-lite": "./src/shims/iconv-lite",
     "moment-timezone": "./node_modules/moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js"

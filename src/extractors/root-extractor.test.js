@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 import RootExtractor, {
@@ -85,6 +85,8 @@ describe('transformElements($content, $, { transforms })', () => {
     assertClean($.html($content), after);
   });
 
+  // Cheerio 1.x treats noscript content as text, not parsed HTML
+  // so we need to parse it manually using $.load or cheerio.load
   it('performs a complex transformation on matched elements', () => {
     const html = `
       <div>
@@ -101,8 +103,16 @@ describe('transformElements($content, $, { transforms })', () => {
     `;
     const opts = {
       transforms: {
+        // Updated noscript transform for Cheerio 1.x compatibility
+        // eslint-disable-next-line no-unused-vars
         noscript: ($node, $) => {
-          const $children = $.browser ? $($node.text()) : $node.children();
+          const noscriptHtml = $node.html();
+          if (!noscriptHtml) return null;
+
+          // Parse the noscript content to check if it's a single img
+          const $parsed = cheerio.load(noscriptHtml, null, false);
+          const $children = $parsed('*');
+
           if (
             $children.length === 1 &&
             $children.get(0) !== undefined &&

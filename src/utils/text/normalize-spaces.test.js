@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { normalizeSpaces } from './index';
 
@@ -20,12 +20,16 @@ describe('normalizeSpaces(text)', () => {
   });
 
   it('preserves spaces in preformatted text blocks', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p>What   do  you    think?</p>
         <pre>  What     happens to        spaces?    </pre>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = normalizeSpaces($.html());
     assert.strictEqual(

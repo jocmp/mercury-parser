@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import stringDirection from 'string-direction';
 
 import GenericContentExtractor from './content/extractor';

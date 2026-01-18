@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Parser from 'mercury';
 import getExtractor from 'extractors/get-extractor';

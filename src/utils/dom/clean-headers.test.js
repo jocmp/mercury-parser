@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 
@@ -6,14 +6,18 @@ import { cleanHeaders } from './index';
 
 describe('cleanHeaders(article, $)', () => {
   it('parses html and returns the article', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <h2>Lose me</h2>
         <p>What do you think?</p>
         <h2>Keep me</h2>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHeaders($('*').first(), $);
     assertClean(
@@ -29,13 +33,17 @@ describe('cleanHeaders(article, $)', () => {
   });
 
   it('removes headers when the header text matches the title', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p>What do you think?</p>
         <h2>Title Match</h2>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHeaders($('*').first(), $, 'Title Match');
     assertClean(
@@ -50,13 +58,17 @@ describe('cleanHeaders(article, $)', () => {
   });
 
   it('removes headers with a negative weight', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p>What do you think?</p>
         <h2 class="advert">Bad Class, Bad Weight</h2>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHeaders($('*').first(), $);
     assertClean(
@@ -71,12 +83,16 @@ describe('cleanHeaders(article, $)', () => {
   });
 
   it('keeps headers with keep class', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <h3 class="mercury-parser-keep">Keep me</h3>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanHeaders($('*').first(), $);
     assertClean(

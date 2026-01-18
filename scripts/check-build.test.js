@@ -1,13 +1,14 @@
 /* eslint-disable global-require, no-undef */
 import assert from 'assert';
-import cheerio from 'cheerio';
+
+import isBrowser from '../src/utils/is-browser';
 
 // don't run this on CI b/c we want to avoid network requests
 if (
   process.env.CI ||
   (typeof __karma__ !== 'undefined' && __karma__.config.args[0] === '--CI')
 ) {
-  if (cheerio.browser) {
+  if (isBrowser) {
     require('../dist/mercury.web');
   }
   // eslint-disable-next-line no-unused-expressions
@@ -18,7 +19,7 @@ if (
     });
   });
 } else {
-  if (cheerio.browser) {
+  if (isBrowser) {
     require('../dist/mercury.web');
   }
   const Merc =

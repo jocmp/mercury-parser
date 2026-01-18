@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Parser from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -45,7 +45,7 @@ describe('BskyAppExtractor', () => {
       assert.strictEqual(date_published, null);
     });
 
-    xit('returns the lead_image_url', async () => {
+    it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
       assert.strictEqual(

@@ -50,7 +50,6 @@ describe('Parser', () => {
     });
 
     it('does washingtonpost', async () => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
       const result = await Parser.parse(
         'https://www.washingtonpost.com/news/opinions/wp/2018/10/29/enough-platitudes-lets-name-names/'
       );
@@ -73,7 +72,6 @@ describe('Parser', () => {
     });
 
     it('does ars pagination', async () => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
       const url =
         'https://arstechnica.com/gadgets/2016/08/the-connected-renter-how-to-make-your-apartment-smarter/';
       const result = await Parser.parse(url, { fetchAllPages: true });

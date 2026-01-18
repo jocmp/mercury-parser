@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { nodeIsSufficient } from 'utils/dom';
 import { cleanContent } from 'cleaners';

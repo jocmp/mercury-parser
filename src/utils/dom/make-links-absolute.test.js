@@ -1,11 +1,11 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { assertClean } from 'test-helpers';
 
 import makeLinksAbsolute from './make-links-absolute';
 
 describe('makeLinksAbsolute($)', () => {
   it('makes relative #hrefs absolute', () => {
-    const $ = cheerio.load('<div><a href="#foo">bar</a></div>');
+    const $ = cheerio.load('<div><a href="#foo">bar</a></div>', null, false);
     const $content = $('*').first();
 
     const result = $.html(makeLinksAbsolute($content, $, 'http://example.com'));
@@ -14,7 +14,7 @@ describe('makeLinksAbsolute($)', () => {
   });
 
   it('makes relative ./relative paths absolute', () => {
-    const $ = cheerio.load('<div><a href="foo/bar">bar</a></div>');
+    const $ = cheerio.load('<div><a href="foo/bar">bar</a></div>', null, false);
     const $content = $('*').first();
 
     const result = $.html(
@@ -28,7 +28,11 @@ describe('makeLinksAbsolute($)', () => {
   });
 
   it('makes relative /root/paths absolute', () => {
-    const $ = cheerio.load('<div><a href="/foo/bar">bar</a></div>');
+    const $ = cheerio.load(
+      '<div><a href="/foo/bar">bar</a></div>',
+      null,
+      false
+    );
     const $content = $('*').first();
 
     const result = $.html(
@@ -42,7 +46,7 @@ describe('makeLinksAbsolute($)', () => {
   });
 
   it('makes relative srcs absolute', () => {
-    const $ = cheerio.load('<div><img src="#foo"></div>');
+    const $ = cheerio.load('<div><img src="#foo"></div>', null, false);
     const $content = $('*').first();
 
     const result = $.html(makeLinksAbsolute($content, $, 'http://example.com'));
@@ -73,7 +77,8 @@ describe('makeLinksAbsolute($)', () => {
        *      assets/images/rhythm/240.jpg,assets/images/rhythm/240@2x.jpg 2x,
        *      assets/images/rhythm/240@3x.jpg 3x
        */
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <picture>
             <source srcset="assets/images/rhythm/076.jpg,assets/images/rhythm/076@2x.jpg 2x" media="(max-width: 450px)">
@@ -82,7 +87,10 @@ describe('makeLinksAbsolute($)', () => {
             <img src="assets/images/rhythm/120.jpg" alt="Vertical and horizontal rhythm">
           </picture>
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
@@ -105,7 +113,8 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('does nothing when the srcset is empty or just whitespace', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <picture>
             <source srcset="" media="(max-width: 450px)">
@@ -113,25 +122,20 @@ describe('makeLinksAbsolute($)', () => {
             <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
           </picture>
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
         makeLinksAbsolute($content, $, 'http://example.com')
       );
 
-      // Cheerio serializes empty srcset as 'srcset', browser as 'srcset=""'
-      const expected = cheerio.browser
-        ? `<div>
+      // Cheerio 1.x serializes empty srcset as 'srcset=""'
+      const expected = `<div>
           <picture>
             <source srcset="" media="(max-width: 450px)">
-            <source srcset=" ">
-            <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
-          </picture>
-        </div>`
-        : `<div>
-          <picture>
-            <source srcset media="(max-width: 450px)">
             <source srcset=" ">
             <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
           </picture>
@@ -141,7 +145,8 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('handles comma separated (with whitespace) srcset files with device-pixel-ratio descriptors', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <picture>
             <source srcset="assets/images/rhythm/076.jpg 2x, assets/images/rhythm/076.jpg" media="(max-width: 450px)">
@@ -149,7 +154,10 @@ describe('makeLinksAbsolute($)', () => {
             <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
           </picture>
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
@@ -169,7 +177,8 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('handles comma separated (without whitespace) srcset files with device-pixel-ratio descriptors', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <picture>
             <source srcset="assets/images/rhythm/076.jpg 2x,assets/images/rhythm/076.jpg" media="(max-width: 450px)">
@@ -177,7 +186,10 @@ describe('makeLinksAbsolute($)', () => {
             <img src="http://example.com/assets/images/rhythm/076.jpg" alt="Vertical and horizontal rhythm">
           </picture>
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
@@ -199,11 +211,15 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('handles comma separated (with whitespace) srcset files with width descriptors', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <img srcset="elva-fairy-320w.jpg 320w, elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w" sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, 800px" src="elva-fairy-800w.jpg" alt="Elva dressed as a fairy">
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
@@ -221,13 +237,17 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('handles multiline comma separated srcset files with width descriptors', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <img srcset="elva-fairy-320w.jpg 320w,
             elva-fairy-480w.jpg 480w,
             elva-fairy-800w.jpg 800w" sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, 800px" src="elva-fairy-800w.jpg" alt="Elva dressed as a fairy">
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(
@@ -245,11 +265,15 @@ describe('makeLinksAbsolute($)', () => {
     });
 
     it('handles URLs that contain a comma', () => {
-      const $ = cheerio.load(`
+      const $ = cheerio.load(
+        `
         <div>
           <picture><source media="(min-width: 768px)" srcset="cartoons/5bbfca021e40b62d6cc418ea/master/w_280,c_limit/181022_a22232.jpg, cartoons/5bbfca021e40b62d6cc418ea/master/w_560,c_limit/181022_a22232.jpg 2x"/><source srcset="cartoons/5bbfca021e40b62d6cc418ea/master/w_727,c_limit/181022_a22232.jpg, cartoons/5bbfca021e40b62d6cc418ea/master/w_1454,c_limit/181022_a22232.jpg 2x"/><img src="cartoons/5bbfca021e40b62d6cc418ea/master/w_727,c_limit/181022_a22232.jpg" /></picture>
         </div>
-      `);
+      `,
+        null,
+        false
+      );
       const $content = $('*').first();
 
       const result = $.html(

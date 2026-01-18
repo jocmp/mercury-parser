@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -97,7 +97,8 @@ describe('WwwFortinetComExtractor', () => {
       );
     });
 
-    xit('converts lazy-loaded noscript images to figures', async () => {
+    // Cheerio 1.x treats noscript content as text, but extractor now parses it manually
+    it('converts lazy-loaded noscript images to figures', async () => {
       const { content } = await result;
 
       const $ = cheerio.load(content || '');

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -26,11 +26,13 @@ describe('WwwJnsaOrgExtractor', () => {
       assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
-    xit('returns the title', async () => {
+    it('returns the title', async () => {
       const { title } = await result;
 
+      // Normalize whitespace for comparison (Cheerio 1.x preserves line breaks)
+      const normalizedTitle = title.replace(/\s+/g, ' ').trim();
       assert.strictEqual(
-        title,
+        normalizedTitle,
         `NSF 2019 in Kansai 「早期発見、早期対処」のセキュリティ ～守りのセキュリティから攻めのセキュリティへ～`
       );
     });

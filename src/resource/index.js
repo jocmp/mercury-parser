@@ -1,7 +1,8 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import iconv from 'iconv-lite';
 
 import { getEncoding } from 'utils/text';
+import isBrowser from 'utils/is-browser';
 import { fetchResource } from './utils';
 import { normalizeMetaTags, convertLazyLoadedImages, clean } from './utils/dom';
 
@@ -54,7 +55,12 @@ const Resource = {
 
     let $ = this.encodeDoc({ content, contentType, alreadyDecoded });
 
-    if ($.root().children().length === 0) {
+    if (
+      $('body').children().length === 0 &&
+      $('body')
+        .text()
+        .trim() === ''
+    ) {
       throw new Error('No children, likely a bad parse.');
     }
 
@@ -78,7 +84,7 @@ const Resource = {
         : iconv.decode(content, encoding);
     let $ = cheerio.load(decodedContent);
     // after first cheerio.load, check to see if encoding matches
-    const contentTypeSelector = cheerio.browser
+    const contentTypeSelector = isBrowser
       ? 'meta[http-equiv=content-type]'
       : 'meta[http-equiv=content-type i]';
     const metaContentType =

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Parser from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -47,7 +47,7 @@ describe('Nineto5googleComExtractor', () => {
       assert.strictEqual(date_published, `2025-02-28T16:45:00.000Z`);
     });
 
-    xit('returns the lead_image_url', async () => {
+    it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
       assert.strictEqual(

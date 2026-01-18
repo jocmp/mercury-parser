@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 import stripUnlikelyCandidates from './strip-unlikely-candidates';
@@ -12,7 +12,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(html);
+      let $ = cheerio.load(html, null, false);
       $ = stripUnlikelyCandidates($);
       assert.strictEqual($.html(), html);
     });
@@ -29,7 +29,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = stripUnlikelyCandidates($);
       assertClean($.html(), after);
     });
@@ -46,7 +46,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = stripUnlikelyCandidates($);
       assertClean($.html(), after);
     });
@@ -68,7 +68,7 @@ describe('Generic Extractor Utils', () => {
           <div>Something unrelated</div>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = stripUnlikelyCandidates($);
       assertClean($.html(), after);
     });
