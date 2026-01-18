@@ -56,7 +56,10 @@ function createCheerioWrapper(elements, context) {
   };
 
   wrapper.map = function(fn) {
-    return elements.map((el, i) => fn.call(el, i, el));
+    const result = elements.map((el, i) => fn.call(el, i, el));
+    // Cheerio's map returns an object with toArray(), not a plain array
+    result.toArray = () => result;
+    return result;
   };
 
   wrapper.filter = function(selector) {
