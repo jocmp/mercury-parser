@@ -7,6 +7,7 @@ export const WwwLebensmittelwarnungDeExtractor = {
 
   date_published: {
     selectors: [['.lmw-intro__meta > time', 'datetime']],
+    format: 'DD.MM.YYYY',
     timezone: 'Europe/Berlin',
   },
 

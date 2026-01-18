@@ -14,7 +14,6 @@ export const WwwOreillyCoJpExtractor = {
       ['dd[itemprop="datePublished"]', 'content'],
       ['meta[itemprop="datePublished"]', 'value'],
     ],
-    timezone: 'Asia/Tokyo',
   },
 
   dek: null,

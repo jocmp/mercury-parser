@@ -1,7 +1,10 @@
 import assert from 'assert';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import cleanDatePublished, { cleanDateString } from './date-published';
+
+dayjs.extend(customParseFormat);
 
 describe('cleanDatePublished(dateString)', () => {
   it('returns a date', () => {
@@ -9,7 +12,7 @@ describe('cleanDatePublished(dateString)', () => {
 
     assert.strictEqual(
       datePublished,
-      moment('1/1/2020', 'MM/DD/YYYY').toISOString()
+      dayjs('1/1/2020', 'M/D/YYYY').toISOString()
     );
   });
 
@@ -40,28 +43,28 @@ describe('cleanDatePublished(dateString)', () => {
 
   it('can handle dates formatted as "[just|right] now"', () => {
     const date1 = cleanDatePublished('now');
-    const newDate1 = moment(date1)
+    const newDate1 = dayjs(date1)
       .format()
       .split('T')[0];
-    const expectedDate1 = moment()
+    const expectedDate1 = dayjs()
       .format()
       .split('T')[0];
     assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('just now');
-    const newDate2 = moment(date2)
+    const newDate2 = dayjs(date2)
       .format()
       .split('T')[0];
-    const expectedDate2 = moment()
+    const expectedDate2 = dayjs()
       .format()
       .split('T')[0];
     assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('right now');
-    const newDate3 = moment(date3)
+    const newDate3 = dayjs(date3)
       .format()
       .split('T')[0];
-    const expectedDate3 = moment()
+    const expectedDate3 = dayjs()
       .format()
       .split('T')[0];
     assert.strictEqual(newDate3, expectedDate3);
@@ -72,30 +75,30 @@ describe('cleanDatePublished(dateString)', () => {
     // "X days ago" will not be accurate down to the exact time
     // "X months ago" will not be accurate down to the exact day
     const date1 = cleanDatePublished('1 hour ago');
-    const newDate1 = moment(date1)
+    const newDate1 = dayjs(date1)
       .format()
       .split('T')[0];
-    const expectedDate1 = moment()
+    const expectedDate1 = dayjs()
       .subtract(1, 'hour')
       .format()
       .split('T')[0];
     assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('5 days ago');
-    const newDate2 = moment(date2)
+    const newDate2 = dayjs(date2)
       .format()
       .split('T')[0];
-    const expectedDate2 = moment()
+    const expectedDate2 = dayjs()
       .subtract(5, 'days')
       .format()
       .split('T')[0];
     assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('10 months ago');
-    const newDate3 = moment(date3)
+    const newDate3 = dayjs(date3)
       .format()
       .split('T')[0];
-    const expectedDate3 = moment()
+    const expectedDate3 = dayjs()
       .subtract(10, 'months')
       .format()
       .split('T')[0];

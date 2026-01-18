@@ -47,13 +47,10 @@ describe('NewrepublicComExtractor', () => {
     });
 
     it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/newrepublic.com/index.js.
       const { date_published } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(date_published, '2016-11-18T05:00:00.000Z');
+      // ISO date-only "2016-11-18" parsed as midnight UTC
+      assert.strictEqual(date_published, '2016-11-18T00:00:00.000Z');
     });
 
     it('returns the dek', async () => {

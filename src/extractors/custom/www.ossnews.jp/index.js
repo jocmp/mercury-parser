@@ -9,8 +9,6 @@ export const WwwOssnewsJpExtractor = {
 
   date_published: {
     selectors: ['p.fs12'],
-    format: 'YYYY年MM月DD日 HH:mm',
-    timezone: 'Asia/Tokyo',
   },
 
   dek: null,

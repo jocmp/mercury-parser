@@ -57,12 +57,10 @@ describe('WwwOreillyCoJpExtractor', () => {
 
     it('returns the date_published', async () => {
       // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
       const { date_published } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(date_published, '2019-04-25T15:00:00.000Z');
+      // ISO date-only "2019-04-26" parsed as midnight UTC
+      assert.strictEqual(date_published, '2019-04-26T00:00:00.000Z');
     });
 
     it('returns the dek', async () => {

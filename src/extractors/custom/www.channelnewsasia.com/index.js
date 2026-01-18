@@ -14,7 +14,7 @@ export const WwwChannelnewsasiaComExtractor = {
 
   date_published: {
     selectors: ['.article-publish:not(span)'],
-    format: 'DD MMM YYYY HH:mma',
+    format: 'D MMM YYYY hh:mmA',
     timezone: 'Asia/Singapore',
   },
 

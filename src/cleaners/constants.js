@@ -65,9 +65,9 @@ export const SPLIT_DATE_STRING = new RegExp(
   'ig'
 );
 
-// 2016-11-22T08:57-500
+// 2016-11-22T08:57-500, 2016-12-22T19:27:41+00:00, 2016-12-22T19:27:41Z
 // Check if datetime string has an offset at the end
-export const TIME_WITH_OFFSET_RE = /-\d{3,4}$/;
+export const TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
 
 // CLEAN TITLE CONSTANTS
 // A regular expression that will match separating characters on a

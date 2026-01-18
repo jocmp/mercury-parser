@@ -11,7 +11,7 @@ export const JapanCnetComExtractor = {
 
   date_published: {
     selectors: ['.date'],
-    format: 'YYYY年MM月DD日 HH時mm分',
+    format: 'YYYY年M月D日 HH時mm分',
     timezone: 'Asia/Tokyo',
   },
 

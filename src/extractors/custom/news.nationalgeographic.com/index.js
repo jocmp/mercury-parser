@@ -11,7 +11,7 @@ export const NewsNationalgeographicComExtractor = {
 
   date_published: {
     selectors: [['meta[name="article:published_time"]', 'value']],
-    format: 'ddd MMM DD HH:mm:ss zz YYYY',
+    format: 'ddd MMM D HH:mm:ss zz YYYY',
     timezone: 'EST',
   },
 

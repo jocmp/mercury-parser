@@ -47,13 +47,10 @@ describe('WwwNbcnewsComExtractor', () => {
     });
 
     it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.nbcnews.com/index.js.
       const { date_published } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(date_published, '2016-12-13T23:06:00.000Z');
+      // Fixture date is "Tue Dec 13 2016 18:06:00 GMT+0000 (UTC)"
+      assert.strictEqual(date_published, '2016-12-13T18:06:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {

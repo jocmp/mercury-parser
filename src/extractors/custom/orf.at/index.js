@@ -7,7 +7,6 @@ export const OrfAtExtractor = {
 
   date_published: {
     selectors: [['meta[name="dc.date"]', 'value']],
-    timezone: 'Europe/Vienna',
   },
 
   lead_image_url: {

@@ -15,8 +15,6 @@ export const WwwYoutubeComExtractor = {
 
   date_published: {
     selectors: [['meta[itemProp="datePublished"]', 'value']],
-
-    timezone: 'GMT',
   },
 
   dek: {

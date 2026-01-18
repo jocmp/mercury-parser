@@ -1,7 +1,7 @@
 import assert from 'assert';
 import URL from 'url';
 import * as cheerio from 'cheerio';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -55,10 +55,10 @@ describe('WwwRedditComExtractor', () => {
       // To pass this test, fill out the date_published selector
       // in ./src/extractors/custom/www.reddit.com/index.js.
       const { date_published } = await result;
-      const newDatePublished = moment(date_published)
+      const newDatePublished = dayjs(date_published)
         .format()
         .split('T')[0];
-      const expectedDate = moment()
+      const expectedDate = dayjs()
         .subtract(4, 'years')
         .format()
         .split('T')[0];

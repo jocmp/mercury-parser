@@ -11,7 +11,7 @@ export const WwwInfoqComExtractor = {
 
   date_published: {
     selectors: ['.article__readTime.date'],
-    format: 'YYYY年MM月DD日',
+    format: 'YYYY年M月D日',
     timezone: 'Asia/Tokyo',
   },
 
