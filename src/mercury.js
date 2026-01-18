@@ -1,5 +1,4 @@
 import URL from 'url';
-import * as cheerio from 'cheerio';
 import TurndownService from 'turndown';
 
 import Resource from 'resource';
@@ -26,7 +25,7 @@ const Parser = {
     // from the current page
     if (!url && isBrowser) {
       url = window.location.href; // eslint-disable-line no-undef
-      html = html || cheerio.html();
+      html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
     }
 
     const parsedUrl = URL.parse(url);
