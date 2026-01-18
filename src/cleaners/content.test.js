@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import extractBestNode from 'extractors/generic/content/extract-best-node';
 import extractCleanNode from './content';

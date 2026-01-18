@@ -1,11 +1,11 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import convertNodeTo from './convert-node-to';
 
 describe('convertNodeTo(node, $)', () => {
   it('takes a node and converts it to a diff tag', () => {
-    const $ = cheerio.load('<div>Should become a p</div>');
+    const $ = cheerio.load('<div>Should become a p</div>', null, false);
     const node = $('div').first();
 
     const result = convertNodeTo(node, $).html();
@@ -16,7 +16,9 @@ describe('convertNodeTo(node, $)', () => {
 
   it('retains attributes on conversion', () => {
     const $ = cheerio.load(
-      '<span class="foo" score="100">Should keep its attrs</span>'
+      '<span class="foo" score="100">Should keep its attrs</span>',
+      null,
+      false
     );
     const node = $('span').first();
 
@@ -28,7 +30,7 @@ describe('convertNodeTo(node, $)', () => {
 
   it('does nothing if node.get returns null', () => {
     const html = '<span class="foo" score="100">Should keep its attrs</span>';
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(html, null, false);
     const node = {
       get: () => null,
     };
@@ -41,9 +43,12 @@ describe('convertNodeTo(node, $)', () => {
   // In the browser, the contents of noscript tags aren't rendered, therefore
   // transforms on the noscript tag (commonly used for lazy-loading) don't work
   // as expected. This test case handles that
-  it('handles noscript tags in the browser', () => {
+  // Cheerio 1.x treats noscript content as text, but $node.html() returns it correctly
+  it('handles noscript tags', () => {
     const $ = cheerio.load(
-      '<noscript><img src="http://example.com" /></noscript>'
+      '<noscript><img src="http://example.com" /></noscript>',
+      null,
+      false
     );
     const node = $('noscript');
 

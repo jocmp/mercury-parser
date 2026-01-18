@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { scoreNode, scoreParagraph } from './index';
 
@@ -88,8 +88,9 @@ describe('scoreNode(node)', () => {
   });
 
   it('scores a TH element with negative 5', () => {
+    // Wrap th in table structure for valid HTML parsing in Cheerio 1.x
     const $ = cheerio.load(`
-      <th>Lorem ipsum, dolor sit, amet</th>
+      <table><thead><tr><th>Lorem ipsum, dolor sit, amet</th></tr></thead></table>
     `);
     const node = $('th').first();
 

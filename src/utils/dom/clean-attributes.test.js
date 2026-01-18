@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 
@@ -6,11 +6,15 @@ import { cleanAttributes } from './index';
 
 describe('cleanAttributes($)', () => {
   it('removes style attributes from nodes', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p style="color: red;">What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanAttributes($('*').first(), $);
     assertClean(
@@ -24,11 +28,15 @@ describe('cleanAttributes($)', () => {
   });
 
   it('removes align attributes from nodes', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p style="color: red;" align="center">What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanAttributes($('*').first(), $);
     assertClean(

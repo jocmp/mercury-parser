@@ -14,3 +14,6 @@ tmp/CHANGELOG.md
 test-output.json
 .yarnrc.yml
 **/.DS_Store
+
+# Vitest screenshots
+**/__screenshots__/

@@ -1,9 +1,10 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import Parser from 'mercury';
 import getExtractor from 'extractors/get-extractor';
 import { excerptContent } from 'utils/text';
+import isBrowser from 'utils/is-browser';
 
 const fs = require('fs');
 
@@ -38,7 +39,7 @@ describe('OrfAtExtractor', () => {
       const { date_published } = await result;
 
       // Browser and Node may parse timezone differently around DST boundaries
-      if (cheerio.browser) {
+      if (isBrowser) {
         assert.ok(
           date_published === '2025-10-24T22:00:00.000Z' ||
             date_published === '2025-10-24T23:00:00.000Z'

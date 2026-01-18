@@ -1,13 +1,17 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { linkDensity } from './index';
 
 describe('linkDensity($)', () => {
   it('returns 0.5 if half of the text is a link', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div><p>Some text!</p><p><a href="">Some text!</a></p> </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const density = linkDensity($('div').first(), $);
 
@@ -15,9 +19,13 @@ describe('linkDensity($)', () => {
   });
 
   it('returns 1 if all of the text is a link', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div><p><a href="">Some text!</a></p></div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const density = linkDensity($('div').first(), $);
 
@@ -25,9 +33,13 @@ describe('linkDensity($)', () => {
   });
 
   it("returns 0 if there's no text", () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div><p><a href=""></a></p></div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const density = linkDensity($('div').first());
 

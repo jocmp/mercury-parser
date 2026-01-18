@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 
@@ -6,12 +6,16 @@ import { cleanImages } from './index';
 
 describe('cleanImages($)', () => {
   it('removes images with small heights/widths', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <img width="5" height="5" />
         <img width="50" />
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanImages($('*').first(), $);
     assertClean(
@@ -25,11 +29,15 @@ describe('cleanImages($)', () => {
   });
 
   it('removes height attribute from images that remain', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <img width="50" height="50" />
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanImages($('*').first(), $);
     assertClean(
@@ -43,13 +51,17 @@ describe('cleanImages($)', () => {
   });
 
   it('removes spacer/transparent images', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <img src="/foo/bar/baz/spacer.png" />
         <img src="/foo/bar/baz/normal.png" />
         <p>Some text</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanImages($('*').first(), $);
     assertClean(

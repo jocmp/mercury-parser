@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 import brsToPs from './brs-to-ps';
@@ -12,7 +12,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(html);
+      let $ = cheerio.load(html, null, false);
       $ = brsToPs($);
       assert.strictEqual($.html(), html);
     });
@@ -31,7 +31,7 @@ describe('Generic Extractor Utils', () => {
           <p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = brsToPs($);
       assertClean($.html(), after);
     });
@@ -50,7 +50,7 @@ describe('Generic Extractor Utils', () => {
           <p> </p><p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = brsToPs($);
       assertClean($.html(), after);
     });
@@ -72,7 +72,7 @@ describe('Generic Extractor Utils', () => {
           <p> </p><p>Ooo good one</p>
         </div>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = brsToPs($);
       assertClean($.html(), after);
     });
@@ -94,7 +94,7 @@ describe('Generic Extractor Utils', () => {
           Here is more text
         </p></p>
       `;
-      let $ = cheerio.load(before);
+      let $ = cheerio.load(before, null, false);
       $ = brsToPs($);
       assertClean($.html(), after);
     });

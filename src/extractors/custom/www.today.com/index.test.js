@@ -1,6 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import moment from 'moment-timezone';
 
 import Mercury from 'mercury';

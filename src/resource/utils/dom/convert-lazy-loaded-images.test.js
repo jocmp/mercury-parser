@@ -1,12 +1,12 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import convertLazyLoadedImages from './convert-lazy-loaded-images';
 
 describe('convertLazyLoadedImages($)', () => {
   it('moves image links to src if placed in another attribute', () => {
     const $ = cheerio.load('<img data-src="http://example.com/foo.jpg">');
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(
       result,
@@ -16,7 +16,7 @@ describe('convertLazyLoadedImages($)', () => {
 
   it('moves image source candidates to srcset if placed in another attribute', () => {
     const $ = cheerio.load('<img data-srcset="http://example.com/foo.jpg 2x">');
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(
       result,
@@ -28,7 +28,7 @@ describe('convertLazyLoadedImages($)', () => {
     const $ = cheerio.load(
       '<img data-srcset="http://example.com/foo.jpg?w=400 2x, http://example.com/foo.jpg?w=600 3x">'
     );
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(
       result,
@@ -40,7 +40,7 @@ describe('convertLazyLoadedImages($)', () => {
     const $ = cheerio.load(
       '<img data-src="http://example.com/foo.jpg" data-srcset="http://example.com/foo.jpg 2x">'
     );
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(
       result,
@@ -52,21 +52,21 @@ describe('convertLazyLoadedImages($)', () => {
     // This is far from perfect, since a relative url could
     // be perfectly correct.
     const $ = cheerio.load('<img data-src="foo.jpg">');
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(result, '<img data-src="foo.jpg">');
   });
 
   it('does nothing when value is not an image', () => {
     const $ = cheerio.load('<img data-src="http://example.com">');
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(result, '<img data-src="http://example.com">');
   });
 
   it('does not change a correct img with src', () => {
     const $ = cheerio.load('<img src="http://example.com/foo.jpg">');
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(result, '<img src="http://example.com/foo.jpg">');
   });
@@ -75,7 +75,7 @@ describe('convertLazyLoadedImages($)', () => {
     const $ = cheerio.load(
       '<img src="http://example.com/foo.jpg" srcset="http://example.com/foo2x.jpg 2x, http://example.com/foo.jpg">'
     );
-    const result = convertLazyLoadedImages($).html();
+    const result = convertLazyLoadedImages($)('body').html();
 
     assert.strictEqual(
       result,

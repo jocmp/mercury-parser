@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: browser-actions/setup-chrome@v1
       - uses: actions/setup-node@v4
         with:
           cache: "npm"
           node-version-file: ".node-version"
       - run: npm install
+      - run: npx playwright install chromium
       - run: npm run test:web

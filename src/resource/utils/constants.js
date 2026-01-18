@@ -1,7 +1,7 @@
-import cheerio from 'cheerio';
+import isBrowser from 'utils/is-browser';
 
 // Browser does not like us setting user agent
-export const REQUEST_HEADERS = cheerio.browser
+export const REQUEST_HEADERS = isBrowser
   ? {}
   : {
       'User-Agent':

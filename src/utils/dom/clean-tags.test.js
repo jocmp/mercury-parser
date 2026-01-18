@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import { assertClean } from 'test-helpers';
 
@@ -6,7 +6,8 @@ import { cleanTags } from './index';
 
 describe('cleanTags($)', () => {
   it('drops a matching node with a negative score', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div score="5">
         <p>What do you think?</p>
         <p>
@@ -17,36 +18,31 @@ describe('cleanTags($)', () => {
         </p>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanTags($('*').first(), $);
     // again small adjustments for cheerio vs. jquery implementation quirks
     // not functionally significant
     assertClean(
       result.html(),
-      cheerio.browser
-        ? `
-          <div score="5">
-            <p>What do you think?</p>
-            <p>
-            </p>
-            <p></p>
-            <p>What do you think?</p>
-          </div>
-        `
-        : `
-          <div score="5">
-            <p>What do you think?</p>
-            <p>
-            </p>
-            <p>What do you think?</p>
-          </div>
-        `
+      `
+        <div score="5">
+          <p>What do you think?</p>
+          <p>
+          </p>
+          <p></p>
+          <p>What do you think?</p>
+        </div>
+      `
     );
   });
 
   it('removes a node with too many inputs', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p>What do you think?</p>
         <p>What do you think?</p>
@@ -65,7 +61,10 @@ describe('cleanTags($)', () => {
         </div>
         <p>What do you think?</p>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanTags($('*').first(), $);
     $('[score]').each((i, e) => $(e).removeAttr('score'));
@@ -88,7 +87,8 @@ describe('cleanTags($)', () => {
   });
 
   it('removes a div with no images and very little text', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div>
         <p>What do you think?</p>
         <div>
@@ -99,7 +99,10 @@ describe('cleanTags($)', () => {
           <p>Lose this one</p>
         </div>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanTags($('*').first(), $);
     $('[score]').each((i, e) => $(e).removeAttr('score'));
@@ -119,7 +122,8 @@ describe('cleanTags($)', () => {
   });
 
   it('removes a node with a link density that is too high', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div score="0">
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu.</p>
         <ul>
@@ -141,7 +145,10 @@ describe('cleanTags($)', () => {
           <li><a href="#">Lose this one</a></li>
         </ul>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanTags($('*').first(), $);
     $('[score]').each((i, e) => $(e).removeAttr('score'));
@@ -166,7 +173,8 @@ describe('cleanTags($)', () => {
   });
 
   it('removes a node with a good score but link density > 0.5', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <div score="0">
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu.</p>
         <ul>
@@ -188,7 +196,10 @@ describe('cleanTags($)', () => {
           <li><a href="#">Lose this one</a></li>
         </ul>
       </div>
-    `);
+    `,
+      null,
+      false
+    );
 
     const result = cleanTags($('*').first(), $);
     $('[score]').each((i, e) => $(e).removeAttr('score'));
@@ -229,7 +240,7 @@ describe('cleanTags($)', () => {
         </ul>
       </div>
     `;
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(html, null, false);
 
     const result = cleanTags($('*').first(), $);
     assertClean(result.html(), html);
@@ -247,7 +258,7 @@ describe('cleanTags($)', () => {
         </ul>
       </div>
     `;
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(html, null, false);
 
     const result = cleanTags($('*').first(), $);
     assertClean(result.html(), html);

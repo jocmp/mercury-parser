@@ -1,7 +1,8 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import moment from 'moment-timezone';
 
+import isBrowser from 'utils/is-browser';
 import GenericDatePublishedExtractor from './extractor';
 
 describe('GenericDatePublishedExtractor', () => {
@@ -76,7 +77,7 @@ describe('GenericDatePublishedExtractor', () => {
     it('extracts from url formatted /2020/jan/01', () => {
       // this works in Chrome, but not in PhantomJS, so disabling
       // for browser testing
-      if (!cheerio.browser) {
+      if (!isBrowser) {
         const $ = cheerio.load('<div></div>');
         const metaCache = [];
         const url = 'https://example.com/2020/jan/01/this-is-good';

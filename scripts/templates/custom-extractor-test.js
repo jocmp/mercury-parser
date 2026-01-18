@@ -31,7 +31,7 @@ function testFor(key, value, dir) {
 export default function(file, url, dir, result, name) {
   return template`
     import assert from 'assert';
-    import cheerio from 'cheerio';
+    import * as cheerio from 'cheerio';
 
     import Parser from 'mercury';
     import getExtractor from 'extractors/get-extractor';

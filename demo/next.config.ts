@@ -19,7 +19,6 @@ const nextConfig: NextConfig = {
     if (!isServer) {
       config.resolve!.alias = {
         ...(config.resolve!.alias as Record<string, string>),
-        cheerio: path.join(srcPath, 'shims/cheerio-query.js'),
         'iconv-lite': path.join(srcPath, 'shims/iconv-lite.js'),
       };
 

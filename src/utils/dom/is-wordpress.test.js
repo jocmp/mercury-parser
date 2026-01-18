@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import isWordpress from './is-wordpress';
 
@@ -12,7 +12,7 @@ describe('isWordpress($)', () => {
         <head>
       </html>
     `;
-    let $ = cheerio.load(html);
+    let $ = cheerio.load(html, null, false);
 
     assert.strictEqual(isWordpress($), false);
 
@@ -23,7 +23,7 @@ describe('isWordpress($)', () => {
         <head>
       </html>
     `;
-    $ = cheerio.load(html2);
+    $ = cheerio.load(html2, null, false);
 
     assert.strictEqual(isWordpress($), false);
   });
@@ -36,7 +36,7 @@ describe('isWordpress($)', () => {
         <head>
       </html>
     `;
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(html, null, false);
 
     assert.strictEqual(isWordpress($), true);
   });

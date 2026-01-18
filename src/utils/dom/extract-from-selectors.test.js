@@ -1,45 +1,58 @@
 import assert from 'assert';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 import extractFromSelectors from './extract-from-selectors';
 
 describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
   it('extracts an arbitrary node by selector', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <html>
         <div class="author">Adam</div>
       </html>
-    `);
+    `,
+      null,
+      false
+    );
 
     assert.strictEqual(extractFromSelectors($, ['.author']), 'Adam');
   });
 
   it('ignores comments', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <html>
         <div class="comments-section">
           <div class="author">Adam</div>
         </div>
-      </html>`);
+      </html>`,
+      null,
+      false
+    );
 
     assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
 
   it('skips a selector if it matches multiple nodes', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <html>
         <div>
           <div class="author">Adam</div>
           <div class="author">Adam</div>
         </div>
       </html>
-    `);
+    `,
+      null,
+      false
+    );
 
     assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
 
   it('skips a node with too many children', () => {
-    const $ = cheerio.load(`
+    const $ = cheerio.load(
+      `
       <html>
         <div>
           <div class="author">
@@ -48,7 +61,10 @@ describe('extractFromSelectors($, selectors, maxChildren, textOnly)', () => {
           </div>
         </div>
       </html>
-    `);
+    `,
+      null,
+      false
+    );
 
     assert.strictEqual(extractFromSelectors($, ['.author']), null);
   });
