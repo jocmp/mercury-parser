@@ -16,7 +16,8 @@ describe('SuperbizSePlExtractor', () => {
       url =
         'https://superbiz.se.pl/wiadomosci/glodowe-podwyzki-dla-emerytow-wyplata-juz-w-marcu-aa-i6r8-YETS-C2h2.html';
       const html = fs.readFileSync(
-        './fixtures/superbiz.se.pl/1739330496278.html'
+        './fixtures/superbiz.se.pl/1739330496278.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

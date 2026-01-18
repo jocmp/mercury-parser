@@ -16,7 +16,8 @@ describe('WwwLebensmittelwarnungDeExtractor', () => {
       url =
         'https://www.lebensmittelwarnung.de/___lebensmittelwarnung.de/Meldungen/2025/02_Feb/250221_13_HE_DubaiSchokolade/250221_13_HE_DubaiSchokolade.html';
       const html = fs.readFileSync(
-        './fixtures/www.lebensmittelwarnung.de/1740334572528.html'
+        './fixtures/www.lebensmittelwarnung.de/1740334572528.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

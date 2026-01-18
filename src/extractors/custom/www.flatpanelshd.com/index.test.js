@@ -15,7 +15,8 @@ describe('WwwFlatpanelshdComExtractor', () => {
       url =
         'https://www.flatpanelshd.com/news.php?subaction=showfull&id=1749568309';
       const html = fs.readFileSync(
-        './fixtures/www.flatpanelshd.com/1749690480775.html'
+        './fixtures/www.flatpanelshd.com/1749690480775.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -16,7 +16,8 @@ describe('SzczecinSePlExtractor', () => {
       url =
         'https://szczecin.se.pl/czterdziesci-wysokich-wygranych-w-eurojackpot-w-polsce-ale-to-w-tym-kraju-rozbili-wielka-kumulacje-aa-Vtns-Mgcv-RZmj.html';
       const html = fs.readFileSync(
-        './fixtures/szczecin.se.pl/1739329179505.html'
+        './fixtures/szczecin.se.pl/1739329179505.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -14,7 +14,7 @@ describe('WwwGizmodoJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.gizmodo.jp/2019/04/suica-gashapon-bandai.html';
-      const html = fs.readFileSync('./fixtures/www.gizmodo.jp.html');
+      const html = fs.readFileSync('./fixtures/www.gizmodo.jp.html', 'utf-8');
       result = Mercury.parse(url, {
         html,
         fallback: false,

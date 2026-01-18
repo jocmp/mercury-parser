@@ -15,7 +15,7 @@ describe('WwwRecodeNetExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.recode.net/2016/12/15/13971502/fcc-tom-wheeler-departure-net-neutrality-death-trump-layton';
-      const html = fs.readFileSync('./fixtures/www.recode.net.html');
+      const html = fs.readFileSync('./fixtures/www.recode.net.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

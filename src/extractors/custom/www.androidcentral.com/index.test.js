@@ -15,7 +15,10 @@ describe('WwwAndroidcentralComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.androidcentral.com/motorola-launch-new-phone-mobile-world-congress';
-      const html = fs.readFileSync('./fixtures/www.androidcentral.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.androidcentral.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

@@ -14,7 +14,7 @@ describe('WwwReutersComExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'http://www.reuters.com/article/us-usa-fed-idUSKBN1430G4';
-      const html = fs.readFileSync('./fixtures/www.reuters.com.html');
+      const html = fs.readFileSync('./fixtures/www.reuters.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

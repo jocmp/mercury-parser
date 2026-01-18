@@ -15,7 +15,7 @@ describe('WwwSbnationComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.sbnation.com/mlb/2016/12/6/13857040/chris-sale-red-sox-trade-white-sox';
-      const html = fs.readFileSync('./fixtures/www.sbnation.com.html');
+      const html = fs.readFileSync('./fixtures/www.sbnation.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
     it('is selected properly', () => {

@@ -16,7 +16,8 @@ describe('PolskisamorzadSePlExtractor', () => {
       url =
         'https://polskisamorzad.se.pl/artykul/910,rekordowy-styczen-lotniska-we-wroclawiu-wiadomo-dokad-najchetniej-podrozowali-pasazerowie';
       const html = fs.readFileSync(
-        './fixtures/polskisamorzad.se.pl/1739330983902.html'
+        './fixtures/polskisamorzad.se.pl/1739330983902.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

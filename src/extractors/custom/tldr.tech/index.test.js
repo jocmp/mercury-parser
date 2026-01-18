@@ -14,7 +14,10 @@ describe('TldrTechExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://tldr.tech/tech/2025-01-31';
-      const html = fs.readFileSync('./fixtures/tldr.tech/1738465920389.html');
+      const html = fs.readFileSync(
+        './fixtures/tldr.tech/1738465920389.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

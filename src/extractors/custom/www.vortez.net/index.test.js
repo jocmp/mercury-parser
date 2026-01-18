@@ -15,7 +15,8 @@ describe('WwwVortezNetExtractor', () => {
       url =
         'https://www.vortez.net/news_story/deepcool_launches_ch690_digital_with_built_in_real_time_system_monitoring.html';
       const html = fs.readFileSync(
-        './fixtures/www.vortez.net/1743645797430.html'
+        './fixtures/www.vortez.net/1743645797430.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -15,7 +15,7 @@ describe('WwwFoolComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.fool.com/investing/2017/01/09/why-amazon-microsoft-and-activision-blizzard-are-b.aspx';
-      const html = fs.readFileSync('./fixtures/www.fool.com.html');
+      const html = fs.readFileSync('./fixtures/www.fool.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

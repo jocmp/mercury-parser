@@ -15,7 +15,10 @@ describe('WwwNtvDeExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.n-tv.de/regionales/hamburg-und-schleswig-holstein/Gespraeche-zum-Opernneubau-in-Hamburg-dauern-weiter-an-article25536027.html';
-      const html = fs.readFileSync('./fixtures/www.n-tv.de/1738634255868.html');
+      const html = fs.readFileSync(
+        './fixtures/www.n-tv.de/1738634255868.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

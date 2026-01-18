@@ -15,7 +15,7 @@ describe('AbcnewsGoComExtractor', () => {
     beforeAll(() => {
       url =
         'http://abcnews.go.com/US/hillary-clinton-putins-alleged-involvement-democratic-hack-stems/story?id=44233864&cid=clicksource_4380645_2_three_posts_vert_hed';
-      const html = fs.readFileSync('./fixtures/abcnews.go.com.html');
+      const html = fs.readFileSync('./fixtures/abcnews.go.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

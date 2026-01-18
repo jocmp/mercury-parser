@@ -15,7 +15,10 @@ describe('WwwBloombergComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.bloomberg.com/politics/articles/2016-12-07/trump-hits-emblem-of-presidential-power-with-air-force-one-tweet';
-      const html = fs.readFileSync('./fixtures/www.bloomberg.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.bloomberg.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -104,7 +107,8 @@ describe('WwwBloombergComExtractor', () => {
     beforeAll(() => {
       url = 'https://www.bloomberg.com/graphics/2016-apple-profits/';
       const html = fs.readFileSync(
-        './fixtures/www.bloomberg.com--graphics.html'
+        './fixtures/www.bloomberg.com--graphics.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -194,7 +198,10 @@ describe('WwwBloombergComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.bloomberg.com/news/articles/2016-12-06/stock-rally-extends-into-asia-as-traders-await-rbi-aussie-gdp';
-      const html = fs.readFileSync('./fixtures/www.bloomberg.com--news.html');
+      const html = fs.readFileSync(
+        './fixtures/www.bloomberg.com--news.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

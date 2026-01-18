@@ -15,7 +15,7 @@ describe('WwwSiComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.si.com/nfl/2017/01/12/dallas-cowboys-stephen-jerry-jones';
-      const html = fs.readFileSync('./fixtures/www.si.com.html');
+      const html = fs.readFileSync('./fixtures/www.si.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

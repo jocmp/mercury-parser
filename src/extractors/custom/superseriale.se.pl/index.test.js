@@ -16,7 +16,8 @@ describe('SuperserialeSePlExtractor', () => {
       url =
         'https://superseriale.se.pl/barwy-szczescia/barwy-szczescia-odcinek-3122-rozmowa-miedzy-jozefina-a-cezarym-wyjasni-wszystko-nigdy-dotad-nie-byla-z-nim-tak-szczera-zdjecia-aa-1iTt-uHSL-6tRa.html';
       const html = fs.readFileSync(
-        './fixtures/superseriale.se.pl/1738720194653.html'
+        './fixtures/superseriale.se.pl/1738720194653.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

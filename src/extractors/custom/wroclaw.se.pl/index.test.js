@@ -16,7 +16,8 @@ describe('WroclawSePlExtractor', () => {
       url =
         'https://wroclaw.se.pl/policjanci-zawiezli-zatrzymanego-mezczyzne-do-sklepu-zaskakujac-cel-wizyty-aa-QhNb-WfPJ-587w.html';
       const html = fs.readFileSync(
-        './fixtures/wroclaw.se.pl/1740022661473.html'
+        './fixtures/wroclaw.se.pl/1740022661473.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

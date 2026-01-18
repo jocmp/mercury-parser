@@ -15,7 +15,10 @@ describe('LodzSePlExtractor', () => {
     beforeAll(() => {
       url =
         'https://lodz.se.pl/taksowkarz-otrzymal-8-ciosow-nozem-w-czasie-kursu-szokujacy-atak-w-lodzi-aa-XiRD-8S5M-JUVX.html';
-      const html = fs.readFileSync('./fixtures/lodz.se.pl/1740021128676.html');
+      const html = fs.readFileSync(
+        './fixtures/lodz.se.pl/1740021128676.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

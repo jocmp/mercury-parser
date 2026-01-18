@@ -59,6 +59,7 @@ export const NewYorkerExtractor = {
       'div[class^="ContentHeaderDek"]',
       'div.content-header__dek',
       'h2[class^="ArticleHeader__dek"]',
+      ['meta[name="description"]', 'value'],
     ],
   },
 

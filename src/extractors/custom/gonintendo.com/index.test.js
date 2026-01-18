@@ -15,7 +15,8 @@ describe('GonintendoComExtractor', () => {
       url =
         'https://gonintendo.com/contents/52827-former-capcom-dev-defends-game-key-cards-says-nintendo-is-trying-to-protect-the-game';
       const html = fs.readFileSync(
-        './fixtures/gonintendo.com/1762111318191.html'
+        './fixtures/gonintendo.com/1762111318191.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

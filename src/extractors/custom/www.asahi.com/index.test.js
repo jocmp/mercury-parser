@@ -14,7 +14,7 @@ describe('WwwAsahiComExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'http://www.asahi.com/articles/ASM2Q5HKNM2QUCVL02D.html';
-      const html = fs.readFileSync('./fixtures/www.asahi.com.html');
+      const html = fs.readFileSync('./fixtures/www.asahi.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

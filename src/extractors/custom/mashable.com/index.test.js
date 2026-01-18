@@ -15,7 +15,7 @@ describe('MashableComExtractor', () => {
     beforeAll(() => {
       url =
         'https://mashable.com/article/mysterious-plane-flying-over-new-york';
-      const html = fs.readFileSync('./fixtures/mashable.com.html');
+      const html = fs.readFileSync('./fixtures/mashable.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

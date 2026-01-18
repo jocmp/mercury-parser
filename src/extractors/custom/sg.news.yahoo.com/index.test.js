@@ -15,7 +15,8 @@ describe('SgNewsYahooComExtractor', () => {
       url =
         'https://sg.news.yahoo.com/mcdonald-pore-launches-chilli-crab-064000706.html';
       const html = fs.readFileSync(
-        './fixtures/sg.news.yahoo.com/1752437547267.html'
+        './fixtures/sg.news.yahoo.com/1752437547267.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

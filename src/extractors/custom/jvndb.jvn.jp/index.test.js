@@ -14,7 +14,7 @@ describe('JvndbJvnJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://jvndb.jvn.jp/ja/contents/2018/JVNDB-2018-013542.html';
-      const html = fs.readFileSync('./fixtures/jvndb.jvn.jp.html');
+      const html = fs.readFileSync('./fixtures/jvndb.jvn.jp.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

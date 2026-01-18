@@ -14,7 +14,7 @@ describe('WiredJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://wired.jp/2019/04/25/helvetica-now/';
-      const html = fs.readFileSync('./fixtures/wired.jp.html');
+      const html = fs.readFileSync('./fixtures/wired.jp.html', 'utf-8');
       result = Mercury.parse(url, {
         html,
         fallback: false,

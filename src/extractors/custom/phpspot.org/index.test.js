@@ -14,7 +14,7 @@ describe('PhpspotOrgExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'http://phpspot.org/blog/archives/2019/04/treeviz.html';
-      const html = fs.readFileSync('./fixtures/phpspot.org.html');
+      const html = fs.readFileSync('./fixtures/phpspot.org.html', 'utf-8');
       result = Mercury.parse(url, {
         html,
         fallback: false,

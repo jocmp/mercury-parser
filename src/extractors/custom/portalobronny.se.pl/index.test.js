@@ -16,7 +16,8 @@ describe('PortalobronnySePlExtractor', () => {
       url =
         'https://portalobronny.se.pl/polityka-obronna/rosyjski-su-24-wlecial-na-6-5-km-w-przestrzen-powietrzna-polski-oficjalna-przyczyna-awaria-aa-ggzS-QUUG-sbdW.html';
       const html = fs.readFileSync(
-        './fixtures/portalobronny.se.pl/1739330785415.html'
+        './fixtures/portalobronny.se.pl/1739330785415.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

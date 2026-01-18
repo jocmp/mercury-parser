@@ -17,7 +17,8 @@ xdescribe('WwwTechpowerupComExtractor', () => {
       url =
         'https://www.techpowerup.com/review/valkyrie-v240-lite-aio-liquid-cpu-cooler/';
       const html = fs.readFileSync(
-        './fixtures/www.techpowerup.com/1747598930208.html'
+        './fixtures/www.techpowerup.com/1747598930208.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

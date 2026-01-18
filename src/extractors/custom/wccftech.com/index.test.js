@@ -16,7 +16,8 @@ describe('WccftechComExtractor', () => {
       url =
         'https://wccftech.com/nintendo-switch-2-reveal-hit-all-the-right-notes-according-to-analyst/';
       const html = fs.readFileSync(
-        './fixtures/wccftech.com/1737405508147.html'
+        './fixtures/wccftech.com/1737405508147.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

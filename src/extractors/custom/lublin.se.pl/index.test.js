@@ -16,7 +16,8 @@ describe('LublinSePlExtractor', () => {
       url =
         'https://lublin.se.pl/tajemniczy-rozblysk-na-niebie-a-potem-huk-internauci-nagrali-niepokojace-zjawisko-aa-pyCB-it69-KEL7.html';
       const html = fs.readFileSync(
-        './fixtures/lublin.se.pl/1740022803567.html'
+        './fixtures/lublin.se.pl/1740022803567.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

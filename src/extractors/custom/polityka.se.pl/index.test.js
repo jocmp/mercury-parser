@@ -16,7 +16,8 @@ describe('PolitykaSePlExtractor', () => {
       url =
         'https://polityka.se.pl/wiadomosci/express-biedrzyckiej-goscie-we-wtorek-4-lutego-aa-HqkJ-vZBV-aJyE.html';
       const html = fs.readFileSync(
-        './fixtures/polityka.se.pl/1738719320280.html'
+        './fixtures/polityka.se.pl/1738719320280.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

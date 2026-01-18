@@ -15,7 +15,10 @@ describe('WwwSePlExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.se.pl/wiadomosci/exclusive/romuald-lipko-niezapomniane-melodie-wspomnienia-o-liderze-budki-suflera-aa-AeXW-yuX4-t87q.html';
-      const html = fs.readFileSync('./fixtures/www.se.pl/1738717059225.html');
+      const html = fs.readFileSync(
+        './fixtures/www.se.pl/1738717059225.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

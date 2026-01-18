@@ -14,7 +14,7 @@ describe('MaTtiasBeExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://ma.ttias.be/cronweekly/issue-130/';
-      const html = fs.readFileSync('./fixtures/ma.ttias.be.html');
+      const html = fs.readFileSync('./fixtures/ma.ttias.be.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -80,7 +80,7 @@ describe('MaTtiasBeExtractor', () => {
     });
 
     it('returns the content', async () => {
-      const html = fs.readFileSync('./fixtures/ma.ttias.be.html');
+      const html = fs.readFileSync('./fixtures/ma.ttias.be.html', 'utf-8');
       const uri = 'https://ma.ttias.be/cronweekly/issue-130/';
 
       const { content } = await Mercury.parse(uri, { html });

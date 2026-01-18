@@ -15,7 +15,7 @@ describe('WwwLatimesComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.latimes.com/local/education/la-me-edu-report-on-la-school-shutdown-20161216-story.html';
-      const html = fs.readFileSync('./fixtures/www.latimes.com.html');
+      const html = fs.readFileSync('./fixtures/www.latimes.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

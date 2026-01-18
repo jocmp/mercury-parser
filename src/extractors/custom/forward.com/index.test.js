@@ -15,7 +15,7 @@ describe('ForwardComExtractor', () => {
     beforeAll(() => {
       url =
         'http://forward.com/schmooze/358592/why-does-slack-want-me-to-say-hummus/';
-      const html = fs.readFileSync('./fixtures/forward.com.html');
+      const html = fs.readFileSync('./fixtures/forward.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

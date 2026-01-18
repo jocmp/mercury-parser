@@ -15,7 +15,8 @@ describe('WwwPhoronixComExtractor', () => {
     beforeAll(() => {
       url = 'https://www.phoronix.com/news/Raspberry-Pi-HEVC-H265-Decode';
       const html = fs.readFileSync(
-        './fixtures/www.phoronix.com/1734972692620.html'
+        './fixtures/www.phoronix.com/1734972692620.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

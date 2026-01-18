@@ -16,7 +16,7 @@ describe('PitchforkComExtractor', () => {
     beforeAll(() => {
       url =
         'https://pitchfork.com/reviews/albums/lust-for-youth-lust-for-youth/';
-      const html = fs.readFileSync('./fixtures/pitchfork.com.html');
+      const html = fs.readFileSync('./fixtures/pitchfork.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

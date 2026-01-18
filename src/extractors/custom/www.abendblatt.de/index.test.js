@@ -15,7 +15,10 @@ describe('WwwAbendblattDeExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.abendblatt.de/wirtschaft/article229123092/Hamburg-Grossmarkt-Obst-Gemuese-Mangos-Papayas-Fruechte-Preise-Corona.html';
-      const html = fs.readFileSync('./fixtures/www.abendblatt.de.html');
+      const html = fs.readFileSync(
+        './fixtures/www.abendblatt.de.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

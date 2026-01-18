@@ -16,7 +16,8 @@ describe('EconomictimesIndiatimesComExtractor', () => {
       url =
         'https://economictimes.indiatimes.com/news/india/india-hosts-irans-khameneis-confidant-to-convey-position-on-kashmir-and-counter-criticism/articleshow/118667138.cms';
       const html = fs.readFileSync(
-        './fixtures/economictimes.indiatimes.com/1740947974502.html'
+        './fixtures/economictimes.indiatimes.com/1740947974502.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

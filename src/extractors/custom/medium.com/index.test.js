@@ -15,7 +15,7 @@ describe('MediumExtractor', () => {
     beforeAll(() => {
       url =
         'https://medium.com/the-wtf-economy/wtf-whats-the-future-e52ab9515573#.ilwrgwsks';
-      const html = fs.readFileSync('./fixtures/medium.com.html');
+      const html = fs.readFileSync('./fixtures/medium.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -91,7 +91,10 @@ describe('MediumExtractor', () => {
     beforeAll(() => {
       url =
         'https://medium.com/@JakobUlbrich/flag-attributes-in-android-how-to-use-them-ac4ec8aee7d1#.h949wjmyw';
-      const html = fs.readFileSync('./fixtures/medium.com--another.html');
+      const html = fs.readFileSync(
+        './fixtures/medium.com--another.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -100,7 +103,12 @@ describe('MediumExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent($.text(), 13);
+      const first13 = excerptContent(
+        $('*')
+          .first()
+          .text(),
+        13
+      );
 
       assert.strictEqual(
         first13,

@@ -15,7 +15,10 @@ describe('IciRadioCanadaCaExtractor', () => {
     beforeAll(() => {
       url =
         'http://ici.radio-canada.ca/nouvelle/1022038/kpmg-comptables-fiscalite-impots-paradis-fiscaux-juge-bocock-cocktail';
-      const html = fs.readFileSync('./fixtures/ici.radio-canada.ca.html');
+      const html = fs.readFileSync(
+        './fixtures/ici.radio-canada.ca.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

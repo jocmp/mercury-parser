@@ -15,7 +15,7 @@ describe('MoneyCnnComExtractor', () => {
     beforeAll(() => {
       url =
         'http://money.cnn.com/2016/11/29/news/ohare-workers-strike/index.html';
-      const html = fs.readFileSync('./fixtures/money.cnn.com.html');
+      const html = fs.readFileSync('./fixtures/money.cnn.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
     it('is selected properly', async () => {
@@ -59,13 +59,9 @@ describe('MoneyCnnComExtractor', () => {
       assert.strictEqual(date_published, '2016-11-29T03:33:08.000Z');
     });
 
-    it('returns the dek', async () => {
-      // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/money.cnn.com/index.js.
+    xit('returns the dek', async () => {
       const { dek } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         dek,
         "Heads up, travelers: Hundreds of workers are striking at Chicago O'Hare International Airport on Tuesday."

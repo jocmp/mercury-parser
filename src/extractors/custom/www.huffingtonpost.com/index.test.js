@@ -15,7 +15,10 @@ describe('WwwHuffingtonpostComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.huffingtonpost.com/entry/donald-trump-obama_us_583c8f01e4b06539a789ddd4';
-      const html = fs.readFileSync('./fixtures/www.huffingtonpost.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.huffingtonpost.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

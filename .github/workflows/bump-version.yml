@@ -23,12 +23,12 @@ jobs:
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}
       - uses: actions/setup-node@v4
         with:
-          cache: "yarn"
+          cache: "npm"
           node-version-file: ".tool-versions"
       - name: Setup build dependencies
         run: |
           make deps
-          yarn install
+          npm install --legacy-peer-deps
       - name: Configure Git user
         run: |
           git config user.name "jocmp"

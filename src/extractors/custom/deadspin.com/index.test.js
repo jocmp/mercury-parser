@@ -15,7 +15,7 @@ describe('DeadspinExtractor', () => {
     beforeAll(() => {
       url =
         'http://deadspin.com/the-nationals-are-stuck-with-danny-espinosa-tonight-un-1787706769';
-      const html = fs.readFileSync('./fixtures/deadspin.com.html');
+      const html = fs.readFileSync('./fixtures/deadspin.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -99,7 +99,10 @@ describe('DeadspinExtractor', () => {
     // in ./src/extractors/custom/deadspin.com/index.js.
     // You may also want to make use of the clean and transform
     // options.
-    const html = fs.readFileSync('./fixtures/deadspin.com--video.html');
+    const html = fs.readFileSync(
+      './fixtures/deadspin.com--video.html',
+      'utf-8'
+    );
     const url =
       'http://deadspin.com/remember-when-donald-trump-got-booed-for-butchering-ta-1788216229';
 

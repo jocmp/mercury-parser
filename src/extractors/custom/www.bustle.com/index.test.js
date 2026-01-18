@@ -15,7 +15,7 @@ describe('WwwBustleComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.bustle.com/articles/194709-13-ways-to-compliment-women-in-the-most-empowering-transformative-way-possible';
-      const html = fs.readFileSync('./fixtures/www.bustle.com.html');
+      const html = fs.readFileSync('./fixtures/www.bustle.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
