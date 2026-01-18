@@ -1,7 +1,7 @@
 import assert from 'assert';
 import URL from 'url';
 import * as cheerio from 'cheerio';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -60,7 +60,7 @@ describe('TakagihiromitsuJpExtractor', () => {
       // To pass this test, fill out the date_published selector
       // in ./src/extractors/custom/takagi-hiromitsu.jp/index.js.
       const { date_published } = await result;
-      const newDatePublished = moment(date_published).format();
+      const newDatePublished = dayjs(date_published).format();
 
       // Update these values with the expected values from
       // the article.

@@ -1,7 +1,6 @@
 import assert from 'assert';
 import URL from 'url';
 import * as cheerio from 'cheerio';
-import moment from 'moment';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -48,14 +47,10 @@ describe('GeniusComExtractor', () => {
     });
 
     it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/genius.com/index.js.
       const { date_published } = await result;
-      const newDatePublished = moment(date_published).format();
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(newDatePublished.split('T')[0], '1984-06-25');
+      // ISO date-only "1984-06-25" parsed as midnight UTC
+      assert.strictEqual(date_published, '1984-06-25T00:00:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {

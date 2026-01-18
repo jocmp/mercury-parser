@@ -12,7 +12,7 @@ export const WeeklyAsciiJpExtractor = {
   date_published: {
     selectors: ['p.date', ['meta[name="odate"]', 'value']],
 
-    format: 'YYYY年MM月DD日 HH:mm',
+    format: 'YYYY年M月D日 HH:mm',
 
     timezone: 'Asia/Tokyo',
   },

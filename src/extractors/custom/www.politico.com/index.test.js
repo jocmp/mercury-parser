@@ -1,7 +1,7 @@
 import assert from 'assert';
 import URL from 'url';
 import * as cheerio from 'cheerio';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
@@ -55,7 +55,7 @@ describe('PoliticoExtractor', () => {
       // To pass this test, fill out the date_published selector
       // in ./src/extractors/custom/www.politico.com/index.js.
       const { date_published } = await result;
-      const new_date_published = moment(date_published)
+      const new_date_published = dayjs(date_published)
         .format()
         .split('T')[0];
 

@@ -9,7 +9,7 @@ export const WwwElecomCoJpExtractor = {
 
   date_published: {
     selectors: ['p.section-last'],
-    format: 'YYYY.MM.DD',
+    format: 'YYYY.M.D',
     timezone: 'Asia/Tokyo',
   },
 
