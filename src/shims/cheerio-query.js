@@ -212,7 +212,10 @@ function createCheerioWrapper(elements, context) {
       if (typeof content === 'string') {
         el.insertAdjacentHTML('beforeend', content);
       } else if (content.get) {
-        content.get().forEach(child => el.appendChild(child));
+        content
+          .get()
+          .filter(child => child && child.nodeType)
+          .forEach(child => el.appendChild(child));
       } else if (content.nodeType) {
         el.appendChild(content);
       }
@@ -226,7 +229,10 @@ function createCheerioWrapper(elements, context) {
         el.insertAdjacentHTML('afterbegin', content);
       } else if (content.get) {
         const first = el.firstChild;
-        content.get().forEach(child => el.insertBefore(child, first));
+        content
+          .get()
+          .filter(child => child && child.nodeType)
+          .forEach(child => el.insertBefore(child, first));
       }
     });
     return wrapper;
