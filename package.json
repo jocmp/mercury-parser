@@ -131,6 +131,7 @@
   ],
   "browser": {
     "main": "./dist/mercury.web.js",
+    "cheerio": "cheerio/slim",
     "postman-request": "browser-request",
     "iconv-lite": "./src/shims/iconv-lite",
     "moment-timezone": "./node_modules/moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js"
