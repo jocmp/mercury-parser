@@ -46,6 +46,7 @@ function createCheerioWrapper(elements, context) {
   });
 
   wrapper.get = idx => (idx === undefined ? elements.slice() : elements[idx]);
+  wrapper.toArray = () => elements.slice();
   wrapper.first = () => createCheerioWrapper(elements.slice(0, 1), context);
   wrapper.last = () => createCheerioWrapper(elements.slice(-1), context);
   wrapper.eq = idx => createCheerioWrapper([elements[idx]], context);
