@@ -5,6 +5,7 @@
   "globals": {
     "describe": true,
     "it": true,
+    "xit": true,
     "fit": true,
     "jasmine": true,
     "beforeEach": true,

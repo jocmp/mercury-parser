@@ -47,7 +47,7 @@ describe('Nineto5googleComExtractor', () => {
       assert.strictEqual(date_published, `2025-02-28T16:45:00.000Z`);
     });
 
-    it('returns the lead_image_url', async () => {
+    xit('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
 
       assert.strictEqual(

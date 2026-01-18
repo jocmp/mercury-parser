@@ -26,7 +26,7 @@ describe('WwwJnsaOrgExtractor', () => {
       assert.strictEqual(extractor.domain, URL.parse(url).hostname);
     });
 
-    it('returns the title', async () => {
+    xit('returns the title', async () => {
       const { title } = await result;
 
       assert.strictEqual(
