@@ -35,8 +35,12 @@ function createCheerioWrapper(elements, context) {
     return createCheerioWrapper([], context);
   };
 
-  // Array-like properties
-  wrapper.length = elements.length;
+  // Array-like properties - use defineProperty since function.length is read-only
+  Object.defineProperty(wrapper, 'length', {
+    value: elements.length,
+    writable: true,
+    configurable: true,
+  });
   elements.forEach((el, i) => {
     wrapper[i] = el;
   });
