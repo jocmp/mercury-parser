@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: "npm"
-          node-version-file: ".tool-versions"
+          node-version-file: ".node-version"
       - run: npm install
       - run: npm run test:node
         timeout-minutes: 10
@@ -23,6 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: "npm"
-          node-version-file: ".tool-versions"
+          node-version-file: ".node-version"
       - run: npm install
       - run: npm run test:web
