@@ -15,7 +15,10 @@ describe('WwwMentalflossComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.mentalfloss.com/article/90140/its-not-too-late-holiday-shop-these-amazon-deals';
-      const html = fs.readFileSync('./fixtures/www.mentalfloss.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.mentalfloss.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

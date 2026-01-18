@@ -14,7 +14,7 @@ describe('SectIijAdJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://sect.iij.ad.jp/d/2019/02/134052.html';
-      const html = fs.readFileSync('./fixtures/sect.iij.ad.jp.html');
+      const html = fs.readFileSync('./fixtures/sect.iij.ad.jp.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

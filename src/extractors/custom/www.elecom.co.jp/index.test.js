@@ -14,7 +14,7 @@ describe('WwwElecomCoJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'http://www.elecom.co.jp/news/201903/keyboard/index.html';
-      const html = fs.readFileSync('./fixtures/www.elecom.co.jp.html');
+      const html = fs.readFileSync('./fixtures/www.elecom.co.jp.html', 'utf-8');
       result = Mercury.parse(url, {
         html,
         fallback: false,

@@ -16,7 +16,8 @@ describe('WwwHeiseDeExtractor', () => {
       url =
         'https://www.heise.de/hintergrund/Secure-Coding-Passwort-Hashing-zum-Schutz-vor-Brute-Force-und-Rainbow-Tabellen-10265244.html';
       const html = fs.readFileSync(
-        './fixtures/www.heise.de/1738467011295.html'
+        './fixtures/www.heise.de/1738467011295.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -15,7 +15,10 @@ describe('WwwCbssportsComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.cbssports.com/mlb/news/why-despite-the-complaints-of-many-mlb-players-are-actually-not-overpaid/';
-      const html = fs.readFileSync('./fixtures/www.cbssports.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.cbssports.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

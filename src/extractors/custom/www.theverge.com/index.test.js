@@ -15,7 +15,8 @@ describe('WwwThevergeComExtractor', () => {
       url =
         'https://www.theverge.com/meta/659506/mark-zuckerberg-ai-facebook-ads';
       const html = fs.readFileSync(
-        './fixtures/www.theverge.com/1746409957524.html'
+        './fixtures/www.theverge.com/1746409957524.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

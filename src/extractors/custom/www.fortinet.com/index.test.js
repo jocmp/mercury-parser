@@ -15,7 +15,7 @@ describe('WwwFortinetComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.fortinet.com/blog/threat-research/defeating-an-android-packer-with-frida.html';
-      const html = fs.readFileSync('./fixtures/www.fortinet.com.html');
+      const html = fs.readFileSync('./fixtures/www.fortinet.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

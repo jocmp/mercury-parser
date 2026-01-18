@@ -15,7 +15,7 @@ describe('NYTimesExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.nytimes.com/2016/09/20/nyregion/nyc-nj-explosions-ahmad-khan-rahami.html';
-      const html = fs.readFileSync('./fixtures/www.nytimes.com.html');
+      const html = fs.readFileSync('./fixtures/www.nytimes.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -104,7 +104,10 @@ describe('NYTimesExtractor', () => {
   });
 
   it('works with a feature story', async () => {
-    const html = fs.readFileSync('./fixtures/www.nytimes.com--feature.html');
+    const html = fs.readFileSync(
+      './fixtures/www.nytimes.com--feature.html',
+      'utf-8'
+    );
     const uri =
       'http://www.nytimes.com/interactive/2016/09/15/arts/design/national-museum-of-african-american-history-and-culture.html';
 
@@ -126,7 +129,10 @@ describe('NYTimesExtractor', () => {
   });
 
   it('returns the title on most recent articles', async () => {
-    const html = fs.readFileSync('./fixtures/www.nytimes.com--recent.html');
+    const html = fs.readFileSync(
+      './fixtures/www.nytimes.com--recent.html',
+      'utf-8'
+    );
     const uri =
       'https://www.nytimes.com/2018/10/09/us/politics/nikki-haley-united-nations.html';
 

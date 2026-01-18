@@ -15,7 +15,8 @@ describe('WwwNotebookcheckNetExtractor', () => {
       url =
         'https://www.notebookcheck.net/8BitDo-64-Controller-now-available-to-pre-order-on-Amazon-in-Black-and-White-with-a-July-30-release-date.1054098.0.html';
       const html = fs.readFileSync(
-        './fixtures/www.notebookcheck.net/1752012461747.html'
+        './fixtures/www.notebookcheck.net/1752012461747.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

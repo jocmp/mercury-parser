@@ -14,7 +14,10 @@ describe('9to5macComExtractor', () => {
     beforeAll(() => {
       url =
         'https://9to5mac.com/2025/06/10/apple-notes-is-coming-to-your-apple-watch-in-watchos-26/';
-      const html = fs.readFileSync('./fixtures/9to5mac.com/1749691994435.html');
+      const html = fs.readFileSync(
+        './fixtures/9to5mac.com/1749691994435.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

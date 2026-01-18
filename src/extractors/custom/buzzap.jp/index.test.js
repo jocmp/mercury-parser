@@ -14,7 +14,7 @@ describe('BuzzapJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://buzzap.jp/news/20190302-reduced-tax-rate-benefit/';
-      const html = fs.readFileSync('./fixtures/buzzap.jp.html');
+      const html = fs.readFileSync('./fixtures/buzzap.jp.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

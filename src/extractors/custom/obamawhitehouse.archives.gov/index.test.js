@@ -16,7 +16,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       url =
         'https://obamawhitehouse.archives.gov/blog/2017/01/17/obama-administration-digital-transition-moving-forward';
       const html = fs.readFileSync(
-        './fixtures/obamawhitehouse.archives.gov.html'
+        './fixtures/obamawhitehouse.archives.gov.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -123,7 +124,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       url =
         'https://obamawhitehouse.archives.gov/the-press-office/2015/04/11/weekly-address-tuition-free-community-college';
       const html = fs.readFileSync(
-        './fixtures/obamawhitehouse.archives.gov--speeches.html'
+        './fixtures/obamawhitehouse.archives.gov--speeches.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -144,7 +146,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       url =
         'https://obamawhitehouse.archives.gov/the-press-office/2016/12/24/weekly-address-merry-christmas-president-and-first-lady';
       const html = fs.readFileSync(
-        './fixtures/obamawhitehouse.archives.gov--blog.html'
+        './fixtures/obamawhitehouse.archives.gov--blog.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -178,7 +181,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       url =
         'https://obamawhitehouse.archives.gov/blog/2011/09/10/serve-and-remember';
       const html = fs.readFileSync(
-        './fixtures/obamawhitehouse.archives.gov--empty.html'
+        './fixtures/obamawhitehouse.archives.gov--empty.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });

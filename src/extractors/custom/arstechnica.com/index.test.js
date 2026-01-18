@@ -16,7 +16,8 @@ describe('ArstechnicaComExtractor', () => {
       url =
         'https://arstechnica.com/science/2025/02/twenty-two-states-sue-to-block-new-nih-funding-policy/';
       const html = fs.readFileSync(
-        './fixtures/arstechnica.com/1739238328741.html'
+        './fixtures/arstechnica.com/1739238328741.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

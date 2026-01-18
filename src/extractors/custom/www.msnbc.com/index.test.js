@@ -15,7 +15,7 @@ describe('WwwMsnbcComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.msnbc.com/rachel-maddow-show/bizarre-election-ends-bizarre-electoral-college-tally';
-      const html = fs.readFileSync('./fixtures/www.msnbc.com.html');
+      const html = fs.readFileSync('./fixtures/www.msnbc.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

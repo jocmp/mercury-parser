@@ -16,7 +16,8 @@ describe('WwwVersantsComExtractor', () => {
       url =
         'https://www.versants.com/actualite/la-centrale-de-benevoles-doperation-nez-rouge-est-a-sainte-julie/';
       const html = fs.readFileSync(
-        './fixtures/www.versants.com/1733366115610.html'
+        './fixtures/www.versants.com/1733366115610.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

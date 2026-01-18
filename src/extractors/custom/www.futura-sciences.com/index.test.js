@@ -15,7 +15,8 @@ describe('WwwFuturaSciencesComExtractor', () => {
       url =
         'https://www.futura-sciences.com/maison/actualites/architecture-vous-cherchez-autre-chose-paris-rome-barcelone-ces-5-villes-vont-vous-retourner-esprit-122621/#xtor%3DRSS-8';
       const html = fs.readFileSync(
-        './fixtures/www.futura-sciences.com/1752023361098.html'
+        './fixtures/www.futura-sciences.com/1752023361098.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

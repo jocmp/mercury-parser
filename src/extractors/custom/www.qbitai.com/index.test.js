@@ -15,7 +15,8 @@ describe('WwwQbitaiComExtractor', () => {
     beforeAll(() => {
       url = 'https://www.qbitai.com/2025/02/257352.html';
       const html = fs.readFileSync(
-        './fixtures/www.qbitai.com/1740538126401.html'
+        './fixtures/www.qbitai.com/1740538126401.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

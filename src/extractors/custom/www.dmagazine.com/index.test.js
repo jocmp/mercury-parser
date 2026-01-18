@@ -15,7 +15,10 @@ describe('WwwDmagazineComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.dmagazine.com/frontburner/2016/12/nfl-concussion-settlement-payments-can-begin/';
-      const html = fs.readFileSync('./fixtures/www.dmagazine.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.dmagazine.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

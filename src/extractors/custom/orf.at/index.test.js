@@ -13,7 +13,10 @@ describe('OrfAtExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://orf.at/stories/3409547/';
-      const html = fs.readFileSync('./fixtures/orf.at/1762108926494.html');
+      const html = fs.readFileSync(
+        './fixtures/orf.at/1762108926494.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

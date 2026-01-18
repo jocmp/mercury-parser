@@ -14,7 +14,7 @@ describe('WwwYoutubeComExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.youtube.com/watch?v=srtMWzyqdp8';
-      const html = fs.readFileSync('./fixtures/www.youtube.com.html');
+      const html = fs.readFileSync('./fixtures/www.youtube.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

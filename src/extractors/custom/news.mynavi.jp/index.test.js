@@ -14,7 +14,7 @@ describe('NewsMynaviJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://news.mynavi.jp/article/20190222-775563/';
-      const html = fs.readFileSync('./fixtures/news.mynavi.jp.html');
+      const html = fs.readFileSync('./fixtures/news.mynavi.jp.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

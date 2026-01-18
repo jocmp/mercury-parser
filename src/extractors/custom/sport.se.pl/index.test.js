@@ -15,7 +15,10 @@ describe('SportSePlExtractor', () => {
     beforeAll(() => {
       url =
         'https://sport.se.pl/pilka-nozna/ekstraklasa/kolejna-katastrofa-slaska-ogromny-zawod-z-piastem-ale-co-zrobil-rafal-leszczynski-wideo-aa-orCp-ajk6-8ada.html';
-      const html = fs.readFileSync('./fixtures/sport.se.pl/1738679563886.html');
+      const html = fs.readFileSync(
+        './fixtures/sport.se.pl/1738679563886.html',
+        'utf-8'
+      );
       result = Parser.parse(url, { html, fallback: false });
     });
 

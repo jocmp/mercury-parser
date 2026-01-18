@@ -14,7 +14,7 @@ describe('WwwJnsaOrgExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.jnsa.org/seminar/nsf/2019kansai/index.html';
-      const html = fs.readFileSync('./fixtures/www.jnsa.org.html');
+      const html = fs.readFileSync('./fixtures/www.jnsa.org.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

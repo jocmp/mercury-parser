@@ -16,7 +16,8 @@ describe('TimesofindiaIndiatimesComExtractor', () => {
       url =
         'https://timesofindia.indiatimes.com/india/china-snubs-imran-says-resolve-jk-bilaterally/articleshow/71496416.cms';
       const html = fs.readFileSync(
-        './fixtures/timesofindia.indiatimes.com.html'
+        './fixtures/timesofindia.indiatimes.com.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: true });
     });

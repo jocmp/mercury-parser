@@ -15,7 +15,8 @@ describe('TarnkappeInfoExtractor', () => {
       url =
         'https://tarnkappe.info/artikel/krypto/krypto-boerse-garantex-keine-geldwaesche-mehr-fuer-ganoven-311235.html';
       const html = fs.readFileSync(
-        './fixtures/tarnkappe.info/1741834825985.html'
+        './fixtures/tarnkappe.info/1741834825985.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

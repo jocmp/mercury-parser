@@ -16,7 +16,8 @@ describe('BialystokSePlExtractor', () => {
       url =
         'https://bialystok.se.pl/posuzkiwany-31-latek-na-widok-policjantow-wyskoczyl-z-okna-aa-saMz-guMy-DgNE.html';
       const html = fs.readFileSync(
-        './fixtures/bialystok.se.pl/1740023079333.html'
+        './fixtures/bialystok.se.pl/1740023079333.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

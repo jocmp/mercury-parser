@@ -14,7 +14,7 @@ describe('GithubComExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://github.com/steventroughtonsmith/marzipanify';
-      const html = fs.readFileSync('./fixtures/github.com.html');
+      const html = fs.readFileSync('./fixtures/github.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

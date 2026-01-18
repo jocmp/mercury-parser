@@ -15,7 +15,8 @@ describe('WwwPolygonComExtractor', () => {
       url =
         'https://www.polygon.com/diablo-4-guides/565876/reliquary-battle-pass-explained-rewards';
       const html = fs.readFileSync(
-        './fixtures/www.polygon.com/1746405751338.html'
+        './fixtures/www.polygon.com/1746405751338.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -15,7 +15,10 @@ describe('WwwFastcompanyComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.fastcompany.com/3067012/the-only-five-email-folders-your-inbox-will-ever-need';
-      const html = fs.readFileSync('./fixtures/www.fastcompany.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.fastcompany.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

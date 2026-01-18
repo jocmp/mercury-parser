@@ -16,7 +16,8 @@ describe('WwwInvestmentexecutiveComExtractor', () => {
       url =
         'https://www.investmentexecutive.com/news/research-and-markets/imf-dims-outlook-for-2023-global-economy-amid-ukraine-war/';
       const html = fs.readFileSync(
-        './fixtures/www.investmentexecutive.com.html'
+        './fixtures/www.investmentexecutive.com.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });

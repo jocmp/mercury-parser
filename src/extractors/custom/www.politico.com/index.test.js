@@ -17,7 +17,7 @@ describe('PoliticoExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.politico.com/story/2016/10/who-will-win-the-vp-debate-229079?lo=ut_a1';
-      const html = fs.readFileSync('./fixtures/www.politico.com.html');
+      const html = fs.readFileSync('./fixtures/www.politico.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -109,7 +109,8 @@ describe('PoliticoExtractor', () => {
       url =
         'https://www.politico.com/news/2022/10/17/student-debt-relief-applications-00062145';
       const html = fs.readFileSync(
-        './fixtures/www.politico.com--test-case-2.html'
+        './fixtures/www.politico.com--test-case-2.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -215,7 +216,8 @@ describe('PoliticoExtractor', () => {
       url =
         'https://www.politico.com/newsletters/morning-money/2022/10/11/grim-global-outlook-for-imf-world-bank-meetings-00061134';
       const html = fs.readFileSync(
-        './fixtures/www.politico.com--test-case-3.html'
+        './fixtures/www.politico.com--test-case-3.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });

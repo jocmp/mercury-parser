@@ -16,7 +16,10 @@ describe('LittleThingsExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.littlethings.com/lifestyle/amazon-has-a-private-food-brand-that-just-launched-100-new-products-for-fall/';
-      const html = fs.readFileSync('./fixtures/www.littlethings.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.littlethings.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

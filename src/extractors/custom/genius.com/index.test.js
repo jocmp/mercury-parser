@@ -15,7 +15,7 @@ describe('GeniusComExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://genius.com/Prince-and-the-revolution-purple-rain-lyrics';
-      const html = fs.readFileSync('./fixtures/genius.com.html');
+      const html = fs.readFileSync('./fixtures/genius.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

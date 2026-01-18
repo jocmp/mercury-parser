@@ -16,7 +16,8 @@ describe('WwwChannelnewsasiaComExtractor', () => {
       url =
         'https://www.channelnewsasia.com/singapore/police-arrest-suspects-ica-change-addresses-unauthorised-attempts-4869916';
       const html = fs.readFileSync(
-        './fixtures/www.channelnewsasia.com/1737324313613.html'
+        './fixtures/www.channelnewsasia.com/1737324313613.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

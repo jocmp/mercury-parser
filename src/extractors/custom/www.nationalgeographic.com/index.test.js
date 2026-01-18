@@ -17,7 +17,8 @@ describe('WwwNationalgeographicComExtractor', () => {
       url =
         'http://www.nationalgeographic.com/magazine/2017/01/gender-toys-departments-piece/';
       const html = fs.readFileSync(
-        './fixtures/www.nationalgeographic.com.html'
+        './fixtures/www.nationalgeographic.com.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });

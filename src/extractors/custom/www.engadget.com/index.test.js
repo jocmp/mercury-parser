@@ -15,7 +15,8 @@ describe('WwwEngadgetComExtractor', () => {
       url =
         'https://www.engadget.com/gaming/the-studio-that-technically-made-disco-elysium-has-a-new-game-in-the-works-185218695.html';
       const html = fs.readFileSync(
-        './fixtures/www.engadget.com/1741829174040.html'
+        './fixtures/www.engadget.com/1741829174040.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

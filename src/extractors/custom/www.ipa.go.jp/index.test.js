@@ -14,7 +14,7 @@ describe('WwwIpaGoJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.ipa.go.jp/security/topics/alert20190402.html';
-      const html = fs.readFileSync('./fixtures/www.ipa.go.jp.html');
+      const html = fs.readFileSync('./fixtures/www.ipa.go.jp.html', 'utf-8');
       result = Mercury.parse(url, {
         html,
         fallback: false,

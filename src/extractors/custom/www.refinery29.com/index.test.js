@@ -15,7 +15,10 @@ describe('WwwRefinery29ComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.refinery29.com/2016/12/132377/graphic-tees-statement-shirt-style-tips';
-      const html = fs.readFileSync('./fixtures/www.refinery29.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.refinery29.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

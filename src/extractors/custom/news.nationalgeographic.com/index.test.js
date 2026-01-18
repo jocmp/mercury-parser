@@ -16,7 +16,8 @@ describe('NewsNationalgeographicComExtractor', () => {
       url =
         'http://news.nationalgeographic.com/energy/2015/08/150803-gender-bias-affects-office-heating-cooling-temperatures/';
       const html = fs.readFileSync(
-        './fixtures/news.nationalgeographic.com.html'
+        './fixtures/news.nationalgeographic.com.html',
+        'utf-8'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });

@@ -16,7 +16,8 @@ describe('TechcrunchComExtractor', () => {
       url =
         'https://techcrunch.com/2024/12/23/halides-next-version-will-come-with-new-film-filters-hdr/';
       const html = fs.readFileSync(
-        './fixtures/techcrunch.com/1735770877170.html'
+        './fixtures/techcrunch.com/1735770877170.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

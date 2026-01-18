@@ -15,7 +15,10 @@ describe('ThoughtcatalogComExtractor', () => {
     beforeAll(() => {
       url =
         'http://thoughtcatalog.com/lauren-jarvis-gibson/2016/12/one-day-you-will-meet-someone-who-will-change-your-life-for-good/';
-      const html = fs.readFileSync('./fixtures/thoughtcatalog.com.html');
+      const html = fs.readFileSync(
+        './fixtures/thoughtcatalog.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

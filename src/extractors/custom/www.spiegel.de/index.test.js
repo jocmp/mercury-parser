@@ -16,7 +16,8 @@ describe('WwwSpiegelDeExtractor', () => {
       url =
         'https://www.spiegel.de/netzwelt/gadgets/ces-2025-nvidia-stellt-ki-supercomputer-im-schreibtisch-format-vor-a-0e0ad625-920d-4a99-a04d-3803ea71974c';
       const html = fs.readFileSync(
-        './fixtures/www.spiegel.de/1736474444948.html'
+        './fixtures/www.spiegel.de/1736474444948.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

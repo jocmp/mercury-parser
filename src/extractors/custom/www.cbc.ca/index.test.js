@@ -14,7 +14,7 @@ describe('WwwCbcCaExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.cbc.ca/news/business/crea-september-numbers-1.6616369';
-      const html = fs.readFileSync('./fixtures/www.cbc.ca.html');
+      const html = fs.readFileSync('./fixtures/www.cbc.ca.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

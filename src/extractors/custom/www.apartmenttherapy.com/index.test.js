@@ -15,7 +15,10 @@ describe('ApartmentTherapyExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'http://www.apartmenttherapy.com/a-light-filled-la-loft-236564';
-      const html = fs.readFileSync('./fixtures/www.apartmenttherapy.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.apartmenttherapy.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
     it('is selected properly', async () => {

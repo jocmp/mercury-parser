@@ -16,7 +16,8 @@ describe('WwwHardwarezoneComSgExtractor', () => {
       url =
         'https://www.hardwarezone.com.sg/feature-how-spot-potential-scam-messages-ios-and-android-singapore-rcs-sms';
       const html = fs.readFileSync(
-        './fixtures/www.hardwarezone.com.sg/1736024727516.html'
+        './fixtures/www.hardwarezone.com.sg/1736024727516.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

@@ -90,32 +90,7 @@ $.load = (html, opts = {}, returnHtml = false) => {
   if (!html) {
     html = $.cloneHtml();
   } else {
-    // Ensure html is a string (handles Buffer from fs.readFileSync)
-    if (typeof html !== 'string') {
-      html = html.toString ? html.toString() : String(html);
-    }
-    // For full HTML documents, use DOMParser and append nodes directly to preserve
-    // meta tags. jQuery's .html() uses innerHTML which strips meta in body context.
-    // For small snippets, use jQuery's .html() to avoid DOMParser overhead.
-    const isFullDocument = /<head[\s>]/i.test(html) || /<html[\s>]/i.test(html);
-    if (isFullDocument) {
-      // eslint-disable-next-line no-undef
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const container = $('<container />');
-      const containerEl = container.get(0);
-      // Append head elements (meta, title, etc.) as DOM nodes - bypasses innerHTML
-      Array.from(doc.head.children).forEach(el => {
-        containerEl.appendChild(el.cloneNode(true));
-      });
-      // Append body children as DOM nodes
-      Array.from(doc.body.childNodes).forEach(node => {
-        containerEl.appendChild(node.cloneNode(true));
-      });
-      html = container;
-    } else {
-      html = $('<container />').html(html);
-    }
+    html = $('<container />').html(html);
   }
 
   PARSING_NODE =
@@ -134,11 +109,7 @@ $.load = (html, opts = {}, returnHtml = false) => {
         $(this).remove();
       }
     });
-
-  // Use DOM appendChild instead of .html() to preserve meta tags
-  const parsingEl = PARSING_NODE.get(0);
-  parsingEl.innerHTML = '';
-  parsingEl.appendChild(html.get(0));
+  PARSING_NODE.html(html);
 
   if (returnHtml) return { $, html: html.html() };
 

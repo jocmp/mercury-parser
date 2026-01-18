@@ -16,7 +16,8 @@ describe('MobilesyrupComExtractor', () => {
       url =
         'https://mobilesyrup.com/2025/01/09/canadian-amazon-prime-users-two-free-kindle-books-january/';
       const html = fs.readFileSync(
-        './fixtures/mobilesyrup.com/1736628781854.html'
+        './fixtures/mobilesyrup.com/1736628781854.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

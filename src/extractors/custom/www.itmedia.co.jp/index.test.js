@@ -14,7 +14,10 @@ describe('WwwItmediaCoJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.itmedia.co.jp/pcuser/articles/1902/22/news089.html';
-      const html = fs.readFileSync('./fixtures/www.itmedia.co.jp.html');
+      const html = fs.readFileSync(
+        './fixtures/www.itmedia.co.jp.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, {
         html,
         fallback: false,

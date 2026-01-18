@@ -15,7 +15,7 @@ describe('WwwNdtvComExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.ndtv.com/india-news/coronavirus-us-president-donald-trump-says-there-may-be-retaliation-if-india-doesnt-clear-export-of-2207327';
-      const html = fs.readFileSync('./fixtures/www.ndtv.com.html');
+      const html = fs.readFileSync('./fixtures/www.ndtv.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

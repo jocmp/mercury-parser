@@ -14,7 +14,7 @@ describe('WwwSanwaCoJpExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://www.sanwa.co.jp/news/201903/ma-irfp139bk/index.html';
-      const html = fs.readFileSync('./fixtures/www.sanwa.co.jp.html');
+      const html = fs.readFileSync('./fixtures/www.sanwa.co.jp.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

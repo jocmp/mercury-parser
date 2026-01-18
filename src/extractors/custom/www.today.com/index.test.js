@@ -16,7 +16,7 @@ describe('WwwTodayComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.today.com/home/zsa-zsa-gabor-s-palm-springs-home-sale-see-inside-t106323';
-      const html = fs.readFileSync('./fixtures/www.today.com.html');
+      const html = fs.readFileSync('./fixtures/www.today.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

@@ -15,7 +15,7 @@ describe('WwwSlateComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.slate.com/articles/news_and_politics/politics/2017/03/trumpcare_proves_that_trump_s_promise_to_take_care_of_rural_voters_was_always.html';
-      const html = fs.readFileSync('./fixtures/www.slate.com.html');
+      const html = fs.readFileSync('./fixtures/www.slate.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

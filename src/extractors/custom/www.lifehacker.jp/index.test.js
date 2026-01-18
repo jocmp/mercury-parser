@@ -15,7 +15,10 @@ describe('WwwLifehackerJpExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.lifehacker.jp/2019/03/amazon-fine-newspaper-stocker.html';
-      const html = fs.readFileSync('./fixtures/www.lifehacker.jp.html');
+      const html = fs.readFileSync(
+        './fixtures/www.lifehacker.jp.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, {
         html,
         fallback: false,

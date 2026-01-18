@@ -16,7 +16,10 @@ describe('WwwChicagotribuneComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.chicagotribune.com/news/nationworld/politics/ct-trump-energy-department-climate-change-request-20161213-story.html';
-      const html = fs.readFileSync('./fixtures/www.chicagotribune.com.html');
+      const html = fs.readFileSync(
+        './fixtures/www.chicagotribune.com.html',
+        'utf-8'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 

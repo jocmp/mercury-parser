@@ -15,7 +15,8 @@ describe('FactorioComExtractor', () => {
     beforeAll(() => {
       url = 'https://factorio.com/blog/post/fff-435';
       const html = fs.readFileSync(
-        './fixtures/factorio.com/1740946820754.html'
+        './fixtures/factorio.com/1740946820754.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

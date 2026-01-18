@@ -15,7 +15,8 @@ describe('WwwAndroidauthorityComExtractor', () => {
     beforeAll(() => {
       url = 'https://www.androidauthority.com/new-android-apps-658839/';
       const html = fs.readFileSync(
-        './fixtures/www.androidauthority.com/1734492467424.html'
+        './fixtures/www.androidauthority.com/1734492467424.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

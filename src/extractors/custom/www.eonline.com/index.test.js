@@ -15,7 +15,7 @@ describe('WwwEonlineComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.eonline.com/news/814222/ryan-gosling-s-feelings-about-fatherhood-will-make-your-heart-sing';
-      const html = fs.readFileSync('./fixtures/www.eonline.com.html');
+      const html = fs.readFileSync('./fixtures/www.eonline.com.html', 'utf-8');
       result = Mercury.parse(url, { html, fallback: false });
     });
 

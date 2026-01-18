@@ -15,7 +15,8 @@ describe('Nineto5googleComExtractor', () => {
       url =
         'https://9to5google.com/2025/02/28/google-pixel-9a-wallpapers-leak/';
       const html = fs.readFileSync(
-        './fixtures/9to5google.com/1740950813179.html'
+        './fixtures/9to5google.com/1740950813179.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

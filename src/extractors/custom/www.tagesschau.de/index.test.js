@@ -15,7 +15,8 @@ describe('WwwTagesschauDeExtractor', () => {
       url =
         'https://www.tagesschau.de/ausland/europa/ukraine-gipfel-london-106.html';
       const html = fs.readFileSync(
-        './fixtures/www.tagesschau.de/1740949702394.html'
+        './fixtures/www.tagesschau.de/1740949702394.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });

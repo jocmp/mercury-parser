@@ -16,7 +16,8 @@ describe('Www1pezeshkComExtractor', () => {
       url =
         'https://www.1pezeshk.com/archives/2024/12/the-battle-of-dogs-utilizing-animals-in-warfare.html';
       const html = fs.readFileSync(
-        './fixtures/www.1pezeshk.com/1733537734038.html'
+        './fixtures/www.1pezeshk.com/1733537734038.html',
+        'utf-8'
       );
       result = Parser.parse(url, { html, fallback: false });
     });
