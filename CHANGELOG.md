@@ -5,9 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.1
+
+- [skip ci] Update Changelog
+- feat: Add terminaltrove.com parser by @jocmp in [#98](https://github.com/jocmp/mercury-parser/pull/98)
+- feat: Update ici.radio-canada.ca parser by @jocmp in [#97](https://github.com/jocmp/mercury-parser/pull/97)
+
+## v3.0.0
+
+- bump version v2.4.11 -> v3.0.0 by @jocmp
+- feat: add www.numerama.com parser by @jocmp in [#96](https://github.com/jocmp/mercury-parser/pull/96)
+- feat: add videogameschronicle.com parser by @jocmp in [#95](https://github.com/jocmp/mercury-parser/pull/95)
+- [skip ci] Remove references to yarn in README by @jocmp
+- Remove moment.js by @jocmp in [#89](https://github.com/jocmp/mercury-parser/pull/89)
+- Upgrade Cheerio to 1.x, remove jQuery by @jocmp in [#88](https://github.com/jocmp/mercury-parser/pull/88)
+- Upgrade deps by @jocmp in [#87](https://github.com/jocmp/mercury-parser/pull/87)
+- Move from Yarn to NPM by @jocmp in [#86](https://github.com/jocmp/mercury-parser/pull/86)
+- Add OIDC config by @jocmp
+- Update npm publish step by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.11...v3.0.0
+
 ## v2.4.11
 
-- fix: Handle link-heavy pages for Phoronix
+- bump version v2.4.10 -> v2.4.11 by @jocmp
+- fix: Handle link-heavy pages for Phoronix by @jocmp in [#84](https://github.com/jocmp/mercury-parser/pull/84)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v2.4.10...v2.4.11
 
 ## v2.4.10
 
