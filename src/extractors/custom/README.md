@@ -202,7 +202,7 @@ git clone git@github.com:jocmp/mercury-parser.git
 
 cd parser
 
-yarn install
+npm install
 ```
 
 If you don't have already have watchman installed, you'll also need to install that:
@@ -224,7 +224,7 @@ git checkout -b feat-new-yorker-extractor
 If we don't already have a parser for the site you want to contribute, you're ready to generate a new custom parser. To do so, run:
 
 ```bash
-yarn generate-parser
+npm run generate-parser
 ```
 
 This script will prompt you to paste a link to an article you want to parse. The URL you choose will serve as the example your parser will test against. The script will also generate your custom parser and some barebones (and failing) tests for your parser.
@@ -234,7 +234,7 @@ For our New Yorker example, we're going to use [this story](http://www.newyorker
 When the generator script completes, you'll be prompted to run:
 
 ```bash
-yarn watch:test www.newyorker.com
+npm run watch:test www.newyorker.com
 ```
 
 This will run the tests for the parser you just generated, which should fail (which makes sense — you haven't written any selectors yet!). Your goal now is to follow the instructions in the generated `www.newyorker.com/index.test.js` and `www.newyorker.com/index.js` files until they pass!
