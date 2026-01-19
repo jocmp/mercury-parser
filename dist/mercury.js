@@ -6941,7 +6941,11 @@ var WwwNumeramaComExtractor = {
   },
   content: {
     selectors: ['.article-content', 'article'],
-    transforms: {},
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
     clean: ['.js-newsletter-block', '.premium-promo-alert', '[data-nosnippet]', '.ultimedia_cntr']
   }
 };

@@ -129,6 +129,15 @@ function stripJunkTags$1(article, $) {
   return $;
 }
 
+function setAttr$1(node, attr, val) {
+  if (node.attribs) {
+    node.attribs[attr] = val;
+  } else if (node.attributes) {
+    node.setAttribute(attr, val);
+  }
+  return node;
+}
+
 function absolutize$1($, rootUrl, attr) {
   var baseUrl = $('base').attr('href');
   $("[".concat(attr, "]")).each(function (_, node) {
@@ -167,15 +176,6 @@ function makeLinksAbsolute$1($content, $, url) {
   });
   absolutizeSet$1($, url, $content);
   return $content;
-}
-
-function setAttr$1(node, attr, val) {
-  if (node.attribs) {
-    node.attribs[attr] = val;
-  } else if (node.attributes) {
-    node.setAttribute(attr, val);
-  }
-  return node;
 }
 
 var _Object$keys = _Object$keys__default$1["default"];
@@ -735,31 +735,6 @@ function stripUnlikelyCandidates($) {
   return $;
 }
 
-// ## NOTES:
-// Another good candidate for refactoring/optimizing.
-// Very imperative code, I don't love it. - AP
-
-//  Given cheerio object, convert consecutive <br /> tags into
-//  <p /> tags instead.
-//
-//  :param $: A cheerio object
-
-function brsToPs($) {
-  var collapsing = false;
-  $('br').each(function (index, element) {
-    var $element = $(element);
-    var nextElement = $element.next().get(0);
-    if (nextElement && nextElement.tagName.toLowerCase() === 'br') {
-      collapsing = true;
-      $element.remove();
-    } else if (collapsing) {
-      collapsing = false;
-      paragraphize(element, $, true);
-    }
-  });
-  return $;
-}
-
 // Given a node, turn it into a P if it is not already a P, and
 // make sure it conforms to the constraints of a P tag (I.E. does
 // not contain any other block tags.)
@@ -792,43 +767,29 @@ function paragraphize(node, $) {
   }
   return $;
 }
-function convertDivs($) {
-  $('div').each(function (index, div) {
-    var $div = $(div);
-    var convertible = $div.children(DIV_TO_P_BLOCK_TAGS).length === 0;
-    if (convertible) {
-      convertNodeTo($div, $, 'p');
+
+// ## NOTES:
+// Another good candidate for refactoring/optimizing.
+// Very imperative code, I don't love it. - AP
+
+//  Given cheerio object, convert consecutive <br /> tags into
+//  <p /> tags instead.
+//
+//  :param $: A cheerio object
+
+function brsToPs($) {
+  var collapsing = false;
+  $('br').each(function (index, element) {
+    var $element = $(element);
+    var nextElement = $element.next().get(0);
+    if (nextElement && nextElement.tagName.toLowerCase() === 'br') {
+      collapsing = true;
+      $element.remove();
+    } else if (collapsing) {
+      collapsing = false;
+      paragraphize(element, $, true);
     }
   });
-  return $;
-}
-function convertSpans$1($) {
-  $('span').each(function (index, span) {
-    var $span = $(span);
-    var convertible = $span.parents('p, div, li, figcaption').length === 0;
-    if (convertible) {
-      convertNodeTo($span, $, 'p');
-    }
-  });
-  return $;
-}
-
-// Loop through the provided doc, and convert any p-like elements to
-// actual paragraph tags.
-//
-//   Things fitting this criteria:
-//   * Multiple consecutive <br /> tags.
-//   * <div /> tags without block level elements inside of them
-//   * <span /> tags who are not children of <p /> or <div /> tags.
-//
-//   :param $: A cheerio object to search
-//   :return cheerio object with new p elements
-//   (By-reference mutation, though. Returned just for convenience.)
-
-function convertToParagraphs($) {
-  $ = brsToPs($);
-  $ = convertDivs($);
-  $ = convertSpans$1($);
   return $;
 }
 function getAttrs(node) {
@@ -869,6 +830,45 @@ function convertNodeTo($node, $) {
     html = node.tagName.toLowerCase() === 'noscript' ? $node.html() : $node.contents();
   }
   $node.replaceWith("<".concat(tag, " ").concat(attribString, ">").concat(html, "</").concat(tag, ">"));
+  return $;
+}
+function convertDivs($) {
+  $('div').each(function (index, div) {
+    var $div = $(div);
+    var convertible = $div.children(DIV_TO_P_BLOCK_TAGS).length === 0;
+    if (convertible) {
+      convertNodeTo($div, $, 'p');
+    }
+  });
+  return $;
+}
+function convertSpans$1($) {
+  $('span').each(function (index, span) {
+    var $span = $(span);
+    var convertible = $span.parents('p, div, li, figcaption').length === 0;
+    if (convertible) {
+      convertNodeTo($span, $, 'p');
+    }
+  });
+  return $;
+}
+
+// Loop through the provided doc, and convert any p-like elements to
+// actual paragraph tags.
+//
+//   Things fitting this criteria:
+//   * Multiple consecutive <br /> tags.
+//   * <div /> tags without block level elements inside of them
+//   * <span /> tags who are not children of <p /> or <div /> tags.
+//
+//   :param $: A cheerio object to search
+//   :return cheerio object with new p elements
+//   (By-reference mutation, though. Returned just for convenience.)
+
+function convertToParagraphs($) {
+  $ = brsToPs($);
+  $ = convertDivs($);
+  $ = convertSpans$1($);
   return $;
 }
 function cleanForHeight($img, $) {
@@ -947,6 +947,19 @@ function cleanHOnes(article, $) {
   }
   return $;
 }
+function setAttrs(node, attrs) {
+  if (node.attribs) {
+    node.attribs = attrs;
+  } else if (node.attributes) {
+    while (node.attributes.length > 0) {
+      node.removeAttribute(node.attributes[0].name);
+    }
+    _Reflect$ownKeys__default["default"](attrs).forEach(function (key) {
+      node.setAttribute(key, attrs[key]);
+    });
+  }
+  return node;
+}
 function ownKeys$f(e, r) {
   var t = _Object$keys__default["default"](e);
   if (_Object$getOwnPropertySymbols__default["default"]) {
@@ -999,104 +1012,15 @@ function removeEmpty($article, $) {
   return $;
 }
 
-// // CONTENT FETCHING CONSTANTS ////
-
-// A list of tags that should be ignored when trying to find the top candidate
-// for a document.
-var NON_TOP_CANDIDATE_TAGS = ['br', 'b', 'i', 'label', 'hr', 'area', 'base', 'basefont', 'input', 'img', 'link', 'meta'];
-var NON_TOP_CANDIDATE_TAGS_RE = new RegExp("^(".concat(NON_TOP_CANDIDATE_TAGS.join('|'), ")$"), 'i');
-
-// A list of selectors that specify, very clearly, either hNews or other
-// very content-specific style content, like Blogger templates.
-// More examples here: http://microformats.org/wiki/blog-post-formats
-var HNEWS_CONTENT_SELECTORS = [['.hentry', '.entry-content'], ['entry', '.entry-content'], ['.entry', '.entry_content'], ['.post', '.postbody'], ['.post', '.post_body'], ['.post', '.post-body']];
-var PHOTO_HINTS = ['figure', 'photo', 'image', 'caption'];
-var PHOTO_HINTS_RE = new RegExp(PHOTO_HINTS.join('|'), 'i');
-
-// A list of strings that denote a positive scoring for this content as being
-// an article container. Checked against className and id.
-//
-// TODO: Perhaps have these scale based on their odds of being quality?
-var POSITIVE_SCORE_HINTS = ['article', 'articlecontent', 'instapaper_body', 'blog', 'body', 'content', 'entry-content-asset', 'entry', 'hentry', 'main', 'Normal', 'page', 'pagination', 'permalink', 'post', 'story', 'text', '[-_]copy',
-// usatoday
-'\\Bcopy'];
-
-// The above list, joined into a matching regular expression
-var POSITIVE_SCORE_RE = new RegExp(POSITIVE_SCORE_HINTS.join('|'), 'i');
-
-// Readability publisher-specific guidelines
-var READABILITY_ASSET = new RegExp('entry-content-asset', 'i');
-
-// A list of strings that denote a negative scoring for this content as being
-// an article container. Checked against className and id.
-//
-// TODO: Perhaps have these scale based on their odds of being quality?
-var NEGATIVE_SCORE_HINTS = ['adbox', 'advert', 'author', 'bio', 'bookmark', 'bottom', 'byline', 'clear', 'com-', 'combx', 'comment', 'comment\\B', 'contact', 'copy', 'credit', 'crumb', 'date', 'deck', 'excerpt', 'featured',
-// tnr.com has a featured_content which throws us off
-'foot', 'footer', 'footnote', 'graf', 'head', 'info', 'infotext',
-// newscientist.com copyright
-'instapaper_ignore', 'jump', 'linebreak', 'link', 'masthead', 'media', 'meta', 'modal', 'outbrain',
-// slate.com junk
-'promo', 'pr_',
-// autoblog - press release
-'related', 'respond', 'roundcontent',
-// lifehacker restricted content warning
-'scroll', 'secondary', 'share', 'shopping', 'shoutbox', 'side', 'sidebar', 'sponsor', 'stamp', 'sub', 'summary', 'tags', 'tools', 'widget'];
-// The above list, joined into a matching regular expression
-var NEGATIVE_SCORE_RE = new RegExp(NEGATIVE_SCORE_HINTS.join('|'), 'i');
-var PARAGRAPH_SCORE_TAGS = new RegExp('^(p|li|span|pre)$', 'i');
-var CHILD_CONTENT_TAGS = new RegExp('^(td|blockquote|ol|ul|dl)$', 'i');
-var BAD_TAGS = new RegExp('^(address|form)$', 'i');
-
-// Get the score of a node based on its className and id.
-function getWeight(node) {
-  var classes = node.attr('class');
-  var id = node.attr('id');
-  var score = 0;
-  if (id) {
-    // if id exists, try to score on both positive and negative
-    if (POSITIVE_SCORE_RE.test(id)) {
-      score += 25;
-    }
-    if (NEGATIVE_SCORE_RE.test(id)) {
-      score -= 25;
-    }
-  }
-  if (classes) {
-    if (score === 0) {
-      // if classes exist and id did not contribute to score
-      // try to score on both positive and negative
-      if (POSITIVE_SCORE_RE.test(classes)) {
-        score += 25;
-      }
-      if (NEGATIVE_SCORE_RE.test(classes)) {
-        score -= 25;
-      }
-    }
-
-    // even if score has been set by id, add score for
-    // possible photo matches
-    // "try to keep photos if we can"
-    if (PHOTO_HINTS_RE.test(classes)) {
-      score += 10;
-    }
-
-    // add 25 if class matches entry-content-asset,
-    // a class apparently instructed for use in the
-    // Readability publisher guidelines
-    // https://www.readability.com/developers/guidelines
-    if (READABILITY_ASSET.test(classes)) {
-      score += 25;
-    }
-  }
-  return score;
-}
-
 // returns the score of a node based on
 // the node's score attribute
 // returns null if no score set
 function getScore($node) {
   return _parseFloat__default["default"]($node.attr('score')) || null;
+}
+function setScore($node, $, score) {
+  $node.attr('score', score);
+  return $node;
 }
 
 // return 1 for every comma in text
@@ -1153,45 +1077,55 @@ function scoreParagraph(node) {
   }
   return score;
 }
-function setScore($node, $, score) {
-  $node.attr('score', score);
-  return $node;
-}
-function addScore($node, $, amount) {
-  try {
-    var score = getOrInitScore($node, $) + amount;
-    setScore($node, $, score);
-  } catch (e) {
-    // Ignoring; error occurs in scoreNode
-  }
-  return $node;
-}
 
-// Adds 1/4 of a child's score to its parent
-function addToParent(node, $, score) {
-  var parent = node.parent();
-  if (parent) {
-    addScore(parent, $, score * 0.25);
-  }
-  return node;
-}
+// // CONTENT FETCHING CONSTANTS ////
 
-// gets and returns the score if it exists
-// if not, initializes a score based on
-// the node's tag type
-function getOrInitScore($node, $) {
-  var weightNodes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var score = getScore($node);
-  if (score) {
-    return score;
-  }
-  score = scoreNode($node);
-  if (weightNodes) {
-    score += getWeight($node);
-  }
-  addToParent($node, $, score);
-  return score;
-}
+// A list of tags that should be ignored when trying to find the top candidate
+// for a document.
+var NON_TOP_CANDIDATE_TAGS = ['br', 'b', 'i', 'label', 'hr', 'area', 'base', 'basefont', 'input', 'img', 'link', 'meta'];
+var NON_TOP_CANDIDATE_TAGS_RE = new RegExp("^(".concat(NON_TOP_CANDIDATE_TAGS.join('|'), ")$"), 'i');
+
+// A list of selectors that specify, very clearly, either hNews or other
+// very content-specific style content, like Blogger templates.
+// More examples here: http://microformats.org/wiki/blog-post-formats
+var HNEWS_CONTENT_SELECTORS = [['.hentry', '.entry-content'], ['entry', '.entry-content'], ['.entry', '.entry_content'], ['.post', '.postbody'], ['.post', '.post_body'], ['.post', '.post-body']];
+var PHOTO_HINTS = ['figure', 'photo', 'image', 'caption'];
+var PHOTO_HINTS_RE = new RegExp(PHOTO_HINTS.join('|'), 'i');
+
+// A list of strings that denote a positive scoring for this content as being
+// an article container. Checked against className and id.
+//
+// TODO: Perhaps have these scale based on their odds of being quality?
+var POSITIVE_SCORE_HINTS = ['article', 'articlecontent', 'instapaper_body', 'blog', 'body', 'content', 'entry-content-asset', 'entry', 'hentry', 'main', 'Normal', 'page', 'pagination', 'permalink', 'post', 'story', 'text', '[-_]copy',
+// usatoday
+'\\Bcopy'];
+
+// The above list, joined into a matching regular expression
+var POSITIVE_SCORE_RE = new RegExp(POSITIVE_SCORE_HINTS.join('|'), 'i');
+
+// Readability publisher-specific guidelines
+var READABILITY_ASSET = new RegExp('entry-content-asset', 'i');
+
+// A list of strings that denote a negative scoring for this content as being
+// an article container. Checked against className and id.
+//
+// TODO: Perhaps have these scale based on their odds of being quality?
+var NEGATIVE_SCORE_HINTS = ['adbox', 'advert', 'author', 'bio', 'bookmark', 'bottom', 'byline', 'clear', 'com-', 'combx', 'comment', 'comment\\B', 'contact', 'copy', 'credit', 'crumb', 'date', 'deck', 'excerpt', 'featured',
+// tnr.com has a featured_content which throws us off
+'foot', 'footer', 'footnote', 'graf', 'head', 'info', 'infotext',
+// newscientist.com copyright
+'instapaper_ignore', 'jump', 'linebreak', 'link', 'masthead', 'media', 'meta', 'modal', 'outbrain',
+// slate.com junk
+'promo', 'pr_',
+// autoblog - press release
+'related', 'respond', 'roundcontent',
+// lifehacker restricted content warning
+'scroll', 'secondary', 'share', 'shopping', 'shoutbox', 'side', 'sidebar', 'sponsor', 'stamp', 'sub', 'summary', 'tags', 'tools', 'widget'];
+// The above list, joined into a matching regular expression
+var NEGATIVE_SCORE_RE = new RegExp(NEGATIVE_SCORE_HINTS.join('|'), 'i');
+var PARAGRAPH_SCORE_TAGS = new RegExp('^(p|li|span|pre)$', 'i');
+var CHILD_CONTENT_TAGS = new RegExp('^(td|blockquote|ol|ul|dl)$', 'i');
+var BAD_TAGS = new RegExp('^(address|form)$', 'i');
 
 // Score an individual node. Has some smarts for paragraphs, otherwise
 // just scores based on tag.
@@ -1219,156 +1153,107 @@ function scoreNode($node) {
   }
   return 0;
 }
-function convertSpans($node, $) {
-  if ($node.get(0)) {
-    var _$node$get = $node.get(0),
-      tagName = _$node$get.tagName;
-    if (tagName === 'span') {
-      // convert spans to divs
-      convertNodeTo($node, $, 'div');
+
+// Get the score of a node based on its className and id.
+function getWeight(node) {
+  var classes = node.attr('class');
+  var id = node.attr('id');
+  var score = 0;
+  if (id) {
+    // if id exists, try to score on both positive and negative
+    if (POSITIVE_SCORE_RE.test(id)) {
+      score += 25;
+    }
+    if (NEGATIVE_SCORE_RE.test(id)) {
+      score -= 25;
     }
   }
-}
-function addScoreTo($node, $, score) {
-  if ($node) {
-    convertSpans($node, $);
-    addScore($node, $, score);
-  }
-}
-function scorePs($, weightNodes) {
-  $('p, pre').not('[score]').each(function (index, node) {
-    // The raw score for this paragraph, before we add any parent/child
-    // scores.
-    var $node = $(node);
-    $node = setScore($node, $, getOrInitScore($node, $, weightNodes));
-    var $parent = $node.parent();
-    var rawScore = scoreNode($node);
-    addScoreTo($parent, $, rawScore);
-    if ($parent) {
-      // Add half of the individual content score to the
-      // grandparent
-      addScoreTo($parent.parent(), $, rawScore / 2);
-    }
-  });
-  return $;
-}
-
-// score content. Parents get the full value of their children's
-// content score, grandparents half
-function scoreContent($) {
-  var weightNodes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-  // First, look for special hNews based selectors and give them a big
-  // boost, if they exist
-  HNEWS_CONTENT_SELECTORS.forEach(function (_ref) {
-    var _ref2 = _slicedToArray__default["default"](_ref, 2),
-      parentSelector = _ref2[0],
-      childSelector = _ref2[1];
-    $("".concat(parentSelector, " ").concat(childSelector)).each(function (index, node) {
-      addScore($(node).parent(parentSelector), $, 80);
-    });
-  });
-
-  // Doubling this again
-  // Previous solution caused a bug
-  // in which parents weren't retaining
-  // scores. This is not ideal, and
-  // should be fixed.
-  scorePs($, weightNodes);
-  scorePs($, weightNodes);
-  return $;
-}
-
-// Now that we have a top_candidate, look through the siblings of
-// it to see if any of them are decently scored. If they are, they
-// may be split parts of the content (Like two divs, a preamble and
-// a body.) Example:
-// http://articles.latimes.com/2009/oct/14/business/fi-bigtvs14
-function mergeSiblings($candidate, topScore, $) {
-  if (!$candidate.parent().length) {
-    return $candidate;
-  }
-  var siblingScoreThreshold = Math.max(10, topScore * 0.25);
-  var wrappingDiv = $('<div></div>');
-  $candidate.parent().children().each(function (index, sibling) {
-    var $sibling = $(sibling);
-    // Ignore tags like BR, HR, etc
-    if (NON_TOP_CANDIDATE_TAGS_RE.test(sibling.tagName)) {
-      return null;
-    }
-    var siblingScore = getScore($sibling);
-    if (siblingScore) {
-      if ($sibling.get(0) === $candidate.get(0)) {
-        wrappingDiv.append($sibling);
-      } else {
-        var contentBonus = 0;
-        var density = linkDensity($sibling);
-
-        // If sibling has a very low link density,
-        // give it a small bonus
-        if (density < 0.05) {
-          contentBonus += 20;
-        }
-
-        // If sibling has a high link density,
-        // give it a penalty
-        if (density >= 0.5) {
-          contentBonus -= 20;
-        }
-
-        // If sibling node has the same class as
-        // candidate, give it a bonus
-        if ($sibling.attr('class') === $candidate.attr('class')) {
-          contentBonus += topScore * 0.2;
-        }
-        var newScore = siblingScore + contentBonus;
-        if (newScore >= siblingScoreThreshold) {
-          return wrappingDiv.append($sibling);
-        }
-        if (sibling.tagName === 'p') {
-          var siblingContent = $sibling.text();
-          var siblingContentLength = textLength(siblingContent);
-          if (siblingContentLength > 80 && density < 0.25) {
-            return wrappingDiv.append($sibling);
-          }
-          if (siblingContentLength <= 80 && density === 0 && hasSentenceEnd(siblingContent)) {
-            return wrappingDiv.append($sibling);
-          }
-        }
+  if (classes) {
+    if (score === 0) {
+      // if classes exist and id did not contribute to score
+      // try to score on both positive and negative
+      if (POSITIVE_SCORE_RE.test(classes)) {
+        score += 25;
+      }
+      if (NEGATIVE_SCORE_RE.test(classes)) {
+        score -= 25;
       }
     }
-    return null;
-  });
-  if (wrappingDiv.children().length === 1 && wrappingDiv.children().first().get(0) === $candidate.get(0)) {
-    return $candidate;
+
+    // even if score has been set by id, add score for
+    // possible photo matches
+    // "try to keep photos if we can"
+    if (PHOTO_HINTS_RE.test(classes)) {
+      score += 10;
+    }
+
+    // add 25 if class matches entry-content-asset,
+    // a class apparently instructed for use in the
+    // Readability publisher guidelines
+    // https://www.readability.com/developers/guidelines
+    if (READABILITY_ASSET.test(classes)) {
+      score += 25;
+    }
   }
-  return wrappingDiv;
+  return score;
 }
 
-// After we've calculated scores, loop through all of the possible
-// candidate nodes we found and find the one with the highest score.
-function findTopCandidate($) {
-  var $candidate;
-  var topScore = 0;
-  $('[score]').each(function (index, node) {
-    // Ignore tags like BR, HR, etc
-    if (NON_TOP_CANDIDATE_TAGS_RE.test(node.tagName)) {
-      return;
-    }
-    var $node = $(node);
-    var score = getScore($node);
-    if (score > topScore) {
-      topScore = score;
-      $candidate = $node;
-    }
-  });
-
-  // If we don't have a candidate, return the body
-  // or whatever the first element is
-  if (!$candidate) {
-    return $('body') || $('*').first();
+// eslint-disable-next-line import/no-cycle
+function addScore($node, $, amount) {
+  try {
+    var score = getOrInitScore($node, $) + amount;
+    setScore($node, $, score);
+  } catch (e) {
+    // Ignoring; error occurs in scoreNode
   }
-  $candidate = mergeSiblings($candidate, topScore, $);
-  return $candidate;
+  return $node;
+}
+
+// eslint-disable-next-line import/no-cycle
+
+// Adds 1/4 of a child's score to its parent
+function addToParent(node, $, score) {
+  var parent = node.parent();
+  if (parent) {
+    addScore(parent, $, score * 0.25);
+  }
+  return node;
+}
+
+// gets and returns the score if it exists
+// if not, initializes a score based on
+// the node's tag type
+function getOrInitScore($node, $) {
+  var weightNodes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var score = getScore($node);
+  if (score) {
+    return score;
+  }
+  score = scoreNode($node);
+  if (weightNodes) {
+    score += getWeight($node);
+  }
+  addToParent($node, $, score);
+  return score;
+}
+function textLength(text) {
+  return text.trim().replace(/\s+/g, ' ').length;
+}
+
+// Determines what percentage of the text
+// in a node is link text
+// Takes a node, returns a float
+function linkDensity($node) {
+  var totalTextLength = textLength($node.text());
+  var linkText = $node.find('a').text();
+  var linkLength = textLength(linkText);
+  if (totalTextLength > 0) {
+    return linkLength / totalTextLength;
+  }
+  if (totalTextLength === 0 && linkLength > 0) {
+    return 1;
+  }
+  return 0;
 }
 function removeUnlessContent($node, $, weight) {
   // Explicitly save entry-content-asset tags, which are
@@ -1502,6 +1387,14 @@ function rewriteTopLevel(article, $) {
   $ = convertNodeTo($('body'), $, 'div');
   return $;
 }
+function setAttr(node, attr, val) {
+  if (node.attribs) {
+    node.attribs[attr] = val;
+  } else if (node.attributes) {
+    node.setAttribute(attr, val);
+  }
+  return node;
+}
 function absolutize($, rootUrl, attr) {
   var baseUrl = $('base').attr('href');
   $("[".concat(attr, "]")).each(function (_, node) {
@@ -1541,24 +1434,13 @@ function makeLinksAbsolute($content, $, url) {
   absolutizeSet($, url, $content);
   return $content;
 }
-function textLength(text) {
-  return text.trim().replace(/\s+/g, ' ').length;
-}
 
-// Determines what percentage of the text
-// in a node is link text
-// Takes a node, returns a float
-function linkDensity($node) {
-  var totalTextLength = textLength($node.text());
-  var linkText = $node.find('a').text();
-  var linkLength = textLength(linkText);
-  if (totalTextLength > 0) {
-    return linkLength / totalTextLength;
-  }
-  if (totalTextLength === 0 && linkLength > 0) {
-    return 1;
-  }
-  return 0;
+// strips all tags from a string of text
+function stripTags(text, $) {
+  // Wrapping text in html element prevents errors when text
+  // has no html
+  var cleanText = $("<span>".concat(text, "</span>")).text();
+  return cleanText === '' ? text : cleanText;
 }
 function _createForOfIteratorHelper$4(r, e) {
   var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"];
@@ -1681,6 +1563,17 @@ function extractFromMeta($, metaNames, cachedNames) {
   }
   return null;
 }
+function withinComment($node) {
+  var parents = $node.parents().toArray();
+  var commentParent = parents.find(function (parent) {
+    var attrs = getAttrs(parent);
+    var nodeClass = attrs["class"],
+      id = attrs.id;
+    var classAndId = "".concat(nodeClass, " ").concat(id);
+    return classAndId.includes('comment');
+  });
+  return commentParent !== undefined;
+}
 function _createForOfIteratorHelper$3(r, e) {
   var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"];
   if (!t) {
@@ -1793,25 +1686,6 @@ function extractFromSelectors($, selectors) {
   return null;
 }
 
-// strips all tags from a string of text
-function stripTags(text, $) {
-  // Wrapping text in html element prevents errors when text
-  // has no html
-  var cleanText = $("<span>".concat(text, "</span>")).text();
-  return cleanText === '' ? text : cleanText;
-}
-function withinComment($node) {
-  var parents = $node.parents().toArray();
-  var commentParent = parents.find(function (parent) {
-    var attrs = getAttrs(parent);
-    var nodeClass = attrs["class"],
-      id = attrs.id;
-    var classAndId = "".concat(nodeClass, " ").concat(id);
-    return classAndId.includes('comment');
-  });
-  return commentParent !== undefined;
-}
-
 // Given a node, determine if it's article-like enough to return
 // param: node (a cheerio node)
 // return: boolean
@@ -1821,27 +1695,6 @@ function nodeIsSufficient($node) {
 }
 function isWordpress($) {
   return $(IS_WP_SELECTOR).length > 0;
-}
-function setAttr(node, attr, val) {
-  if (node.attribs) {
-    node.attribs[attr] = val;
-  } else if (node.attributes) {
-    node.setAttribute(attr, val);
-  }
-  return node;
-}
-function setAttrs(node, attrs) {
-  if (node.attribs) {
-    node.attribs = attrs;
-  } else if (node.attributes) {
-    while (node.attributes.length > 0) {
-      node.removeAttribute(node.attributes[0].name);
-    }
-    _Reflect$ownKeys__default["default"](attrs).forEach(function (key) {
-      node.setAttribute(key, attrs[key]);
-    });
-  }
-  return node;
 }
 var IS_LINK = new RegExp('https?://', 'i');
 var IMAGE_RE = '.(png|gif|jpe?g)';
@@ -7332,6 +7185,65 @@ var OrfAtExtractor = {
     clean: ['.story-meta']
   }
 };
+var WwwVideogameschronicleComExtractor = {
+  domain: 'www.videogameschronicle.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.author-byline a[rel="author"]']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  content: {
+    selectors: ['.post__content-body', 'article'],
+    transforms: {
+      'figure a': function figure_a($node) {
+        var href = $node.attr('href');
+        var $img = $node.find('img');
+        if (href && $img.length && !$img.attr('src')) {
+          $img.attr('src', href);
+          $node.replaceWith($img);
+        }
+      }
+    },
+    clean: ['.adcontainer']
+  }
+};
+var WwwNumeramaComExtractor = {
+  domain: 'www.numerama.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: ['.article-header__description']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article-content', 'article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.js-newsletter-block', '.premium-promo-alert', '[data-nosnippet]', '.ultimedia_cntr']
+  }
+};
 var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
   __proto__: null,
   BloggerExtractor: BloggerExtractor,
@@ -7517,7 +7429,9 @@ var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
   WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
   SgNewsYahooComExtractor: SgNewsYahooComExtractor,
   GonintendoComExtractor: GonintendoComExtractor,
-  OrfAtExtractor: OrfAtExtractor
+  OrfAtExtractor: OrfAtExtractor,
+  WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
+  WwwNumeramaComExtractor: WwwNumeramaComExtractor
 });
 function ownKeys$5(e, r) {
   var t = _Object$keys__default["default"](e);
@@ -7752,28 +7666,6 @@ function extractCleanNode(article, _ref) {
   cleanAttributes(article, $);
   return article;
 }
-function cleanTitle(title, _ref) {
-  var url = _ref.url,
-    $ = _ref.$;
-  // If title has |, :, or - in it, see if
-  // we can clean it up.
-  if (TITLE_SPLITTERS_RE.test(title)) {
-    title = resolveSplitTitle(title, url);
-  }
-
-  // Final sanity check that we didn't get a crazy title.
-  // if (title.length > 150 || title.length < 15) {
-  if (title.length > 150) {
-    // If we did, return h1 from the document if it exists
-    var h1 = $('h1');
-    if (h1.length === 1) {
-      title = h1.text();
-    }
-  }
-
-  // strip any html tags in the title text
-  return normalizeSpaces(stripTags(title, $).trim());
-}
 function extractBreadcrumbTitle(splitTitle, text) {
   // This must be a very breadcrumbed title, like:
   // The Best Gadgets on Earth : Bits : Blogs : NYTimes.com
@@ -7856,6 +7748,28 @@ function resolveSplitTitle(title) {
   // Just return it all.
   return title;
 }
+function cleanTitle(title, _ref) {
+  var url = _ref.url,
+    $ = _ref.$;
+  // If title has |, :, or - in it, see if
+  // we can clean it up.
+  if (TITLE_SPLITTERS_RE.test(title)) {
+    title = resolveSplitTitle(title, url);
+  }
+
+  // Final sanity check that we didn't get a crazy title.
+  // if (title.length > 150 || title.length < 15) {
+  if (title.length > 150) {
+    // If we did, return h1 from the document if it exists
+    var h1 = $('h1');
+    if (h1.length === 1) {
+      title = h1.text();
+    }
+  }
+
+  // strip any html tags in the title text
+  return normalizeSpaces(stripTags(title, $).trim());
+}
 var Cleaners = {
   author: cleanAuthor,
   lead_image_url: clean$1,
@@ -7864,6 +7778,157 @@ var Cleaners = {
   content: extractCleanNode,
   title: cleanTitle
 };
+function convertSpans($node, $) {
+  if ($node.get(0)) {
+    var _$node$get = $node.get(0),
+      tagName = _$node$get.tagName;
+    if (tagName === 'span') {
+      // convert spans to divs
+      convertNodeTo($node, $, 'div');
+    }
+  }
+}
+function addScoreTo($node, $, score) {
+  if ($node) {
+    convertSpans($node, $);
+    addScore($node, $, score);
+  }
+}
+function scorePs($, weightNodes) {
+  $('p, pre').not('[score]').each(function (index, node) {
+    // The raw score for this paragraph, before we add any parent/child
+    // scores.
+    var $node = $(node);
+    $node = setScore($node, $, getOrInitScore($node, $, weightNodes));
+    var $parent = $node.parent();
+    var rawScore = scoreNode($node);
+    addScoreTo($parent, $, rawScore);
+    if ($parent) {
+      // Add half of the individual content score to the
+      // grandparent
+      addScoreTo($parent.parent(), $, rawScore / 2);
+    }
+  });
+  return $;
+}
+
+// score content. Parents get the full value of their children's
+// content score, grandparents half
+function scoreContent($) {
+  var weightNodes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  // First, look for special hNews based selectors and give them a big
+  // boost, if they exist
+  HNEWS_CONTENT_SELECTORS.forEach(function (_ref) {
+    var _ref2 = _slicedToArray__default["default"](_ref, 2),
+      parentSelector = _ref2[0],
+      childSelector = _ref2[1];
+    $("".concat(parentSelector, " ").concat(childSelector)).each(function (index, node) {
+      addScore($(node).parent(parentSelector), $, 80);
+    });
+  });
+
+  // Doubling this again
+  // Previous solution caused a bug
+  // in which parents weren't retaining
+  // scores. This is not ideal, and
+  // should be fixed.
+  scorePs($, weightNodes);
+  scorePs($, weightNodes);
+  return $;
+}
+
+// Now that we have a top_candidate, look through the siblings of
+// it to see if any of them are decently scored. If they are, they
+// may be split parts of the content (Like two divs, a preamble and
+// a body.) Example:
+// http://articles.latimes.com/2009/oct/14/business/fi-bigtvs14
+function mergeSiblings($candidate, topScore, $) {
+  if (!$candidate.parent().length) {
+    return $candidate;
+  }
+  var siblingScoreThreshold = Math.max(10, topScore * 0.25);
+  var wrappingDiv = $('<div></div>');
+  $candidate.parent().children().each(function (index, sibling) {
+    var $sibling = $(sibling);
+    // Ignore tags like BR, HR, etc
+    if (NON_TOP_CANDIDATE_TAGS_RE.test(sibling.tagName)) {
+      return null;
+    }
+    var siblingScore = getScore($sibling);
+    if (siblingScore) {
+      if ($sibling.get(0) === $candidate.get(0)) {
+        wrappingDiv.append($sibling);
+      } else {
+        var contentBonus = 0;
+        var density = linkDensity($sibling);
+
+        // If sibling has a very low link density,
+        // give it a small bonus
+        if (density < 0.05) {
+          contentBonus += 20;
+        }
+
+        // If sibling has a high link density,
+        // give it a penalty
+        if (density >= 0.5) {
+          contentBonus -= 20;
+        }
+
+        // If sibling node has the same class as
+        // candidate, give it a bonus
+        if ($sibling.attr('class') === $candidate.attr('class')) {
+          contentBonus += topScore * 0.2;
+        }
+        var newScore = siblingScore + contentBonus;
+        if (newScore >= siblingScoreThreshold) {
+          return wrappingDiv.append($sibling);
+        }
+        if (sibling.tagName === 'p') {
+          var siblingContent = $sibling.text();
+          var siblingContentLength = textLength(siblingContent);
+          if (siblingContentLength > 80 && density < 0.25) {
+            return wrappingDiv.append($sibling);
+          }
+          if (siblingContentLength <= 80 && density === 0 && hasSentenceEnd(siblingContent)) {
+            return wrappingDiv.append($sibling);
+          }
+        }
+      }
+    }
+    return null;
+  });
+  if (wrappingDiv.children().length === 1 && wrappingDiv.children().first().get(0) === $candidate.get(0)) {
+    return $candidate;
+  }
+  return wrappingDiv;
+}
+
+// After we've calculated scores, loop through all of the possible
+// candidate nodes we found and find the one with the highest score.
+function findTopCandidate($) {
+  var $candidate;
+  var topScore = 0;
+  $('[score]').each(function (index, node) {
+    // Ignore tags like BR, HR, etc
+    if (NON_TOP_CANDIDATE_TAGS_RE.test(node.tagName)) {
+      return;
+    }
+    var $node = $(node);
+    var score = getScore($node);
+    if (score > topScore) {
+      topScore = score;
+      $candidate = $node;
+    }
+  });
+
+  // If we don't have a candidate, return the body
+  // or whatever the first element is
+  if (!$candidate) {
+    return $('body') || $('*').first();
+  }
+  $candidate = mergeSiblings($candidate, topScore, $);
+  return $candidate;
+}
 
 // Using a variety of scoring techniques, extract the content most
 // likely to be article text.
