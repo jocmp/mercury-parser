@@ -16,10 +16,6 @@ Mercury Parser allows you to easily create custom parsers using simple JavaScrip
 ### Installation
 
 ```bash
-# If you're using yarn
-yarn add @jocmp/mercury-parser
-
-# If you're using npm
 npm install @jocmp/mercury-parser
 ```
 
@@ -107,9 +103,6 @@ Note that the URL argument is still supplied, in order to identify the web site 
 Mercury Parser also ships with a CLI, meaning you can use it from your command line like so:
 
 ```bash
-# Install Mercury Parser globally
-yarn global add @jocmp/mercury-parser
-#   or
 npm -g install @jocmp/mercury-parser
 
 # Then

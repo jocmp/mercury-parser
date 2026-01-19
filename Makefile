@@ -6,15 +6,15 @@ build:
 
 .PHONY: build-node
 build-node:
-	yarn build
+	npm run build
 
 .PHONY: build-web
 build-web:
-	yarn build:web
+	npm run build:web
 
 .PHONY: build-generator
 build-generator:
-	yarn build:generator
+	npm run build:generator
 
 .PHONY: deps
 deps: ## Install bumpver
