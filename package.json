@@ -91,7 +91,7 @@
     "playwright": "^1.57.0",
     "prettier": "^1.15.3",
     "remark-cli": "^12.0.1",
-    "remark-lint": "^6.0.4",
+    "remark-lint": "^10.0.1",
     "remark-preset-lint-recommended": "^7.0.0",
     "request": "^2.88.2",
     "rollup": "^2.79.2",
