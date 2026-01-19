@@ -36,3 +36,7 @@ dev:
 .PHONY: check
 check:
 	npm run lint
+
+.PHONY: test
+test:
+	npm test

@@ -183,3 +183,4 @@ export * from './sg.news.yahoo.com';
 export * from './gonintendo.com';
 export * from './orf.at';
 export * from './www.videogameschronicle.com';
+export * from './www.numerama.com';
