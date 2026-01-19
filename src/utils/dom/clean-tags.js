@@ -1,13 +1,11 @@
-import {
-  getScore,
-  setScore,
-  getOrInitScore,
-  scoreCommas,
-} from 'extractors/generic/content/scoring';
+import getScore from '../../extractors/generic/content/scoring/get-score';
+import setScore from '../../extractors/generic/content/scoring/set-score';
+import getOrInitScore from '../../extractors/generic/content/scoring/get-or-init-score';
+import scoreCommas from '../../extractors/generic/content/scoring/score-commas';
 
 import { CLEAN_CONDITIONALLY_TAGS, KEEP_CLASS } from './constants';
 import { normalizeSpaces } from '../text';
-import { linkDensity } from './index';
+import { linkDensity } from './link-density';
 
 function removeUnlessContent($node, $, weight) {
   // Explicitly save entry-content-asset tags, which are
