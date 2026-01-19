@@ -22,6 +22,7 @@ Follow these steps:
 
    - Prefer a single selector over multiple in the `selectors` array. If you use a CSS Selector for the content, fall back to a semantic HTML tag.
    - The goal is repeatable parsers - avoid brittle selectors
+   - If h2 elements are primarily used for section headings within article content, add a transform to preserve them: `h2: node => node.attr('class', 'mercury-parser-keep')`
    - See `src/extractors/custom/www.phoronix.com/index.js` for an example
 
 4. Remove boilerplate comments from `index.js` and `index.test.js`
