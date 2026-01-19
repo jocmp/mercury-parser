@@ -1,5 +1,5 @@
 import { NON_TOP_CANDIDATE_TAGS_RE } from './constants';
-import { getScore } from './index';
+import getScore from './get-score';
 import mergeSiblings from './merge-siblings';
 
 // After we've calculated scores, loop through all of the possible

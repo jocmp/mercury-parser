@@ -1,4 +1,4 @@
-import { getWeight } from 'extractors/generic/content/scoring';
+import getWeight from '../../extractors/generic/content/scoring/get-weight';
 
 import { HEADER_TAG_LIST, KEEP_CLASS } from './constants';
 import { normalizeSpaces } from '../text';

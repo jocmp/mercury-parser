@@ -1,4 +1,4 @@
-import { scoreParagraph } from './index';
+import scoreParagraph from './score-paragraph';
 import {
   PARAGRAPH_SCORE_TAGS,
   CHILD_CONTENT_TAGS,

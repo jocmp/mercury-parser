@@ -32,3 +32,7 @@ changelog:
 .PHONY: dev
 dev:
 	cd demo && npm install && npm run dev
+
+.PHONY: check
+check:
+	npm run lint

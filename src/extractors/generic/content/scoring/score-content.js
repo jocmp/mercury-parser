@@ -1,7 +1,10 @@
 import { convertNodeTo } from 'utils/dom';
 
 import { HNEWS_CONTENT_SELECTORS } from './constants';
-import { scoreNode, setScore, getOrInitScore, addScore } from './index';
+import scoreNode from './score-node';
+import setScore from './set-score';
+import getOrInitScore from './get-or-init-score';
+import addScore from './add-score';
 
 function convertSpans($node, $) {
   if ($node.get(0)) {

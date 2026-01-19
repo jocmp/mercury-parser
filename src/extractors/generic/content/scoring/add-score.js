@@ -1,4 +1,6 @@
-import { getOrInitScore, setScore } from './index';
+// eslint-disable-next-line import/no-cycle
+import getOrInitScore from './get-or-init-score';
+import setScore from './set-score';
 
 export default function addScore($node, $, amount) {
   try {
