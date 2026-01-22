@@ -1,8 +1,7 @@
 import assert from 'assert';
-import URL from 'url';
 import * as cheerio from 'cheerio';
 
-import Mercury from 'mercury';
+import Parser from 'mercury';
 import getExtractor from 'extractors/get-extractor';
 import { excerptContent } from 'utils/text';
 
@@ -14,102 +13,67 @@ describe('IciRadioCanadaCaExtractor', () => {
     let url;
     beforeAll(() => {
       url =
-        'http://ici.radio-canada.ca/nouvelle/1022038/kpmg-comptables-fiscalite-impots-paradis-fiscaux-juge-bocock-cocktail';
+        'https://ici.radio-canada.ca/nouvelle/2205360/budget-federal-depenses-compressions-investissements-deficit-2025';
       const html = fs.readFileSync(
-        './fixtures/ici.radio-canada.ca.html',
-        'utf-8'
+        './fixtures/ici.radio-canada.ca/1769046155910.html'
       );
-      result = Mercury.parse(url, { html, fallback: false });
+      result = Parser.parse(url, { html, fallback: false });
     });
 
     it('is selected properly', () => {
-      // This test should be passing by default.
-      // It sanity checks that the correct parser
-      // is being selected for URLs from this domain
       const extractor = getExtractor(url);
-      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, new URL(url).hostname);
     });
 
     it('returns the title', async () => {
-      // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
       const { title } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(title, 'Affaire KPMG : un juge se récuse');
+      assert.strictEqual(
+        title,
+        'Budget fédéral\u00a0: dépenses de taille, compressions humbles et un déficit qui se creuse'
+      );
     });
 
     it('returns the author', async () => {
-      // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
       const { author } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(
-        author,
-        'Zone Justice et faits divers - ICI.Radio-Canada.ca'
-      );
+      assert.strictEqual(author, 'Zone Politique - ICI.Radio-Canada.ca');
     });
 
     it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
       const { date_published } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(date_published, '2017-03-13T23:18:00.000Z');
-    });
-
-    it('returns the dek', async () => {
-      // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
-      const { dek } = await result;
-
-      // Update these values with the expected values from
-      // the article.
-      assert.strictEqual(
-        dek,
-        "Un juge de la Cour de l'impôt se récuse d'un dossier mettant en cause un stratagème du cabinet comptable KPMG. Selon les émissions Enquête et The Fifth Estate, le juge Bocock avait participé à une soirée cocktail organisée par un cabinet d'avocats lié à l'affaire."
-      );
+      assert.strictEqual(date_published, '2025-11-04T21:04:12.603Z');
     });
 
     it('returns the lead_image_url', async () => {
-      // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
       const { lead_image_url } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         lead_image_url,
-        'https://images.radio-canada.ca/v1/ici-info/16x9/randall-bocock-juge.jpg?im=Resize=(1250);Composite=(type=URL,url=https://images.radio-canada.ca/v1/assets/elements/16x9/outdated-content-2017.png),gravity=SouthEast,placement=Over,location=(0,0),scale=1'
+        'https://images.radio-canada.ca/q_auto,w_1250/v1/ici-info/16x9/mark-carney-francois-philippe-champagne-budget-2025-un-canada-fort.jpg'
+      );
+    });
+
+    it('returns the dek', async () => {
+      const { dek } = await result;
+
+      assert.strictEqual(
+        dek,
+        'Pour leur premier budget, les libéraux de Mark Carney misent sur des investissements considérables axés sur le logement, les infrastructures et la défense.'
       );
     });
 
     it('returns the content', async () => {
-      // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/ici.radio-canada.ca/index.js.
-      // You may also want to make use of the clean and transform
-      // options.
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         first13,
-        "Un texte de Frédéric Zalac d'Enquête Jusqu’à la semaine dernière, le juge Randall"
+        '« Générationnels », « audacieux », « historiques »… Ce ne sont pas'
       );
     });
   });

@@ -2,7 +2,7 @@ export const IciRadioCanadaCaExtractor = {
   domain: 'ici.radio-canada.ca',
 
   title: {
-    selectors: ['h1'],
+    selectors: [['meta[name="dc.title"]', 'value']],
   },
 
   author: {
@@ -11,12 +11,10 @@ export const IciRadioCanadaCaExtractor = {
 
   date_published: {
     selectors: [['meta[name="dc.date.created"]', 'value']],
-    format: 'YYYY-MM-DD|HH[h]mm',
-    timezone: 'America/New_York',
   },
 
   dek: {
-    selectors: ['div.lead-container', '.bunker-component.lead'],
+    selectors: [['meta[name="description"]', 'value']],
   },
 
   lead_image_url: {
@@ -24,18 +22,11 @@ export const IciRadioCanadaCaExtractor = {
   },
 
   content: {
-    selectors: [
-      'section.document-content-style',
-      ['.main-multimedia-item', '.news-story-content'],
-    ],
-
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
-
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: [],
+    selectors: ['article main', 'article'],
+    transforms: {
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      ul: node => node.attr('class', 'mercury-parser-keep'),
+    },
+    clean: ['header', 'nav', 'button', 'figcaption', '[class*="adBox"]'],
   },
 };
