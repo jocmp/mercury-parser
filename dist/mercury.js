@@ -4390,31 +4390,31 @@ var WwwSlateComExtractor = {
 var IciRadioCanadaCaExtractor = {
   domain: 'ici.radio-canada.ca',
   title: {
-    selectors: ['h1']
+    selectors: [['meta[name="dc.title"]', 'value']]
   },
   author: {
     selectors: [['meta[name="dc.creator"]', 'value']]
   },
   date_published: {
-    selectors: [['meta[name="dc.date.created"]', 'value']],
-    format: 'YYYY-MM-DD|HH[h]mm',
-    timezone: 'America/New_York'
+    selectors: [['meta[name="dc.date.created"]', 'value']]
   },
   dek: {
-    selectors: ['div.lead-container', '.bunker-component.lead']
+    selectors: [['meta[name="description"]', 'value']]
   },
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['section.document-content-style', ['.main-multimedia-item', '.news-story-content']],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: []
+    selectors: ['article main', 'article'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      ul: function ul(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['header', 'nav', 'button', 'figcaption', '[class*="adBox"]']
   }
 };
 
@@ -6576,12 +6576,6 @@ var WwwVortezNetExtractor = {
   title: {
     selectors: ['title']
   },
-  author: {
-    selectors: []
-  },
-  date_published: {
-    selectors: []
-  },
   dek: {
     selectors: []
   },
@@ -6950,6 +6944,23 @@ var WwwNumeramaComExtractor = {
   }
 };
 
+var TerminaltroveComExtractor = {
+  domain: 'terminaltrove.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    clean: ['.share-badge', '.modal', '.modal-toggle', '.sr-only', '.premium-sponsor-featured']
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   BloggerExtractor: BloggerExtractor,
@@ -7137,7 +7148,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   GonintendoComExtractor: GonintendoComExtractor,
   OrfAtExtractor: OrfAtExtractor,
   WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
-  WwwNumeramaComExtractor: WwwNumeramaComExtractor
+  WwwNumeramaComExtractor: WwwNumeramaComExtractor,
+  TerminaltroveComExtractor: TerminaltroveComExtractor
 });
 
 function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
