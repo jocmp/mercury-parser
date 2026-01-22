@@ -5,14 +5,6 @@ export const WwwVortezNetExtractor = {
     selectors: ['title'],
   },
 
-  author: {
-    selectors: [],
-  },
-
-  date_published: {
-    selectors: [],
-  },
-
   dek: {
     selectors: [],
   },
