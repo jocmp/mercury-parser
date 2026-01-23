@@ -185,3 +185,4 @@ export * from './orf.at';
 export * from './www.videogameschronicle.com';
 export * from './www.numerama.com';
 export * from './terminaltrove.com';
+export * from './news.pts.org.tw';
