@@ -111,7 +111,7 @@
     "string-direction": "^0.1.2",
     "turndown": "^7.1.1",
     "wuzzy": "^0.1.4",
-    "yargs-parser": "^15.0.1"
+    "yargs-parser": "^22.0.0"
   },
   "bundleDependencies": [
     "browser-request"
