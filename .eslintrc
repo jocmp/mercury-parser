@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": ["airbnb", "prettier"],
   "plugins": ["babel"],
   "globals": {
@@ -21,11 +21,13 @@
     "func-names": 0,
     "no-confusing-arrow": 0,
     "camelcase": 0,
+    "prefer-regex-literals": 0,
+    "default-param-last": 0,
     "no-multiple-empty-lines": [
       "error",
       { "max": 1, "maxEOF": 0, "maxBOF": 0 }
     ],
-    "import/no-unresolved": false,
+    "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": [
       "error",
       {
