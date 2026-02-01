@@ -4414,7 +4414,7 @@ var IciRadioCanadaCaExtractor = {
         return node.attr('class', 'mercury-parser-keep');
       }
     },
-    clean: ['header', 'nav', 'button', 'figcaption', '[class*="adBox"]']
+    clean: ['header', 'nav', 'button', 'figcaption', '[class*="adBox"]', '.framed']
   }
 };
 
@@ -6961,6 +6961,35 @@ var TerminaltroveComExtractor = {
   }
 };
 
+var NewsPtsOrgTwExtractor = {
+  domain: 'news.pts.org.tw',
+  title: {
+    selectors: ['h1.article-title']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'content'], ['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="description"]', 'content'], ['meta[name="description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.post-article', '.article-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.articleimg', 'ul']
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   BloggerExtractor: BloggerExtractor,
@@ -7149,7 +7178,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   OrfAtExtractor: OrfAtExtractor,
   WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
   WwwNumeramaComExtractor: WwwNumeramaComExtractor,
-  TerminaltroveComExtractor: TerminaltroveComExtractor
+  TerminaltroveComExtractor: TerminaltroveComExtractor,
+  NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor
 });
 
 function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
