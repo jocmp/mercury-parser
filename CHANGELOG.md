@@ -5,11 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.2
+
+- feat: Remove 'also read' from radio-canada by @jocmp in [#101](https://github.com/jocmp/mercury-parser/pull/101)
+- feat: add news.pts.org.tw parser by @Ben-Jian in [#99](https://github.com/jocmp/mercury-parser/pull/99)
+- chore: Fix PR GH Actions by @jocmp
+
+## New Contributors
+
+- @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
+
 ## v3.0.1
 
-- [skip ci] Update Changelog
+- bump version v3.0.0 -> v3.0.1 by @jocmp
+- [skip ci] Update Changelog by @jocmp
 - feat: Add terminaltrove.com parser by @jocmp in [#98](https://github.com/jocmp/mercury-parser/pull/98)
 - feat: Update ici.radio-canada.ca parser by @jocmp in [#97](https://github.com/jocmp/mercury-parser/pull/97)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.0...v3.0.1
 
 ## v3.0.0
 
