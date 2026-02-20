@@ -1609,6 +1609,44 @@ function addExtractor(extractor) {
   return apiExtractors;
 }
 
+var BalloonJuiceComExtractor = {
+  domain: 'balloon-juice.com',
+  title: {
+    selectors: ['h1.entry-title']
+  },
+  author: {
+    selectors: ['.entry-author-name']
+  },
+  date_published: {
+    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content', 'article'],
+    transforms: {
+      // Handle JS-rendered iframes
+      'iframe[src*="embed.bsky.app"]': function iframeSrcEmbedBskyApp($node) {
+        $node.addClass('mercury-parser-keep iframe-embed-bsky');
+        $node.parent('.bluesky-embed').addClass('mercury-parser-keep');
+      },
+      // Handle no-JS blockquote fallbacks - convert to iframes
+      'blockquote.bluesky-embed[data-bluesky-uri]': function blockquoteBlueskyEmbedDataBlueskyUri($node, $) {
+        var uri = $node.attr('data-bluesky-uri');
+        if (uri) {
+          // Convert at://did:plc:.../app.bsky.feed.post/... to embed URL
+          var embedPath = uri.replace('at://', '');
+          var src = "https://embed.bsky.app/embed/".concat(embedPath);
+          var $iframe = $("<iframe src=\"".concat(src, "\" class=\"mercury-parser-keep iframe-embed-bsky\" width=\"100%\" frameborder=\"0\"></iframe>"));
+          $node.replaceWith($iframe);
+        }
+      }
+    },
+    clean: ['.shared-counts-wrap', '.entry-meta']
+  }
+};
+
 var BloggerExtractor = {
   domain: 'blogspot.com',
   content: {
@@ -6990,8 +7028,65 @@ var NewsPtsOrgTwExtractor = {
   }
 };
 
+var WwwThedriveComExtractor = {
+  domain: 'www.thedrive.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content', 'article'],
+    transforms: {
+      img: function img(node) {
+        node.removeAttr('sizes');
+      },
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.product-disclosure', '.recurrent-newsletter-block', '.pw-incontent-commerce-ad', '#author-widgets']
+  }
+};
+
+var ChicagoyimbyComExtractor = {
+  domain: 'chicagoyimby.com',
+  title: {
+    selectors: ['h1.post-title']
+  },
+  author: {
+    selectors: ['.entry-meta-author a']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content'],
+    transforms: {
+      img: function img(node) {
+        node.removeAttr('sizes');
+      }
+    },
+    clean: ['.breadcrumb']
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
+  BalloonJuiceComExtractor: BalloonJuiceComExtractor,
   BloggerExtractor: BloggerExtractor,
   NYMagExtractor: NYMagExtractor,
   WikipediaExtractor: WikipediaExtractor,
@@ -7179,7 +7274,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
   WwwNumeramaComExtractor: WwwNumeramaComExtractor,
   TerminaltroveComExtractor: TerminaltroveComExtractor,
-  NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor
+  NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
+  WwwThedriveComExtractor: WwwThedriveComExtractor,
+  ChicagoyimbyComExtractor: ChicagoyimbyComExtractor
 });
 
 function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
