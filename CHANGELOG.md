@@ -5,8 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.3
+
+- feat: Add chicagoyimby.com parser by @jocmp in [#112](https://github.com/jocmp/mercury-parser/pull/112)
+- feat: Add www.thedrive.com parser by @jocmp in [#113](https://github.com/jocmp/mercury-parser/pull/113)
+- feat: Add balloon-juice.com parser by @jocmp in [#111](https://github.com/jocmp/mercury-parser/pull/111)
+
 ## v3.0.2
 
+- bump version v3.0.1 -> v3.0.2 by @jocmp
+- [skip ci] Update changelog by @jocmp
 - feat: Remove 'also read' from radio-canada by @jocmp in [#101](https://github.com/jocmp/mercury-parser/pull/101)
 - feat: add news.pts.org.tw parser by @Ben-Jian in [#99](https://github.com/jocmp/mercury-parser/pull/99)
 - chore: Fix PR GH Actions by @jocmp
@@ -14,6 +22,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 ## New Contributors
 
 - @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.1...v3.0.2
 
 ## v3.0.1
 
