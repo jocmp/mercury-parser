@@ -33,7 +33,24 @@ function confirm(fn, args, msg, newParser) {
   const result = fn(...args);
 
   if (result && result.then) {
-    result.then(r => savePage(r, args, newParser));
+    result
+      .then(r => {
+        if (r && r.error) {
+          spinner.fail();
+          console.error(
+            `\nCould not download the page: ${r.message}\nCannot continue.`
+          );
+          process.exit(1);
+        }
+        savePage(r, args, newParser);
+      })
+      .catch(err => {
+        spinner.fail();
+        console.error(
+          `\nCould not download the page: ${err.message}\nCannot continue.`
+        );
+        process.exit(1);
+      });
   } else {
     spinner.succeed();
   }
