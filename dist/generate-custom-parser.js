@@ -9830,7 +9830,16 @@ function confirm(fn, args, msg, newParser) {
   var result = fn.apply(void 0, _toConsumableArray__default$1["default"](args));
   if (result && result.then) {
     result.then(function (r) {
-      return savePage(r, args, newParser);
+      if (r && r.error) {
+        spinner.fail();
+        console.error("\nCould not download the page: ".concat(r.message, "\nCannot continue."));
+        process.exit(1);
+      }
+      savePage(r, args, newParser);
+    })["catch"](function (err) {
+      spinner.fail();
+      console.error("\nCould not download the page: ".concat(err.message, "\nCannot continue."));
+      process.exit(1);
     });
   } else {
     spinner.succeed();
