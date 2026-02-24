@@ -42,8 +42,7 @@ export default async function collectAllPages({
         nextPageResult.content
       }`,
     };
-
-    // eslint-disable-next-line prefer-destructuring
+     
     next_page_url = nextPageResult.next_page_url;
   }
 
