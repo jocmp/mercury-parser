@@ -189,3 +189,4 @@ export * from './terminaltrove.com';
 export * from './news.pts.org.tw';
 export * from './www.thedrive.com';
 export * from './chicagoyimby.com';
+export * from './www.jalopnik.com';
