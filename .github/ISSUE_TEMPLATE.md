@@ -1,7 +1,7 @@
 <!--
 Thanks for reporting an issue!
 
-This issue tracker is for bugs and issues found within Postlight Parser.
+This issue tracker is for bugs and issues found within Mercury Parser.
 
 Please fill in as much of the template below as you're able.
 

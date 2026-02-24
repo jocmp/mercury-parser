@@ -1,6 +1,6 @@
 # Custom Parsers
 
-Postlight Parser can extract meaningful content from almost any web site, but custom parsers/extractors allow Mercury Parser to find the content more quickly and more accurately than it might otherwise do. Our goal is to include custom parsers as many sites as we can, and we'd love your help!
+Mercury Parser can extract meaningful content from almost any web site, but custom parsers/extractors allow Mercury Parser to find the content more quickly and more accurately than it might otherwise do. Our goal is to include custom parsers as many sites as we can, and we'd love your help!
 
 ## The basics of parsing a site with a custom parser
 
@@ -39,7 +39,7 @@ export const ExampleExtractor = {
     ...
 ```
 
-As you might guess, the selectors key provides an array of selectors that Postlight Parser will check to find your title text. In our `ExampleExtractor`, we're saying that the title can be found in the text of an `h1` header with a class name of `hed`.
+As you might guess, the selectors key provides an array of selectors that Mercury Parser will check to find your title text. In our `ExampleExtractor`, we're saying that the title can be found in the text of an `h1` header with a class name of `hed`.
 
 The selector you choose should return one element. If more than one element is returned by your selector, it will fail (and Parser will fall back to its generic extractor).
 
@@ -263,7 +263,7 @@ it('returns the title', async () => {
 
 As you can see, to pass this test, we need to fill out our title selector. In order to do this, you need to know what your selector is. To do this, open the html fixture the generator downloaded for you in the [`fixtures`](/fixtures) directory. In our example, that file is `fixtures/www.newyorker.com.html`. Now open that file in your web browser.
 
-The page should look more or less exactly like the site you pointed it to, but this version is downloaded locally for test purposes. (You should always look for selectors using this local fixture rather than the actual web site; some sites re-write elements after the page loads, and we want to make sure we're looking at the page the same way Postlight Parser will be.)
+The page should look more or less exactly like the site you pointed it to, but this version is downloaded locally for test purposes. (You should always look for selectors using this local fixture rather than the actual web site; some sites re-write elements after the page loads, and we want to make sure we're looking at the page the same way Mercury Parser will be.)
 
 (For the purpose of this guide, we're going to assume you're using Chrome as your default browser; any browser should do, but we're going to refer specifically to Chrome's developer tools in this guide.)
 
@@ -381,7 +381,7 @@ It's also possible to add a custom parser at runtime via the CLI.
 
 ```javascript
 var customExtractor = {
-  domain: 'postlight.com',
+  domain: 'theverge.com',
   title: {
     selectors: ['h1'],
   },
@@ -404,5 +404,5 @@ module.exports = customExtractor;
 ### 2. From the CLI, add the `--add-extractor` param:
 
 ```bash
-mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
+mercury-parser https://www.theverge.com/press-room/22772113/the-verge-on-background-policy-update --add-extractor ./src/extractors/fixtures/theverge.com/index.js
 ```

@@ -127,17 +127,15 @@ mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --ext
 mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
 ```
 
+### Previewing
+
+You can run a local server to test out your changes with the following command. The site will be
+available at <http://localhost:3000>
+
+```bash
+make dev
+```
+
 ## License
 
-Licensed under either of the below, at your preference:
-
-- Apache License, Version 2.0
-  ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-- MIT license
-  ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
-
-## Contributing
-
-For details on how to contribute to Mercury Parser, including how to write a custom content extractor for any site, see [CONTRIBUTING.md](./CONTRIBUTING.md)
-
-Unless it is explicitly stated otherwise, any contribution intentionally submitted for inclusion in the work, as defined in the Apache-2.0 license, shall be dual licensed as above without any additional terms or conditions.
+Licensed under the MIT license ([LICENSE](./LICENSE))
