@@ -2,11 +2,11 @@ Please generate a custom extract for the following link: \$ARGUMENTS.
 
 Follow these steps:
 
-1. Generate the new parser with the link via `npm run generate-parser -- <link>`
+1. Ignore your memory
 
-   - This creates `index.js`, `index.test.js`, and an HTML fixture file
+2. Generate the new parser with the link via `npm run generate-parser -- <link>`. Do not continue if this command fails and do not offer to manually fetch the page and say why it failed.
 
-2. Run the test against the new parser via `npm run watch:test <domain>`
+   - This creates `index.js`, `index.test.js`, and an HTML fixture file in `fixtures/<domain>`
 
 3. Fill out selectors for each attribute:
 
@@ -27,4 +27,6 @@ Follow these steps:
 
 4. Remove boilerplate comments from `index.js` and `index.test.js`
 
-5. Ensure code passes `make check test`
+5. Make sure tests pass with `npx jest <domain>`
+
+6. Build using `npm run build` then show me the output of `npx mercury-parser <link>` then ask me if any changes are needed
