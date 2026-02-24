@@ -12,7 +12,7 @@ export default function convertLazyLoadedImages($) {
     try {
       const { src } = JSON.parse(str);
       if (typeof src === 'string') return src;
-    } catch (_) {
+    } catch {
       return false;
     }
 

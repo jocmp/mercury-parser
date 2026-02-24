@@ -20,9 +20,9 @@ export function record(name, options = {}) {
       if (isBrowser) return;
       if (!has_fixtures) {
         try {
-          require(`../${fp}`); // eslint-disable-line global-require, import/no-dynamic-require, max-len
+          require(`../${fp}`); // eslint-disable-line global-require, import/no-dynamic-require
           has_fixtures = true;
-        } catch (e) {
+        } catch {
           nock.recorder.rec({
             dont_print: true,
           });
