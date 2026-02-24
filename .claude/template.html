@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+    th {
+      text-align: left;
+      background: #f0f0f0;
+      padding: 8px 12px;
+      width: 160px;
+      border: 1px solid #ddd;
+      font-weight: 600;
+    }
+    td {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      word-break: break-word;
+    }
+    td a {
+      color: #0066cc;
+    }
+    hr {
+      border: none;
+      border-top: 2px solid #eee;
+      margin: 2rem 0;
+    }
+    .content {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    .content blockquote {
+      border-left: 4px solid #ccc;
+      margin: 1rem 0;
+      padding: 0.5rem 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>{{TITLE}}</h1>
+
+  <table>
+    <tr>
+      <th>Author</th>
+      <td>{{AUTHOR}}</td>
+    </tr>
+    <tr>
+      <th>Date Published</th>
+      <td>{{DATE_PUBLISHED}}</td>
+    </tr>
+    <tr>
+      <th>Domain</th>
+      <td>{{DOMAIN}}</td>
+    </tr>
+    <tr>
+      <th>URL</th>
+      <td><a href="{{URL}}">{{URL}}</a></td>
+    </tr>
+    <tr>
+      <th>Excerpt</th>
+      <td>{{EXCERPT}}</td>
+    </tr>
+    <tr>
+      <th>Word Count</th>
+      <td>{{WORD_COUNT}}</td>
+    </tr>
+    <tr>
+      <th>Direction</th>
+      <td>{{DIRECTION}}</td>
+    </tr>
+    <tr>
+      <th>Pages</th>
+      <td>{{RENDERED_PAGES}} / {{TOTAL_PAGES}}</td>
+    </tr>
+    <tr>
+      <th>Lead Image</th>
+      <td>{{LEAD_IMAGE_URL}}</td>
+    </tr>
+    <tr>
+      <th>Dek</th>
+      <td>{{DEK}}</td>
+    </tr>
+    <tr>
+      <th>Next Page URL</th>
+      <td>{{NEXT_PAGE_URL}}</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <div class="content">
+    {{CONTENT}}
+  </div>
+
+</body>
+</html>
