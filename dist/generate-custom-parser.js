@@ -1203,7 +1203,7 @@ function addScore($node, $, amount) {
   try {
     var score = getOrInitScore($node, $) + amount;
     setScore($node, $, score);
-  } catch (e) {
+  } catch (_unused) {
     // Ignoring; error occurs in scoreNode
   }
   return $node;
@@ -1713,7 +1713,7 @@ function convertLazyLoadedImages($) {
       var _JSON$parse = JSON.parse(str),
         src = _JSON$parse.src;
       if (typeof src === 'string') return src;
-    } catch (_) {
+    } catch (_unused) {
       return false;
     }
     return false;
@@ -7373,6 +7373,36 @@ var ChicagoyimbyComExtractor = {
     clean: ['.breadcrumb']
   }
 };
+var WwwJalopnikComExtractor = {
+  domain: 'www.jalopnik.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="article:author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article.news-post'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      '.slide-key': function slideKey(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.breadcrumbs', '.byline-container']
+  }
+};
 var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
   __proto__: null,
   BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7565,7 +7595,8 @@ var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
   TerminaltroveComExtractor: TerminaltroveComExtractor,
   NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
   WwwThedriveComExtractor: WwwThedriveComExtractor,
-  ChicagoyimbyComExtractor: ChicagoyimbyComExtractor
+  ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
+  WwwJalopnikComExtractor: WwwJalopnikComExtractor
 });
 function ownKeys$5(e, r) {
   var t = _Object$keys__default["default"](e);
@@ -9584,8 +9615,6 @@ function _collectAllPages() {
           result = _objectSpread$1(_objectSpread$1({}, result), {}, {
             content: "".concat(result.content, "<hr><h4>Page ").concat(pages, "</h4>").concat(nextPageResult.content)
           });
-
-          // eslint-disable-next-line prefer-destructuring
           next_page_url = nextPageResult.next_page_url;
           _context.next = 1;
           break;
