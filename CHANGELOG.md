@@ -5,11 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.4
+
+- feat: Add jalopnik.com custom parser by @jocmp in [#117](https://github.com/jocmp/mercury-parser/pull/117)
+- Remove unused instruction. Add option for an html preview. by @benubois in [#116](https://github.com/jocmp/mercury-parser/pull/116)
+- Claude command error handling/updates. by @benubois in [#115](https://github.com/jocmp/mercury-parser/pull/115)
+- Improve error handling in generate-custom-parser.js by @benubois in [#114](https://github.com/jocmp/mercury-parser/pull/114)
+- Update README with dev command by @jocmp
+
 ## v3.0.3
 
+- bump version v3.0.2 -> v3.0.3 by @jocmp
+- [skip ci] Update changelog by @jocmp
 - feat: Add chicagoyimby.com parser by @jocmp in [#112](https://github.com/jocmp/mercury-parser/pull/112)
 - feat: Add www.thedrive.com parser by @jocmp in [#113](https://github.com/jocmp/mercury-parser/pull/113)
 - feat: Add balloon-juice.com parser by @jocmp in [#111](https://github.com/jocmp/mercury-parser/pull/111)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.2...v3.0.3
 
 ## v3.0.2
 
@@ -20,7 +32,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: Fix PR GH Actions by @jocmp
 
 ## New Contributors
-
 - @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
 
 **Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.1...v3.0.2
@@ -785,7 +796,7 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - fix: scorePs parent scoring was overwriting child scoring by @adampash
 - fix: accepting cookies with request (required for sites like by @adampash
 - debugging: cheerio isn't always consistent in setting scores by @adampash
-- refactor: limiting calls to \$ function by @adampash
+- refactor: limiting calls to $ function by @adampash
 - feat: whitelisting attrs to keep by @adampash
 - chore: remove logic for fetching meta tags with custom attrs (resource by @adampash
 - chore: code reorganization by @adampash
@@ -853,7 +864,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Quick port of constants file by @adampash
 
 ## New Contributors
-
 - @jocmp made their first contribution
 - @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
 - @touchRED made their first contribution
