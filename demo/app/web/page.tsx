@@ -16,10 +16,16 @@ function WebDemoContent() {
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const urlParam = searchParams.get('q') || '';
+  const defaultParam = searchParams.get('default') === '1';
+  const [forceDefault, setForceDefault] = useState(defaultParam);
 
   useEffect(() => {
     setInputUrl(urlParam);
   }, [urlParam]);
+
+  useEffect(() => {
+    setForceDefault(defaultParam);
+  }, [defaultParam]);
 
   useEffect(() => {
     // Dynamically import Mercury for client-side
@@ -41,20 +47,31 @@ function WebDemoContent() {
       setResult(null);
 
       try {
-        // Fetch HTML via API to bypass CORS
-        const fetchRes = await fetch('/api/fetch', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: urlParam }),
-        });
-        const { html, error: fetchError } = await fetchRes.json();
+        let data;
 
-        if (fetchError) {
-          setError(fetchError);
-          return;
+        if (defaultParam) {
+          const response = await fetch('/api/parse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: urlParam, forceDefault: true }),
+          });
+          data = await response.json();
+        } else {
+          // Fetch HTML via API to bypass CORS
+          const fetchRes = await fetch('/api/fetch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: urlParam }),
+          });
+          const { html, error: fetchError } = await fetchRes.json();
+
+          if (fetchError) {
+            setError(fetchError);
+            return;
+          }
+
+          data = await Mercury.parse(urlParam, { html, fetchAllPages: false });
         }
-
-        const data = await Mercury.parse(urlParam, { html, fetchAllPages: false });
 
         if (data.error) {
           setError(data.message || 'Parse failed');
@@ -69,12 +86,14 @@ function WebDemoContent() {
     };
 
     fetchAndParse();
-  }, [Mercury, urlParam]);
+  }, [Mercury, urlParam, defaultParam]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!Mercury || !inputUrl) return;
-    router.push(`/web?q=${encodeURIComponent(inputUrl)}`);
+    const params = new URLSearchParams({ q: inputUrl });
+    if (forceDefault) params.set('default', '1');
+    router.push(`/web?${params}`);
   };
 
   if (loadError) {
@@ -127,6 +146,23 @@ function WebDemoContent() {
         >
           {!Mercury ? 'Loading...' : loading ? 'Parsing...' : 'Parse'}
         </button>
+        <label
+          style={{
+            marginLeft: '1rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontSize: '0.9rem',
+            cursor: 'pointer',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={forceDefault}
+            onChange={e => setForceDefault(e.target.checked)}
+          />
+          Default parser
+        </label>
       </form>
 
       {error && (

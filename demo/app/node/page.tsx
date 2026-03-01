@@ -14,10 +14,16 @@ function NodeDemoContent() {
   const [error, setError] = useState<string | null>(null);
 
   const urlParam = searchParams.get('q') || '';
+  const defaultParam = searchParams.get('default') === '1';
+  const [forceDefault, setForceDefault] = useState(defaultParam);
 
   useEffect(() => {
     setInputUrl(urlParam);
   }, [urlParam]);
+
+  useEffect(() => {
+    setForceDefault(defaultParam);
+  }, [defaultParam]);
 
   useEffect(() => {
     if (!urlParam) return;
@@ -31,7 +37,7 @@ function NodeDemoContent() {
         const response = await fetch('/api/parse', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: urlParam }),
+          body: JSON.stringify({ url: urlParam, forceDefault: defaultParam }),
         });
 
         const data = await response.json();
@@ -54,7 +60,9 @@ function NodeDemoContent() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputUrl) return;
-    router.push(`/node?q=${encodeURIComponent(inputUrl)}`);
+    const params = new URLSearchParams({ q: inputUrl });
+    if (forceDefault) params.set('default', '1');
+    router.push(`/node?${params}`);
   };
 
   return (
@@ -86,6 +94,23 @@ function NodeDemoContent() {
         >
           {loading ? 'Parsing...' : 'Parse'}
         </button>
+        <label
+          style={{
+            marginLeft: '1rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontSize: '0.9rem',
+            cursor: 'pointer',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={forceDefault}
+            onChange={e => setForceDefault(e.target.checked)}
+          />
+          Default parser
+        </label>
       </form>
 
       {error && (
