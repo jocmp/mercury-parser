@@ -7115,6 +7115,54 @@ var WwwJalopnikComExtractor = {
   }
 };
 
+var Nineto5linuxComExtractor = {
+  domain: '9to5linux.com',
+  title: {
+    selectors: ['title', 'h1']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    transforms: {
+      img: function img(node) {
+        node.removeAttr('sizes');
+      }
+    },
+    clean: ['.post-meta']
+  }
+};
+
+var WwwMediaoneonlineComExtractor = {
+  domain: 'www.mediaoneonline.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: ['h2.article-description']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.hb-entry-main-content', '.story_content'],
+    clean: ['.inside-post-ad-1', '.inside-post-ad-before', '.inside-post-ad-before-before', '.inside-post-ad-after', '.hocal-draggable', '.audioSection']
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7308,7 +7356,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
   WwwThedriveComExtractor: WwwThedriveComExtractor,
   ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
-  WwwJalopnikComExtractor: WwwJalopnikComExtractor
+  WwwJalopnikComExtractor: WwwJalopnikComExtractor,
+  Nineto5linuxComExtractor: Nineto5linuxComExtractor,
+  WwwMediaoneonlineComExtractor: WwwMediaoneonlineComExtractor
 });
 
 function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
