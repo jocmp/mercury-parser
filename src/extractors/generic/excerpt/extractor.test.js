@@ -84,7 +84,7 @@ describe('clean(text)', () => {
     let shouldBe = `
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-      exercitation ullamco laboris nisi ut&hellip;
+      exercitation ullamco laboris&hellip;
     `;
     shouldBe = shouldBe.replace(/[\s\n]+/g, ' ').trim();
 
