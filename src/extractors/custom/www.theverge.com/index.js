@@ -18,7 +18,7 @@ export const WwwThevergeComExtractor = {
   },
 
   content: {
-    selectors: ['#zephr-anchor', 'article'],
+    selectors: ['.duet--layout--entry-body', 'article'],
 
     transforms: {
       h2: $node => $node.attr('class', 'mercury-parser-keep'),
@@ -41,6 +41,12 @@ export const WwwThevergeComExtractor = {
       },
     },
 
-    clean: [],
+    clean: [
+      '.duet--article--timestamp',
+      '[id*="-article_footer"]',
+      '[id*="-article_footer"] ~ *',
+      '#comments',
+      '#comments ~ *',
+    ],
   },
 };
