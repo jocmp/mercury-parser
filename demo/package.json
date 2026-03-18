@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "jquery": "^3.7.1",
-    "next": "^15",
+    "next": "^16",
     "react": "^19",
     "react-dom": "^19",
     "url": "^0.11.3"
