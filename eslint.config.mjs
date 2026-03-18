@@ -64,7 +64,6 @@ export default [
         {
           devDependencies: [
             '**/*.test.js',
-            'scripts/proxy-browser-test.js',
             'rollup.config*js',
           ],
         },
