@@ -5,13 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.5
+
+- feat: Update theverge.com parser to hide author block by @jocmp in [#139](https://github.com/jocmp/mercury-parser/pull/139)
+- chore: Remove request and express deps by @jocmp in [#140](https://github.com/jocmp/mercury-parser/pull/140)
+- feat: Add custom parser for 9to5linux.com by @jocmp in [#123](https://github.com/jocmp/mercury-parser/pull/123)
+
 ## v3.0.4
 
+- bump version v3.0.3 -> v3.0.4 by @jocmp
+- chore: Update changelog by @jocmp
 - feat: Add jalopnik.com custom parser by @jocmp in [#117](https://github.com/jocmp/mercury-parser/pull/117)
 - Remove unused instruction. Add option for an html preview. by @benubois in [#116](https://github.com/jocmp/mercury-parser/pull/116)
 - Claude command error handling/updates. by @benubois in [#115](https://github.com/jocmp/mercury-parser/pull/115)
 - Improve error handling in generate-custom-parser.js by @benubois in [#114](https://github.com/jocmp/mercury-parser/pull/114)
 - Update README with dev command by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.3...v3.0.4
 
 ## v3.0.3
 
