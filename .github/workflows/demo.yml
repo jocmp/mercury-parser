@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          node-version-file: ".node-version"
+      - run: npm install
+      - run: cd demo && npm install
+      - name: Verify demo boots
+        run: |
+          cd demo
+          npx next dev --port 3001 &
+          SERVER_PID=$!
+          sleep 5
+          curl -sf http://localhost:3001 > /dev/null
+          kill $SERVER_PID
