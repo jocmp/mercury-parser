@@ -7,6 +7,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 ## v3.0.5
 
+- Fix demo server by @jocmp in [#141](https://github.com/jocmp/mercury-parser/pull/141)
+- Update changelog by @jocmp
 - feat: Update theverge.com parser to hide author block by @jocmp in [#139](https://github.com/jocmp/mercury-parser/pull/139)
 - chore: Remove request and express deps by @jocmp in [#140](https://github.com/jocmp/mercury-parser/pull/140)
 - feat: Add custom parser for 9to5linux.com by @jocmp in [#123](https://github.com/jocmp/mercury-parser/pull/123)
