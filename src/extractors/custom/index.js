@@ -191,4 +191,4 @@ export * from './www.thedrive.com';
 export * from './chicagoyimby.com';
 export * from './www.jalopnik.com';
 export * from './9to5linux.com';
-export * from './www.transfermarkt.de';
+export * from './www.transfermarkt.de';export * from './www.blick.de';
