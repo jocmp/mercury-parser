@@ -62,7 +62,7 @@
     "@eslint/eslintrc": "^3.3.4",
     "@jesses/circle-github-bot": "^2.1.0",
     "@octokit/rest": "^22.0.1",
-    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-babel": "^7.0.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
