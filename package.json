@@ -73,7 +73,7 @@
     "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "babelrc-rollup": "^3.0.0",
-    "eslint": "^9.39.2",
+    "eslint": "^10.1.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-babel-module": "^5.3.2",
