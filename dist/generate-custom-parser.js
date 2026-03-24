@@ -7436,6 +7436,68 @@ function requireMercury() {
       clean: ['.post-meta']
     }
   };
+  var WwwTransfermarktDeExtractor = {
+    domain: 'www.transfermarkt.de',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: null,
+    date_published: {
+      selectors: ['.news-header span:first-child'],
+      format: 'DD.MM.YYYY - HH:mm',
+      timezone: 'Europe/Berlin'
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.news-content'],
+      defaultCleaner: false,
+      transforms: {
+        h2: function h2(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        }
+      },
+      clean: ['.dachzeile', '.news-header-social', '.newsansicht-bildquelle', '.news-widget--container', '.pinpoll', '.advertisment-button-container', 'tm-consent']
+    }
+  };
+  var WwwBlickDeExtractor = {
+    domain: 'www.blick.de',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: ['.article-meta__author']
+    },
+    date_published: {
+      selectors: [['time.article-meta__date[datetime]', 'datetime']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['article'],
+      defaultCleaner: false,
+      transforms: {
+        h2: function h2(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        },
+        'figcaption details': function figcaption_details(node) {
+          var text = node.text();
+          node.replaceWith("<span>".concat(text, "</span>"));
+        },
+        'ul.gallery__item-wrapper': 'div',
+        'li.gallery__item': 'div'
+      },
+      clean: ['.section-header', '.article__footer', '.social-button-container', '.gallery__button', '.gallery__position-label', '.detail-img__caption-toggle', '.nativendo-mid-article', '.taboola-mid-article', 'article > p']
+    }
+  };
   var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
     __proto__: null,
     BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7630,7 +7692,9 @@ function requireMercury() {
     WwwThedriveComExtractor: WwwThedriveComExtractor,
     ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
     WwwJalopnikComExtractor: WwwJalopnikComExtractor,
-    Nineto5linuxComExtractor: Nineto5linuxComExtractor
+    Nineto5linuxComExtractor: Nineto5linuxComExtractor,
+    WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
+    WwwBlickDeExtractor: WwwBlickDeExtractor
   });
   function ownKeys$5(e, r) {
     var t = _Object$keys__default$1["default"](e);
