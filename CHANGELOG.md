@@ -5,14 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.0.7
+
+- Downgrade ellipsize to 0.6.0
+- feat: Add custom parsers for euronews by @jocmp in [#151](https://github.com/jocmp/mercury-parser/pull/151)
+
 ## v3.0.6
 
+- bump version v3.0.5 -> v3.0.6 by @jocmp
+- Update changelog by @jocmp
 - feat: Add blick.de custom parser by @jocmp in [#145](https://github.com/jocmp/mercury-parser/pull/145)
 - feat: Add transfermarkt.de custom parser by @jocmp in [#144](https://github.com/jocmp/mercury-parser/pull/144)
 - chore: Bump actions to v5 for Node 24 by @jocmp
 - fix: Add npm scope to publish workflow by @jocmp
 - chore: Rework publish again by @jocmp
 - chore: Rework publish step by @jocmp in [#142](https://github.com/jocmp/mercury-parser/pull/142)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.5...v3.0.6
 
 ## v3.0.5
 
@@ -57,7 +66,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: Fix PR GH Actions by @jocmp
 
 ## New Contributors
-
 - @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
 
 **Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.1...v3.0.2
@@ -822,7 +830,7 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - fix: scorePs parent scoring was overwriting child scoring by @adampash
 - fix: accepting cookies with request (required for sites like by @adampash
 - debugging: cheerio isn't always consistent in setting scores by @adampash
-- refactor: limiting calls to \$ function by @adampash
+- refactor: limiting calls to $ function by @adampash
 - feat: whitelisting attrs to keep by @adampash
 - chore: remove logic for fetching meta tags with custom attrs (resource by @adampash
 - chore: code reorganization by @adampash
@@ -890,7 +898,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Quick port of constants file by @adampash
 
 ## New Contributors
-
 - @jocmp made their first contribution
 - @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
 - @touchRED made their first contribution
