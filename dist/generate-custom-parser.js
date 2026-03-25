@@ -452,7 +452,7 @@ function requireMercury() {
   // Use this setting as the maximum size an article can be
   // for us to attempt parsing. Defaults to 5 MB.
   var MAX_CONTENT_LENGTH = 5242880;
-  function ownKeys$g(e, r) {
+  function ownKeys$h(e, r) {
     var t = _Object$keys__default$1["default"](e);
     if (_Object$getOwnPropertySymbols__default$1["default"]) {
       var o = _Object$getOwnPropertySymbols__default$1["default"](e);
@@ -462,12 +462,12 @@ function requireMercury() {
     }
     return t;
   }
-  function _objectSpread$g(e) {
+  function _objectSpread$h(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) {
+      r % 2 ? ownKeys$h(Object(t), !0).forEach(function (r) {
         _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$g(Object(t)).forEach(function (r) {
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$h(Object(t)).forEach(function (r) {
         _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
       });
     }
@@ -547,9 +547,9 @@ function requireMercury() {
           case 0:
             headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
             parsedUrl = parsedUrl || URL__default$1["default"].parse(encodeURI(url));
-            options = _objectSpread$g({
+            options = _objectSpread$h({
               url: parsedUrl.href,
-              headers: _objectSpread$g(_objectSpread$g({}, REQUEST_HEADERS), headers),
+              headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
               timeout: FETCH_TIMEOUT,
               // Accept cookies
               jar: true,
@@ -969,7 +969,7 @@ function requireMercury() {
     }
     return node;
   }
-  function ownKeys$f(e, r) {
+  function ownKeys$g(e, r) {
     var t = _Object$keys__default$1["default"](e);
     if (_Object$getOwnPropertySymbols__default$1["default"]) {
       var o = _Object$getOwnPropertySymbols__default$1["default"](e);
@@ -979,12 +979,12 @@ function requireMercury() {
     }
     return t;
   }
-  function _objectSpread$f(e) {
+  function _objectSpread$g(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) {
+      r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) {
         _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$f(Object(t)).forEach(function (r) {
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$g(Object(t)).forEach(function (r) {
         _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
       });
     }
@@ -995,7 +995,7 @@ function requireMercury() {
       var attrs = getAttrs(node);
       setAttrs(node, _Reflect$ownKeys__default$1["default"](attrs).reduce(function (acc, attr) {
         if (WHITELIST_ATTRS_RE.test(attr)) {
-          return _objectSpread$f(_objectSpread$f({}, acc), {}, _defineProperty__default$1["default"]({}, attr, attrs[attr]));
+          return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty__default$1["default"]({}, attr, attrs[attr]));
         }
         return acc;
       }, {}));
@@ -6469,6 +6469,30 @@ function requireMercury() {
       clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
     }
   };
+  function ownKeys$f(e, r) {
+    var t = _Object$keys__default$1["default"](e);
+    if (_Object$getOwnPropertySymbols__default$1["default"]) {
+      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+      r && (o = o.filter(function (r) {
+        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+      })), t.push.apply(t, o);
+    }
+    return t;
+  }
+  function _objectSpread$f(e) {
+    for (var r = 1; r < arguments.length; r++) {
+      var t = null != arguments[r] ? arguments[r] : {};
+      r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) {
+        _defineProperty__default$1["default"](e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$f(Object(t)).forEach(function (r) {
+        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      });
+    }
+    return e;
+  }
+  var SportSePlExtractor = _objectSpread$f(_objectSpread$f({}, WwwSePlExtractor), {}, {
+    domain: 'sport.se.pl'
+  });
   function ownKeys$e(e, r) {
     var t = _Object$keys__default$1["default"](e);
     if (_Object$getOwnPropertySymbols__default$1["default"]) {
@@ -6490,31 +6514,7 @@ function requireMercury() {
     }
     return e;
   }
-  var SportSePlExtractor = _objectSpread$e(_objectSpread$e({}, WwwSePlExtractor), {}, {
-    domain: 'sport.se.pl'
-  });
-  function ownKeys$d(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
-      r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
-      })), t.push.apply(t, o);
-    }
-    return t;
-  }
-  function _objectSpread$d(e) {
-    for (var r = 1; r < arguments.length; r++) {
-      var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$d(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
-      });
-    }
-    return e;
-  }
-  var PolitykaSePlExtractor = _objectSpread$d(_objectSpread$d({}, WwwSePlExtractor), {}, {
+  var PolitykaSePlExtractor = _objectSpread$e(_objectSpread$e({}, WwwSePlExtractor), {}, {
     domain: 'polityka.se.pl'
   });
   var SuperserialeSePlExtractor = {
@@ -6544,6 +6544,30 @@ function requireMercury() {
       '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
     }
   };
+  function ownKeys$d(e, r) {
+    var t = _Object$keys__default$1["default"](e);
+    if (_Object$getOwnPropertySymbols__default$1["default"]) {
+      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+      r && (o = o.filter(function (r) {
+        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+      })), t.push.apply(t, o);
+    }
+    return t;
+  }
+  function _objectSpread$d(e) {
+    for (var r = 1; r < arguments.length; r++) {
+      var t = null != arguments[r] ? arguments[r] : {};
+      r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) {
+        _defineProperty__default$1["default"](e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$d(Object(t)).forEach(function (r) {
+        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      });
+    }
+    return e;
+  }
+  var SzczecinSePlExtractor = _objectSpread$d(_objectSpread$d({}, WwwSePlExtractor), {}, {
+    domain: 'szczecin.se.pl'
+  });
   function ownKeys$c(e, r) {
     var t = _Object$keys__default$1["default"](e);
     if (_Object$getOwnPropertySymbols__default$1["default"]) {
@@ -6565,8 +6589,8 @@ function requireMercury() {
     }
     return e;
   }
-  var SzczecinSePlExtractor = _objectSpread$c(_objectSpread$c({}, WwwSePlExtractor), {}, {
-    domain: 'szczecin.se.pl'
+  var SuperbizSePlExtractor = _objectSpread$c(_objectSpread$c({}, WwwSePlExtractor), {}, {
+    domain: 'superbiz.se.pl'
   });
   function ownKeys$b(e, r) {
     var t = _Object$keys__default$1["default"](e);
@@ -6589,31 +6613,7 @@ function requireMercury() {
     }
     return e;
   }
-  var SuperbizSePlExtractor = _objectSpread$b(_objectSpread$b({}, WwwSePlExtractor), {}, {
-    domain: 'superbiz.se.pl'
-  });
-  function ownKeys$a(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
-      r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
-      })), t.push.apply(t, o);
-    }
-    return t;
-  }
-  function _objectSpread$a(e) {
-    for (var r = 1; r < arguments.length; r++) {
-      var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$a(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
-      });
-    }
-    return e;
-  }
-  var PortalobronnySePlExtractor = _objectSpread$a(_objectSpread$a({}, WwwSePlExtractor), {}, {
+  var PortalobronnySePlExtractor = _objectSpread$b(_objectSpread$b({}, WwwSePlExtractor), {}, {
     domain: 'portalobronny.se.pl'
   });
   var PolskisamorzadSePlExtractor = {
@@ -6637,6 +6637,30 @@ function requireMercury() {
       clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
     }
   };
+  function ownKeys$a(e, r) {
+    var t = _Object$keys__default$1["default"](e);
+    if (_Object$getOwnPropertySymbols__default$1["default"]) {
+      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+      r && (o = o.filter(function (r) {
+        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+      })), t.push.apply(t, o);
+    }
+    return t;
+  }
+  function _objectSpread$a(e) {
+    for (var r = 1; r < arguments.length; r++) {
+      var t = null != arguments[r] ? arguments[r] : {};
+      r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) {
+        _defineProperty__default$1["default"](e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$a(Object(t)).forEach(function (r) {
+        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      });
+    }
+    return e;
+  }
+  var LodzSePlExtractor = _objectSpread$a(_objectSpread$a({}, WwwSePlExtractor), {}, {
+    domain: 'lodz.se.pl'
+  });
   function ownKeys$9(e, r) {
     var t = _Object$keys__default$1["default"](e);
     if (_Object$getOwnPropertySymbols__default$1["default"]) {
@@ -6658,8 +6682,8 @@ function requireMercury() {
     }
     return e;
   }
-  var LodzSePlExtractor = _objectSpread$9(_objectSpread$9({}, WwwSePlExtractor), {}, {
-    domain: 'lodz.se.pl'
+  var WroclawSePlExtractor = _objectSpread$9(_objectSpread$9({}, WwwSePlExtractor), {}, {
+    domain: 'wroclaw.se.pl'
   });
   function ownKeys$8(e, r) {
     var t = _Object$keys__default$1["default"](e);
@@ -6682,8 +6706,8 @@ function requireMercury() {
     }
     return e;
   }
-  var WroclawSePlExtractor = _objectSpread$8(_objectSpread$8({}, WwwSePlExtractor), {}, {
-    domain: 'wroclaw.se.pl'
+  var LublinSePlExtractor = _objectSpread$8(_objectSpread$8({}, WwwSePlExtractor), {}, {
+    domain: 'lublin.se.pl'
   });
   function ownKeys$7(e, r) {
     var t = _Object$keys__default$1["default"](e);
@@ -6706,31 +6730,7 @@ function requireMercury() {
     }
     return e;
   }
-  var LublinSePlExtractor = _objectSpread$7(_objectSpread$7({}, WwwSePlExtractor), {}, {
-    domain: 'lublin.se.pl'
-  });
-  function ownKeys$6(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
-      r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
-      })), t.push.apply(t, o);
-    }
-    return t;
-  }
-  function _objectSpread$6(e) {
-    for (var r = 1; r < arguments.length; r++) {
-      var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$6(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
-      });
-    }
-    return e;
-  }
-  var BialystokSePlExtractor = _objectSpread$6(_objectSpread$6({}, WwwSePlExtractor), {}, {
+  var BialystokSePlExtractor = _objectSpread$7(_objectSpread$7({}, WwwSePlExtractor), {}, {
     domain: 'bialystok.se.pl'
   });
   var WwwLebensmittelwarnungDeExtractor = {
@@ -7498,6 +7498,60 @@ function requireMercury() {
       clean: ['.section-header', '.article__footer', '.social-button-container', '.gallery__button', '.gallery__position-label', '.detail-img__caption-toggle', '.nativendo-mid-article', '.taboola-mid-article', 'article > p']
     }
   };
+  var WwwEuronewsComExtractor = {
+    domain: 'www.euronews.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: [['meta[name="article:author"]', 'value'], '.c-article-contributors']
+    },
+    date_published: {
+      selectors: [['meta[name="article:published_time"]', 'value']]
+    },
+    dek: {
+      selectors: ['h2.c-article-summary']
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.c-article-content', 'article'],
+      transforms: {
+        h2: function h2(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        },
+        '.widget__figure': function widget__figure(node) {
+          return node.addClass('mercury-parser-keep');
+        }
+      },
+      clean: ['.c-ad', '.c-widget-related', '.connatix-container']
+    }
+  };
+  function ownKeys$6(e, r) {
+    var t = _Object$keys__default$1["default"](e);
+    if (_Object$getOwnPropertySymbols__default$1["default"]) {
+      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+      r && (o = o.filter(function (r) {
+        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+      })), t.push.apply(t, o);
+    }
+    return t;
+  }
+  function _objectSpread$6(e) {
+    for (var r = 1; r < arguments.length; r++) {
+      var t = null != arguments[r] ? arguments[r] : {};
+      r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) {
+        _defineProperty__default$1["default"](e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$6(Object(t)).forEach(function (r) {
+        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      });
+    }
+    return e;
+  }
+  var GrEuronewsComExtractor = _objectSpread$6(_objectSpread$6({}, WwwEuronewsComExtractor), {}, {
+    domain: 'gr.euronews.com'
+  });
   var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
     __proto__: null,
     BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7694,7 +7748,9 @@ function requireMercury() {
     WwwJalopnikComExtractor: WwwJalopnikComExtractor,
     Nineto5linuxComExtractor: Nineto5linuxComExtractor,
     WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
-    WwwBlickDeExtractor: WwwBlickDeExtractor
+    WwwBlickDeExtractor: WwwBlickDeExtractor,
+    WwwEuronewsComExtractor: WwwEuronewsComExtractor,
+    GrEuronewsComExtractor: GrEuronewsComExtractor
   });
   function ownKeys$5(e, r) {
     var t = _Object$keys__default$1["default"](e);
