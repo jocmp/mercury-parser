@@ -1,7 +1,6 @@
 import getScore from './get-score';
 import scoreNode from './score-node';
 import getWeight from './get-weight';
-// eslint-disable-next-line import/no-cycle
 import addToParent from './add-to-parent';
 
 // gets and returns the score if it exists
