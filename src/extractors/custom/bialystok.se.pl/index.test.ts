@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('BialystokSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://bialystok.se.pl/posuzkiwany-31-latek-na-widok-policjantow-wyskoczyl-z-okna-aa-saMz-guMy-DgNE.html';

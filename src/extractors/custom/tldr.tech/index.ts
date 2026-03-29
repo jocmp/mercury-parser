@@ -13,8 +13,8 @@ export const TldrTechExtractor = {
     selectors: ['.content-center', 'body'],
 
     transforms: {
-      h2: $node => $node.attr('class', 'mercury-parser-keep'),
-      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+      h2: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
+      h3: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: [],

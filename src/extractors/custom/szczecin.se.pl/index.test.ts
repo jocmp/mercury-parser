@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SzczecinSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://szczecin.se.pl/czterdziesci-wysokich-wygranych-w-eurojackpot-w-polsce-ale-to-w-tym-kraju-rozbili-wielka-kumulacje-aa-Vtns-Mgcv-RZmj.html';

@@ -29,7 +29,7 @@ export const WwwLatimesComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.trb_ar_la': $node => {
+      '.trb_ar_la': ($node: any) => {
         const $figure = $node.find('figure');
         $node.replaceWith($figure);
       },

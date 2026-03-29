@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwTagesschauDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.tagesschau.de/ausland/europa/ukraine-gipfel-london-106.html';

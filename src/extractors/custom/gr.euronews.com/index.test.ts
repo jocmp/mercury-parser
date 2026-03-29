@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('GrEuronewsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://gr.euronews.com/my-europe/2026/03/24/amerikanos-presvhs-ee-aporripsh-emporikh-sumfwnia-oikonomikh-ameleia';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwQbitaiComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.qbitai.com/2025/02/257352.html';
       const html = fs.readFileSync(

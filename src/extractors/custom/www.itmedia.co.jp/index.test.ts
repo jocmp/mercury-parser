@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwItmediaCoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.itmedia.co.jp/pcuser/articles/1902/22/news089.html';
       const html = fs.readFileSync(

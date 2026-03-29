@@ -3,8 +3,8 @@ import convertNodeTo from './convert-node-to';
 
 import { DIV_TO_P_BLOCK_TAGS } from './constants';
 
-function convertDivs($) {
-  $('div').each((index, div) => {
+function convertDivs($: any) {
+  $('div').each((index: number, div: any) => {
     const $div = $(div);
     const convertible = $div.children(DIV_TO_P_BLOCK_TAGS).length === 0;
 
@@ -16,8 +16,8 @@ function convertDivs($) {
   return $;
 }
 
-function convertSpans($) {
-  $('span').each((index, span) => {
+function convertSpans($: any) {
+  $('span').each((index: number, span: any) => {
     const $span = $(span);
     const convertible = $span.parents('p, div, li, figcaption').length === 0;
     if (convertible) {
@@ -40,7 +40,7 @@ function convertSpans($) {
 //   :return cheerio object with new p elements
 //   (By-reference mutation, though. Returned just for convenience.)
 
-export default function convertToParagraphs($) {
+export default function convertToParagraphs($: any) {
   $ = brsToPs($);
   $ = convertDivs($);
   $ = convertSpans($);

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwRefinery29ComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.refinery29.com/2016/12/132377/graphic-tees-statement-shirt-style-tips';

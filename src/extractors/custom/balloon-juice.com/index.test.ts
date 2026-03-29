@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('BalloonJuiceComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://balloon-juice.com/2026/02/02/schadenfreude-open-thread-gop-fire-drill/';

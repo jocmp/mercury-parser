@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('NewsNationalgeographicComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://news.nationalgeographic.com/energy/2015/08/150803-gender-bias-affects-office-heating-cooling-temperatures/';

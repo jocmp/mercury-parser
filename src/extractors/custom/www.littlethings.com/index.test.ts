@@ -11,8 +11,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('LittleThingsExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.littlethings.com/lifestyle/amazon-has-a-private-food-brand-that-just-launched-100-new-products-for-fall/';

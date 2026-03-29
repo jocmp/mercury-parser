@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PastebinComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://pastebin.com/Af0yDAW4';
       const html = fs.readFileSync('./fixtures/pastebin.com.html', 'utf-8');

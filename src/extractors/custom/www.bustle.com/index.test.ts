@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwBustleComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.bustle.com/articles/194709-13-ways-to-compliment-women-in-the-most-empowering-transformative-way-possible';

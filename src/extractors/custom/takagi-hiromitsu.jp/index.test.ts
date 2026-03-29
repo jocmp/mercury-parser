@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('TakagihiromitsuJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://takagi-hiromitsu.jp/diary/20190211.html';
       const html = fs.readFileSync(

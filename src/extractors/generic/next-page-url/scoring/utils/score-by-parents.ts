@@ -6,11 +6,11 @@ import {
 } from 'utils/dom/constants';
 import { EXTRANEOUS_LINK_HINTS_RE } from '../constants';
 
-function makeSig($link) {
+function makeSig($link: any) {
   return `${$link.attr('class') || ''} ${$link.attr('id') || ''}`;
 }
 
-export default function scoreByParents($link) {
+export default function scoreByParents($link: any) {
   // If a parent node contains paging-like classname or id, give a
   // bonus. Additionally, if a parent_node contains bad content
   // (like 'sponsor'), give a penalty.

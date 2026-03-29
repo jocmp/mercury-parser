@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwQdailyComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.qdaily.com/articles/38282.html';
       const html = fs.readFileSync('./fixtures/www.qdaily.com.html', 'utf-8');

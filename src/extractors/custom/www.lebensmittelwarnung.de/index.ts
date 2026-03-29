@@ -19,7 +19,7 @@ export const WwwLebensmittelwarnungDeExtractor = {
     selectors: ['main'],
 
     transforms: {
-      h2: node => {
+      h2: (node: any) => {
         const button = node.find('button');
 
         if (node.find('button').length > 0) {
@@ -29,14 +29,14 @@ export const WwwLebensmittelwarnungDeExtractor = {
 
         node.attr('class', 'mercury-parser-keep');
       },
-      ul: $node => {
+      ul: ($node: any) => {
         $node.attr('class', 'mercury-parser-keep');
       },
-      '.lmw-bodytext': node => {
+      '.lmw-bodytext': (node: any) => {
         // Kontakt Information
         node.attr('class', 'mercury-parser-keep');
       },
-      '.lmw-description-list__item': node => {
+      '.lmw-description-list__item': (node: any) => {
         node.attr('class', 'mercury-parser-keep');
       },
     },

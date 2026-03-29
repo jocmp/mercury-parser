@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSbnationComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.sbnation.com/mlb/2016/12/6/13857040/chris-sale-red-sox-trade-white-sox';

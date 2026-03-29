@@ -24,7 +24,7 @@ export const NYTimesExtractor = {
     selectors: ['div.g-blocks', 'section[name="articleBody"]', 'article#story'],
 
     transforms: {
-      'img.g-lazy': $node => {
+      'img.g-lazy': ($node: any) => {
         let src = $node.attr('src');
         const width = 640;
 

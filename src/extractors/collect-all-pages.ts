@@ -12,7 +12,7 @@ export default async function collectAllPages({
   Extractor,
   title,
   url,
-}) {
+}: any) {
   // At this point, we've fetched just the first page
   let pages = 1;
   const previousUrls = [removeAnchor(url)];

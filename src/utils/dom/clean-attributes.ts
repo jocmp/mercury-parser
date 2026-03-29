@@ -3,8 +3,8 @@ import setAttrs from './set-attrs';
 
 import { WHITELIST_ATTRS_RE, KEEP_CLASS } from './constants';
 
-function removeAllButWhitelist($article, $) {
-  $article.find('*').each((index, node) => {
+function removeAllButWhitelist($article: any, $: any) {
+  $article.find('*').each((index: number, node: any) => {
     const attrs = getAttrs(node);
 
     setAttrs(
@@ -26,7 +26,7 @@ function removeAllButWhitelist($article, $) {
 }
 
 // Remove attributes like style or align
-export default function cleanAttributes($article, $) {
+export default function cleanAttributes($article: any, $: any) {
   // Grabbing the parent because at this point
   // $article will be wrapped in a div which will
   // have a score set on it.

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwInvestmentexecutiveComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.investmentexecutive.com/news/research-and-markets/imf-dims-outlook-for-2023-global-economy-amid-ukraine-war/';

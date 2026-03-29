@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwMoongiftJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.moongift.jp/2019/04/wasm-module-rust%e3%81%aewebassembly%e3%81%ae%e4%b8%ad%e3%81%a7dom%e3%82%92%e6%89%b1%e3%81%86/';

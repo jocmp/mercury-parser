@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwCnnComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.cnn.com/2016/11/29/politics/donald-trump-transition-presidency/index.html';

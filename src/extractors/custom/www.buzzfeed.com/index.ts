@@ -35,7 +35,7 @@ export const BuzzfeedExtractor = {
     transforms: {
       h2: 'b',
 
-      'div.longform_custom_header_media': $node => {
+      'div.longform_custom_header_media': ($node: any) => {
         if ($node.has('img') && $node.has('.longform_header_image_source')) {
           return 'figure';
         }

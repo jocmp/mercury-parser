@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwFoolComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.fool.com/investing/2017/01/09/why-amazon-microsoft-and-activision-blizzard-are-b.aspx';

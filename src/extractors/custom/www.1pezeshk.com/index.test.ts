@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('Www1pezeshkComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.1pezeshk.com/archives/2024/12/the-battle-of-dogs-utilizing-animals-in-warfare.html';

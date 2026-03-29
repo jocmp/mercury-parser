@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwFuturaSciencesComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.futura-sciences.com/maison/actualites/architecture-vous-cherchez-autre-chose-paris-rome-barcelone-ces-5-villes-vont-vous-retourner-esprit-122621/#xtor%3DRSS-8';

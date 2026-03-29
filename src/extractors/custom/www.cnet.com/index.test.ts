@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwCnetComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.cnet.com/news/seven-mobile-trends-to-look-for-in-2017/';

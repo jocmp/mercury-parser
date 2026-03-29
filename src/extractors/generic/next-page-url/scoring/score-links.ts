@@ -16,11 +16,11 @@ import {
   scoreNextLinkText,
 } from './utils';
 
-export function makeBaseRegex(baseUrl) {
+export function makeBaseRegex(baseUrl: any) {
   return new RegExp(`^${baseUrl}`, 'i');
 }
 
-function makeSig($link, linkText) {
+function makeSig($link: any, linkText: any) {
   return `${linkText || $link.text()} ${$link.attr('class') || ''} ${$link.attr(
     'id'
   ) || ''}`;
@@ -30,10 +30,10 @@ export default function scoreLinks({
   links,
   articleUrl,
   baseUrl,
-  parsedUrl = undefined,
+  parsedUrl = undefined as any,
   $,
   previousUrls = [],
-}) {
+}: any) {
   parsedUrl = parsedUrl || URL.parse(articleUrl);
   const baseRegex = makeBaseRegex(baseUrl);
   const isWp = isWordpress($);
@@ -45,7 +45,7 @@ export default function scoreLinks({
   // After we do that, assign each page a score, and pick the one that
   // looks most like the next page link, as long as its score is strong
   // enough to have decent confidence.
-  const scoredPages = links.reduce((possiblePages, link) => {
+  const scoredPages = links.reduce((possiblePages: any, link: any) => {
     // Remove any anchor data since we don't do a good job
     // standardizing URLs (it's hard), we're going to do
     // some checking with and without a trailing slash

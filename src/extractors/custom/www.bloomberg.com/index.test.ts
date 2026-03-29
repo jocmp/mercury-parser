@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwBloombergComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.bloomberg.com/politics/articles/2016-12-07/trump-hits-emblem-of-presidential-power-with-air-force-one-tweet';
@@ -102,8 +102,8 @@ describe('WwwBloombergComExtractor', () => {
   });
 
   describe('/graphics/ template', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.bloomberg.com/graphics/2016-apple-profits/';
       const html = fs.readFileSync(
@@ -193,8 +193,8 @@ describe('WwwBloombergComExtractor', () => {
   });
 
   describe('/news/ template', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.bloomberg.com/news/articles/2016-12-06/stock-rally-extends-into-asia-as-traders-await-rbi-aussie-gdp';

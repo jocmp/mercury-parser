@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwMentalflossComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.mentalfloss.com/article/90140/its-not-too-late-holiday-shop-these-amazon-deals';

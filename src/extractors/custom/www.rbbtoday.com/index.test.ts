@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwRbbtodayComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.rbbtoday.com/article/2019/04/19/169284.html';
       const html = fs.readFileSync('./fixtures/www.rbbtoday.com.html', 'utf-8');

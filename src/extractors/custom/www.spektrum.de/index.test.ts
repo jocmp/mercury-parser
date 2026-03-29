@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SpektrumExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.spektrum.de/news/genetik-das-geheimnis-der-parasitischen-rafflesien/2039026';

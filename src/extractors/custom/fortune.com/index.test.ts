@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('FortuneComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://fortune.com/2016/12/15/amazon-alexa-gadgets/';
       const html = fs.readFileSync('./fixtures/fortune.com.html', 'utf-8');

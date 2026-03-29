@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAbendblattDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.abendblatt.de/wirtschaft/article229123092/Hamburg-Grossmarkt-Obst-Gemuese-Mangos-Papayas-Fruechte-Preise-Corona.html';

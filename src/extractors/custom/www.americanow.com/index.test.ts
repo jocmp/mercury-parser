@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAmericanowComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.americanow.com/story/politics/2016/12/22/trump-names-kellyanne-conway-counselor-president';

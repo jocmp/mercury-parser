@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('LublinSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://lublin.se.pl/tajemniczy-rozblysk-na-niebie-a-potem-huk-internauci-nagrali-niepokojace-zjawisko-aa-pyCB-it69-KEL7.html';

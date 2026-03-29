@@ -4,13 +4,13 @@ import { extractFromMeta, stripTags } from 'utils/dom';
 
 import { EXCERPT_META_SELECTORS } from './constants';
 
-export function clean(content, $?, maxLength = 200) {
+export function clean(content: any, $?: any, maxLength = 200) {
   content = content.replace(/[\s\n]+/g, ' ').trim();
   return ellipsize(content, maxLength, { ellipse: '&hellip;' });
 }
 
 const GenericExcerptExtractor = {
-  extract({ $, content, metaCache }) {
+  extract({ $, content, metaCache }: any) {
     const excerpt = extractFromMeta($, EXCERPT_META_SELECTORS, metaCache);
     if (excerpt) {
       return clean(stripTags(excerpt, $), $);

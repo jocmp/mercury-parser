@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwIpaGoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.ipa.go.jp/security/topics/alert20190402.html';
       const html = fs.readFileSync('./fixtures/www.ipa.go.jp.html', 'utf-8');

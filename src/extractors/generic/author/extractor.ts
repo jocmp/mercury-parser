@@ -9,7 +9,7 @@ import {
 } from './constants';
 
 const GenericAuthorExtractor = {
-  extract({ $, metaCache }) {
+  extract({ $, metaCache }: any) {
     let author;
 
     // First, check to see if we have a matching

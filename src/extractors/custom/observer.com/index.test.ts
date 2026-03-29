@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ObserverComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://observer.com/2016/12/archaeologists-just-discovered-a-2500-year-old-lost-city-atop-a-greek-mountain-peak/';

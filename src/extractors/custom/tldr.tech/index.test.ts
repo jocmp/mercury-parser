@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('TldrTechExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://tldr.tech/tech/2025-01-31';
       const html = fs.readFileSync(

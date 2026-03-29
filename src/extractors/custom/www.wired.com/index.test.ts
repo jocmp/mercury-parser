@@ -11,8 +11,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('WiredExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.wired.com/2016/09/ode-rosetta-spacecraft-going-die-comet/';

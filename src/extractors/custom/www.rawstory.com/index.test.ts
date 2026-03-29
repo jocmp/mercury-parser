@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwRawstoryComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.rawstory.com/2016/12/these-6-celebrities-are-refusing-to-play-trumps-inauguration-as-team-scrambles-to-secure-talent/';

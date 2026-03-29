@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('DeadlineComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://deadline.com/2019/04/donald-trump-boeing-max-737-rebrand-advice-twitter-1202595880/';

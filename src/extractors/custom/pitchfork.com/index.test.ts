@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('PitchforkComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://pitchfork.com/reviews/albums/lust-for-youth-lust-for-youth/';

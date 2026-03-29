@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSpiegelDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.spiegel.de/netzwelt/gadgets/ces-2025-nvidia-stellt-ki-supercomputer-im-schreibtisch-format-vor-a-0e0ad625-920d-4a99-a04d-3803ea71974c';

@@ -9,7 +9,7 @@ import getScore from './get-score';
 // may be split parts of the content (Like two divs, a preamble and
 // a body.) Example:
 // http://articles.latimes.com/2009/oct/14/business/fi-bigtvs14
-export default function mergeSiblings($candidate, topScore, $) {
+export default function mergeSiblings($candidate: any, topScore: any, $: any) {
   if (!$candidate.parent().length) {
     return $candidate;
   }
@@ -20,7 +20,7 @@ export default function mergeSiblings($candidate, topScore, $) {
   $candidate
     .parent()
     .children()
-    .each((index, sibling) => {
+    .each((index: number, sibling: any) => {
       const $sibling = $(sibling);
       // Ignore tags like BR, HR, etc
       if (NON_TOP_CANDIDATE_TAGS_RE.test(sibling.tagName)) {

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwElecomCoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.elecom.co.jp/news/201903/keyboard/index.html';
       const html = fs.readFileSync('./fixtures/www.elecom.co.jp.html', 'utf-8');

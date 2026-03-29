@@ -11,7 +11,7 @@ import { BLOCK_LEVEL_TAGS_RE } from './constants';
 // :param $: The cheerio object to handle dom manipulation
 // :param br: Whether or not the passed node is a br
 
-export default function paragraphize(node, $, br = false) {
+export default function paragraphize(node: any, $: any, br = false) {
   const $node = $(node);
 
   if (br) {

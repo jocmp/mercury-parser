@@ -2,7 +2,7 @@ import URL from 'url';
 
 import { KEEP_SELECTORS, KEEP_CLASS } from './constants';
 
-export default function markToKeep(article, $, url?, tags = []) {
+export default function markToKeep(article: any, $: any, url?: string, tags: string[] = []) {
   if (tags.length === 0) {
     tags = KEEP_SELECTORS;
   }

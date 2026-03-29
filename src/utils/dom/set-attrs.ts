@@ -1,4 +1,4 @@
-export default function setAttrs(node, attrs) {
+export default function setAttrs(node: any, attrs: Record<string, any>) {
   if (node.attribs) {
     node.attribs = attrs;
   } else if (node.attributes) {
@@ -7,7 +7,7 @@ export default function setAttrs(node, attrs) {
     }
 
     Reflect.ownKeys(attrs).forEach(key => {
-      node.setAttribute(key, attrs[key]);
+      node.setAttribute(key as string, attrs[key as string]);
     });
   }
 

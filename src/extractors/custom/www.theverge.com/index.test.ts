@@ -8,8 +8,8 @@ const fs = require('fs');
 
 describe('WwwThevergeComExtractor', () => {
   describe('blog post', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.theverge.com/tech/895879/samsung-galaxy-z-trifold-discontinued-stock-sold-out';
@@ -61,8 +61,8 @@ describe('WwwThevergeComExtractor', () => {
   });
 
   describe('review with images', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.theverge.com/tech/894319/google-pixel-10a-review-screen-specs-battery-camera';
@@ -101,8 +101,8 @@ describe('WwwThevergeComExtractor', () => {
   });
 
   describe('quick post with image', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.theverge.com/ai-artificial-intelligence/883034/openclaw-ai-deleting-emails-stop-openclaw';
@@ -140,8 +140,8 @@ describe('WwwThevergeComExtractor', () => {
   });
 
   describe('quick post with pull quote', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.theverge.com/games/882555/read-xbox-president-sarah-bonds-memo-about-leaving-microsoft';

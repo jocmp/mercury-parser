@@ -21,7 +21,7 @@ export const TarnkappeInfoExtractor = {
     selectors: ['main'],
 
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: ['section#author'],

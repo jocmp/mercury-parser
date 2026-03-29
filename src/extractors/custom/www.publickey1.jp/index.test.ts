@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwPublickey1JpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.publickey1.jp/blog/19/1ssdintel_ssd_d5-p4326qlc14643d_nandssd.html';

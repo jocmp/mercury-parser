@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwThedriveComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.thedrive.com/news/the-best-milwaukee-packout-deals-at-the-home-depot-right-now';

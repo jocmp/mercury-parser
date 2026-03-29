@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('9to5macComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://9to5mac.com/2025/06/10/apple-notes-is-coming-to-your-apple-watch-in-watchos-26/';

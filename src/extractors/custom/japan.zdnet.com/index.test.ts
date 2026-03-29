@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('JapanZdnetComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://japan.zdnet.com/article/35136396/';
       const html = fs.readFileSync('./fixtures/japan.zdnet.com.html', 'utf-8');

@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('OrfAtExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://orf.at/stories/3409547/';
       const html = fs.readFileSync(

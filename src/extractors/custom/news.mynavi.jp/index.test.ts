@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('NewsMynaviJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://news.mynavi.jp/article/20190222-775563/';
       const html = fs.readFileSync('./fixtures/news.mynavi.jp.html', 'utf-8');

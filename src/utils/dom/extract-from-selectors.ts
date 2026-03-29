@@ -1,6 +1,6 @@
 import withinComment from './within-comment';
 
-function isGoodNode($node, maxChildren) {
+function isGoodNode($node: any, maxChildren: number) {
   // If it has a number of children, it's more likely a container
   // element. Skip it.
   if ($node.children().length > maxChildren) {
@@ -18,8 +18,8 @@ function isGoodNode($node, maxChildren) {
 // be extractable from the document. This is for flat
 // meta-information, like author, title, date published, etc.
 export default function extractFromSelectors(
-  $,
-  selectors,
+  $: any,
+  selectors: string[],
   maxChildren = 1,
   textOnly = true
 ) {

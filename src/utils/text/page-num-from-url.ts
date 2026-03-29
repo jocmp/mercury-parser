@@ -1,6 +1,6 @@
 import { PAGE_IN_HREF_RE } from './constants';
 
-export default function pageNumFromUrl(url) {
+export default function pageNumFromUrl(url: string) {
   const matches = url.match(PAGE_IN_HREF_RE);
   if (!matches) return null;
 

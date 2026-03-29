@@ -10,7 +10,7 @@ import RootExtractor, { selectExtendedTypes } from 'extractors/root-extractor';
 import collectAllPages from 'extractors/collect-all-pages';
 
 const Parser = {
-  async parse(url, { html, ...opts }: any = {}) {
+  async parse(url: string, { html, ...opts }: any = {}) {
     const {
       fetchAllPages = true,
       fallback = true,
@@ -30,7 +30,7 @@ const Parser = {
 
     const parsedUrl = URL.parse(url);
 
-    if (!validateUrl(parsedUrl)) {
+    if (!validateUrl(parsedUrl as any)) {
       return {
         error: true,
         message:
@@ -38,12 +38,14 @@ const Parser = {
       };
     }
 
-    const $ = await Resource.create(url, html, parsedUrl, headers);
+    const result$ = await Resource.create(url, html, parsedUrl, headers) as any;
 
     // If we found an error creating the resource, return that error
-    if ($.failed) {
-      return $;
+    if (result$.failed) {
+      return result$;
     }
+
+    const $: any = result$;
 
     // Add custom extractor via cli.
     if (customExtractor) {
@@ -62,7 +64,7 @@ const Parser = {
     // Cached value of every meta name in our document.
     // Used when extracting title/author/date_published/dek
     const metaCache = $('meta')
-      .map((_, node) => $(node).attr('name'))
+      .map((_: number, node: any) => $(node).attr('name'))
       .toArray();
 
     let extendedTypes = {};
@@ -116,11 +118,11 @@ const Parser = {
 
   // A convenience method for getting a resource
   // to work with, e.g., for custom extractor generator
-  fetchResource(url) {
+  fetchResource(url: string) {
     return Resource.create(url);
   },
 
-  addExtractor(extractor) {
+  addExtractor(extractor: any) {
     return addCustomExtractor(extractor);
   },
 };

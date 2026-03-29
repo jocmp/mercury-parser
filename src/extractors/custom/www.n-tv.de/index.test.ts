@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwNtvDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.n-tv.de/regionales/hamburg-und-schleswig-holstein/Gespraeche-zum-Opernneubau-in-Hamburg-dauern-weiter-an-article25536027.html';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('QzComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://qz.com/africa/1807355/nigerias-economy-has-best-quarterly-growth-since-recession/';

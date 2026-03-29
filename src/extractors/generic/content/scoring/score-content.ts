@@ -6,7 +6,7 @@ import setScore from './set-score';
 import getOrInitScore from './get-or-init-score';
 import addScore from './add-score';
 
-function convertSpans($node, $) {
+function convertSpans($node: any, $: any) {
   if ($node.get(0)) {
     const { tagName } = $node.get(0);
 
@@ -17,17 +17,17 @@ function convertSpans($node, $) {
   }
 }
 
-function addScoreTo($node, $, score) {
+function addScoreTo($node: any, $: any, score: any) {
   if ($node) {
     convertSpans($node, $);
     addScore($node, $, score);
   }
 }
 
-function scorePs($, weightNodes) {
+function scorePs($: any, weightNodes: any) {
   $('p, pre')
     .not('[score]')
-    .each((index, node) => {
+    .each((index: number, node: any) => {
       // The raw score for this paragraph, before we add any parent/child
       // scores.
       let $node = $(node);
@@ -49,11 +49,11 @@ function scorePs($, weightNodes) {
 
 // score content. Parents get the full value of their children's
 // content score, grandparents half
-export default function scoreContent($, weightNodes = true) {
+export default function scoreContent($: any, weightNodes = true) {
   // First, look for special hNews based selectors and give them a big
   // boost, if they exist
   HNEWS_CONTENT_SELECTORS.forEach(([parentSelector, childSelector]) => {
-    $(`${parentSelector} ${childSelector}`).each((index, node) => {
+    $(`${parentSelector} ${childSelector}`).each((index: number, node: any) => {
       addScore($(node).parent(parentSelector), $, 80);
     });
   });

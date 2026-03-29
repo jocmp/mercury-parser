@@ -25,7 +25,7 @@ export const WwwFortinetComExtractor = {
     transforms: {
       // Cheerio 1.x treats noscript content as text, not parsed HTML
       // so we need to parse it manually
-      noscript: ($node, $) => {
+      noscript: ($node: any, $: any) => {
         const noscriptHtml = $node.html();
         if (!noscriptHtml) return null;
 

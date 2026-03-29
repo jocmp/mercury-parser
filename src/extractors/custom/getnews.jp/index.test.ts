@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('GetnewsJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://getnews.jp/archives/2146078';
       const html = fs.readFileSync('./fixtures/getnews.jp.html', 'utf-8');

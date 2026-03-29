@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('FactorioComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://factorio.com/blog/post/fff-435';
       const html = fs.readFileSync(

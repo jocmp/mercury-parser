@@ -25,7 +25,7 @@ export const WwwVideogameschronicleComExtractor = {
     selectors: ['.post__content-body', 'article'],
 
     transforms: {
-      'figure a': $node => {
+      'figure a': ($node: any) => {
         const href = $node.attr('href');
         const $img = $node.find('img');
         if (href && $img.length && !$img.attr('src')) {

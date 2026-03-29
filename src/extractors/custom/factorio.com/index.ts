@@ -13,7 +13,7 @@ export const FactorioComExtractor = {
     selectors: [['.blog-post', 'div:nth-child(2)']],
 
     transforms: {
-      h3: node => {
+      h3: (node: any) => {
         const author = node.find('author');
 
         if (author.text()) {

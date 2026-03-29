@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwWesternjournalismComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.westernjournalism.com/berlin-terrorist-shot-dead-in-milan-by-rookie-police-officer/';

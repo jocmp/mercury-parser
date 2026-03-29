@@ -23,7 +23,7 @@ export const WwwGizmodoJpExtractor = {
     selectors: ['article.p-post'],
 
     transforms: {
-      'img.p-post-thumbnailImage': $node => {
+      'img.p-post-thumbnailImage': ($node: any) => {
         const src = $node.attr('src');
         $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
       },

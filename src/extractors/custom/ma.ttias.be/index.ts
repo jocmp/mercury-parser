@@ -19,7 +19,7 @@ export const MaTtiasBeExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      h2: $node => {
+      h2: ($node: any) => {
         // The "id" attribute values would result in low scores and the element being
         // removed.
         $node.attr('id', null);
@@ -27,7 +27,7 @@ export const MaTtiasBeExtractor = {
         // h1 elements will be demoted to h2, so demote h2 elements to h3.
         return 'h3';
       },
-      h1: $node => {
+      h1: ($node: any) => {
         // The "id" attribute values would result in low scores and the element being
         // removed.
         $node.attr('id', null);
@@ -36,7 +36,7 @@ export const MaTtiasBeExtractor = {
         // add a paragraph here. It will be removed anyway because it is empty.
         $node.after('<p></p>');
       },
-      ul: $node => {
+      ul: ($node: any) => {
         // Articles contain lists of links which look like, but are not, navigation
         // elements. Adding this class attribute avoids them being incorrectly removed.
         $node.attr('class', 'entry-content-asset');

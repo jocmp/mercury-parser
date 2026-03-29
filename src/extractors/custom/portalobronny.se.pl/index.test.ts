@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PortalobronnySePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://portalobronny.se.pl/polityka-obronna/rosyjski-su-24-wlecial-na-6-5-km-w-przestrzen-powietrzna-polski-oficjalna-przyczyna-awaria-aa-ggzS-QUUG-sbdW.html';

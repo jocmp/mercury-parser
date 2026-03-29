@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLinkedinComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.linkedin.com/pulse/what-set-your-soul-fire-2017-ellyn-shook';

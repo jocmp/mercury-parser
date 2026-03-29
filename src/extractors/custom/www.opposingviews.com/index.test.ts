@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwOpposingviewsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.opposingviews.com/i/politics/trump-picks-investing-mogul-icahn-advise-him-finance-regulation';

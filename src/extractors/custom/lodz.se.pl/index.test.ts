@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('LodzSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://lodz.se.pl/taksowkarz-otrzymal-8-ciosow-nozem-w-czasie-kursu-szokujacy-atak-w-lodzi-aa-XiRD-8S5M-JUVX.html';

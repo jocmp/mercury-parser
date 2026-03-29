@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('DeadspinExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://deadspin.com/the-nationals-are-stuck-with-danny-espinosa-tonight-un-1787706769';

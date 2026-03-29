@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwBlickDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.blick.de/erzgebirge/fachkraeftemangel-im-erzgebirge-arztpraxen-suchen-verzweifelt-nach-personal-artikel14183771';

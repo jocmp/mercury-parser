@@ -25,9 +25,9 @@ const GenericExtractor = {
   url_and_domain: GenericUrlExtractor.extract,
   excerpt: GenericExcerptExtractor.extract,
   word_count: GenericWordCountExtractor.extract,
-  direction: ({ title }) => stringDirection.getDirection(title),
+  direction: ({ title }: any) => stringDirection.getDirection(title),
 
-  extract(options) {
+  extract(options: any) {
     const { html, $ } = options;
 
     if (html && !$) {

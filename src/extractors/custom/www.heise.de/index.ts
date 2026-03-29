@@ -25,7 +25,7 @@ export const WwwHeiseDeExtractor = {
     selectors: ['.article-layout__content'],
 
     transforms: {
-      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: [

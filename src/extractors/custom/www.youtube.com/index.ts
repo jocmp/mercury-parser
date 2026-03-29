@@ -39,12 +39,12 @@ export const WwwYoutubeComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '#player-api': ($node, $) => {
+      '#player-api': ($node: any, $: any) => {
         const videoId = $('meta[itemProp="videoId"]').attr('value');
         $node.html(`
           <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`);
       },
-      '#player-container-outer': ($node, $) => {
+      '#player-container-outer': ($node: any, $: any) => {
         const videoId = $('meta[itemProp="videoId"]').attr('value');
         const description = $('meta[itemProp="description"]').attr('value');
         $node.html(`

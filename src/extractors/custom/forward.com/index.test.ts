@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ForwardComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://forward.com/schmooze/358592/why-does-slack-want-me-to-say-hummus/';

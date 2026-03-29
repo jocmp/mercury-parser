@@ -9,7 +9,7 @@ import {
 } from './constants';
 
 const GenericDatePublishedExtractor = {
-  extract({ $, url, metaCache }) {
+  extract({ $, url, metaCache }: any) {
     let datePublished;
     // First, check to see if we have a matching meta tag
     // that we can make use of.

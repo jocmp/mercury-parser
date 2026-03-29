@@ -13,7 +13,7 @@ export const ArstechnicaComExtractor = {
     selectors: ['.post-content', 'main'],
 
     transforms: {
-      img: $node => {
+      img: ($node: any) => {
         $node.removeAttr('width');
         $node.removeAttr('sizes');
       },

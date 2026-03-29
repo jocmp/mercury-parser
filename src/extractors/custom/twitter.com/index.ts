@@ -7,7 +7,7 @@ export const TwitterExtractor = {
       // Twitter doesn't have nice selectors, so our initial
       // selector grabs the whole page, then we're re-writing
       // it to fit our needs before we clean it up.
-      '.permalink[role=main]': ($node, $) => {
+      '.permalink[role=main]': ($node: any, $: any) => {
         const tweets = $node.find('.tweet');
         const $tweetContainer = $('<div id="TWEETS_GO_HERE"></div>');
         $tweetContainer.append(tweets);

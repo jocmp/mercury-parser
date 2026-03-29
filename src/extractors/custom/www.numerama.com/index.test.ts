@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwNumeramaComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.numerama.com/tech/2050917-sam-altman-annonce-deja-des-changements-pour-chatgpt-5-apres-2-jours-dexistence.html';

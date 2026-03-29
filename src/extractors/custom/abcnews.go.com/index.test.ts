@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('AbcnewsGoComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://abcnews.go.com/US/hillary-clinton-putins-alleged-involvement-democratic-hack-stems/story?id=44233864&cid=clicksource_4380645_2_three_posts_vert_hed';

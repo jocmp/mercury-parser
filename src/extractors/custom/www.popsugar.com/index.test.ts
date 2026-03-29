@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwPopsugarComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.popsugar.com/home/Millennial-Decorating-Mistakes-42696116#photo-42696116';

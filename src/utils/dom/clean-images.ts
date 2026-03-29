@@ -1,6 +1,6 @@
 import { SPACER_RE } from './constants';
 
-function cleanForHeight($img, $) {
+function cleanForHeight($img: any, $: any) {
   const height = parseInt($img.attr('height'), 10);
   const width = parseInt($img.attr('width'), 10) || 20;
 
@@ -21,7 +21,7 @@ function cleanForHeight($img, $) {
 
 // Cleans out images where the source string matches transparent/spacer/etc
 // TODO This seems very aggressive - AP
-function removeSpacers($img, $) {
+function removeSpacers($img: any, $: any) {
   if (SPACER_RE.test($img.attr('src'))) {
     $img.remove();
   }
@@ -29,8 +29,8 @@ function removeSpacers($img, $) {
   return $;
 }
 
-export default function cleanImages($article, $) {
-  $article.find('img').each((index, img) => {
+export default function cleanImages($article: any, $: any) {
+  $article.find('img').each((index: number, img: any) => {
     const $img = $(img);
 
     cleanForHeight($img, $);

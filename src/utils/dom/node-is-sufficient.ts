@@ -2,6 +2,6 @@
 // param: node (a cheerio node)
 // return: boolean
 
-export default function nodeIsSufficient($node) {
+export default function nodeIsSufficient($node: any) {
   return $node.text().trim().length >= 100;
 }

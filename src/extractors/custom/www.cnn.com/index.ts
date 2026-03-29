@@ -29,7 +29,7 @@ export const WwwCnnComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': $node => {
+      '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': ($node: any) => {
         const $text = $node.html();
         if ($text) {
           return 'p';
@@ -40,7 +40,7 @@ export const WwwCnnComExtractor = {
 
       // this transform cleans the short, all-link sections linking
       // to related content but not marked as such in any way.
-      '.zn-body__paragraph': $node => {
+      '.zn-body__paragraph': ($node: any) => {
         if ($node.has('a')) {
           if (
             $node.text().trim() ===

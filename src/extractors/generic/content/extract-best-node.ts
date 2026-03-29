@@ -13,7 +13,7 @@ import { scoreContent, findTopCandidate } from './scoring';
 // worthiness of nodes.
 //
 // Returns a cheerio object $
-export default function extractBestNode($, opts) {
+export default function extractBestNode($: any, opts: any) {
   if (opts.stripUnlikelyCandidates) {
     $ = stripUnlikelyCandidates($);
   }

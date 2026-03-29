@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwInquisitrComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.inquisitr.com/3790467/donald-trump-intelligence-briefings-security-president-elect-smart-mike-pence/';

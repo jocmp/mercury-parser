@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAlComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.al.com/news/birmingham/index.ssf/2016/12/two_arrested_in_multi-state_de.html#incart_river_home';

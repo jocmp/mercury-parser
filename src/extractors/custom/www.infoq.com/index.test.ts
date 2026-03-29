@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwInfoqComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.infoq.com/jp/news/2019/02/chrome-never-slow-mode';
       const html = fs.readFileSync('./fixtures/www.infoq.com.html', 'utf-8');

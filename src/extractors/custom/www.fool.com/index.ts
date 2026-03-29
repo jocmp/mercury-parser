@@ -30,7 +30,7 @@ export const WwwFoolComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.caption img': $node => {
+      '.caption img': ($node: any) => {
         const src = $node.attr('src');
         $node.parent().replaceWith(`<figure><img src="${src}"/></figure>`);
       },

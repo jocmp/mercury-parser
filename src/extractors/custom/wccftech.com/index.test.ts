@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WccftechComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://wccftech.com/nintendo-switch-2-reveal-hit-all-the-right-notes-according-to-analyst/';

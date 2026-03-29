@@ -1,6 +1,6 @@
 import { CANDIDATES_WHITELIST, CANDIDATES_BLACKLIST } from './constants';
 
-export default function stripUnlikelyCandidates($) {
+export default function stripUnlikelyCandidates($: any) {
   //  Loop through the provided document and remove any non-link nodes
   //  that are unlikely candidates for article content.
   //
@@ -12,7 +12,7 @@ export default function stripUnlikelyCandidates($) {
   //  :return $: the cleaned cheerio object
   $('*')
     .not('a')
-    .each((index, node) => {
+    .each((index: number, node: any) => {
       const $node = $(node);
       const classes = $node.attr('class');
       const id = $node.attr('id');

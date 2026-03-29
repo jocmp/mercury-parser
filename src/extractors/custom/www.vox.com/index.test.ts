@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwVoxComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.vox.com/culture/2016/12/10/13898352/trump-twitter-harassment-policy-bannable';

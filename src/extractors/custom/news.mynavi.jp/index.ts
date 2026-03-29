@@ -30,7 +30,7 @@ export const NewsMynaviJpExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      img: $node => {
+      img: ($node: any) => {
         const src = $node.attr('data-original');
         if (src !== '') {
           $node.attr('src', src);

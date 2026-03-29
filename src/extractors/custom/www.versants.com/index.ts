@@ -18,7 +18,7 @@ export const WwwVersantsComExtractor = {
 
   content: {
     transforms: {
-      '.featured-image': $node => {
+      '.featured-image': ($node: any) => {
         $node.addClass('mercury-parser-keep');
         const figcaption = $node.find('span');
         $node.find('figure').append(figcaption);

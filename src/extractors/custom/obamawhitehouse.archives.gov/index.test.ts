@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ObamawhitehouseArchivesGovExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://obamawhitehouse.archives.gov/blog/2017/01/17/obama-administration-digital-transition-moving-forward';
@@ -118,8 +118,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
   });
 
   describe('wh.gov speeches', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://obamawhitehouse.archives.gov/the-press-office/2015/04/11/weekly-address-tuition-free-community-college';
@@ -140,8 +140,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
   });
 
   describe('gets more failing blogs', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://obamawhitehouse.archives.gov/the-press-office/2016/12/24/weekly-address-merry-christmas-president-and-first-lady';
@@ -175,8 +175,8 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
   });
 
   describe('handles this previously empty post', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://obamawhitehouse.archives.gov/blog/2011/09/10/serve-and-remember';

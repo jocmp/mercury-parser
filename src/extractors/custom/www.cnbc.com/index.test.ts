@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwCnbcComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.cnbc.com/2016/12/20/coals-us-stronghold-is-losing-steam-even-as-trump-aims-for-a-revival.html';
@@ -99,8 +99,8 @@ describe('WwwCnbcComExtractor', () => {
   });
 
   describe('website redesign', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.cnbc.com/2019/03/18/heres-how-cybersecurity-vendors-drive-the-hacking-news-cycle.html';

@@ -1,6 +1,6 @@
 import { NEXT_LINK_TEXT_RE, CAP_LINK_TEXT_RE } from '../constants';
 
-export default function scoreCapLinks(linkData) {
+export default function scoreCapLinks(linkData: any) {
   // Cap links are links like "last", etc.
   if (CAP_LINK_TEXT_RE.test(linkData)) {
     // If we found a link like "last", but we've already seen that

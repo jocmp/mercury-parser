@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('SgNewsYahooComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://sg.news.yahoo.com/mcdonald-pore-launches-chilli-crab-064000706.html';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SuperbizSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://superbiz.se.pl/wiadomosci/glodowe-podwyzki-dla-emerytow-wyplata-juz-w-marcu-aa-i6r8-YETS-C2h2.html';

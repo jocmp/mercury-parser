@@ -57,7 +57,7 @@ describe('GenericExcerptExtractor', () => {
       const $ = cheerio.load(html);
       const content =
         '<div><p>Wow <b>this</b> is going to be something good.</p></div>';
-      const metaCache = [];
+      const metaCache: any[] = [];
 
       const excerpt = GenericExcerptExtractor.extract({
         $,

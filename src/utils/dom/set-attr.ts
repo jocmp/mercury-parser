@@ -1,4 +1,4 @@
-export default function setAttr(node, attr, val) {
+export default function setAttr(node: any, attr: string, val: any) {
   if (node.attribs) {
     node.attribs[attr] = val;
   } else if (node.attributes) {

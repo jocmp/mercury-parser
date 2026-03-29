@@ -21,11 +21,11 @@ export const WwwPolygonComExtractor = {
     selectors: ['article'],
 
     transforms: {
-      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+      h2: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
 
-      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
 
-      img: $node => {
+      img: ($node: any) => {
         const srcset = $node.attr('srcset');
         const [src] = (srcset || '').split(',');
 

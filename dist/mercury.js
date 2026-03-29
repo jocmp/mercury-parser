@@ -59,7 +59,7 @@ function normalizeSpaces(text) {
 // string to be cleaned.
 // Only used for date_published currently.
 function extractFromUrl(url, regexList) {
-    const matchRe = regexList.find(re => re.test(url));
+    const matchRe = regexList.find((re) => re.test(url));
     if (matchRe) {
         return matchRe.exec(url)[1];
     }
@@ -1376,7 +1376,7 @@ function absolutizeSet($, rootUrl, $content) {
             const candidates = urlSet.match(/(?:\s*)(\S+(?:\s*[\d.]+[wx])?)(?:\s*,\s*)?/g);
             if (!candidates)
                 return;
-            const absoluteCandidates = candidates.map(candidate => {
+            const absoluteCandidates = candidates.map((candidate) => {
                 // a candidate URL cannot start or end with a comma
                 // descriptors are separated from the URLs by unescaped whitespace
                 const parts = candidate
@@ -1408,7 +1408,7 @@ function stripTags(text, $) {
 // Given a node type to search for, and a list of meta tag names to
 // search for, find a meta tag associated.
 function extractFromMeta($, metaNames, cachedNames, cleanTags = true) {
-    const foundNames = metaNames.filter(name => cachedNames.indexOf(name) !== -1);
+    const foundNames = metaNames.filter((name) => cachedNames.indexOf(name) !== -1);
     // eslint-disable-next-line no-restricted-syntax
     for (const name of foundNames) {
         const type = 'name';
@@ -1420,7 +1420,7 @@ function extractFromMeta($, metaNames, cachedNames, cleanTags = true) {
         const values = nodes
             .map((index, node) => $(node).attr(value))
             .toArray()
-            .filter(text => text !== '');
+            .filter((text) => text !== '');
         // If we have more than one value for the same name, we have a
         // conflict and can't trust any of them. Skip this name. If we have
         // zero, that means our meta tags had no values. Skip this name
@@ -1444,7 +1444,7 @@ function extractFromMeta($, metaNames, cachedNames, cleanTags = true) {
 
 function withinComment($node) {
     const parents = $node.parents().toArray();
-    const commentParent = parents.find(parent => {
+    const commentParent = parents.find((parent) => {
         const attrs = getAttrs(parent);
         const { class: nodeClass, id } = attrs;
         const classAndId = `${nodeClass} ${id}`;
@@ -1516,7 +1516,7 @@ const TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 // attribute that a is a placeholer. We need to be able to properly fill in
 // the src attribute so the images are no longer lazy loaded.
 function convertLazyLoadedImages($) {
-    const extractSrcFromJSON = str => {
+    const extractSrcFromJSON = (str) => {
         try {
             const { src } = JSON.parse(str);
             if (typeof src === 'string')
@@ -1709,7 +1709,7 @@ const BalloonJuiceComExtractor = {
         selectors: ['.entry-content', 'article'],
         transforms: {
             // Handle JS-rendered iframes
-            'iframe[src*="embed.bsky.app"]': $node => {
+            'iframe[src*="embed.bsky.app"]': ($node) => {
                 $node.addClass('mercury-parser-keep iframe-embed-bsky');
                 $node.parent('.bluesky-embed').addClass('mercury-parser-keep');
             },
@@ -1815,7 +1815,7 @@ const WikipediaExtractor = {
         defaultCleaner: false,
         // transform top infobox to an image with caption
         transforms: {
-            '.infobox img': $node => {
+            '.infobox img': ($node) => {
                 const $parent = $node.parents('.infobox');
                 // Only prepend the first image in .infobox
                 if ($parent.children('img').length === 0) {
@@ -1894,7 +1894,7 @@ const NYTimesExtractor = {
     content: {
         selectors: ['div.g-blocks', 'section[name="articleBody"]', 'article#story'],
         transforms: {
-            'img.g-lazy': $node => {
+            'img.g-lazy': ($node) => {
                 let src = $node.attr('src');
                 const width = 640;
                 src = src.replace('{{size}}', width);
@@ -2196,7 +2196,7 @@ const BuzzfeedExtractor = {
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
             h2: 'b',
-            'div.longform_custom_header_media': $node => {
+            'div.longform_custom_header_media': ($node) => {
                 if ($node.has('img') && $node.has('.longform_header_image_source')) {
                     return 'figure';
                 }
@@ -2376,7 +2376,7 @@ const DeadspinExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'iframe.lazyload[data-recommend-id^="youtube://"]': $node => {
+            'iframe.lazyload[data-recommend-id^="youtube://"]': ($node) => {
                 const youtubeId = $node.attr('id').split('youtube-')[1];
                 $node.attr('src', `https://www.youtube.com/embed/${youtubeId}`);
             },
@@ -2517,14 +2517,14 @@ const MediumExtractor = {
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
             // Allow drop cap character.
-            'section span:first-of-type': $node => {
+            'section span:first-of-type': ($node) => {
                 const $text = $node.html();
                 if ($text.length === 1 && /^[a-zA-Z()]+$/.test($text)) {
                     $node.replaceWith($text);
                 }
             },
             // Re-write lazy-loaded youtube videos
-            iframe: $node => {
+            iframe: ($node) => {
                 const ytRe = /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
                 const thumb = decodeURIComponent($node.attr('data-thumbnail'));
                 const $parent = $node.parents('figure');
@@ -2539,7 +2539,7 @@ const MediumExtractor = {
                 $parent.remove();
             },
             // rewrite figures to pull out image and caption, remove rest
-            figure: $node => {
+            figure: ($node) => {
                 // ignore if figure has an iframe
                 if ($node.find('iframe').length > 0)
                     return;
@@ -2549,7 +2549,7 @@ const MediumExtractor = {
             },
             // Remove any smaller images that did not get caught by the generic image
             // cleaner (author photo 48px, leading sentence images 79px, etc.).
-            img: $node => {
+            img: ($node) => {
                 const width = parseInt($node.attr('width'), 10);
                 if (width < 100)
                     $node.remove();
@@ -2631,7 +2631,7 @@ const WwwWashingtonpostComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'div.inline-content': $node => {
+            'div.inline-content': ($node) => {
                 if ($node.has('img,iframe,video').length > 0) {
                     return 'figure';
                 }
@@ -2771,7 +2771,7 @@ const WwwCnnComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': $node => {
+            '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': ($node) => {
                 const $text = $node.html();
                 if ($text) {
                     return 'p';
@@ -2780,7 +2780,7 @@ const WwwCnnComExtractor = {
             },
             // this transform cleans the short, all-link sections linking
             // to related content but not marked as such in any way.
-            '.zn-body__paragraph': $node => {
+            '.zn-body__paragraph': ($node) => {
                 if ($node.has('a')) {
                     if ($node.text().trim() ===
                         $node
@@ -3274,7 +3274,7 @@ const WwwVoxComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'figure .e-image__image noscript': $node => {
+            'figure .e-image__image noscript': ($node) => {
                 const imgHtml = $node.html();
                 $node
                     .parents('.e-image__image')
@@ -3418,7 +3418,7 @@ const WwwLatimesComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            '.trb_ar_la': $node => {
+            '.trb_ar_la': ($node) => {
                 const $figure = $node.find('figure');
                 $node.replaceWith($figure);
             },
@@ -4018,7 +4018,7 @@ const WwwRefinery29ComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'div.loading noscript': $node => {
+            'div.loading noscript': ($node) => {
                 const imgHtml = $node.html();
                 $node.parents('.loading').replaceWith(imgHtml);
             },
@@ -4118,7 +4118,7 @@ const WwwSiComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            noscript: $node => {
+            noscript: ($node) => {
                 const $children = $node.children();
                 if ($children.length === 1 && $children.get(0).tagName === 'img') {
                     return 'figure';
@@ -4194,7 +4194,7 @@ const WwwCnetComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'figure.image': $node => {
+            'figure.image': ($node) => {
                 const $img = $node.find('img');
                 $img.attr('width', '100%');
                 $img.attr('height', '100%');
@@ -4819,7 +4819,7 @@ const WwwFoolComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            '.caption img': $node => {
+            '.caption img': ($node) => {
                 const src = $node.attr('src');
                 $node.parent().replaceWith(`<figure><img src="${src}"/></figure>`);
             },
@@ -4887,8 +4887,8 @@ const IciRadioCanadaCaExtractor = {
     content: {
         selectors: ['article main', 'article'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            ul: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            ul: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             'header',
@@ -5035,7 +5035,7 @@ const NewsMynaviJpExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            img: $node => {
+            img: ($node) => {
                 const src = $node.attr('data-original');
                 if (src !== '') {
                     $node.attr('src', src);
@@ -5144,7 +5144,7 @@ const WwwRedditComExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            'div[role="img"]': $node => {
+            'div[role="img"]': ($node) => {
                 // External link image preview
                 const $img = $node.find('img');
                 const bgImg = $node.css('background-image');
@@ -5306,7 +5306,7 @@ const WwwElecomCoJpExtractor = {
         selectors: ['td.TableMain2'],
         defaultCleaner: false,
         transforms: {
-            table: $node => {
+            table: ($node) => {
                 $node.attr('width', 'auto');
             },
         },
@@ -5371,7 +5371,7 @@ const GeniusComExtractor = {
             [
                 'meta[itemprop=page_data]',
                 'value',
-                res => {
+                (res) => {
                     const json = JSON.parse(res);
                     return json.song.release_date;
                 },
@@ -5388,7 +5388,7 @@ const GeniusComExtractor = {
             [
                 'meta[itemprop=page_data]',
                 'value',
-                res => {
+                (res) => {
                     const json = JSON.parse(res);
                     return json.song.album.cover_art_url;
                 },
@@ -5672,7 +5672,7 @@ const DeadlineComExtractor = {
     content: {
         selectors: ['div.a-article-grid__main.pmc-a-grid article.pmc-a-grid-item'],
         transforms: {
-            '.embed-twitter': $node => {
+            '.embed-twitter': ($node) => {
                 const innerHtml = $node.html();
                 $node.replaceWith(innerHtml);
             },
@@ -5699,7 +5699,7 @@ const WwwGizmodoJpExtractor = {
     content: {
         selectors: ['article.p-post'],
         transforms: {
-            'img.p-post-thumbnailImage': $node => {
+            'img.p-post-thumbnailImage': ($node) => {
                 const src = $node.attr('src');
                 $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
             },
@@ -5760,7 +5760,7 @@ const WwwLifehackerJpExtractor = {
             'div.lh-entryDetail-body',
         ],
         transforms: {
-            'img.lazyload': $node => {
+            'img.lazyload': ($node) => {
                 const src = $node.attr('src');
                 $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
             },
@@ -5919,7 +5919,7 @@ const WiredJpExtractor = {
             'article.article-detail',
         ],
         transforms: {
-            'img[data-original]': $node => {
+            'img[data-original]': ($node) => {
                 const dataOriginal = $node.attr('data-original');
                 const src = $node.attr('src');
                 const url = URL__default["default"].resolve(src, dataOriginal);
@@ -6021,7 +6021,7 @@ const WwwPhoronixComExtractor = {
         selectors: ['.content', 'article'],
         defaultCleaner: false,
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [],
     },
@@ -6191,14 +6191,14 @@ const MaTtiasBeExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            h2: $node => {
+            h2: ($node) => {
                 // The "id" attribute values would result in low scores and the element being
                 // removed.
                 $node.attr('id', null);
                 // h1 elements will be demoted to h2, so demote h2 elements to h3.
                 return 'h3';
             },
-            h1: $node => {
+            h1: ($node) => {
                 // The "id" attribute values would result in low scores and the element being
                 // removed.
                 $node.attr('id', null);
@@ -6206,7 +6206,7 @@ const MaTtiasBeExtractor = {
                 // add a paragraph here. It will be removed anyway because it is empty.
                 $node.after('<p></p>');
             },
-            ul: $node => {
+            ul: ($node) => {
                 // Articles contain lists of links which look like, but are not, navigation
                 // elements. Adding this class attribute avoids them being incorrectly removed.
                 $node.attr('class', 'entry-content-asset');
@@ -6273,7 +6273,7 @@ const WwwAbendblattDeExtractor = {
         // Is there anything in the content you selected that needs transformed
         // before it's consumable content? E.g., unusual lazy loaded images
         transforms: {
-            p: $node => {
+            p: ($node) => {
                 if (!$node.hasClass('obfuscated'))
                     return null;
                 let o = '';
@@ -6299,7 +6299,7 @@ const WwwAbendblattDeExtractor = {
                 $node.addClass('deobfuscated');
                 return null;
             },
-            div: $node => {
+            div: ($node) => {
                 if (!$node.hasClass('obfuscated'))
                     return null;
                 let o = '';
@@ -6368,7 +6368,7 @@ const ArstechnicaComExtractor = {
     content: {
         selectors: ['.post-content', 'main'],
         transforms: {
-            img: $node => {
+            img: ($node) => {
                 $node.removeAttr('width');
                 $node.removeAttr('sizes');
             },
@@ -6402,7 +6402,7 @@ const WwwNdtvComExtractor = {
             // This site puts a dateline in a 'b' above the first paragraph, and then somehow
             // blends it into the first paragraph with CSS. This transform moves the dateline
             // to the first paragraph.
-            '.place_cont': $node => {
+            '.place_cont': ($node) => {
                 if (!$node.parents('p').length) {
                     const nextSibling = $node.next('p');
                     if (nextSibling) {
@@ -6535,7 +6535,7 @@ const WwwVersantsComExtractor = {
     },
     content: {
         transforms: {
-            '.featured-image': $node => {
+            '.featured-image': ($node) => {
                 $node.addClass('mercury-parser-keep');
                 const figcaption = $node.find('span');
                 $node.find('figure').append(figcaption);
@@ -6569,7 +6569,7 @@ const Www1pezeshkComExtractor = {
     content: {
         selectors: ['article > .entry-content'],
         transforms: {
-            img: $node => {
+            img: ($node) => {
                 $node.src = decodeURIComponent($node.src);
             },
         },
@@ -6615,20 +6615,20 @@ const WwwAndroidauthorityComExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            div: node => {
+            div: (node) => {
                 removeAffiliateLink(node);
             },
-            p: node => {
+            p: (node) => {
                 if (node.text().startsWith('Published on')) {
                     node.remove();
                 }
                 removeAffiliateLink(node);
             },
-            ol: node => {
+            ol: (node) => {
                 node.attr('class', 'mercury-parser-keep');
             },
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: node => {
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: (node) => {
                 if (!removePolls(node)) {
                     node.attr('class', 'mercury-parser-keep');
                 }
@@ -6680,10 +6680,10 @@ const WwwHardwarezoneComSgExtractor = {
     content: {
         selectors: ['.content', 'article'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
-            p: node => {
+            p: (node) => {
                 node.attr('class', 'mercury-parser-keep');
             },
         },
@@ -6734,7 +6734,7 @@ const MobilesyrupComExtractor = {
     content: {
         selectors: ['.article-content'],
         transforms: {
-            '.article-content > ul': node => {
+            '.article-content > ul': (node) => {
                 node.attr('class', 'mercury-parser-keep');
             },
         },
@@ -6767,7 +6767,7 @@ const WwwChannelnewsasiaComExtractor = {
     content: {
         selectors: ['section[data-title="Content"]'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [],
     },
@@ -6819,7 +6819,7 @@ const WwwHeiseDeExtractor = {
     content: {
         selectors: ['.article-layout__content'],
         transforms: {
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '.ad-mobile-group-1',
@@ -6840,8 +6840,8 @@ const TldrTechExtractor = {
     content: {
         selectors: ['.content-center', 'body'],
         transforms: {
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
         },
         clean: [],
     },
@@ -6909,7 +6909,7 @@ const WwwSePlExtractor = {
     content: {
         selectors: ['article'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '#timezone',
@@ -6953,7 +6953,7 @@ const SuperserialeSePlExtractor = {
     content: {
         selectors: ['article'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '#timezone',
@@ -7001,7 +7001,7 @@ const PolskisamorzadSePlExtractor = {
     content: {
         selectors: ['.article-single'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '#timezone',
@@ -7053,7 +7053,7 @@ const WwwLebensmittelwarnungDeExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            h2: node => {
+            h2: (node) => {
                 const button = node.find('button');
                 if (node.find('button').length > 0) {
                     node.find('.lmw-section__toggle-icon').remove();
@@ -7061,14 +7061,14 @@ const WwwLebensmittelwarnungDeExtractor = {
                 }
                 node.attr('class', 'mercury-parser-keep');
             },
-            ul: $node => {
+            ul: ($node) => {
                 $node.attr('class', 'mercury-parser-keep');
             },
-            '.lmw-bodytext': node => {
+            '.lmw-bodytext': (node) => {
                 // Kontakt Information
                 node.attr('class', 'mercury-parser-keep');
             },
-            '.lmw-description-list__item': node => {
+            '.lmw-description-list__item': (node) => {
                 node.attr('class', 'mercury-parser-keep');
             },
         },
@@ -7084,7 +7084,7 @@ const WwwQbitaiComExtractor = {
     content: {
         selectors: ['.article'],
         transforms: {
-            '.zhaiyao': node => node.attr('class', 'mercury-parser-keep'),
+            '.zhaiyao': (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['.article_info'],
     },
@@ -7119,7 +7119,7 @@ const FactorioComExtractor = {
     content: {
         selectors: [['.blog-post', 'div:nth-child(2)']],
         transforms: {
-            h3: node => {
+            h3: (node) => {
                 const author = node.find('author');
                 if (author.text()) {
                     node.after(`<p>${author.text()}</p>`);
@@ -7174,7 +7174,7 @@ const Nineto5googleComExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
         },
@@ -7199,8 +7199,8 @@ const WwwEngadgetComExtractor = {
     content: {
         selectors: ['.caas-body'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            'blockquote noscript': node => {
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            'blockquote noscript': (node) => {
                 const iframe = node.find('iframe');
                 if (iframe != null) {
                     return 'div';
@@ -7229,7 +7229,7 @@ const TarnkappeInfoExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['section#author'],
     },
@@ -7253,7 +7253,7 @@ const WwwVortezNetExtractor = {
         selectors: ['.main-content', '.the-article-content'],
         transforms: {
             strong: 'p',
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['.article-header', '.panel-title', 'select', 'br'],
     },
@@ -7276,9 +7276,9 @@ const WwwPolygonComExtractor = {
     content: {
         selectors: ['article'],
         transforms: {
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
-            img: $node => {
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            img: ($node) => {
                 const srcset = $node.attr('srcset');
                 const [src] = (srcset || '').split(',');
                 if (src) {
@@ -7314,10 +7314,10 @@ const WwwThevergeComExtractor = {
     content: {
         selectors: ['.duet--layout--entry-body', 'article'],
         transforms: {
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
-            h4: $node => $node.attr('class', 'mercury-parser-keep'),
-            img: $node => {
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h4: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            img: ($node) => {
                 const srcset = $node.attr('srcset');
                 const [src] = (srcset || '').split(',');
                 if (src) {
@@ -7354,7 +7354,7 @@ const WwwTechpowerupComExtractor = {
     content: {
         selectors: ['.contnt'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['header', 'footer'],
     },
@@ -7380,9 +7380,9 @@ const WwwFlatpanelshdComExtractor = {
     content: {
         selectors: ['#zephr-anchor', 'article'],
         transforms: {
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
-            h4: $node => $node.attr('class', 'mercury-parser-keep'),
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h4: ($node) => $node.attr('class', 'mercury-parser-keep'),
             pre: 'div',
         },
         clean: [],
@@ -7406,7 +7406,7 @@ const Nineto5macComExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
         },
@@ -7432,9 +7432,9 @@ const WwwNotebookcheckNetExtractor = {
     content: {
         selectors: ['#content'],
         transforms: {
-            h2: $node => $node.attr('class', 'mercury-parser-keep'),
-            h3: $node => $node.attr('class', 'mercury-parser-keep'),
-            h4: $node => $node.attr('class', 'mercury-parser-keep'),
+            h2: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h3: ($node) => $node.attr('class', 'mercury-parser-keep'),
+            h4: ($node) => $node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['.ttcl_3', '.socialarea', '.tx-nbc2fe-relatedarticles', 'aside'],
     },
@@ -7457,10 +7457,10 @@ const WwwFuturaSciencesComExtractor = {
     content: {
         selectors: ['#article-anchor-article-main-content', '.article-text'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            h3: node => node.attr('class', 'mercury-parser-keep'),
-            h4: node => node.attr('class', 'mercury-parser-keep'),
-            ul: $node => $node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            h3: (node) => node.attr('class', 'mercury-parser-keep'),
+            h4: (node) => node.attr('class', 'mercury-parser-keep'),
+            ul: ($node) => $node.attr('class', 'mercury-parser-keep'),
         },
         clean: ['.cWHWfD', 'span[class*="wrappers__Span"]'],
     },
@@ -7552,7 +7552,7 @@ const WwwVideogameschronicleComExtractor = {
     content: {
         selectors: ['.post__content-body', 'article'],
         transforms: {
-            'figure a': $node => {
+            'figure a': ($node) => {
                 const href = $node.attr('href');
                 const $img = $node.find('img');
                 if (href && $img.length && !$img.attr('src')) {
@@ -7585,7 +7585,7 @@ const WwwNumeramaComExtractor = {
     content: {
         selectors: ['.article-content', 'article'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '.js-newsletter-block',
@@ -7665,11 +7665,11 @@ const WwwThedriveComExtractor = {
     content: {
         selectors: ['.entry-content', 'article'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            h3: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            h3: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '.product-disclosure',
@@ -7697,7 +7697,7 @@ const ChicagoyimbyComExtractor = {
     content: {
         selectors: ['.entry-content'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
         },
@@ -7737,8 +7737,8 @@ const WwwJalopnikComExtractor = {
             'article.news-post',
         ],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            '.slide-key': node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            '.slide-key': (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '.breadcrumbs',
@@ -7764,7 +7764,7 @@ const Nineto5linuxComExtractor = {
     content: {
         selectors: ['main'],
         transforms: {
-            img: node => {
+            img: (node) => {
                 node.removeAttr('sizes');
             },
         },
@@ -7793,7 +7793,7 @@ const WwwTransfermarktDeExtractor = {
         selectors: ['.news-content'],
         defaultCleaner: false,
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
         },
         clean: [
             '.dachzeile',
@@ -7828,7 +7828,7 @@ const WwwBlickDeExtractor = {
         selectors: ['article'],
         defaultCleaner: false,
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
             'figcaption details': (node) => {
                 const text = node.text();
                 node.replaceWith(`<span>${text}</span>`);
@@ -7873,8 +7873,8 @@ const WwwEuronewsComExtractor = {
     content: {
         selectors: ['.c-article-content', 'article'],
         transforms: {
-            h2: node => node.attr('class', 'mercury-parser-keep'),
-            '.widget__figure': node => node.addClass('mercury-parser-keep'),
+            h2: (node) => node.attr('class', 'mercury-parser-keep'),
+            '.widget__figure': (node) => node.addClass('mercury-parser-keep'),
         },
         clean: ['.c-ad', '.c-widget-related', '.connatix-container'],
     },
@@ -8269,10 +8269,10 @@ function cleanDatePublished(dateString, { timezone, format } = {}) {
     if (SEC_DATE_STRING.test(dateString)) {
         return new Date(parseInt(dateString, 10) * 1000).toISOString();
     }
-    let date = createDate(dateString, timezone, format);
+    let date = createDate(dateString, timezone || '', format || '');
     if (!date.isValid()) {
         dateString = cleanDateString(dateString);
-        date = createDate(dateString, timezone, format);
+        date = createDate(dateString, timezone || '', format || '');
     }
     return date.isValid() ? date.toISOString() : null;
 }
@@ -8327,12 +8327,14 @@ function extractBreadcrumbTitle(splitTitle, text) {
             acc[titleText] = acc[titleText] ? acc[titleText] + 1 : 1;
             return acc;
         }, {});
-        const [maxTerm, termCount] = Reflect.ownKeys(termCounts).reduce((acc, key) => {
+        const maxTermResult = Object.keys(termCounts).reduce((acc, key) => {
             if (acc[1] < termCounts[key]) {
                 return [key, termCounts[key]];
             }
             return acc;
-        }, [0, 0]);
+        }, ['', 0]);
+        const maxTerm = maxTermResult[0];
+        const termCount = maxTermResult[1];
         // We found a splitter that was used more than once, so it
         // is probably the breadcrumber. Split our title on that instead.
         // Note: max_term should be <= 4 characters, so that " >> "
@@ -8357,7 +8359,7 @@ function cleanDomainFromTitle(splitTitle, url) {
     // Strip out the big TLDs - it just makes the matching a bit more
     // accurate. Not the end of the world if it doesn't strip right.
     const { host } = URL__default["default"].parse(url);
-    const nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
+    const nakedDomain = (host || '').replace(DOMAIN_ENDINGS_RE, '');
     const startSlug = splitTitle[0].toLowerCase().replace(' ', '');
     const startSlugRatio = wuzzy__default["default"].levenshtein(startSlug, nakedDomain);
     if (startSlugRatio > 0.4 && startSlug.length > 5) {
@@ -8560,7 +8562,7 @@ function findTopCandidate($) {
         }
         const $node = $(node);
         const score = getScore($node);
-        if (score > topScore) {
+        if (score && score > topScore) {
             topScore = score;
             $candidate = $node;
         }
@@ -9276,7 +9278,7 @@ function scorePrevLink(linkData) {
 
 function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrls) {
     // skip if we've already fetched this url
-    if (previousUrls.find(url => href === url) !== undefined) {
+    if (previousUrls.find((url) => href === url) !== undefined) {
         return false;
     }
     // If we've already parsed this URL, or the URL matches the base
@@ -9484,13 +9486,13 @@ const GenericExcerptExtractor = {
     },
 };
 
-const getWordCount = content => {
+const getWordCount = (content) => {
     const $ = cheerio__namespace.load(content);
     const $content = $('div').first();
     const text = normalizeSpaces($content.text());
     return text.split(/\s/).length;
 };
-const getWordCountAlt = content => {
+const getWordCountAlt = (content) => {
     content = content.replace(/<[^>]*>/g, ' ');
     content = content.replace(/\s+/g, ' ');
     content = content.trim();
@@ -9559,7 +9561,7 @@ const Detectors = {
 };
 function detectByHtml($) {
     const selector = Reflect.ownKeys(Detectors).find(s => $(s).length > 0);
-    return Detectors[selector];
+    return selector ? Detectors[selector] : undefined;
 }
 
 function getExtractor(url, parsedUrl, $) {
@@ -9611,7 +9613,7 @@ function transformElements($content, $, { transforms }) {
     return $content;
 }
 function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
-    return selectors.find(selector => {
+    return selectors.find((selector) => {
         if (Array.isArray(selector)) {
             if (extractHtml) {
                 return selector.reduce((acc, s) => acc && $(s).length > 0, true);
@@ -9679,7 +9681,7 @@ function select(opts) {
             return $content
                 .children()
                 .toArray()
-                .map(el => $.html($(el)));
+                .map((el) => $.html($(el)));
         }
         return $.html($content);
     }
@@ -9862,11 +9864,12 @@ const Parser = {
                 message: 'The url parameter passed does not look like a valid URL. Please check your URL and try again.',
             };
         }
-        const $ = await Resource.create(url, html, parsedUrl, headers);
+        const result$ = await Resource.create(url, html, parsedUrl, headers);
         // If we found an error creating the resource, return that error
-        if ($.failed) {
-            return $;
+        if (result$.failed) {
+            return result$;
         }
+        const $ = result$;
         // Add custom extractor via cli.
         if (customExtractor) {
             addExtractor(customExtractor);

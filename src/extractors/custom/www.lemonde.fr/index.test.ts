@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLemondeFrExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.lemonde.fr/economie/article/2019/05/07/dans-ses-previsions-economiques-bruxelles-confirme-la-montee-des-perils_5459325_3234.html';

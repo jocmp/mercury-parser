@@ -3,12 +3,12 @@ import stripTags from './strip-tags';
 // Given a node type to search for, and a list of meta tag names to
 // search for, find a meta tag associated.
 export default function extractFromMeta(
-  $,
-  metaNames,
-  cachedNames,
+  $: any,
+  metaNames: string[],
+  cachedNames: string[],
   cleanTags = true
 ) {
-  const foundNames = metaNames.filter(name => cachedNames.indexOf(name) !== -1);
+  const foundNames = metaNames.filter((name: string) => cachedNames.indexOf(name) !== -1);
 
   // eslint-disable-next-line no-restricted-syntax
   for (const name of foundNames) {
@@ -21,9 +21,9 @@ export default function extractFromMeta(
     // are two meta tags with the same name and value.
     // Remove empty values.
     const values = nodes
-      .map((index, node) => $(node).attr(value))
+      .map((index: number, node: any) => $(node).attr(value))
       .toArray()
-      .filter(text => text !== '');
+      .filter((text: any) => text !== '');
 
     // If we have more than one value for the same name, we have a
     // conflict and can't trust any of them. Skip this name. If we have

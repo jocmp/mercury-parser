@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PagesixComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://pagesix.com/2016/12/19/sofia-vergara-and-nick-loebs-embryo-drama-taking-a-detour/';

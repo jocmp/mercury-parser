@@ -56,7 +56,7 @@ describe('scoreContent($, weightNodes)', () => {
 
     // fuzzines of test below addressing minor
     // discrepancy b/w node and browser
-    assert.strictEqual(getScore(itemprop) > 500, true);
+    assert.strictEqual(getScore(itemprop)! > 500, true);
   });
 
   it('gives its parent all of the children scores', () => {

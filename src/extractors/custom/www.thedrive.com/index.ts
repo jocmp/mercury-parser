@@ -21,11 +21,11 @@ export const WwwThedriveComExtractor = {
     selectors: ['.entry-content', 'article'],
 
     transforms: {
-      img: node => {
+      img: (node: any) => {
         node.removeAttr('sizes');
       },
-      h2: node => node.attr('class', 'mercury-parser-keep'),
-      h3: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
+      h3: (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: [

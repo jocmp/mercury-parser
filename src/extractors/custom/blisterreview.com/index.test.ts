@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('BlisterreviewComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://blisterreview.com/gear-reviews/2019-2020-line-outline';
       const html = fs.readFileSync(

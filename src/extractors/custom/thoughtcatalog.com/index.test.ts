@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ThoughtcatalogComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://thoughtcatalog.com/lauren-jarvis-gibson/2016/12/one-day-you-will-meet-someone-who-will-change-your-life-for-good/';

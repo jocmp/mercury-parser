@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WroclawSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://wroclaw.se.pl/policjanci-zawiezli-zatrzymanego-mezczyzne-do-sklepu-zaskakujac-cel-wizyty-aa-QhNb-WfPJ-587w.html';

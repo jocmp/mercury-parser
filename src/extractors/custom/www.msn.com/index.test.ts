@@ -12,8 +12,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('MSNExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.msn.com/en-us/health/wellness/this-is-your-brain-on-sad-movies-plus-5-films-to-cry-to/ar-BBwsPWG?li=BBnb2gg';

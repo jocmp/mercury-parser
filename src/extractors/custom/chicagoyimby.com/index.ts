@@ -21,7 +21,7 @@ export const ChicagoyimbyComExtractor = {
     selectors: ['.entry-content'],
 
     transforms: {
-      img: node => {
+      img: (node: any) => {
         node.removeAttr('sizes');
       },
     },

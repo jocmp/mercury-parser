@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwVersantsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.versants.com/actualite/la-centrale-de-benevoles-doperation-nez-rouge-est-a-sainte-julie/';

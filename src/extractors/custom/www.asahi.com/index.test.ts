@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAsahiComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.asahi.com/articles/ASM2Q5HKNM2QUCVL02D.html';
       const html = fs.readFileSync('./fixtures/www.asahi.com.html', 'utf-8');

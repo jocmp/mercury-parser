@@ -3,7 +3,7 @@ import scoreLength from './score-length';
 
 // Score a paragraph using various methods. Things like number of
 // commas, etc. Higher is better.
-export default function scoreParagraph(node) {
+export default function scoreParagraph(node: any) {
   let score = 1;
   const text = node.text().trim();
   const textLength = text.length;

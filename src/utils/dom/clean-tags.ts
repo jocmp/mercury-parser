@@ -7,7 +7,7 @@ import { CLEAN_CONDITIONALLY_TAGS, KEEP_CLASS } from './constants';
 import { normalizeSpaces } from '../text';
 import { linkDensity } from './link-density';
 
-function removeUnlessContent($node, $, weight) {
+function removeUnlessContent($node: any, $: any, weight: number) {
   // Explicitly save entry-content-asset tags, which are
   // noted as valuable in the Publisher guidelines. For now
   // this works everywhere. We may want to consider making
@@ -86,8 +86,8 @@ function removeUnlessContent($node, $, weight) {
 // etc)
 //
 // Return this same doc.
-export default function cleanTags($article, $) {
-  $(CLEAN_CONDITIONALLY_TAGS, $article).each((index, node) => {
+export default function cleanTags($article: any, $: any) {
+  $(CLEAN_CONDITIONALLY_TAGS, $article).each((index: number, node: any) => {
     const $node = $(node);
     // If marked to keep, skip it
     if ($node.hasClass(KEEP_CLASS) || $node.find(`.${KEEP_CLASS}`).length > 0)

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ScanNetsecurityNeJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://scan.netsecurity.ne.jp/article/2019/03/05/42049.html';
       const html = fs.readFileSync(

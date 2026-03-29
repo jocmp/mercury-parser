@@ -11,8 +11,8 @@ const fs = require('fs');
 // eslint-disable-next-line no-undef
 xdescribe('WwwTechpowerupComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.techpowerup.com/review/valkyrie-v240-lite-aio-liquid-cpu-cooler/';

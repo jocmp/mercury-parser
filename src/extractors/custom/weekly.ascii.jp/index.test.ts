@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WeeklyAsciiJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://weekly.ascii.jp/elem/000/000/428/428292/';
       const html = fs.readFileSync('./fixtures/weekly.ascii.jp.html', 'utf-8');

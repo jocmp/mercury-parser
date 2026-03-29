@@ -2,7 +2,7 @@
 import addScore from './add-score';
 
 // Adds 1/4 of a child's score to its parent
-export default function addToParent(node, $, score) {
+export default function addToParent(node: any, $: any, score: any) {
   const parent = node.parent();
   if (parent) {
     addScore(parent, $, score * 0.25);

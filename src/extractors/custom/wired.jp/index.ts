@@ -36,7 +36,7 @@ export const WiredJpExtractor = {
     ],
 
     transforms: {
-      'img[data-original]': $node => {
+      'img[data-original]': ($node: any) => {
         const dataOriginal = $node.attr('data-original');
         const src = $node.attr('src');
         const url = URL.resolve(src, dataOriginal);

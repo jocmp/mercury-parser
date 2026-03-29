@@ -22,7 +22,7 @@ export const WwwVortezNetExtractor = {
 
     transforms: {
       strong: 'p',
-      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: ['.article-header', '.panel-title', 'select', 'br'],

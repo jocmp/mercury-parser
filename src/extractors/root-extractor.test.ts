@@ -105,7 +105,7 @@ describe('transformElements($content, $, { transforms })', () => {
       transforms: {
         // Updated noscript transform for Cheerio 1.x compatibility
         // eslint-disable-next-line no-unused-vars
-        noscript: ($node, $) => {
+        noscript: ($node: any, $: any) => {
           const noscriptHtml = $node.html();
           if (!noscriptHtml) return null;
 

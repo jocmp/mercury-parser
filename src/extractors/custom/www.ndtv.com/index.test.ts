@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwNdtvComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.ndtv.com/india-news/coronavirus-us-president-donald-trump-says-there-may-be-retaliation-if-india-doesnt-clear-export-of-2207327';

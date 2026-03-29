@@ -32,7 +32,7 @@ export const WwwSiComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      noscript: $node => {
+      noscript: ($node: any) => {
         const $children = $node.children();
         if ($children.length === 1 && $children.get(0).tagName === 'img') {
           return 'figure';

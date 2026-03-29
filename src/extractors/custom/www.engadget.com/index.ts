@@ -21,9 +21,9 @@ export const WwwEngadgetComExtractor = {
     selectors: ['.caas-body'],
 
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
 
-      'blockquote noscript': node => {
+      'blockquote noscript': (node: any) => {
         const iframe = node.find('iframe');
 
         if (iframe != null) {

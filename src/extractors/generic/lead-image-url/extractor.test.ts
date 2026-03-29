@@ -54,7 +54,7 @@ describe('GenericLeadImageUrlExtractor', () => {
       </div>
     `);
       const content = $('*').first();
-      const metaCache = [];
+      const metaCache: any[] = [];
 
       const result = GenericLeadImageUrlExtractor.extract({
         $,
@@ -72,7 +72,7 @@ describe('GenericLeadImageUrlExtractor', () => {
       </div>
     `);
       const content = $('*').first();
-      const metaCache = [];
+      const metaCache: any[] = [];
 
       const result = GenericLeadImageUrlExtractor.extract({
         $,

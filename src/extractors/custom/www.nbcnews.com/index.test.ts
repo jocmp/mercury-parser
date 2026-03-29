@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwNbcnewsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.nbcnews.com/tech/tech-news/what-s-hold-spacex-n695001';
       const html = fs.readFileSync('./fixtures/www.nbcnews.com.html', 'utf-8');

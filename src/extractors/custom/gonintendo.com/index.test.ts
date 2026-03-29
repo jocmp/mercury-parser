@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('GonintendoComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://gonintendo.com/contents/52827-former-capcom-dev-defends-game-key-cards-says-nintendo-is-trying-to-protect-the-game';

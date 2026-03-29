@@ -3,15 +3,15 @@ import URL from 'url';
 import { DIGIT_RE, EXTRANEOUS_LINK_HINTS_RE } from '../constants';
 
 export default function shouldScore(
-  href,
-  articleUrl,
-  baseUrl,
-  parsedUrl,
-  linkText,
-  previousUrls
+  href: any,
+  articleUrl: any,
+  baseUrl: any,
+  parsedUrl: any,
+  linkText: any,
+  previousUrls: any
 ) {
   // skip if we've already fetched this url
-  if (previousUrls.find(url => href === url) !== undefined) {
+  if (previousUrls.find((url: any) => href === url) !== undefined) {
     return false;
   }
 

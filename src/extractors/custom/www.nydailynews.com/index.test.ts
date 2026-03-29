@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('WwwNydailynewsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.nydailynews.com/news/politics/michelle-obama-feeling-not-hope-feels-article-1.2913255';

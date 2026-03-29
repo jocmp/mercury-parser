@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwHuffingtonpostComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.huffingtonpost.com/entry/donald-trump-obama_us_583c8f01e4b06539a789ddd4';

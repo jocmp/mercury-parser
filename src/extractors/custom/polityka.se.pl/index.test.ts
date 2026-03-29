@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PolitykaSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://polityka.se.pl/wiadomosci/express-biedrzyckiej-goscie-we-wtorek-4-lutego-aa-HqkJ-vZBV-aJyE.html';

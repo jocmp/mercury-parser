@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('Nineto5googleComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://9to5google.com/2025/02/28/google-pixel-9a-wallpapers-leak/';

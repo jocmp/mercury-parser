@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwMiamiheraldComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.miamiherald.com/news/business/biz-monday/article120329158.html';

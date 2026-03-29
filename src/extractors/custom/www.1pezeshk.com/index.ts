@@ -17,7 +17,7 @@ export const Www1pezeshkComExtractor = {
     selectors: ['article > .entry-content'],
 
     transforms: {
-      img: $node => {
+      img: ($node: any) => {
         $node.src = decodeURIComponent($node.src);
       },
     },

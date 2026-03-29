@@ -7,8 +7,8 @@ import { IS_LINK, IS_IMAGE, IS_SRCSET } from './constants';
 // Many sites will have img tags with no source, or an image tag with a src
 // attribute that a is a placeholer. We need to be able to properly fill in
 // the src attribute so the images are no longer lazy loaded.
-export default function convertLazyLoadedImages($) {
-  const extractSrcFromJSON = str => {
+export default function convertLazyLoadedImages($: any) {
+  const extractSrcFromJSON = (str: string) => {
     try {
       const { src } = JSON.parse(str);
       if (typeof src === 'string') return src;
@@ -19,7 +19,7 @@ export default function convertLazyLoadedImages($) {
     return false;
   };
 
-  $('img').each((_, img) => {
+  $('img').each((_: number, img: any) => {
     const attrs = getAttrs(img);
 
     Reflect.ownKeys(attrs).forEach(attr => {

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwTmzComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.tmz.com/2016/11/28/prince-wife-estate-will/';
       const html = fs.readFileSync('./fixtures/www.tmz.com.html', 'utf-8');

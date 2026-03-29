@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PolskisamorzadSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://polskisamorzad.se.pl/artykul/910,rekordowy-styczen-lotniska-we-wroclawiu-wiadomo-dokad-najchetniej-podrozowali-pasazerowie';

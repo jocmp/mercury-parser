@@ -21,7 +21,7 @@ export const Nineto5macComExtractor = {
     selectors: ['main'],
 
     transforms: {
-      img: node => {
+      img: (node: any) => {
         node.removeAttr('sizes');
       },
     },

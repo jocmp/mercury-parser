@@ -22,11 +22,11 @@ export const WwwNotebookcheckNetExtractor = {
     selectors: ['#content'],
 
     transforms: {
-      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+      h2: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
 
-      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
 
-      h4: $node => $node.attr('class', 'mercury-parser-keep'),
+      h4: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: ['.ttcl_3', '.socialarea', '.tx-nbc2fe-relatedarticles', 'aside'],

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('NewYorkerExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.newyorker.com/tech/elements/hacking-cryptography-and-the-countdown-to-quantum-computing';
@@ -104,8 +104,8 @@ describe('NewYorkerExtractor', () => {
   });
 
   describe('magazine content', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.newyorker.com/magazine/2016/12/05/lessons-from-my-mother';
@@ -133,8 +133,8 @@ describe('NewYorkerExtractor', () => {
   });
 
   describe('article with multiple authors', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.newyorker.com/humor/daily-shouts/teas-you-should-probably-get-rid-of-already';

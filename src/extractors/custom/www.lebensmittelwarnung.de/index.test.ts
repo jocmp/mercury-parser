@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLebensmittelwarnungDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.lebensmittelwarnung.de/___lebensmittelwarnung.de/Meldungen/2025/02_Feb/250221_13_HE_DubaiSchokolade/250221_13_HE_DubaiSchokolade.html';

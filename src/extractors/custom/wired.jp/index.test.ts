@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WiredJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://wired.jp/2019/04/25/helvetica-now/';
       const html = fs.readFileSync('./fixtures/wired.jp.html', 'utf-8');

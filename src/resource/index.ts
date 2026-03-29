@@ -14,8 +14,8 @@ const Resource = {
   //                  attempting to fetch it ourselves. Expects a
   //                  string.
   // :param headers: Custom headers to be included in the request
-  async create(url, preparedResponse?, parsedUrl?, headers = {}) {
-    let result;
+  async create(url: string, preparedResponse?: any, parsedUrl?: any, headers = {}) {
+    let result: any;
 
     if (preparedResponse) {
       const validResponse = {
@@ -44,7 +44,7 @@ const Resource = {
     return this.generateDoc(result);
   },
 
-  generateDoc({ body: content, response, alreadyDecoded = false }) {
+  generateDoc({ body: content, response, alreadyDecoded = false }: { body: any; response: any; alreadyDecoded?: boolean }) {
     const { 'content-type': contentType = '' } = response.headers;
 
     // TODO: Implement is_text function from
@@ -71,7 +71,7 @@ const Resource = {
     return $;
   },
 
-  encodeDoc({ content, contentType, alreadyDecoded = false }) {
+  encodeDoc({ content, contentType, alreadyDecoded = false }: { content: any; contentType: string; alreadyDecoded?: boolean }) {
     if (alreadyDecoded) {
       return cheerio.load(content);
     }
@@ -90,7 +90,7 @@ const Resource = {
     const metaContentType =
       $(contentTypeSelector).attr('content') ||
       $('meta[charset]').attr('charset');
-    const properEncoding = getEncoding(metaContentType);
+    const properEncoding = getEncoding(metaContentType as string);
 
     // if encodings in the header/body dont match, use the one in the body
     if (metaContentType && properEncoding !== encoding) {

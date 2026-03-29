@@ -35,7 +35,7 @@ describe('GenericDatePublishedExtractor', () => {
         </head>
       </div>
     `);
-      const metaCache = [];
+      const metaCache: any[] = [];
       const result = GenericDatePublishedExtractor.extract({
         $,
         url: '',
@@ -47,7 +47,7 @@ describe('GenericDatePublishedExtractor', () => {
 
     it('extracts from url formatted /2012/08/01/etc', () => {
       const $ = cheerio.load('<div></div>');
-      const metaCache = [];
+      const metaCache: any[] = [];
       const url = 'https://example.com/2012/08/01/this-is-good';
       const result = GenericDatePublishedExtractor.extract({
         $,
@@ -60,7 +60,7 @@ describe('GenericDatePublishedExtractor', () => {
 
     it('extracts from url formatted /2020-01-01', () => {
       const $ = cheerio.load('<div></div>');
-      const metaCache = [];
+      const metaCache: any[] = [];
       const url = 'https://example.com/2020-01-01/this-is-good';
       const result = GenericDatePublishedExtractor.extract({
         $,
@@ -76,7 +76,7 @@ describe('GenericDatePublishedExtractor', () => {
       // for browser testing
       if (!isBrowser) {
         const $ = cheerio.load('<div></div>');
-        const metaCache = [];
+        const metaCache: any[] = [];
         const url = 'https://example.com/2020/jan/01/this-is-good';
         const result = GenericDatePublishedExtractor.extract({
           $,
@@ -93,7 +93,7 @@ describe('GenericDatePublishedExtractor', () => {
 
     it('returns null if no date can be found', () => {
       const $ = cheerio.load('<div></div>');
-      const metaCache = [];
+      const metaCache: any[] = [];
       const result = GenericDatePublishedExtractor.extract({
         $,
         url: '',

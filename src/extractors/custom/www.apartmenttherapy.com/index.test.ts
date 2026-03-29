@@ -11,8 +11,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('ApartmentTherapyExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.apartmenttherapy.com/a-light-filled-la-loft-236564';
       const html = fs.readFileSync(

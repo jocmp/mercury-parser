@@ -8,7 +8,7 @@ import {
   MAX_CONTENT_LENGTH,
 } from './constants';
 
-function get(options) {
+function get(options: any) {
   return new Promise((resolve, reject) => {
     request(options, (err, response, body) => {
       if (err) {
@@ -25,7 +25,7 @@ function get(options) {
 // Validation here means that we haven't found reason to bail from
 // further processing of this url.
 
-export function validateResponse(response, parseNon200 = false) {
+export function validateResponse(response: any, parseNon200 = false) {
   // Check if we got a valid status code
   // This isn't great, but I'm requiring a statusMessage to be set
   // before short circuiting b/c nock doesn't set it in tests
@@ -73,7 +73,7 @@ export function validateResponse(response, parseNon200 = false) {
 
 // Grabs the last two pieces of the URL and joins them back together
 // This is to get the 'livejournal.com' from 'erotictrains.livejournal.com'
-export function baseDomain({ host }) {
+export function baseDomain({ host }: { host: string }) {
   return host
     .split('.')
     .slice(-2)
@@ -86,7 +86,7 @@ export function baseDomain({ host }) {
 // TODO: Ensure we are not fetching something enormous. Always return
 //       unicode content for HTML, with charset conversion.
 
-export default async function fetchResource(url, parsedUrl, headers = {}) {
+export default async function fetchResource(url: string, parsedUrl: any, headers = {}) {
   parsedUrl = parsedUrl || URL.parse(encodeURI(url));
   const options = {
     url: parsedUrl.href,

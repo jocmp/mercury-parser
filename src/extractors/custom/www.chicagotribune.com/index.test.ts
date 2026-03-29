@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('WwwChicagotribuneComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.chicagotribune.com/news/nationworld/politics/ct-trump-energy-department-climate-change-request-20161213-story.html';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwNprOrgExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.npr.org/sections/thetwo-way/2016/12/15/505723552/jury-finds-dylann-roof-guilty-in-s-c-church-shooting';

@@ -29,7 +29,7 @@ export const WwwRefinery29ComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div.loading noscript': $node => {
+      'div.loading noscript': ($node: any) => {
         const imgHtml = $node.html();
         $node.parents('.loading').replaceWith(imgHtml);
       },

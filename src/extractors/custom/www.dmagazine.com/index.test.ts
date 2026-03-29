@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwDmagazineComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.dmagazine.com/frontburner/2016/12/nfl-concussion-settlement-payments-can-begin/';

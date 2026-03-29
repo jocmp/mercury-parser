@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwPolygonComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.polygon.com/diablo-4-guides/565876/reliquary-battle-pass-explained-rewards';

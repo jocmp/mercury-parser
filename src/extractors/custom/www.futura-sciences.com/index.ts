@@ -21,13 +21,13 @@ export const WwwFuturaSciencesComExtractor = {
     selectors: ['#article-anchor-article-main-content', '.article-text'],
 
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
 
-      h3: node => node.attr('class', 'mercury-parser-keep'),
+      h3: (node: any) => node.attr('class', 'mercury-parser-keep'),
 
-      h4: node => node.attr('class', 'mercury-parser-keep'),
+      h4: (node: any) => node.attr('class', 'mercury-parser-keep'),
 
-      ul: $node => $node.attr('class', 'mercury-parser-keep'),
+      ul: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: ['.cWHWfD', 'span[class*="wrappers__Span"]'],

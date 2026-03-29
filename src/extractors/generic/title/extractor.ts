@@ -9,7 +9,7 @@ import {
 } from './constants';
 
 const GenericTitleExtractor = {
-  extract({ $, url, metaCache }) {
+  extract({ $, url, metaCache }: any) {
     // First, check to see if we have a matching meta tag that we can make
     // use of that is strongly associated with the headline.
     let title;

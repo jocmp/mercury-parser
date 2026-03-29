@@ -30,7 +30,7 @@ export const WwwMsnbcComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.pane-node-body': ($node, $) => {
+      '.pane-node-body': ($node: any, $: any) => {
         const [
           selector,
           attr,

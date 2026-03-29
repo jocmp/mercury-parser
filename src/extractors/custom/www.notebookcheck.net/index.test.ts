@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwNotebookcheckNetExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.notebookcheck.net/8BitDo-64-Controller-now-available-to-pre-order-on-Amazon-in-Black-and-White-with-a-July-30-release-date.1054098.0.html';

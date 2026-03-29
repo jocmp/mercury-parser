@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSlateComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.slate.com/articles/news_and_politics/politics/2017/03/trumpcare_proves_that_trump_s_promise_to_take_care_of_rural_voters_was_always.html';

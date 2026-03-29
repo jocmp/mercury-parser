@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('IciRadioCanadaCaExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://ici.radio-canada.ca/nouvelle/2205360/budget-federal-depenses-compressions-investissements-deficit-2025';

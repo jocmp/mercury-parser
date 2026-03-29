@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('Nineto5linuxComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4';

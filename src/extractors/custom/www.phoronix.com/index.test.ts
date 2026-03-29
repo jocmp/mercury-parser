@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwPhoronixComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.phoronix.com/news/Raspberry-Pi-HEVC-H265-Decode';
       const html = fs.readFileSync(

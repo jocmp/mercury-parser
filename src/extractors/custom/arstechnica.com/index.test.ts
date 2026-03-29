@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ArstechnicaComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://arstechnica.com/science/2025/02/twenty-two-states-sue-to-block-new-nih-funding-policy/';

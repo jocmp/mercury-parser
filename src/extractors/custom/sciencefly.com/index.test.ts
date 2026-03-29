@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ScienceflyComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://sciencefly.com/video-shows-false-killer-whale-snagging-tuna-bait/';

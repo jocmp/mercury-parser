@@ -32,7 +32,7 @@ export const WwwAbendblattDeExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      p: $node => {
+      p: ($node: any) => {
         if (!$node.hasClass('obfuscated')) return null;
         let o = '';
         let n = 0;
@@ -58,7 +58,7 @@ export const WwwAbendblattDeExtractor = {
         $node.addClass('deobfuscated');
         return null;
       },
-      div: $node => {
+      div: ($node: any) => {
         if (!$node.hasClass('obfuscated')) return null;
         let o = '';
         let n = 0;

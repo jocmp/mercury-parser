@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLadbibleComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.ladbible.com/news/latest-aussie-government-sparks-fury-over-graphic-and-confronting-covid-19-ad-20210711';

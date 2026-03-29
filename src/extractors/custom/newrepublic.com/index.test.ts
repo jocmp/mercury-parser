@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('NewrepublicComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://newrepublic.com/article/138859/fantastic-beasts-nice-place-visit';
@@ -105,8 +105,8 @@ describe('NewrepublicComExtractor', () => {
   });
 
   describe('minutes', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(async () => {
       url =
         'https://newrepublic.com/minutes/139022/maybe-donald-trumps-twitter-account-just-smoke-screen';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SportSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://sport.se.pl/pilka-nozna/ekstraklasa/kolejna-katastrofa-slaska-ogromny-zawod-z-piastem-ale-co-zrobil-rafal-leszczynski-wideo-aa-orCp-ajk6-8ada.html';

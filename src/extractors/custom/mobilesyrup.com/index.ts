@@ -27,7 +27,7 @@ export const MobilesyrupComExtractor = {
     selectors: ['.article-content'],
 
     transforms: {
-      '.article-content > ul': node => {
+      '.article-content > ul': (node: any) => {
         node.attr('class', 'mercury-parser-keep');
       },
     },

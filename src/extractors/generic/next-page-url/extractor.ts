@@ -6,7 +6,7 @@ import scoreLinks from './scoring/score-links';
 // Looks for and returns next page url
 // for multi-page articles
 const GenericNextPageUrlExtractor = {
-  extract({ $, url, parsedUrl = undefined, previousUrls = [] }) {
+  extract({ $, url, parsedUrl = undefined as any, previousUrls = [] }: any) {
     parsedUrl = parsedUrl || URL.parse(url);
 
     const articleUrl = removeAnchor(url);
@@ -33,13 +33,13 @@ const GenericNextPageUrlExtractor = {
         const scoredLink = scoredLinks[link];
         return scoredLink.score > acc.score ? scoredLink : acc;
       },
-      { score: -100 }
+      { score: -100 } as any
     );
 
     // If the score is less than 50, we're not confident enough to use it,
     // so we fail.
     if (topPage.score >= 50) {
-      return topPage.href;
+      return (topPage as any).href;
     }
 
     return null;

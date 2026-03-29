@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwVideogameschronicleComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.videogameschronicle.com/news/super-mario-bros-wonder-is-getting-a-switch-2-edition-with-new-multiplayer-modes/';

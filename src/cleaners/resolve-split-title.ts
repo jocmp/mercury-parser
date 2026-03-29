@@ -3,7 +3,7 @@ import wuzzy from 'wuzzy';
 
 import { TITLE_SPLITTERS_RE, DOMAIN_ENDINGS_RE } from './constants';
 
-function extractBreadcrumbTitle(splitTitle, text) {
+function extractBreadcrumbTitle(splitTitle: string[], text: string) {
   // This must be a very breadcrumbed title, like:
   // The Best Gadgets on Earth : Bits : Blogs : NYTimes.com
   // NYTimes - Blogs - Bits - The Best Gadgets on Earth
@@ -11,12 +11,12 @@ function extractBreadcrumbTitle(splitTitle, text) {
     // Look to see if we can find a breadcrumb splitter that happens
     // more than once. If we can, we'll be able to better pull out
     // the title.
-    const termCounts = splitTitle.reduce((acc, titleText) => {
+    const termCounts: Record<string, number> = splitTitle.reduce((acc: Record<string, number>, titleText: string) => {
       acc[titleText] = acc[titleText] ? acc[titleText] + 1 : 1;
       return acc;
     }, {});
 
-    const [maxTerm, termCount] = Reflect.ownKeys(termCounts).reduce(
+    const maxTermResult = Object.keys(termCounts).reduce<[string, number]>(
       (acc, key) => {
         if (acc[1] < termCounts[key]) {
           return [key, termCounts[key]];
@@ -24,14 +24,16 @@ function extractBreadcrumbTitle(splitTitle, text) {
 
         return acc;
       },
-      [0, 0]
+      ['', 0]
     );
+    const maxTerm = maxTermResult[0];
+    const termCount = maxTermResult[1];
 
     // We found a splitter that was used more than once, so it
     // is probably the breadcrumber. Split our title on that instead.
     // Note: max_term should be <= 4 characters, so that " >> "
     // will match, but nothing longer than that.
-    if (termCount >= 2 && (maxTerm as string).length <= 4) {
+    if (termCount >= 2 && maxTerm.length <= 4) {
       splitTitle = text.split(maxTerm);
     }
 
@@ -51,7 +53,7 @@ function extractBreadcrumbTitle(splitTitle, text) {
   return null;
 }
 
-function cleanDomainFromTitle(splitTitle, url) {
+function cleanDomainFromTitle(splitTitle: string[], url: string) {
   // Search the ends of the title, looking for bits that fuzzy match
   // the URL too closely. If one is found, discard it and return the
   // rest.
@@ -59,7 +61,7 @@ function cleanDomainFromTitle(splitTitle, url) {
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
   const { host } = URL.parse(url);
-  const nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
+  const nakedDomain = (host || '').replace(DOMAIN_ENDINGS_RE, '');
 
   const startSlug = splitTitle[0].toLowerCase().replace(' ', '');
   const startSlugRatio = wuzzy.levenshtein(startSlug, nakedDomain);
@@ -83,7 +85,7 @@ function cleanDomainFromTitle(splitTitle, url) {
 
 // Given a title with separators in it (colons, dashes, etc),
 // resolve whether any of the segments should be removed.
-export default function resolveSplitTitle(title, url = '') {
+export default function resolveSplitTitle(title: string, url = '') {
   // Splits while preserving splitters, like:
   // ['The New New York', ' - ', 'The Washington Post']
   const splitTitle = title.split(TITLE_SPLITTERS_RE);

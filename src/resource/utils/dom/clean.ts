@@ -1,10 +1,10 @@
 import { TAGS_TO_REMOVE } from './constants';
 
-function isComment(index, node) {
+function isComment(index: number, node: any) {
   return node.type === 'comment';
 }
 
-function cleanComments($) {
+function cleanComments($: any) {
   $.root()
     .find('*')
     .contents()
@@ -14,7 +14,7 @@ function cleanComments($) {
   return $;
 }
 
-export default function clean($) {
+export default function clean($: any) {
   $(TAGS_TO_REMOVE).remove();
 
   $ = cleanComments($);

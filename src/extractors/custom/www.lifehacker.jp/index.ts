@@ -32,7 +32,7 @@ export const WwwLifehackerJpExtractor = {
     ],
 
     transforms: {
-      'img.lazyload': $node => {
+      'img.lazyload': ($node: any) => {
         const src = $node.attr('src');
         $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
       },

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwYomiuriCoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.yomiuri.co.jp/sports/soccer/20190411-OYT1T50287/';
       const html = fs.readFileSync(

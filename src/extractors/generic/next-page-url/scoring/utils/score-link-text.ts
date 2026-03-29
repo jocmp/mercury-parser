@@ -1,6 +1,6 @@
 import { IS_DIGIT_RE } from 'utils/text/constants';
 
-export default function scoreLinkText(linkText, pageNum) {
+export default function scoreLinkText(linkText: any, pageNum: any) {
   // If the link text can be parsed as a number, give it a minor
   // bonus, with a slight bias towards lower numbered pages. This is
   // so that pages that might not have 'next' in their text can still

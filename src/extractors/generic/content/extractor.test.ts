@@ -16,7 +16,7 @@ describe('GenericContentExtractor', () => {
           html,
           url:
             'http://www.vulture.com/2016/08/dc-comics-greg-berlanti-c-v-r.html',
-        })
+        } as any) as string
       );
 
       assert(typeof result, 'string');

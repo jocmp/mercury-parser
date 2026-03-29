@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('MoneyCnnComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://money.cnn.com/2016/11/29/news/ohare-workers-strike/index.html';

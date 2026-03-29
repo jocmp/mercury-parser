@@ -20,7 +20,7 @@ export const BskyAppExtractor = {
     selectors: ['noscript'],
 
     transforms: {
-      noscript: ($node, $) => {
+      noscript: ($node: any, $: any) => {
         const innerHtml = $.browser ? $node.text() : $node.html();
         const summary = $(innerHtml).find('#bsky_post_text');
         $node.replaceWith(summary.html());

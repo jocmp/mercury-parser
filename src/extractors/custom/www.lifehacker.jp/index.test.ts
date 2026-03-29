@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLifehackerJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.lifehacker.jp/2019/03/amazon-fine-newspaper-stocker.html';

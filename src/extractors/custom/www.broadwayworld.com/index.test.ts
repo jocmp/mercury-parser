@@ -11,8 +11,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('WwwBroadwayWorldComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.broadwayworld.com/article/American-Theatre-Wing-Launches-Andrew-Lloyd-Webber-Training-Scholarships-20161013';

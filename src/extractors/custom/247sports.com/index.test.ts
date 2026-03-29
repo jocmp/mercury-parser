@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('twofortysevensportsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://247sports.com/Bolt/Breaking-Houston-hires-Major-Applewhite-as-head-coach-49676932';

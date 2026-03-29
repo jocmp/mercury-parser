@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('TarnkappeInfoExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://tarnkappe.info/artikel/krypto/krypto-boerse-garantex-keine-geldwaesche-mehr-fuer-ganoven-311235.html';

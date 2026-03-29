@@ -30,7 +30,7 @@ export const WwwNdtvComExtractor = {
       // This site puts a dateline in a 'b' above the first paragraph, and then somehow
       // blends it into the first paragraph with CSS. This transform moves the dateline
       // to the first paragraph.
-      '.place_cont': $node => {
+      '.place_cont': ($node: any) => {
         if (!$node.parents('p').length) {
           const nextSibling = $node.next('p');
           if (nextSibling) {

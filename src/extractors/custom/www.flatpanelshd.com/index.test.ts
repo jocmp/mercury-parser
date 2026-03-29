@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwFlatpanelshdComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.flatpanelshd.com/news.php?subaction=showfull&id=1749568309';

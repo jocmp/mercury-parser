@@ -31,7 +31,7 @@ export const DeadspinExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'iframe.lazyload[data-recommend-id^="youtube://"]': $node => {
+      'iframe.lazyload[data-recommend-id^="youtube://"]': ($node: any) => {
         const youtubeId = $node.attr('id').split('youtube-')[1];
         $node.attr('src', `https://www.youtube.com/embed/${youtubeId}`);
       },

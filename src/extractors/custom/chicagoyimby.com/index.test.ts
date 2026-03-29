@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('ChicagoyimbyComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://chicagoyimby.com/2026/02/new-renderings-revealed-for-fulton-bond.html';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.se.pl/wiadomosci/exclusive/romuald-lipko-niezapomniane-melodie-wspomnienia-o-liderze-budki-suflera-aa-AeXW-yuX4-t87q.html';

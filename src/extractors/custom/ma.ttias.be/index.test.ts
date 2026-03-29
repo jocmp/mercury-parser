@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('MaTtiasBeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://ma.ttias.be/cronweekly/issue-130/';
       const html = fs.readFileSync('./fixtures/ma.ttias.be.html', 'utf-8');

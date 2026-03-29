@@ -38,7 +38,7 @@ export const WwwRedditComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div[role="img"]': $node => {
+      'div[role="img"]': ($node: any) => {
         // External link image preview
         const $img = $node.find('img');
         const bgImg = $node.css('background-image');

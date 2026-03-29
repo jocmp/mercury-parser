@@ -16,20 +16,20 @@ export const MediumExtractor = {
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       // Allow drop cap character.
-      'section span:first-of-type': $node => {
+      'section span:first-of-type': ($node: any) => {
         const $text = $node.html();
         if ($text.length === 1 && /^[a-zA-Z()]+$/.test($text)) {
           $node.replaceWith($text);
         }
       },
       // Re-write lazy-loaded youtube videos
-      iframe: $node => {
+      iframe: ($node: any) => {
         const ytRe = /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
         const thumb = decodeURIComponent($node.attr('data-thumbnail'));
         const $parent = $node.parents('figure');
 
         if (ytRe.test(thumb)) {
-          const [_, youtubeId] = thumb.match(ytRe); // eslint-disable-line
+          const [_, youtubeId] = thumb.match(ytRe)!; // eslint-disable-line
           $node.attr('src', `https://www.youtube.com/embed/${youtubeId}`);
           const $caption = $parent.find('figcaption');
           $parent.empty().append([$node, $caption]);
@@ -41,7 +41,7 @@ export const MediumExtractor = {
       },
 
       // rewrite figures to pull out image and caption, remove rest
-      figure: $node => {
+      figure: ($node: any) => {
         // ignore if figure has an iframe
         if ($node.find('iframe').length > 0) return;
 
@@ -53,7 +53,7 @@ export const MediumExtractor = {
 
       // Remove any smaller images that did not get caught by the generic image
       // cleaner (author photo 48px, leading sentence images 79px, etc.).
-      img: $node => {
+      img: ($node: any) => {
         const width = parseInt($node.attr('width'), 10);
         if (width < 100) $node.remove();
       },

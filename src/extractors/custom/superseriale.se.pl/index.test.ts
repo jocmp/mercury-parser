@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SuperserialeSePlExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://superseriale.se.pl/barwy-szczescia/barwy-szczescia-odcinek-3122-rozmowa-miedzy-jozefina-a-cezarym-wyjasni-wszystko-nigdy-dotad-nie-byla-z-nim-tak-szczera-zdjecia-aa-1iTt-uHSL-6tRa.html';

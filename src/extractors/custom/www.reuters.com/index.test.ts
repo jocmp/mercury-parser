@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwReutersComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.reuters.com/article/us-usa-fed-idUSKBN1430G4';
       const html = fs.readFileSync('./fixtures/www.reuters.com.html', 'utf-8');

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('ThefederalistpapersOrgExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://thefederalistpapers.org/education-2/the-failure-of-public-schooling-in-one-chart';

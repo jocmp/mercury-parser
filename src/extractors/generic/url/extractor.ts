@@ -3,13 +3,13 @@ import { extractFromMeta } from 'utils/dom';
 
 import { CANONICAL_META_SELECTORS } from './constants';
 
-function parseDomain(url) {
+function parseDomain(url: any) {
   const parsedUrl = URL.parse(url);
   const { hostname } = parsedUrl;
   return hostname;
 }
 
-function result(url) {
+function result(url: any) {
   return {
     url,
     domain: parseDomain(url),
@@ -17,7 +17,7 @@ function result(url) {
 }
 
 const GenericUrlExtractor = {
-  extract({ $, url, metaCache = undefined }) {
+  extract({ $, url, metaCache = undefined as any }: any) {
     const $canonical = $('link[rel=canonical]');
     if ($canonical.length !== 0) {
       const href = $canonical.attr('href');

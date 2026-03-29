@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('PeopleComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://people.com/style/jennifer-aniston-coat-tags-jimmy-kimmel/';
       const html = fs.readFileSync('./fixtures/people.com.html', 'utf-8');

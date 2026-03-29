@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwOssnewsJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.ossnews.jp/oss_info/article.html?oid=8976';
       const html = fs.readFileSync('./fixtures/www.ossnews.jp.html', 'utf-8');

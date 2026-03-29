@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('EpaperZeitDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://epaper.zeit.de/article/702225a4061dfbf97ab93df8de77e8c54aa3f5fe7a8c2799e8d425953d123acf';

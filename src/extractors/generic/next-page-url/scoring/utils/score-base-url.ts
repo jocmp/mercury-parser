@@ -1,4 +1,4 @@
-export default function scoreBaseUrl(href, baseRegex) {
+export default function scoreBaseUrl(href: any, baseRegex: any) {
   // If the baseUrl isn't part of this URL, penalize this
   // link. It could still be the link, but the odds are lower.
   // Example:

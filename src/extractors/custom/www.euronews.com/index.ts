@@ -27,8 +27,8 @@ export const WwwEuronewsComExtractor = {
   content: {
     selectors: ['.c-article-content', 'article'],
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
-      '.widget__figure': node => node.addClass('mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
+      '.widget__figure': (node: any) => node.addClass('mercury-parser-keep'),
     },
     clean: ['.c-ad', '.c-widget-related', '.connatix-container'],
   },

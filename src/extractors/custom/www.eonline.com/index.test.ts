@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwEonlineComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.eonline.com/news/814222/ryan-gosling-s-feelings-about-fatherhood-will-make-your-heart-sing';

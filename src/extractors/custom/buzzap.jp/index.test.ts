@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('BuzzapJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://buzzap.jp/news/20190302-reduced-tax-rate-benefit/';
       const html = fs.readFileSync('./fixtures/buzzap.jp.html', 'utf-8');

@@ -9,9 +9,9 @@ import paragraphize from './paragraphize';
 //
 //  :param $: A cheerio object
 
-export default function brsToPs($) {
+export default function brsToPs($: any) {
   let collapsing = false;
-  $('br').each((index, element) => {
+  $('br').each((index: number, element: any) => {
     const $element = $(element);
     const nextElement = $element.next().get(0);
 

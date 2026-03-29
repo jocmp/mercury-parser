@@ -25,7 +25,7 @@ export const WwwTransfermarktDeExtractor = {
     selectors: ['.news-content'],
     defaultCleaner: false,
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
     clean: [
       '.dachzeile',

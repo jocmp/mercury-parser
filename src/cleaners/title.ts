@@ -4,11 +4,11 @@ import { normalizeSpaces } from 'utils/text';
 import { TITLE_SPLITTERS_RE } from './constants';
 import resolveSplitTitle from './resolve-split-title';
 
-export default function cleanTitle(title, { url, $ }) {
+export default function cleanTitle(title: string, { url, $ }: { url: string; $: any }) {
   // If title has |, :, or - in it, see if
   // we can clean it up.
   if (TITLE_SPLITTERS_RE.test(title)) {
-    title = resolveSplitTitle(title, url);
+    title = resolveSplitTitle(title, url) as string;
   }
 
   // Final sanity check that we didn't get a crazy title.

@@ -25,8 +25,8 @@ export const WwwBlickDeExtractor = {
     selectors: ['article'],
     defaultCleaner: false,
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
-      'figcaption details': (node) => {
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
+      'figcaption details': (node: any) => {
         const text = node.text();
         node.replaceWith(`<span>${text}</span>`);
       },

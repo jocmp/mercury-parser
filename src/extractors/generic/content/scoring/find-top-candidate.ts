@@ -4,11 +4,11 @@ import mergeSiblings from './merge-siblings';
 
 // After we've calculated scores, loop through all of the possible
 // candidate nodes we found and find the one with the highest score.
-export default function findTopCandidate($) {
-  let $candidate;
-  let topScore = 0;
+export default function findTopCandidate($: any) {
+  let $candidate: any;
+  let topScore: number = 0;
 
-  $('[score]').each((index, node) => {
+  $('[score]').each((index: number, node: any) => {
     // Ignore tags like BR, HR, etc
     if (NON_TOP_CANDIDATE_TAGS_RE.test(node.tagName)) {
       return;
@@ -17,7 +17,7 @@ export default function findTopCandidate($) {
     const $node = $(node);
     const score = getScore($node);
 
-    if (score > topScore) {
+    if (score && score > topScore) {
       topScore = score;
       $candidate = $node;
     }

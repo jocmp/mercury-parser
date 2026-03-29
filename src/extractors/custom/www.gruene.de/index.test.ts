@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwGrueneDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.gruene.de/themen/arbeit';
       const html = fs.readFileSync('./fixtures/www.gruene.de.html', 'utf-8');

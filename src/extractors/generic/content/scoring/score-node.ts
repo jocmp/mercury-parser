@@ -7,7 +7,7 @@ import {
 
 // Score an individual node. Has some smarts for paragraphs, otherwise
 // just scores based on tag.
-export default function scoreNode($node) {
+export default function scoreNode($node: any) {
   const { tagName } = $node.get(0);
 
   // TODO: Consider ordering by most likely.

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwMacrumorsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.macrumors.com/2017/01/18/apple-pencil-2-march-2017/';
       const html = fs.readFileSync(

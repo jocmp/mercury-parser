@@ -3,10 +3,10 @@ import URL from 'url';
 import getAttrs from './get-attrs';
 import setAttr from './set-attr';
 
-function absolutize($, rootUrl, attr) {
+function absolutize($: any, rootUrl: string, attr: string) {
   const baseUrl = $('base').attr('href');
 
-  $(`[${attr}]`).each((_, node) => {
+  $(`[${attr}]`).each((_: number, node: any) => {
     const attrs = getAttrs(node);
     const url = attrs[attr];
     if (!url) return;
@@ -16,8 +16,8 @@ function absolutize($, rootUrl, attr) {
   });
 }
 
-function absolutizeSet($, rootUrl, $content) {
-  $('[srcset]', $content).each((_, node) => {
+function absolutizeSet($: any, rootUrl: string, $content: any) {
+  $('[srcset]', $content).each((_: number, node: any) => {
     const attrs = getAttrs(node);
     const urlSet = attrs.srcset;
 
@@ -29,7 +29,7 @@ function absolutizeSet($, rootUrl, $content) {
         /(?:\s*)(\S+(?:\s*[\d.]+[wx])?)(?:\s*,\s*)?/g
       );
       if (!candidates) return;
-      const absoluteCandidates = candidates.map(candidate => {
+      const absoluteCandidates = candidates.map((candidate: string) => {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         const parts = candidate
@@ -45,7 +45,7 @@ function absolutizeSet($, rootUrl, $content) {
   });
 }
 
-export default function makeLinksAbsolute($content, $, url) {
+export default function makeLinksAbsolute($content: any, $: any, url: string) {
   ['href', 'src'].forEach(attr => absolutize($, url, attr));
   absolutizeSet($, url, $content);
 

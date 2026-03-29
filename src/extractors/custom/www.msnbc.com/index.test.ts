@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwMsnbcComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.msnbc.com/rachel-maddow-show/bizarre-election-ends-bizarre-electoral-college-tally';

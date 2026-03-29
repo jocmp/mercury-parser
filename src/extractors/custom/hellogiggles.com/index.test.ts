@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('HellogigglesComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://hellogiggles.com/comfy-chic-holiday-outfit-illustrated/';
       const html = fs.readFileSync('./fixtures/hellogiggles.com.html', 'utf-8');

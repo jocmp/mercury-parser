@@ -31,7 +31,7 @@ export const WwwNationalgeographicComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.parsys.content': ($node, $) => {
+      '.parsys.content': ($node: any, $: any) => {
         const $imageParent = $node.children().first();
         if ($imageParent.hasClass('imageGroup')) {
           const $dataAttrContainer = $imageParent

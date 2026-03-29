@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('GeniusComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://genius.com/Prince-and-the-revolution-purple-rain-lyrics';
       const html = fs.readFileSync('./fixtures/genius.com.html', 'utf-8');

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwYoutubeComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.youtube.com/watch?v=srtMWzyqdp8';
       const html = fs.readFileSync('./fixtures/www.youtube.com.html', 'utf-8');

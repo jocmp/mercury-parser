@@ -21,10 +21,10 @@ export const WwwHardwarezoneComSgExtractor = {
   content: {
     selectors: ['.content', 'article'],
     transforms: {
-      img: node => {
+      img: (node: any) => {
         node.removeAttr('sizes');
       },
-      p: node => {
+      p: (node: any) => {
         node.attr('class', 'mercury-parser-keep');
       },
     },

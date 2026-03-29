@@ -14,7 +14,7 @@ export const GeniusComExtractor = {
       [
         'meta[itemprop=page_data]',
         'value',
-        res => {
+        (res: any) => {
           const json = JSON.parse(res);
           return json.song.release_date;
         },
@@ -33,7 +33,7 @@ export const GeniusComExtractor = {
       [
         'meta[itemprop=page_data]',
         'value',
-        res => {
+        (res: any) => {
           const json = JSON.parse(res);
           return json.song.album.cover_art_url;
         },

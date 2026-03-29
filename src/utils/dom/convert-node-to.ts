@@ -1,7 +1,7 @@
 import isBrowser from 'utils/is-browser';
 import getAttrs from './get-attrs';
 
-export default function convertNodeTo($node, $, tag = 'p', _fromTag?) {
+export default function convertNodeTo($node: any, $: any, tag = 'p', _fromTag?: string) {
   const node = $node.get(0);
   if (!node) {
     return $;

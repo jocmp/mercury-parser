@@ -5,8 +5,8 @@ const Detectors = {
   'meta[name="generator"][value="blogger"]': BloggerExtractor,
 };
 
-export default function detectByHtml($) {
-  const selector = Reflect.ownKeys(Detectors).find(s => $(s).length > 0);
+export default function detectByHtml($: any) {
+  const selector = Reflect.ownKeys(Detectors).find(s => $(s).length > 0) as string | undefined;
 
-  return Detectors[selector];
+  return selector ? (Detectors as any)[selector] : undefined;
 }

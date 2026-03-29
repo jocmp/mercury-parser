@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('UproxxComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://uproxx.com/news/rudy-giuliani-not-secretary-of-state/';
       const html = fs.readFileSync('./fixtures/uproxx.com.html', 'utf-8');

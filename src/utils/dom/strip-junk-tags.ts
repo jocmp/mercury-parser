@@ -1,6 +1,6 @@
 import { STRIP_OUTPUT_TAGS, KEEP_CLASS } from './constants';
 
-export default function stripJunkTags(article, $, tags = []) {
+export default function stripJunkTags(article: any, $: any, tags: string[] = []) {
   if (tags.length === 0) {
     tags = STRIP_OUTPUT_TAGS;
   }

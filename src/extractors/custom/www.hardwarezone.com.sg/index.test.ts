@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwHardwarezoneComSgExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.hardwarezone.com.sg/feature-how-spot-potential-scam-messages-ios-and-android-singapore-rcs-sms';

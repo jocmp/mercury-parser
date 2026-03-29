@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwVortezNetExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.vortez.net/news_story/deepcool_launches_ch690_digital_with_built_in_real_time_system_monitoring.html';

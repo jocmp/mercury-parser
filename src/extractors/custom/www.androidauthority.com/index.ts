@@ -1,4 +1,4 @@
-function removeAffiliateLink(node) {
+function removeAffiliateLink(node: any) {
   if (
     node
       .text()
@@ -10,7 +10,7 @@ function removeAffiliateLink(node) {
   }
 }
 
-function removePolls(node) {
+function removePolls(node: any) {
   const siblings = node.parent().children();
 
   if (siblings.find('button:not(:has(picture))').length > 0) {
@@ -47,21 +47,21 @@ export const WwwAndroidauthorityComExtractor = {
   content: {
     selectors: ['main'],
     transforms: {
-      div: node => {
+      div: (node: any) => {
         removeAffiliateLink(node);
       },
-      p: node => {
+      p: (node: any) => {
         if (node.text().startsWith('Published on')) {
           node.remove();
         }
 
         removeAffiliateLink(node);
       },
-      ol: node => {
+      ol: (node: any) => {
         node.attr('class', 'mercury-parser-keep');
       },
-      h2: $node => $node.attr('class', 'mercury-parser-keep'),
-      h3: node => {
+      h2: ($node: any) => $node.attr('class', 'mercury-parser-keep'),
+      h3: (node: any) => {
         if (!removePolls(node)) {
           node.attr('class', 'mercury-parser-keep');
         }

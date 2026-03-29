@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwJalopnikComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.jalopnik.com/2105422/car-brand-most-satisfying-to-drive-consumer-reports/';

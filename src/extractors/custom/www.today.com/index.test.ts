@@ -11,8 +11,8 @@ const fs = require('fs');
 
 describe('WwwTodayComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.today.com/home/zsa-zsa-gabor-s-palm-springs-home-sale-see-inside-t106323';

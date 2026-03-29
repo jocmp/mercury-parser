@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('TechcrunchComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://techcrunch.com/2024/12/23/halides-next-version-will-come-with-new-film-filters-hdr/';

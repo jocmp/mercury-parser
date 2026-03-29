@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwProspectmagazineCoUkExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.prospectmagazine.co.uk/magazine/anglosphere-old-dream-brexit-role-in-the-world';

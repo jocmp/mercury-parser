@@ -37,8 +37,8 @@ export const WwwJalopnikComExtractor = {
     ],
 
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
-      '.slide-key': node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
+      '.slide-key': (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
 
     clean: [

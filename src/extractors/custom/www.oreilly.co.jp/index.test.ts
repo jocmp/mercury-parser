@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwOreillyCoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.oreilly.co.jp/books/9784873118741/';
       const html = fs.readFileSync(

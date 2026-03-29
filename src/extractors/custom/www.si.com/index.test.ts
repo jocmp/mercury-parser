@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSiComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.si.com/nfl/2017/01/12/dallas-cowboys-stephen-jerry-jones';

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('GothamistComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://gothamist.com/2017/03/09/fallout_shelters_nyc.php';
       const html = fs.readFileSync('./fixtures/gothamist.com.html', 'utf-8');

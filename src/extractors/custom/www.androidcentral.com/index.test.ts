@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAndroidcentralComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.androidcentral.com/motorola-launch-new-phone-mobile-world-congress';

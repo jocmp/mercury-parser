@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('MobilesyrupComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://mobilesyrup.com/2025/01/09/canadian-amazon-prime-users-two-free-kindle-books-january/';

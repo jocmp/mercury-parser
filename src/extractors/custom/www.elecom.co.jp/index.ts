@@ -23,7 +23,7 @@ export const WwwElecomCoJpExtractor = {
     defaultCleaner: false,
 
     transforms: {
-      table: $node => {
+      table: ($node: any) => {
         $node.attr('width', 'auto');
       },
     },

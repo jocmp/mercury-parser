@@ -27,12 +27,12 @@ export const BalloonJuiceComExtractor = {
     selectors: ['.entry-content', 'article'],
     transforms: {
       // Handle JS-rendered iframes
-      'iframe[src*="embed.bsky.app"]': $node => {
+      'iframe[src*="embed.bsky.app"]': ($node: any) => {
         $node.addClass('mercury-parser-keep iframe-embed-bsky');
         $node.parent('.bluesky-embed').addClass('mercury-parser-keep');
       },
       // Handle no-JS blockquote fallbacks - convert to iframes
-      'blockquote.bluesky-embed[data-bluesky-uri]': ($node, $) => {
+      'blockquote.bluesky-embed[data-bluesky-uri]': ($node: any, $: any) => {
         const uri = $node.attr('data-bluesky-uri');
         if (uri) {
           // Convert at://did:plc:.../app.bsky.feed.post/... to embed URL

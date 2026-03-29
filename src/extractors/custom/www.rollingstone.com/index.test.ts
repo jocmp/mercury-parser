@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwRollingstoneComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.rollingstone.com/movies/features/how-la-la-land-resurrected-the-hollywood-musical-w454198';

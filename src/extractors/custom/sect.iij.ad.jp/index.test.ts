@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('SectIijAdJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://sect.iij.ad.jp/d/2019/02/134052.html';
       const html = fs.readFileSync('./fixtures/sect.iij.ad.jp.html', 'utf-8');

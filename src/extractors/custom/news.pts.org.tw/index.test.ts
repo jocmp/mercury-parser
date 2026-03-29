@@ -8,8 +8,8 @@ const fs = require('fs');
 
 describe('NewsPtsOrgTwExtractor', () => {
   describe('water bankruptcy article', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://news.pts.org.tw/article/791685';
       const html = fs.readFileSync('./fixtures/news.pts.org.tw.html');
@@ -40,8 +40,8 @@ describe('NewsPtsOrgTwExtractor', () => {
   });
 
   describe('impeachment article', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://news.pts.org.tw/article/791642';
       const html = fs.readFileSync('./fixtures/news.pts.org.tw--hot_topics.html');

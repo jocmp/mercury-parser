@@ -1,6 +1,6 @@
 import { NEXT_LINK_TEXT_RE } from '../constants';
 
-export default function scoreNextLinkText(linkData) {
+export default function scoreNextLinkText(linkData: any) {
   // Things like "next", ">>", etc.
   if (NEXT_LINK_TEXT_RE.test(linkData)) {
     return 50;

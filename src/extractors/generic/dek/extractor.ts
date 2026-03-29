@@ -3,7 +3,7 @@
 // until we have a more robust generic option.
 // Below is the original source for this, for reference.
 const GenericDekExtractor = {
-  extract(_opts?) {
+  extract(_opts?: any) {
     return null;
   },
 };

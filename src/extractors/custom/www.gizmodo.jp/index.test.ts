@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwGizmodoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.gizmodo.jp/2019/04/suica-gashapon-bandai.html';
       const html = fs.readFileSync('./fixtures/www.gizmodo.jp.html', 'utf-8');

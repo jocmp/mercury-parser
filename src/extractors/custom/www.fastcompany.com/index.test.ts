@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwFastcompanyComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.fastcompany.com/3067012/the-only-five-email-folders-your-inbox-will-ever-need';

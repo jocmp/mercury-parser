@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwAndroidauthorityComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.androidauthority.com/new-android-apps-658839/';
       const html = fs.readFileSync(

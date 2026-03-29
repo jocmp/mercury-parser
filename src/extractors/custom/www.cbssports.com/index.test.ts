@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwCbssportsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.cbssports.com/mlb/news/why-despite-the-complaints-of-many-mlb-players-are-actually-not-overpaid/';

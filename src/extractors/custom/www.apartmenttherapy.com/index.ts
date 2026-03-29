@@ -17,7 +17,7 @@ export const ApartmentTherapyExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div[data-render-react-id="images/LazyPicture"]': ($node, $) => {
+      'div[data-render-react-id="images/LazyPicture"]': ($node: any, $: any) => {
         const data = JSON.parse($node.attr('data-props'));
         const { src } = data.sources[0];
         const $img = $('<img />').attr('src', src);

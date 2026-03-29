@@ -30,7 +30,7 @@ export const WwwVoxComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'figure .e-image__image noscript': $node => {
+      'figure .e-image__image noscript': ($node: any) => {
         const imgHtml = $node.html();
         $node
           .parents('.e-image__image')

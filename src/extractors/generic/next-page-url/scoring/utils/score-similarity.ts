@@ -1,6 +1,6 @@
 import difflib from 'difflib';
 
-export default function scoreSimilarity(score, articleUrl, href) {
+export default function scoreSimilarity(score: any, articleUrl: any, href: any) {
   // Do this last and only if we have a real candidate, because it's
   // potentially expensive computationally. Compare the link to this
   // URL using difflib to get the % similarity of these URLs. On a

@@ -32,7 +32,7 @@ const GenericContentExtractor = {
   //
   // cleanConditionally: Clean the node to return of some
   // superfluous content. Things like forms, ads, etc.
-  extract({ $, html, title = undefined, url = undefined }, opts?) {
+  extract({ $, html, title = undefined as any, url = undefined as any }: any, opts?: any) {
     opts = { ...this.defaultOpts, ...opts };
 
     $ = $ || cheerio.load(html);
@@ -63,7 +63,7 @@ const GenericContentExtractor = {
   },
 
   // Get node given current options
-  getContentNode($, title, url, opts) {
+  getContentNode($: any, title: any, url: any, opts: any) {
     return cleanContent(extractBestNode($, opts), {
       $,
       cleanConditionally: opts.cleanConditionally,
@@ -75,7 +75,7 @@ const GenericContentExtractor = {
   // Once we got here, either we're at our last-resort node, or
   // we broke early. Make sure we at least have -something- before we
   // move forward.
-  cleanAndReturnNode(node, $) {
+  cleanAndReturnNode(node: any, $: any) {
     if (!node) {
       return null;
     }

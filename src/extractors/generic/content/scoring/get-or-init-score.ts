@@ -7,7 +7,7 @@ import addToParent from './add-to-parent';
 // gets and returns the score if it exists
 // if not, initializes a score based on
 // the node's tag type
-export default function getOrInitScore($node, $, weightNodes = true) {
+export default function getOrInitScore($node: any, $: any, weightNodes = true) {
   let score = getScore($node);
 
   if (score) {

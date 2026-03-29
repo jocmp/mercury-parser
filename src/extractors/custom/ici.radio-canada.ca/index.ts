@@ -24,8 +24,8 @@ export const IciRadioCanadaCaExtractor = {
   content: {
     selectors: ['article main', 'article'],
     transforms: {
-      h2: node => node.attr('class', 'mercury-parser-keep'),
-      ul: node => node.attr('class', 'mercury-parser-keep'),
+      h2: (node: any) => node.attr('class', 'mercury-parser-keep'),
+      ul: (node: any) => node.attr('class', 'mercury-parser-keep'),
     },
     clean: [
       'header',

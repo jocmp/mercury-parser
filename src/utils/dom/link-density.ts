@@ -1,11 +1,11 @@
-export function textLength(text) {
+export function textLength(text: string) {
   return text.trim().replace(/\s+/g, ' ').length;
 }
 
 // Determines what percentage of the text
 // in a node is link text
 // Takes a node, returns a float
-export function linkDensity($node, $?) {
+export function linkDensity($node: any, $?: any) {
   const totalTextLength = textLength($node.text());
 
   const linkText = $node.find('a').text();

@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('JvndbJvnJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://jvndb.jvn.jp/ja/contents/2018/JVNDB-2018-013542.html';
       const html = fs.readFileSync('./fixtures/jvndb.jvn.jp.html', 'utf-8');

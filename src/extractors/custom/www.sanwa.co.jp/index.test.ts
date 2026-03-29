@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwSanwaCoJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.sanwa.co.jp/news/201903/ma-irfp139bk/index.html';
       const html = fs.readFileSync('./fixtures/www.sanwa.co.jp.html', 'utf-8');

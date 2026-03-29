@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwHeiseDeExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.heise.de/hintergrund/Secure-Coding-Passwort-Hashing-zum-Schutz-vor-Brute-Force-und-Rainbow-Tabellen-10265244.html';

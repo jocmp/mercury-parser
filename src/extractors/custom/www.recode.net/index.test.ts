@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwRecodeNetExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.recode.net/2016/12/15/13971502/fcc-tom-wheeler-departure-net-neutrality-death-trump-layton';

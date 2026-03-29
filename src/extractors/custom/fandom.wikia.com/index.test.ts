@@ -11,8 +11,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('WikiaExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://fandom.wikia.com/articles/box-office-good-peculiar';
       const html = fs.readFileSync('./fixtures/fandom.wikia.com.html', 'utf-8');

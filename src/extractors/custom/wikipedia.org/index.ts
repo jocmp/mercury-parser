@@ -7,7 +7,7 @@ export const WikipediaExtractor = {
 
     // transform top infobox to an image with caption
     transforms: {
-      '.infobox img': $node => {
+      '.infobox img': ($node: any) => {
         const $parent = $node.parents('.infobox');
         // Only prepend the first image in .infobox
         if ($parent.children('img').length === 0) {

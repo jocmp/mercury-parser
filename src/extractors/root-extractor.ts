@@ -3,7 +3,7 @@ import { convertNodeTo, makeLinksAbsolute } from 'utils/dom';
 import GenericExtractor from './generic';
 
 // Remove elements by an array of selectors
-export function cleanBySelectors($content, $, { clean }) {
+export function cleanBySelectors($content: any, $: any, { clean }: any) {
   if (!clean) return $content;
 
   $(clean.join(','), $content).remove();
@@ -12,7 +12,7 @@ export function cleanBySelectors($content, $, { clean }) {
 }
 
 // Transform matching elements
-export function transformElements($content, $, { transforms }) {
+export function transformElements($content: any, $: any, { transforms }: any) {
   if (!transforms) return $content;
 
   Reflect.ownKeys(transforms).forEach(key => {
@@ -21,12 +21,12 @@ export function transformElements($content, $, { transforms }) {
 
     // If value is a string, convert directly
     if (typeof value === 'string') {
-      $matches.each((index, node) => {
+      $matches.each((index: number, node: any) => {
         convertNodeTo($(node), $, transforms[key]);
       });
     } else if (typeof value === 'function') {
       // If value is function, apply function to node
-      $matches.each((index, node) => {
+      $matches.each((index: number, node: any) => {
         const result = value($(node), $);
         // If function returns a string, convert node to that value
         if (typeof result === 'string') {
@@ -39,8 +39,8 @@ export function transformElements($content, $, { transforms }) {
   return $content;
 }
 
-function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
-  return selectors.find(selector => {
+function findMatchingSelector($: any, selectors: any, extractHtml: any, allowMultiple: any) {
+  return selectors.find((selector: any) => {
     if (Array.isArray(selector)) {
       if (extractHtml) {
         return selector.reduce((acc, s) => acc && $(s).length > 0, true);
@@ -65,7 +65,7 @@ function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
   });
 }
 
-export function select(opts) {
+export function select(opts: any) {
   const { $, type, extractionOpts, extractHtml = false } = opts;
   // Skip if there's not extraction for this type
   if (!extractionOpts) return null;
@@ -87,7 +87,7 @@ export function select(opts) {
 
   if (!matchingSelector) return null;
 
-  function transformAndClean($node) {
+  function transformAndClean($node: any) {
     makeLinksAbsolute($node, $, opts.url || '');
     cleanBySelectors($node, $, extractionOpts);
     transformElements($node, $, extractionOpts);
@@ -106,7 +106,7 @@ export function select(opts) {
     if (Array.isArray(matchingSelector)) {
       $content = $(matchingSelector.join(','));
       const $wrapper = $('<div></div>');
-      $content.each((_, element) => {
+      $content.each((_: any, element: any) => {
         $wrapper.append(element);
       });
 
@@ -119,15 +119,15 @@ export function select(opts) {
     $content.wrap($('<div></div>'));
     $content = $content.parent();
     $content = transformAndClean($content);
-    if (Cleaners[type]) {
-      Cleaners[type]($content, { ...opts, defaultCleaner });
+    if ((Cleaners as any)[type]) {
+      (Cleaners as any)[type]($content, { ...opts, defaultCleaner });
     }
 
     if (allowMultiple) {
       return $content
         .children()
         .toArray()
-        .map(el => $.html($(el)));
+        .map((el: any) => $.html($(el)));
     }
 
     return $.html($content);
@@ -145,7 +145,7 @@ export function select(opts) {
     const [selector, attr, transform] = matchingSelector;
     $match = $(selector);
     $match = transformAndClean($match);
-    result = $match.map((_, el) => {
+    result = $match.map((_: any, el: any) => {
       const item = $(el)
         .attr(attr)
         .trim();
@@ -154,7 +154,7 @@ export function select(opts) {
   } else {
     $match = $(matchingSelector);
     $match = transformAndClean($match);
-    result = $match.map((_, el) =>
+    result = $match.map((_: any, el: any) =>
       $(el)
         .text()
         .trim()
@@ -167,15 +167,15 @@ export function select(opts) {
       : result[0];
   // Allow custom extractor to skip default cleaner
   // for this type; defaults to true
-  if (defaultCleaner && Cleaners[type]) {
-    return Cleaners[type](result, { ...opts, ...extractionOpts });
+  if (defaultCleaner && (Cleaners as any)[type]) {
+    return (Cleaners as any)[type](result, { ...opts, ...extractionOpts });
   }
 
   return result;
 }
 
-export function selectExtendedTypes(extend, opts) {
-  const results = {};
+export function selectExtendedTypes(extend: any, opts: any) {
+  const results: Record<string, any> = {};
   Reflect.ownKeys(extend).forEach(t => {
     if (!results[t as string]) {
       results[t as string] = select({ ...opts, type: t as string, extractionOpts: extend[t as string] });
@@ -184,10 +184,10 @@ export function selectExtendedTypes(extend, opts) {
   return results;
 }
 
-function extractResult(opts) {
+function extractResult(opts: any) {
   const { type, extractor, fallback = true } = opts;
 
-  const result = select({ ...opts, extractionOpts: extractor[type] });
+  const result = select({ ...opts, extractionOpts: (extractor as any)[type] });
 
   // If custom parser succeeds, return the result
   if (result) {
@@ -196,13 +196,13 @@ function extractResult(opts) {
 
   // If nothing matches the selector, and fallback is enabled,
   // run the Generic extraction
-  if (fallback) return GenericExtractor[type](opts);
+  if (fallback) return (GenericExtractor as any)[type](opts);
 
   return null;
 }
 
 const RootExtractor = {
-  extract(extractor: any = GenericExtractor, opts) {
+  extract(extractor: any = GenericExtractor, opts: any) {
     const { contentOnly, extractedTitle } = opts;
     // This is the generic extractor. Run its extract method
     if (extractor.domain === '*') return extractor.extract(opts);

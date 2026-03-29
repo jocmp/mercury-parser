@@ -9,8 +9,8 @@ const fs = require('fs');
 
 describe('WwwEuronewsComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.euronews.com/culture/2026/03/24/chaos-connection-and-catastrophic-cringe-the-best-karaoke-scenes-in-movies';

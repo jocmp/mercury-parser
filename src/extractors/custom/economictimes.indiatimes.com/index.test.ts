@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('EconomictimesIndiatimesComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://economictimes.indiatimes.com/news/india/india-hosts-irans-khameneis-confidant-to-convey-position-on-kashmir-and-counter-criticism/articleshow/118667138.cms';

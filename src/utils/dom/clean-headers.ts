@@ -3,8 +3,8 @@ import getWeight from '../../extractors/generic/content/scoring/get-weight';
 import { HEADER_TAG_LIST, KEEP_CLASS } from './constants';
 import { normalizeSpaces } from '../text';
 
-export default function cleanHeaders($article, $, title = '') {
-  $(HEADER_TAG_LIST, $article).each((index, header) => {
+export default function cleanHeaders($article: any, $: any, title = '') {
+  $(HEADER_TAG_LIST, $article).each((index: number, header: any) => {
     const $header = $(header);
 
     if ($(header).hasClass(KEEP_CLASS)) {

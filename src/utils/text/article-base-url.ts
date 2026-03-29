@@ -7,7 +7,7 @@ import {
   PAGE_IN_HREF_RE,
 } from './constants';
 
-function isGoodSegment(segment, index, firstSegmentHasLetters) {
+function isGoodSegment(segment: string, index: number, firstSegmentHasLetters: boolean) {
   let goodSegment = true;
 
   // If this is purely a number, and it's the first or second
@@ -34,7 +34,7 @@ function isGoodSegment(segment, index, firstSegmentHasLetters) {
 // Take a URL, and return the article base of said URL. That is, no
 // pagination data exists in it. Useful for comparing to other links
 // that might have pagination data within them.
-export default function articleBaseUrl(url, parsed?) {
+export default function articleBaseUrl(url: string, parsed?: any) {
   const parsedUrl = parsed || URL.parse(url);
   const { protocol, host, path } = parsedUrl;
 
@@ -42,7 +42,7 @@ export default function articleBaseUrl(url, parsed?) {
   const cleanedSegments = path
     .split('/')
     .reverse()
-    .reduce((acc, rawSegment, index) => {
+    .reduce((acc: string[], rawSegment: string, index: number) => {
       let segment = rawSegment;
 
       // Split off and save anything that looks like a file type.

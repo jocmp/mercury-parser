@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('JapanCnetComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://japan.cnet.com/article/35135610/';
       const html = fs.readFileSync('./fixtures/japan.cnet.com.html', 'utf-8');

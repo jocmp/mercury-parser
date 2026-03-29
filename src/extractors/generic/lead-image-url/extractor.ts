@@ -24,7 +24,7 @@ import {
 //   * domain
 //   * weird aspect ratio
 const GenericLeadImageUrlExtractor = {
-  extract({ $, content, metaCache, html = undefined }) {
+  extract({ $, content, metaCache, html = undefined as any }: any) {
     let cleanUrl;
     if (!$.browser && $('head').length === 0) {
       $('*')
@@ -54,9 +54,9 @@ const GenericLeadImageUrlExtractor = {
     // so try to do some analysis and determine them instead.
     const $content = $(content);
     const imgs = $('img', $content).toArray();
-    const imgScores = {};
+    const imgScores: Record<string, any> = {};
 
-    imgs.forEach((img, index) => {
+    imgs.forEach((img: any, index: any) => {
       const $img = $(img);
       const src = $img.attr('src');
 
@@ -73,8 +73,8 @@ const GenericLeadImageUrlExtractor = {
     });
 
     const [topUrl, topScore] = Reflect.ownKeys(imgScores).reduce(
-      (acc, key) => (imgScores[key] > acc[1] ? [key, imgScores[key]] : acc),
-      [null, 0]
+      (acc: any, key) => (imgScores[key as string] > acc[1] ? [key, imgScores[key as string]] : acc),
+      [null, 0] as any
     );
 
     if (topScore > 0) {

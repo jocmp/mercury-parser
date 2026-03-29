@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwLatimesComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.latimes.com/local/education/la-me-edu-report-on-la-school-shutdown-20161216-story.html';

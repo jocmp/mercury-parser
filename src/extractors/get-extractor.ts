@@ -5,7 +5,7 @@ import GenericExtractor from './generic';
 import detectByHtml from './detect-by-html';
 import { apiExtractors } from './add-extractor';
 
-export default function getExtractor(url, parsedUrl?, $?) {
+export default function getExtractor(url: any, parsedUrl?: any, $?: any) {
   parsedUrl = parsedUrl || URL.parse(url);
   const { hostname } = parsedUrl;
   const baseDomain = hostname
@@ -14,10 +14,10 @@ export default function getExtractor(url, parsedUrl?, $?) {
     .join('.');
 
   return (
-    apiExtractors[hostname] ||
-    apiExtractors[baseDomain] ||
-    Extractors[hostname] ||
-    Extractors[baseDomain] ||
+    (apiExtractors as any)[hostname] ||
+    (apiExtractors as any)[baseDomain] ||
+    (Extractors as any)[hostname] ||
+    (Extractors as any)[baseDomain] ||
     detectByHtml($) ||
     GenericExtractor
   );

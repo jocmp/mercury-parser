@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('PhpspotOrgExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://phpspot.org/blog/archives/2019/04/treeviz.html';
       const html = fs.readFileSync('./fixtures/phpspot.org.html', 'utf-8');

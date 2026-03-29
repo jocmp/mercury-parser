@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwCbcCaExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://www.cbc.ca/news/business/crea-september-numbers-1.6616369';
       const html = fs.readFileSync('./fixtures/www.cbc.ca.html', 'utf-8');

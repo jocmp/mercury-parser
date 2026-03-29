@@ -12,8 +12,8 @@ const fs = require('fs');
 // Rename CustomExtractor
 describe('PoliticoExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'http://www.politico.com/story/2016/10/who-will-win-the-vp-debate-229079?lo=ut_a1';
@@ -103,8 +103,8 @@ describe('PoliticoExtractor', () => {
   });
 
   describe('test case 2', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.politico.com/news/2022/10/17/student-debt-relief-applications-00062145';
@@ -210,8 +210,8 @@ describe('PoliticoExtractor', () => {
   });
 
   describe('test case 3', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url =
         'https://www.politico.com/newsletters/morning-money/2022/10/11/grim-global-outlook-for-imf-world-bank-meetings-00061134';

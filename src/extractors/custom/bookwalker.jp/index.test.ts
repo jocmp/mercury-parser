@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('BookwalkerJpExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'https://bookwalker.jp/de2b8f78c6-f6bb-4da9-8d15-202e8c6c185b/';
       const html = fs.readFileSync('./fixtures/bookwalker.jp.html', 'utf-8');

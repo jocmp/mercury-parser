@@ -37,7 +37,7 @@ describe('GenericUrlExtractor', () => {
         </html>
       `;
       const $ = cheerio.load(html);
-      const metaCache = ['og:url'];
+      const metaCache: any[] = ['og:url'];
 
       const { url, domain } = GenericUrlExtractor.extract({
         $,
@@ -59,7 +59,7 @@ describe('GenericUrlExtractor', () => {
         </html>
       `;
       const $ = cheerio.load(html);
-      const metaCache = [];
+      const metaCache: any[] = [];
 
       const { url, domain } = GenericUrlExtractor.extract({
         $,

@@ -23,7 +23,7 @@ describe('cleanTitle(title, { url, $ })', () => {
     const title = $('h1').html();
 
     assert.strictEqual(
-      cleanTitle(title, { url: '', $ }),
+      cleanTitle(title as string, { url: '', $ }),
       'This Is the Real Title'
     );
   });

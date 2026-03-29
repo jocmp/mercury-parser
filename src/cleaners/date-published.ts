@@ -23,11 +23,11 @@ const TIMEZONE_ABBR_RE = /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC
 // Check if string contains timezone offset info (e.g., +0000, GMT+0000, Z)
 const HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
 
-function hasTimezoneInfo(str) {
+function hasTimezoneInfo(str: string) {
   return HAS_TIMEZONE_RE.test(str);
 }
 
-function stripTimezoneAbbr(str) {
+function stripTimezoneAbbr(str: string) {
   return str
     .replace(TIMEZONE_ABBR_RE, '')
     .replace(/\s+/g, ' ')
@@ -35,14 +35,14 @@ function stripTimezoneAbbr(str) {
 }
 
 // Remove timezone tokens (zz, z, ZZ, Z) from format string
-function stripTimezoneFromFormat(format) {
+function stripTimezoneFromFormat(format: string) {
   return format
     .replace(/\s*z+/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
-export function cleanDateString(dateString) {
+export function cleanDateString(dateString: string) {
   return (dateString.match(SPLIT_DATE_STRING) || [])
     .join(' ')
     .replace(TIME_MERIDIAN_DOTS_RE, 'm')
@@ -51,14 +51,14 @@ export function cleanDateString(dateString) {
     .trim();
 }
 
-export function createDate(dateString, timezone, format) {
+export function createDate(dateString: string, timezone: string, format: string) {
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
     return dayjs(new Date(dateString));
   }
 
   if (TIME_AGO_STRING.test(dateString)) {
     const fragments = TIME_AGO_STRING.exec(dateString);
-    return dayjs().subtract(parseInt(fragments[1], 10), fragments[2] as dayjs.ManipulateType);
+    return dayjs().subtract(parseInt(fragments![1], 10), fragments![2] as dayjs.ManipulateType);
   }
 
   if (TIME_NOW_STRING.test(dateString)) {
@@ -111,7 +111,7 @@ export function createDate(dateString, timezone, format) {
 // Take a date published string, and hopefully return a date out of
 // it. Return none if we fail.
 export default function cleanDatePublished(
-  dateString,
+  dateString: string,
   { timezone, format } = {} as { timezone?: string; format?: string }
 ) {
   // If string is in milliseconds or seconds, convert to int and return
@@ -122,11 +122,11 @@ export default function cleanDatePublished(
     return new Date(parseInt(dateString, 10) * 1000).toISOString();
   }
 
-  let date = createDate(dateString, timezone, format);
+  let date = createDate(dateString, timezone || '', format || '');
 
   if (!date.isValid()) {
     dateString = cleanDateString(dateString);
-    date = createDate(dateString, timezone, format);
+    date = createDate(dateString, timezone || '', format || '');
   }
 
   return date.isValid() ? date.toISOString() : null;

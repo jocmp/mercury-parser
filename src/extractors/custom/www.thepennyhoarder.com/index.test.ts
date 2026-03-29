@@ -10,8 +10,8 @@ const fs = require('fs');
 
 describe('WwwThepennyhoarderComExtractor', () => {
   describe('initial test case', () => {
-    let result;
-    let url;
+    let result: any;
+    let url: string;
     beforeAll(() => {
       url = 'http://www.thepennyhoarder.com/find-hidden-cash/';
       const html = fs.readFileSync(
