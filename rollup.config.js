@@ -1,12 +1,17 @@
-import babel from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 
 export default {
-  input: 'src/mercury.js',
+  input: 'src/mercury.ts',
   plugins: [
     commonjs(),
-    babel({
-      babelHelpers: 'runtime',
+    typescript({
+      tsconfig: './tsconfig.json',
+      declaration: false,
+      declarationDir: undefined,
+      compilerOptions: {
+        module: 'ES2022',
+      },
     }),
   ],
   treeshake: true,

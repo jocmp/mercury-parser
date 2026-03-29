@@ -1,8 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import babelParser from '@babel/eslint-parser';
-import babelPlugin from '@babel/eslint-plugin';
 import prettierConfig from 'eslint-config-prettier';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,7 +24,6 @@ export default [
   prettierConfig,
   {
     languageOptions: {
-      parser: babelParser,
       globals: {
         describe: 'readonly',
         it: 'readonly',
@@ -38,12 +35,11 @@ export default [
         afterAll: 'readonly',
       },
     },
-    plugins: {
-      '@babel': babelPlugin,
-    },
     settings: {
       'import/resolver': {
-        'babel-module': {},
+        node: {
+          extensions: ['.ts', '.js'],
+        },
       },
     },
     rules: {
@@ -51,7 +47,6 @@ export default [
       'no-control-regex': 0,
       'import/prefer-default-export': 0,
       'generator-star-spacing': 0,
-      '@babel/generator-star-spacing': 0,
       'func-names': 0,
       'no-confusing-arrow': 0,
       camelcase: 0,
@@ -59,11 +54,12 @@ export default [
       'import/no-unresolved': 0,
       'prefer-regex-literals': 0,
       'default-param-last': 0,
+      'import/extensions': 0,
       'import/no-extraneous-dependencies': [
         'error',
         {
           devDependencies: [
-            '**/*.test.js',
+            '**/*.test.ts',
             'rollup.config*js',
           ],
         },

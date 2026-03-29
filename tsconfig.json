@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "types": ["jest"],
+    "paths": {
+      "utils": ["./src/utils"],
+      "utils/*": ["./src/utils/*"],
+      "cleaners": ["./src/cleaners"],
+      "cleaners/*": ["./src/cleaners/*"],
+      "resource": ["./src/resource"],
+      "resource/*": ["./src/resource/*"],
+      "extractors": ["./src/extractors"],
+      "extractors/*": ["./src/extractors/*"],
+      "mercury": ["./src/mercury"],
+      "test-helpers": ["./src/test-helpers"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "demo", "fixtures", "scripts"]
+}

@@ -1,0 +1,113 @@
+import assert from 'assert';
+import URL from 'url';
+import * as cheerio from 'cheerio';
+
+import Mercury from 'mercury';
+import getExtractor from 'extractors/get-extractor';
+import { excerptContent } from 'utils/text';
+
+const fs = require('fs');
+
+describe('WwwOreillyCoJpExtractor', () => {
+  describe('initial test case', () => {
+    let result: any;
+    let url: string;
+    beforeAll(() => {
+      url = 'https://www.oreilly.co.jp/books/9784873118741/';
+      const html = fs.readFileSync(
+        './fixtures/www.oreilly.co.jp.html',
+        'utf-8'
+      );
+      result = Mercury.parse(url, {
+        html,
+        fallback: false,
+      });
+    });
+
+    it('is selected properly', () => {
+      // This test should be passing by default.
+      // It sanity checks that the correct parser
+      // is being selected for URLs from this domain
+      const extractor = getExtractor(url);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+    });
+
+    it('returns the title', async () => {
+      // To pass this test, fill out the title selector
+      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
+      const { title } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(title, `Head First はじめてのプログラミング`);
+    });
+
+    it('returns the author', async () => {
+      // To pass this test, fill out the author selector
+      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
+      const { author } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        author,
+        'Eric Freeman　著、嶋田 健志　監訳、木下 哲也　訳'
+      );
+    });
+
+    it('returns the date_published', async () => {
+      // To pass this test, fill out the date_published selector
+      const { date_published } = await result;
+
+      // ISO date-only "2019-04-26" parsed as midnight UTC
+      assert.strictEqual(date_published, '2019-04-26T00:00:00.000Z');
+    });
+
+    it('returns the dek', async () => {
+      // To pass this test, fill out the dek selector
+      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
+      const { dek } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(dek, null);
+    });
+
+    it('returns the lead_image_url', async () => {
+      // To pass this test, fill out the lead_image_url selector
+      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
+      const { lead_image_url } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        lead_image_url,
+        `https://www.oreilly.co.jp/books/images/picture_large978-4-87311-874-1.jpeg`
+      );
+    });
+
+    it('returns the content', async () => {
+      // To pass this test, fill out the content selector
+      // in ./src/extractors/custom/www.oreilly.co.jp/index.js.
+      // You may also want to make use of the clean and transform
+      // options.
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      const first13 = excerptContent(
+        $('*')
+          .first()
+          .text(),
+        8
+      );
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        first13,
+        'TOPICS Head First , Programming , Python 発行年月日'
+      );
+    });
+  });
+});

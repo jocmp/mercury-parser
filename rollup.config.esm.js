@@ -1,15 +1,19 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import globals from 'rollup-plugin-node-globals';
 import terser from '@rollup/plugin-terser';
-import babel from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 
 export default {
-  input: 'src/mercury.js',
+  input: 'src/mercury.ts',
   plugins: [
-    babel({
-      babelHelpers: 'runtime',
-      exclude: './node_modules/**',
+    typescript({
+      tsconfig: './tsconfig.json',
+      declaration: false,
+      declarationDir: undefined,
+      compilerOptions: {
+        module: 'ES2022',
+      },
     }),
     commonjs({
       ignoreGlobal: true,

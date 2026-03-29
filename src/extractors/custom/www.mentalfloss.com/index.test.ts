@@ -1,0 +1,103 @@
+import assert from 'assert';
+import URL from 'url';
+import * as cheerio from 'cheerio';
+
+import Mercury from 'mercury';
+import getExtractor from 'extractors/get-extractor';
+import { excerptContent } from 'utils/text';
+
+const fs = require('fs');
+
+describe('WwwMentalflossComExtractor', () => {
+  describe('initial test case', () => {
+    let result: any;
+    let url: string;
+    beforeAll(() => {
+      url =
+        'http://www.mentalfloss.com/article/90140/its-not-too-late-holiday-shop-these-amazon-deals';
+      const html = fs.readFileSync(
+        './fixtures/www.mentalfloss.com.html',
+        'utf-8'
+      );
+      result = Mercury.parse(url, { html, fallback: false });
+    });
+
+    it('is selected properly', () => {
+      // This test should be passing by default.
+      // It sanity checks that the correct parser
+      // is being selected for URLs from this domain
+      const extractor = getExtractor(url);
+      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+    });
+
+    it('returns the title', async () => {
+      // To pass this test, fill out the title selector
+      // in ./src/extractors/custom/www.mentalfloss.com/index.js.
+      const { title } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        title,
+        "It's Not Too Late to Holiday Shop With These Amazon Deals"
+      );
+    });
+
+    it('returns the author', async () => {
+      // To pass this test, fill out the author selector
+      // in ./src/extractors/custom/www.mentalfloss.com/index.js.
+      const { author } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(author, 'Smart Shopping Team');
+    });
+
+    it('returns the date_published', async () => {
+      // To pass this test, fill out the date_published selector
+      // in ./src/extractors/custom/www.mentalfloss.com/index.js.
+      const { date_published } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(date_published, '2016-12-19T12:29:00.000Z');
+    });
+
+    it('returns the lead_image_url', async () => {
+      // To pass this test, fill out the lead_image_url selector
+      // in ./src/extractors/custom/www.mentalfloss.com/index.js.
+      const { lead_image_url } = await result;
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        lead_image_url,
+        'https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/35hk53jh53-4509b8146d8e06da952fe862fd3874ad.jpg'
+      );
+    });
+
+    it('returns the content', async () => {
+      // To pass this test, fill out the content selector
+      // in ./src/extractors/custom/www.mentalfloss.com/index.js.
+      // You may also want to make use of the clean and transform
+      // options.
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      const first13 = excerptContent(
+        $('*')
+          .first()
+          .text(),
+        13
+      );
+
+      // Update these values with the expected values from
+      // the article.
+      assert.strictEqual(
+        first13,
+        'As a recurring feature, our team combs the Web and shares some amazing'
+      );
+    });
+  });
+});
