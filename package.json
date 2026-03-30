@@ -103,7 +103,7 @@
     "cheerio": "^1.1.2",
     "dayjs": "^1.11.19",
     "difflib": "github:postlight/difflib.js",
-    "ellipsize": "0.6.0",
+    "ellipsize": "0.7.0",
     "iconv-lite": "0.7.2",
     "postman-request": "^2.88.1-postman.31",
     "string-direction": "^0.1.2",
