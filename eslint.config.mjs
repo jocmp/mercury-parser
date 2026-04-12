@@ -36,6 +36,7 @@ export default [
         beforeEach: 'readonly',
         beforeAll: 'readonly',
         afterAll: 'readonly',
+        expect: 'readonly',
       },
     },
     plugins: {
