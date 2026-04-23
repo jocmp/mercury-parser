@@ -42,7 +42,6 @@ var require$$31 = require('dayjs/plugin/timezone');
 var require$$32 = require('dayjs/plugin/customParseFormat');
 var require$$33 = require('wuzzy');
 var require$$34 = require('difflib');
-var require$$35 = require('ellipsize');
 var _taggedTemplateLiteral = require('@babel/runtime-corejs2/helpers/taggedTemplateLiteral');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -88,7 +87,6 @@ var require$$31__default = /*#__PURE__*/_interopDefaultLegacy(require$$31);
 var require$$32__default = /*#__PURE__*/_interopDefaultLegacy(require$$32);
 var require$$33__default = /*#__PURE__*/_interopDefaultLegacy(require$$33);
 var require$$34__default = /*#__PURE__*/_interopDefaultLegacy(require$$34);
-var require$$35__default = /*#__PURE__*/_interopDefaultLegacy(require$$35);
 var _taggedTemplateLiteral__default = /*#__PURE__*/_interopDefaultLegacy(_taggedTemplateLiteral);
 
 // Spacer images to be removed
@@ -222,7 +220,6 @@ function requireMercury() {
   var customParseFormat = require$$32__default["default"];
   var wuzzy = require$$33__default["default"];
   var difflib = require$$34__default["default"];
-  var ellipsize = require$$35__default["default"];
   function _interopDefaultLegacy(e) {
     return e && _typeof__default["default"](e) === 'object' && 'default' in e ? e : {
       'default': e
@@ -282,7 +279,6 @@ function requireMercury() {
   var customParseFormat__default = /*#__PURE__*/_interopDefaultLegacy(customParseFormat);
   var wuzzy__default = /*#__PURE__*/_interopDefaultLegacy(wuzzy);
   var difflib__default = /*#__PURE__*/_interopDefaultLegacy(difflib);
-  var ellipsize__default = /*#__PURE__*/_interopDefaultLegacy(ellipsize);
   var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
   function normalizeSpaces(text) {
     return text.replace(NORMALIZE_RE, ' ').trim();
@@ -9277,11 +9273,61 @@ function requireMercury() {
       return result(url);
     }
   };
+  var defaults = {
+    ellipse: '…',
+    chars: [' ', '-'],
+    max: 140,
+    truncate: true
+  };
+  function ellipsizeMiddle(str, max, ellipse, chars) {
+    if (str.length <= max) return str;
+    if (max < 2) return str.slice(0, max - ellipse.length) + ellipse;
+    var maxLen = max - ellipse.length;
+    var middle = Math.floor(maxLen / 2);
+    var left = middle;
+    var right = str.length - middle;
+    for (var i = 0; i < middle; i += 1) {
+      var charLeft = str.charAt(i);
+      var posRight = str.length - i;
+      var charRight = str.charAt(posRight);
+      if (chars.indexOf(charLeft) !== -1) left = i;
+      if (chars.indexOf(charRight) !== -1) right = posRight;
+    }
+    return str.slice(0, left) + ellipse + str.slice(right);
+  }
+  function ellipsize(str, max, ellipse, chars, truncate) {
+    if (str.length <= max) return str;
+    var maxLen = max - ellipse.length;
+    var end = maxLen;
+    var breakpointFound = false;
+    for (var i = 0; i <= maxLen; i += 1) {
+      var _char = str.charAt(i);
+      if (chars.indexOf(_char) !== -1) {
+        end = i;
+        breakpointFound = true;
+      }
+    }
+    if (!truncate && !breakpointFound) return '';
+    return str.slice(0, end) + ellipse;
+  }
+  var ellipsize$1 = function ellipsize$1(str, max, opts) {
+    if (typeof str !== 'string' || str.length === 0) return '';
+    if (max === 0) return '';
+    opts = opts || {};
+    _Object$keys__default$1["default"](defaults).forEach(function (key) {
+      if (opts[key] === null || typeof opts[key] === 'undefined') {
+        opts[key] = defaults[key];
+      }
+    });
+    opts.max = max || opts.max;
+    if (opts.truncate === 'middle') return ellipsizeMiddle(str, opts.max, opts.ellipse, opts.chars);
+    return ellipsize(str, opts.max, opts.ellipse, opts.chars, opts.truncate);
+  };
   var EXCERPT_META_SELECTORS = ['og:description', 'twitter:description'];
   function clean(content, $) {
     var maxLength = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
     content = content.replace(/[\s\n]+/g, ' ').trim();
-    return ellipsize__default["default"](content, maxLength, {
+    return ellipsize$1(content, maxLength, {
       ellipse: '&hellip;'
     });
   }

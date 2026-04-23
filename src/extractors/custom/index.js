@@ -195,3 +195,4 @@ export * from './www.transfermarkt.de';
 export * from './www.blick.de';
 export * from './www.euronews.com';
 export * from './gr.euronews.com';
+export * from './www.ilfattoquotidiano.it';
