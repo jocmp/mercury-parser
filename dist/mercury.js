@@ -35,7 +35,6 @@ var timezonePlugin = require('dayjs/plugin/timezone');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 var wuzzy = require('wuzzy');
 var difflib = require('difflib');
-var ellipsize = require('ellipsize');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -92,7 +91,6 @@ var timezonePlugin__default = /*#__PURE__*/_interopDefaultLegacy(timezonePlugin)
 var customParseFormat__default = /*#__PURE__*/_interopDefaultLegacy(customParseFormat);
 var wuzzy__default = /*#__PURE__*/_interopDefaultLegacy(wuzzy);
 var difflib__default = /*#__PURE__*/_interopDefaultLegacy(difflib);
-var ellipsize__default = /*#__PURE__*/_interopDefaultLegacy(ellipsize);
 
 var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
 function normalizeSpaces(text) {
@@ -7241,6 +7239,31 @@ var GrEuronewsComExtractor = _objectSpread$6(_objectSpread$6({}, WwwEuronewsComE
   domain: 'gr.euronews.com'
 });
 
+var WwwIlfattoquotidianoItExtractor = {
+  domain: 'www.ilfattoquotidiano.it',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.ifq-post__author .ifq-news-meta__author-name'],
+    clean: ['span']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.ifq-post__content', 'article'],
+    transforms: {},
+    clean: []
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7439,7 +7462,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
   WwwBlickDeExtractor: WwwBlickDeExtractor,
   WwwEuronewsComExtractor: WwwEuronewsComExtractor,
-  GrEuronewsComExtractor: GrEuronewsComExtractor
+  GrEuronewsComExtractor: GrEuronewsComExtractor,
+  WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor
 });
 
 function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -8785,12 +8809,63 @@ var GenericUrlExtractor = {
   }
 };
 
+var defaults = {
+  ellipse: '…',
+  chars: [' ', '-'],
+  max: 140,
+  truncate: true
+};
+function ellipsizeMiddle(str, max, ellipse, chars) {
+  if (str.length <= max) return str;
+  if (max < 2) return str.slice(0, max - ellipse.length) + ellipse;
+  var maxLen = max - ellipse.length;
+  var middle = Math.floor(maxLen / 2);
+  var left = middle;
+  var right = str.length - middle;
+  for (var i = 0; i < middle; i += 1) {
+    var charLeft = str.charAt(i);
+    var posRight = str.length - i;
+    var charRight = str.charAt(posRight);
+    if (chars.indexOf(charLeft) !== -1) left = i;
+    if (chars.indexOf(charRight) !== -1) right = posRight;
+  }
+  return str.slice(0, left) + ellipse + str.slice(right);
+}
+function ellipsize(str, max, ellipse, chars, truncate) {
+  if (str.length <= max) return str;
+  var maxLen = max - ellipse.length;
+  var end = maxLen;
+  var breakpointFound = false;
+  for (var i = 0; i <= maxLen; i += 1) {
+    var _char = str.charAt(i);
+    if (chars.indexOf(_char) !== -1) {
+      end = i;
+      breakpointFound = true;
+    }
+  }
+  if (!truncate && !breakpointFound) return '';
+  return str.slice(0, end) + ellipse;
+}
+var ellipsize$1 = (function (str, max, opts) {
+  if (typeof str !== 'string' || str.length === 0) return '';
+  if (max === 0) return '';
+  opts = opts || {};
+  _Object$keys__default["default"](defaults).forEach(function (key) {
+    if (opts[key] === null || typeof opts[key] === 'undefined') {
+      opts[key] = defaults[key];
+    }
+  });
+  opts.max = max || opts.max;
+  if (opts.truncate === 'middle') return ellipsizeMiddle(str, opts.max, opts.ellipse, opts.chars);
+  return ellipsize(str, opts.max, opts.ellipse, opts.chars, opts.truncate);
+});
+
 var EXCERPT_META_SELECTORS = ['og:description', 'twitter:description'];
 
 function clean(content, $) {
   var maxLength = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
   content = content.replace(/[\s\n]+/g, ' ').trim();
-  return ellipsize__default["default"](content, maxLength, {
+  return ellipsize$1(content, maxLength, {
     ellipse: '&hellip;'
   });
 }
