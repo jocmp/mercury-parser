@@ -7548,6 +7548,30 @@ function requireMercury() {
   var GrEuronewsComExtractor = _objectSpread$6(_objectSpread$6({}, WwwEuronewsComExtractor), {}, {
     domain: 'gr.euronews.com'
   });
+  var WwwIlfattoquotidianoItExtractor = {
+    domain: 'www.ilfattoquotidiano.it',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: ['.ifq-post__author .ifq-news-meta__author-name'],
+      clean: ['span']
+    },
+    date_published: {
+      selectors: [['meta[name="article:published_time"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.ifq-post__content', 'article'],
+      transforms: {},
+      clean: []
+    }
+  };
   var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
     __proto__: null,
     BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -7746,7 +7770,8 @@ function requireMercury() {
     WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
     WwwBlickDeExtractor: WwwBlickDeExtractor,
     WwwEuronewsComExtractor: WwwEuronewsComExtractor,
-    GrEuronewsComExtractor: GrEuronewsComExtractor
+    GrEuronewsComExtractor: GrEuronewsComExtractor,
+    WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor
   });
   function ownKeys$5(e, r) {
     var t = _Object$keys__default$1["default"](e);
