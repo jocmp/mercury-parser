@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## Unreleased
+
+- feat: Add ilfattoquotidiano.it custom parser by @jocmp in [#170](https://github.com/jocmp/mercury-parser/pull/170)
+- Vendor ellipsize by @jocmp in [#164](https://github.com/jocmp/mercury-parser/pull/164)
+- Skip demo dependabots by @jocmp
+- Rework CI by @jocmp
+
 ## v3.0.7
 
-- Downgrade ellipsize to 0.6.0
+- bump version v3.0.6 -> v3.0.7 by @jocmp
+- Update changelog by @jocmp
+- Downgrade ellipsize to 0.6.0 by @jocmp
 - feat: Add custom parsers for euronews by @jocmp in [#151](https://github.com/jocmp/mercury-parser/pull/151)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.6...v3.0.7
 
 ## v3.0.6
 
@@ -66,6 +77,7 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: Fix PR GH Actions by @jocmp
 
 ## New Contributors
+
 - @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
 
 **Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.1...v3.0.2
@@ -898,6 +910,7 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Quick port of constants file by @adampash
 
 ## New Contributors
+
 - @jocmp made their first contribution
 - @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
 - @touchRED made their first contribution
