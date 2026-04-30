@@ -96,7 +96,7 @@
     "remark-preset-lint-recommended": "^7.0.0",
     "rollup": "^2.79.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "vite-plugin-node-polyfills": "^0.25.0",
+    "vite-plugin-node-polyfills": "^0.26.0",
     "vitest": "^4.0.17"
   },
   "dependencies": {
