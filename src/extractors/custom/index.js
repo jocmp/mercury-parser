@@ -199,3 +199,4 @@ export * from './www.ilfattoquotidiano.it';
 export * from './actualidad.rt.com';
 export * from './www.tweaktown.com';
 export * from './www.frandroid.com';
+export * from './www.motorsport.com';
