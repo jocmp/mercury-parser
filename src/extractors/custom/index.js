@@ -201,3 +201,4 @@ export * from './www.tweaktown.com';
 export * from './www.frandroid.com';
 export * from './www.motorsport.com';
 export * from './www.nexojornal.com.br';
+export * from './substack.com';
