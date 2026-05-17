@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <meta name="norton-safeweb-site-verification" value="24usqpep0ejc5w6hod3dulxwciwp0djs6c6ufp96av3t4whuxovj72wfkdjxu82yacb7430qjm8adbd5ezlt4592dq4zrvadcn9j9n-0btgdzpiojfzno16-fnsnu7xd">
+        
+        <link rel="preconnect" href="https://substackcdn.com/">
+        
+
+        
+            <title data-rh="true">“A model that produces code which compiles and passes the tests it was given is not the same as a model that produces correct, secure, maintainable, well-architected software”</title>
+            
+            <meta data-rh="true" value="article" name="og:type"><meta data-rh="true" value="“A model that produces code which compiles and passes the tests it was given is not the same as a model that produces correct, secure, maintainable, well-architected software”" name="og:title"><meta data-rh="true" name="twitter:title" value="“A model that produces code which compiles and passes the tests it was given is not the same as a model that produces correct, secure, maintainable, well-architected software”"><meta data-rh="true" name="description" value="A lot of code is being written by AI, but what does it mean?"><meta data-rh="true" value="A lot of code is being written by AI, but what does it mean?" name="og:description"><meta data-rh="true" name="twitter:description" value="A lot of code is being written by AI, but what does it mean?"><meta data-rh="true" value="https://substackcdn.com/image/fetch/$s_!L9Di!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png" name="og:image"><meta data-rh="true" name="twitter:image" value="https://substackcdn.com/image/fetch/$s_!9Xjg!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fgarymarcus.substack.com%2Fapi%2Fv1%2Fpost_preview%2F196156935%2Ftwitter.jpg%3Fversion%3D4"><meta data-rh="true" name="twitter:card" value="summary_large_image">
+            
+            
+        
+
+        
+
+        
+
+        
+        <link rel="preload" as="style" href="https://substackcdn.com/bundle/theme/main.7c52761e29f131507b65.css">
+        
+        
+        
+        <link rel="preload" as="font" href="https://fonts.gstatic.com/s/spectral/v13/rnCr-xNNww_2s0amA9M5knjsS_ul.woff2" crossorigin="">
+        
+
+        
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/382.c8ce4625.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/56938.bc21f918.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/54636.1791a1b4.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/82434.6d24e4ab.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/26790.cf93beae.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/11578.ff47eabe.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/42090.ed81448b.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/37872.e2f10b08.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/95680.261114a6.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/22652.63fdbdd6.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/54539.e53aba08.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/71560.a8b9543c.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/71560.a8b9543c.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/54539.e53aba08.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/22652.63fdbdd6.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/37872.e2f10b08.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/42090.ed81448b.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/11578.ff47eabe.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/26790.cf93beae.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/82434.6d24e4ab.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/54636.1791a1b4.css">
+            
+                <link rel="stylesheet" type="text/css" href="https://substackcdn.com/bundle/static/css/86379.813be60f.css">
+            
+        
+
+        
+        
+        
+        
+        <meta name="viewport" value="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover">
+        <meta name="author" value="Gary Marcus">
+        <meta value="https://garymarcus.substack.com/p/a-model-that-produces-code-which" name="og:url">
+        
+        
+        <link rel="canonical" href="https://garymarcus.substack.com/p/a-model-that-produces-code-which">
+        
+
+        
+
+        
+
+        
+
+        
+            
+                <link rel="shortcut icon" href="https://substackcdn.com/icons/substack/favicon.ico" sizes="32x32">
+            
+        
+            
+                <link rel="icon" href="https://substackcdn.com/icons/substack/icon.svg" type="image/svg+xml">
+            
+        
+            
+                <link rel="apple-touch-icon" href="https://substackcdn.com/icons/substack/apple-touch-icon.png">
+            
+        
+            
+        
+            
+        
+            
+        
+
+        
+
+        
+            <link rel="alternate" type="application/rss+xml" href="https://garymarcus.substack.com/feed" title="Marcus on AI">
+        
+
+        
+        
+          
+        
+        
+        
+
+        
+
+        
+            <link rel="stylesheet" href="https://substackcdn.com/bundle/theme/main.7c52761e29f131507b65.css">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </head>
+
+    <body class="">
+        
+
+        
+
+        
+
+        
+
+        <div id="entry">
+            <div id="main" style="--post-preview-border-radius:var(--border-radius-xs);" class="main typography use-theme-bg"><div class="pencraft pc-display-contents pc-reset pubTheme-yiXxQA"><div data-testid="navbar" class="main-menu"><div class="mainMenuContent-DME8DR"><div style="position:relative;height:71px;" class="pencraft pc-display-flex pc-gap-12 pc-paddingLeft-20 pc-paddingRight-20 pc-justifyContent-space-between pc-alignItems-center pc-reset border-bottom-detail-k1F6C4 topBar-pIF0J1"><div style="flex-basis:0px;flex-grow:1;" class="logoContainer-p12gJb"></div><div style="flex-grow:0;" class="titleContainer-DJYq5v"><h1 class="pencraft pc-reset font-pub-headings-FE5byy reset-IxiVJZ title-oOnUGd"><a href="https://garymarcus.substack.com/" class="pencraft pc-display-contents pc-reset">Marcus on AI</a></h1></div><div style="flex-basis:0px;flex-grow:1;" class="pencraft pc-display-flex pc-justifyContent-flex-end pc-alignItems-center pc-reset buttonsContainerContainer-ThaN_w"><div class="buttonsContainer-SJBuep"><div class="pencraft pc-display-flex pc-gap-8 pc-justifyContent-flex-end pc-alignItems-center pc-reset navbar-buttons"><div class="pencraft pc-display-flex pc-gap-4 pc-reset"><span data-state="closed"><button tabindex="0" type="button" aria-label="Search" class="pencraft pc-reset pencraft iconButton-mq_Et5 iconButtonBase-dJGHgN buttonBase-GK1x3M buttonStyle-r7yGCK size_md-gCDS3o priority_tertiary-rlke8z"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></button></span><button tabindex="0" type="button" aria-label="Share Publication" id="radix-P0-4" aria-haspopup="menu" aria-expanded="false" data-state="closed" class="pencraft pc-reset pencraft iconButton-mq_Et5 iconButtonBase-dJGHgN buttonBase-GK1x3M buttonStyle-r7yGCK size_md-gCDS3o priority_tertiary-rlke8z"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg></button></div><button tabindex="0" type="button" data-testid="noncontributor-cta-button" class="pencraft pc-reset pencraft buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_primary-RfbeYt size_md-gCDS3o">Subscribe</button><button tabindex="0" data-native="true" type="button" data-href="https://substack.com/sign-in?redirect=%2Fp%2Fa-model-that-produces-code-which&amp;for_pub=garymarcus" class="pencraft pc-reset pencraft buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_tertiary-rlke8z size_md-gCDS3o">Sign in</button></div></div></div></div></div><div style="height:72px;"></div></div></div><div><div aria-label="Post" role="main" class="single-post-container"><div class="container"><div class="single-post"><div class="pencraft pc-display-contents pc-reset pubTheme-yiXxQA"><article class="typography newsletter-post post"><div role="region" aria-label="Post header" class="post-header"><h1 dir="auto" class="post-title published title-X77sOw">“A model that produces code which compiles and passes the tests it was given is not the same as a model that produces correct, secure, maintainable, well-architected software”</h1><h3 dir="auto" class="subtitle subtitle-HEEcLo">A lot of code is being written by AI, but what does it mean? </h3><div aria-label="Post UFI" role="region" class="pencraft pc-display-flex pc-flexDirection-column pc-paddingBottom-16 pc-reset"><div class="pencraft pc-display-flex pc-paddingTop-16 pc-paddingBottom-16 pc-justifyContent-space-between pc-alignItems-center pc-reset"><div class="pencraft pc-display-flex pc-gap-12 pc-alignItems-center pc-reset byline-wrapper"><div class="pencraft pc-display-flex pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-row pc-gap-8 pc-alignItems-center pc-justifyContent-flex-start pc-reset"><div style="--scale:36px;--offset:9px;--border-width:4.5px;" class="pencraft pc-display-flex pc-flexDirection-row pc-alignItems-center pc-justifyContent-flex-start pc-reset ltr-qDBmby"><a href="https://substack.com/@garymarcus" aria-label="View Gary Marcus's profile" class="pencraft pc-display-contents pc-reset"><div style="--scale:36px;" tabindex="0" class="pencraft pc-display-flex pc-width-36 pc-height-36 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA animate-XFJxE4 outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 pressable-sm-YIJFKJ showFocus-sk_vEm container-TAtrWj interactive-UkK0V6 avatar-u8q6xB last-JfNEJ_"><div style="--scale:36px;" title="Gary Marcus" class="pencraft pc-display-flex pc-width-36 pc-height-36 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 container-TAtrWj"><picture><source type="image/webp" srcset="https://substackcdn.com/image/fetch/$s_!Ka51!,w_36,h_36,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 1x, https://substackcdn.com/image/fetch/$s_!Ka51!,w_72,h_72,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 2x, https://substackcdn.com/image/fetch/$s_!Ka51!,w_108,h_108,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 3x"><img src="https://substackcdn.com/image/fetch/$s_!Ka51!,w_36,h_36,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg" alt="Gary Marcus's avatar" srcset="https://substackcdn.com/image/fetch/$s_!Ka51!,w_36,h_36,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 1x, https://substackcdn.com/image/fetch/$s_!Ka51!,w_72,h_72,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 2x, https://substackcdn.com/image/fetch/$s_!Ka51!,w_108,h_108,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb2e48c-be2a-4db7-b68c-90300f00fd1e_1668x1456.jpeg 3x" width="36" height="36" draggable="false" class="img-OACg1c object-fit-cover-u4ReeV pencraft pc-reset"></picture></div></div></a></div></div></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset"><div class="pencraft pc-reset color-pub-primary-text-NyXPlw line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA"><span style="min-width:0;" data-state="closed"><a href="https://substack.com/@garymarcus" class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ">Gary Marcus</a></span></div><div class="pencraft pc-display-flex pc-gap-4 pc-reset"><div class="pencraft pc-reset color-pub-secondary-text-hGQ02T line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA">May 01, 2026</div></div></div></div></div><div class="pencraft pc-display-flex pc-gap-16 pc-justifyContent-space-between pc-alignItems-center pc-reset flex-grow-rzmknG post-ufi"><div class="pencraft pc-display-flex pc-gap-8 pc-reset"><div class="like-button-container post-ufi-button style-button"><button tabindex="0" type="button" aria-label="Like (117)" aria-pressed="false" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><svg role="img" style="height:20px;width:20px;" width="20" height="20" viewBox="0 0 24 24" fill="#000000" stroke-width="2" stroke="#000" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></g></svg><div class="label">117</div></button></div><button tabindex="0" type="button" aria-label="View comments (30)" data-href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comments" class="pencraft pc-reset pencraft post-ufi-button style-button post-ufi-comment-button has-label with-border"><svg role="img" style="height:20px;width:20px;" width="20" height="20" viewBox="0 0 24 24" fill="#000000" stroke-width="2" stroke="#000" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></g></svg><div class="label">30</div></button><button tabindex="0" type="button" id="radix-P0-27" aria-haspopup="menu" aria-expanded="false" data-state="closed" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><svg role="img" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="2" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882"></path></g></svg><div class="label">5</div></button></div><div class="pencraft pc-display-flex pc-gap-8 pc-reset"><button tabindex="0" type="button" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><div class="label">Share</div></button></div></div></div></div><div class="visibility-check"></div><div><div><div class="available-content"><div dir="auto" class="body markup"><p><span>The title here, a paraphrased quote from me, pretty much says it all. It’s in TNW, today, evaluating a claim from “</span><a href="https://thenextweb.com/news/openai-brockman-80-percent-code-ai-productivity-claim">OpenAI president [who] says AI is now writing 80% of the company’s code</a><strong>”.</strong></p><div class="captioned-image-container"><figure><a target="_blank" href="https://substackcdn.com/image/fetch/$s_!L9Di!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png" data-component-name="Image2ToDOM" class="image-link image2 is-viewable-img can-restack"><div class="image2-inset"><picture><source type="image/webp" srcset="https://substackcdn.com/image/fetch/$s_!L9Di!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 424w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 848w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 1272w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 1456w" sizes="100vw"><img src="https://substack-post-media.s3.amazonaws.com/public/images/9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png" width="1383" height="864" data-attrs="{&quot;src&quot;:&quot;https://substack-post-media.s3.amazonaws.com/public/images/9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png&quot;,&quot;srcNoWatermark&quot;:null,&quot;fullscreen&quot;:null,&quot;imageSize&quot;:null,&quot;height&quot;:864,&quot;width&quot;:1383,&quot;resizeWidth&quot;:null,&quot;bytes&quot;:153677,&quot;alt&quot;:null,&quot;title&quot;:null,&quot;type&quot;:&quot;image/png&quot;,&quot;href&quot;:null,&quot;belowTheFold&quot;:false,&quot;topImage&quot;:true,&quot;internalRedirect&quot;:&quot;https://garymarcus.substack.com/i/196156935?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbea2e4ac-4336-49af-a3a2-30da306981ce_1383x1256.png&quot;,&quot;isProcessing&quot;:false,&quot;align&quot;:null,&quot;offset&quot;:false}" alt="" srcset="https://substackcdn.com/image/fetch/$s_!L9Di!,w_424,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 424w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 848w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_1272,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 1272w, https://substackcdn.com/image/fetch/$s_!L9Di!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9610e183-b1a7-4522-8838-ec798cec6525_1383x864.png 1456w" sizes="100vw" fetchpriority="high" class="sizing-normal"></picture><div class="image-link-expand"><div class="pencraft pc-display-flex pc-gap-8 pc-reset"><button tabindex="0" type="button" class="pencraft pc-reset pencraft icon-container restack-image"><svg role="img" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="1.5" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><g><title></title><path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882"></path></g></svg></button><button tabindex="0" type="button" class="pencraft pc-reset pencraft icon-container view-image"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize2 lucide-maximize-2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" x2="14" y1="3" y2="10"></line><line x1="3" x2="10" y1="21" y2="14"></line></svg></button></div></div></div></a></figure></div><p>Great to see a nuanced point reported correctly in the media, by Ana Maria Constantin, and great also to see OpenAI’s President Greg Brockman sorta kinda acknowledging the point I was making, in a rare note of realism from OpenAI. </p><p>After all, it’s only with realism that we can hope to make progress. </p><p>Realism re AI coding is knowing that next-word prediction gets us a surprisingly long way in writing code, but less far in making sure that code is robust.  Coders (especially vibe coders with little experience) beware.  </p><p>And all you OpenClaw devotees, that goes 10x, if not 100x, for you. </p><div data-component-name="SubscribeWidget" class="subscribe-widget"><div class="pencraft pc-display-flex pc-justifyContent-center pc-reset"><div class="container-IpPqBD"></div></div></div></div></div><div class="visibility-check"></div></div><div class="post-footer"><div class="pencraft pc-display-flex pc-gap-16 pc-paddingTop-16 pc-paddingBottom-16 pc-justifyContent-space-between pc-alignItems-center pc-reset flex-grow-rzmknG border-top-detail-themed-k9TZAY border-bottom-detail-themed-Ua9186 post-ufi"><div class="pencraft pc-display-flex pc-gap-8 pc-reset"><div class="like-button-container post-ufi-button style-button"><button tabindex="0" type="button" aria-label="Like (117)" aria-pressed="false" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><svg role="img" style="height:20px;width:20px;" width="20" height="20" viewBox="0 0 24 24" fill="#000000" stroke-width="2" stroke="#000" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></g></svg><div class="label">117</div></button></div><button tabindex="0" type="button" aria-label="View comments (30)" data-href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comments" class="pencraft pc-reset pencraft post-ufi-button style-button post-ufi-comment-button has-label with-border"><svg role="img" style="height:20px;width:20px;" width="20" height="20" viewBox="0 0 24 24" fill="#000000" stroke-width="2" stroke="#000" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></g></svg><div class="label">30</div></button><button tabindex="0" type="button" id="radix-P0-56" aria-haspopup="menu" aria-expanded="false" data-state="closed" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><svg role="img" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="2" stroke="var(--color-fg-primary)" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" class="icon"><g><title></title><path d="M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882"></path></g></svg><div class="label">5</div></button></div><div class="pencraft pc-display-flex pc-gap-8 pc-reset"><button tabindex="0" type="button" class="pencraft pc-reset pencraft post-ufi-button style-button has-label with-border"><div class="label">Share</div></button></div></div></div></div></article></div></div></div><div class="pencraft pc-display-contents pc-reset pubTheme-yiXxQA"><div class="visibility-check"></div><div id="discussion" class="pencraft pc-display-flex pc-flexDirection-column pc-gap-16 pc-paddingTop-32 pc-paddingBottom-32 pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-column pc-gap-32 pc-reset container"><h4 class="pencraft pc-reset line-height-24-jnGwiv font-display-nhmvtD size-20-P_cSRT weight-bold-DmI9lw reset-IxiVJZ">Discussion about this post</h4><div class="pencraft pc-alignSelf-flex-start pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-column pc-position-relative pc-minWidth-0 pc-reset bg-primary-zk6FDl outline-detail-vcQLyr pc-borderRadius-sm overflow-hidden-WdpwT6"><div dir="ltr" data-orientation="horizontal" class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"><div style="outline:none;" tabindex="-1" aria-label="Select discussion type" role="tablist" aria-orientation="horizontal" data-orientation="horizontal" class="pencraft pc-display-flex pc-gap-4 pc-padding-4 pc-position-relative pc-reset cursor-default-flE2S1 pc-borderRadius-sm overflow-auto-7WTsTi scrollBar-hidden-HcAIpI"><button tabindex="-1" type="button" role="tab" aria-selected="true" aria-controls="radix-P0-70-content-comments" data-state="active" id="radix-P0-70-trigger-comments" data-orientation="horizontal" data-radix-collection-item="" class="pencraft pc-reset flex-auto-j3S2WA pencraft segment-j4TeZ4 buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_quaternary-kpMibu size_sm-G3LciD">Comments</button><button tabindex="-1" type="button" role="tab" aria-selected="false" aria-controls="radix-P0-70-content-restacks" data-state="inactive" id="radix-P0-70-trigger-restacks" data-orientation="horizontal" data-radix-collection-item="" class="pencraft pc-reset flex-auto-j3S2WA pencraft segment-j4TeZ4 buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_quaternary-kpMibu size_sm-G3LciD">Restacks</button><div class="pencraft pc-position-absolute pc-height-32 pc-reset bg-secondary-UUD3_J pc-borderRadius-xs sizing-border-box-DggLA4 highlight-U002IP"></div></div></div><div class="pencraft pc-display-flex pc-alignItems-center pc-reset arrowButtonContainer-O4uSiH arrowButtonOverlaidContainer-t10AyH left-Tg8vqp"><div class="overlay-zrMCxn primary-lv_sOW"></div></div><div class="pencraft pc-display-flex pc-alignItems-center pc-reset arrowButtonContainer-O4uSiH arrowButtonOverlaidContainer-t10AyH right-i3oWGi"><div class="overlay-zrMCxn primary-lv_sOW"></div></div></div></div></div><div id="substack-comments" class="single-post-section comments-section"><div class="container"><div class="visibility-check"></div><div data-test-id="comment-input" class="pencraft pc-display-flex pc-reset flex-grow-rzmknG"></div><div class="comment-list post-page-root-comment-list"><div class="comment-list-items"><div class="comment"><div id="comment-252284732" class="comment-anchor"></div><div id="comment-252284732-reply" class="comment-anchor"></div><div role="article" aria-label="Comment by Jason Rhinelander" class="pencraft pc-display-flex pc-gap-12 pc-paddingBottom-12 pc-reset comment-content"><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset"><a href="https://substack.com/profile/31285812-jason-rhinelander?utm_source=comment" aria-label="View Jason Rhinelander's profile" class="pencraft pc-display-contents pc-reset"><div style="--scale:32px;" tabindex="0" class="pencraft pc-display-flex pc-width-32 pc-height-32 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA animate-XFJxE4 outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 pressable-sm-YIJFKJ showFocus-sk_vEm container-TAtrWj interactive-UkK0V6"><div style="--scale:32px;" title="Jason Rhinelander" class="pencraft pc-display-flex pc-width-32 pc-height-32 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 container-TAtrWj"><picture><source type="image/webp" srcset="https://substackcdn.com/image/fetch/$s_!Tfxb!,w_32,h_32,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 1x, https://substackcdn.com/image/fetch/$s_!Tfxb!,w_64,h_64,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 2x, https://substackcdn.com/image/fetch/$s_!Tfxb!,w_96,h_96,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 3x"><img src="https://substackcdn.com/image/fetch/$s_!Tfxb!,w_32,h_32,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png" alt="Jason Rhinelander's avatar" srcset="https://substackcdn.com/image/fetch/$s_!Tfxb!,w_32,h_32,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 1x, https://substackcdn.com/image/fetch/$s_!Tfxb!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 2x, https://substackcdn.com/image/fetch/$s_!Tfxb!,w_96,h_96,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Forange.png 3x" width="32" height="32" draggable="false" class="img-OACg1c object-fit-cover-u4ReeV pencraft pc-reset"></picture></div></div></a></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"><div class="pencraft pc-display-flex pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-column pc-gap-4 pc-reset"><div class="pencraft pc-display-flex pc-minWidth-0 pc-gap-8 pc-alignItems-center pc-justifyContent-space-between pc-reset line-height-20-t4M0El font-text-qe4AeH size-15-Psle70 weight-regular-mUq6Gb"><div class="pencraft pc-display-flex pc-minWidth-0 pc-gap-8 pc-alignItems-center pc-reset flex-grow-rzmknG"><div class="pencraft pc-display-flex pc-gap-6 pc-reset color-primary-zABazT line-height-20-t4M0El font-text-qe4AeH size-13-hZTUKr weight-regular-mUq6Gb reset-IxiVJZ"><span class="pencraft pc-reset line-height-20-t4M0El font-text-qe4AeH size-15-Psle70 weight-medium-fw81nC reset-IxiVJZ"><span style="min-width:0;" data-state="closed"><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a href="https://substack.com/profile/31285812-jason-rhinelander?utm_source=substack-feed-item" showback="" data-native="true" class="link-LIBpto">Jason Rhinelander</a></span></span> </span></div><a data-native="true" href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comment/252284732" rel="nofollow" title="May 1, 2026, 8:51 PM" class="pencraft pc-reset color-secondary-ls1g8s decoration-hover-underline-ClDVRM reset-IxiVJZ"><span class="pencraft pc-reset color-secondary-ls1g8s line-height-20-t4M0El font-text-qe4AeH size-13-hZTUKr weight-regular-mUq6Gb reset-IxiVJZ">5h</span></a></div></div><div class="pencraft pc-display-flex pc-gap-4 pc-reset"><button tabindex="-1" type="button" class="pencraft pc-display-flex pc-gap-4 pc-height-20 pc-paddingLeft-6 pc-paddingRight-6 pc-paddingTop-2 pc-paddingBottom-2 pc-alignItems-center pc-reset font-text-qe4AeH size-11-NuY2Zx weight-medium-fw81nC pencraft tag-XbOVLt theme_accent-Y2sqZY priority_secondary-outline-RpooJS pencraft pc-display-flex pc-height-20 pc-paddingLeft-6 pc-paddingRight-6 pc-paddingTop-2 pc-paddingBottom-2 pc-gap-4 pc-alignItems-center pc-reset cursor-inherit-LxLBJ6 pc-borderRadius-xs font-text-qe4AeH size-11-NuY2Zx weight-medium-fw81nC"><div class="pencraft pc-display-flex pc-alignItems-center pc-reset leading-mI5Ihl fillIcon-dQ0mii"><svg role="img" style="height:14px;width:14px;" width="14" height="14" viewBox="0 0 20 20" fill="var(--color-fg-primary)" stroke-width="2.5" stroke="#000" xmlns="http://www.w3.org/2000/svg"><g><title></title><path stroke="none" d="M9.99915 16.7256C9.90515 16.7256 9.79102 16.692 9.65674 16.6249C9.52246 16.5622 9.3949 16.4906 9.27405 16.41C8.02974 15.6044 6.94657 14.7584 6.02454 13.8722C5.10697 12.9815 4.3953 12.0662 3.88953 11.1262C3.38375 10.1818 3.13086 9.23067 3.13086 8.27283C3.13086 7.63725 3.23157 7.05762 3.43298 6.53394C3.63888 6.01025 3.92086 5.55819 4.27893 5.17773C4.64148 4.79728 5.05774 4.50635 5.52771 4.30493C6.00216 4.09904 6.51241 3.99609 7.05847 3.99609C7.73433 3.99609 8.31844 4.16618 8.81079 4.50635C9.30762 4.84652 9.70374 5.28963 9.99915 5.83569C10.299 5.28516 10.6951 4.84204 11.1875 4.50635C11.6843 4.16618 12.2707 3.99609 12.9465 3.99609C13.4836 3.99609 13.9894 4.09904 14.4639 4.30493C14.9428 4.50635 15.3613 4.79728 15.7194 5.17773C16.0774 5.55819 16.3572 6.01025 16.5586 6.53394C16.7645 7.05762 16.8674 7.63725 16.8674 8.27283C16.8674 9.23067 16.6145 10.1818 16.1088 11.1262C15.603 12.0662 14.8891 12.9815 13.967 13.8722C13.0495 14.7584 11.9708 15.6044 10.731 16.41C10.6056 16.4906 10.4758 16.5622 10.3416 16.6249C10.2118 16.692 10.0976 16.7256 9.99915 16.7256Z"></path></g></svg></div>Liked by Gary Marcus</button></div></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"></div><div class="pencraft pc-display-flex pc-reset triggerContainer-eX588u"><button tabindex="0" type="button" aria-label="Ellipsis" id="radix-P0-83" aria-haspopup="menu" aria-expanded="false" data-state="closed" class="pencraft pc-reset pencraft trigger-j08Uop iconButton-mq_Et5 iconButtonBase-dJGHgN buttonBase-GK1x3M buttonStyle-r7yGCK size_sm-G3LciD priority_quaternary-kpMibu"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div></div><div class="comment-body expanded"><p><span>I'm the chief software architect of a non-profit, open source, decentralized messaging application, and I recently incorporated AI coding into my workflow. I've been a fairly big AI skeptic, but decided to give AI coding a chance to see if it could change my workflow after hearing a lot of reports about how AI coding has become rather good over the past few months. At first, there was some learning curve: I absolutely did not like the first attempts the AI gave me at writing code. It had dumb defaults (for example, a built-in default to not cleanly refactor things and to be far too willing to duplicate rather than reuse code). This results in bad tech debt of the sorts you are describing.</span></p><p><span>But as I continued the experiment, I managed to temper those behaviours, and ended up in a situation where I could use AI coding to significantly improve the output with a code quality level that I am happy signing off on and maintaining going forward. In other words, I manage to get it massaged into code that I would be happy with had I written in.</span></p><p><span>Now don't get me wrong: AI still isn't close to produce the right code on the first try, or second try, but interfaces like Claude Code allow me to tell it why what it's doing is wrong as it proposes changes. I end up having to correct things ("No, didn't I see similar code earlier that should be refactored to reuse this?" or "No, that is not an efficient way to approach this") frequently -- often the same sort of corrections I would use with a junior dev (back when junior devs were a thing in this industry). But *with* continual corrections and guidance and not blindly accepting proposed implementations and changes, I've found the AI augmented approach to substantially increase the output of *high quality* code that I produce.</span></p><p><span>With a micro focus on my particularly needs, this is great: I can double or triple my output -- even with all the time spent giving feedback for nearly every proposed piece of code -- without a sacrifice in code quality or maintainability. That's a real gain for me, personally.</span></p><p><span>But backing out to the macro focus, it all becomes more than a little worrisome. Yes, *I* am prompting the AI and refining its output to massage it into good code, but I'm a developer with many years of experience who can distinguish between good and bad code a mile away. When I think of inexperienced devs applying AI, and think of what happens after the senior devs like me retire (or start forgetting everything because we become so dependent on AI), I'm left thinking about who will be left: AI jockeys without much ability to distinguish maintainable code from unmaintainable code but-at-lest-this-one-feature-I-am-adding-works spaghetti. That's a recipe for disaster because of just how much risk it creates. Would you want to log in to a banking interface, for example, whose claim to fame is that they have lower fees because they cut costs while making a really great web interface by using vibe coding AI to implement the entire banking stack using one junior dev driving the AI at a breakneck pace? Will that be the only option for a company looking for software developers in 10-20-30 years time?</span></p><p><span>I don't have a solution to that problem, and it's a terrifying one. The hope of some seems to be that AI coding models will get a lot better at producing good code the first time around so that the "just accept everything" AI jokey output ends up better and high quality and doesn't produce spaghetti the first time through. I'm not sure that's particularly feasible, though, given the diminishing returns we seem to be getting from AI models. The focus now seems to be shifting to "marginal improvements in quality, but significantly cheaper", which makes me think that expectation isn't realistic.</span></p></div><div class="pencraft pc-display-flex pc-gap-16 pc-paddingTop-8 pc-justifyContent-flex-start pc-alignItems-center pc-reset comment-actions withShareButton-hQzuEn"><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a class="pencraft pc-reset link-_X6et2 link-LIBpto"><div class="pencraft pc-display-flex pc-gap-6 pc-alignItems-center pc-reset"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-fg-secondary-themed)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg><div class="pencraft pc-reset color-pub-secondary-text-hGQ02T line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA">Reply</div></div></a></span><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a class="pencraft pc-reset link-_X6et2 link-LIBpto"><div class="pencraft pc-display-flex pc-gap-6 pc-alignItems-center pc-reset"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-fg-secondary-themed)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg><div class="pencraft pc-reset color-pub-secondary-text-hGQ02T line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA">Share</div></div></a></span></div><div data-state="closed" class="pencraft pc-display-flex pc-flexDirection-column pc-reset overflow-hidden-WdpwT6"></div></div></div><div class="more-replies-container"><a href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comment/252284732" class="more-replies">3 replies</a></div></div><div class="comment"><div id="comment-252267010" class="comment-anchor"></div><div id="comment-252267010-reply" class="comment-anchor"></div><div role="article" aria-label="Comment by nachofergie 🇨🇦🏴󠁧󠁢󠁳󠁣󠁴󠁿🇺🇦🇵🇸🇬🇱🇨🇺" class="pencraft pc-display-flex pc-gap-12 pc-paddingBottom-12 pc-reset comment-content"><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset"><a href="https://substack.com/profile/333993712-nachofergie?utm_source=comment" aria-label="View nachofergie 🇨🇦🏴󠁧󠁢󠁳󠁣󠁴󠁿🇺🇦🇵🇸🇬🇱🇨🇺's profile" class="pencraft pc-display-contents pc-reset"><div style="--scale:32px;" tabindex="0" class="pencraft pc-display-flex pc-width-32 pc-height-32 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA animate-XFJxE4 outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 pressable-sm-YIJFKJ showFocus-sk_vEm container-TAtrWj interactive-UkK0V6"><div style="--scale:32px;" title="nachofergie 🇨🇦🏴󠁧󠁢󠁳󠁣󠁴󠁿🇺🇦🇵🇸🇬🇱🇨🇺" class="pencraft pc-display-flex pc-width-32 pc-height-32 pc-justifyContent-center pc-alignItems-center pc-position-relative pc-reset bg-secondary-UUD3_J flex-auto-j3S2WA outline-detail-vcQLyr pc-borderRadius-full overflow-hidden-WdpwT6 sizing-border-box-DggLA4 container-TAtrWj"><picture><source type="image/webp" srcset="https://substackcdn.com/image/fetch/$s_!RRFe!,w_32,h_32,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 1x, https://substackcdn.com/image/fetch/$s_!RRFe!,w_64,h_64,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 2x, https://substackcdn.com/image/fetch/$s_!RRFe!,w_96,h_96,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 3x"><img src="https://substackcdn.com/image/fetch/$s_!RRFe!,w_32,h_32,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg" alt="nachofergie 🇨🇦🏴󠁧󠁢󠁳󠁣󠁴󠁿🇺🇦🇵🇸🇬🇱🇨🇺's avatar" srcset="https://substackcdn.com/image/fetch/$s_!RRFe!,w_32,h_32,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 1x, https://substackcdn.com/image/fetch/$s_!RRFe!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 2x, https://substackcdn.com/image/fetch/$s_!RRFe!,w_96,h_96,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9418ccdb-39a7-44bd-8329-7fb15b9cf713_225x225.jpeg 3x" width="32" height="32" draggable="false" class="img-OACg1c object-fit-cover-u4ReeV pencraft pc-reset"></picture></div></div></a></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"><div class="pencraft pc-display-flex pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-column pc-gap-4 pc-reset"><div class="pencraft pc-display-flex pc-minWidth-0 pc-gap-8 pc-alignItems-center pc-justifyContent-space-between pc-reset line-height-20-t4M0El font-text-qe4AeH size-15-Psle70 weight-regular-mUq6Gb"><div class="pencraft pc-display-flex pc-minWidth-0 pc-gap-8 pc-alignItems-center pc-reset flex-grow-rzmknG"><div class="pencraft pc-display-flex pc-gap-6 pc-reset color-primary-zABazT line-height-20-t4M0El font-text-qe4AeH size-13-hZTUKr weight-regular-mUq6Gb reset-IxiVJZ"><span class="pencraft pc-reset line-height-20-t4M0El font-text-qe4AeH size-15-Psle70 weight-medium-fw81nC reset-IxiVJZ"><span style="min-width:0;" data-state="closed"><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a href="https://substack.com/profile/333993712-nachofergie?utm_source=substack-feed-item" showback="" data-native="true" class="link-LIBpto">nachofergie 🇨🇦🏴󠁧󠁢󠁳󠁣󠁴󠁿🇺🇦🇵🇸🇬🇱🇨🇺</a></span></span> </span></div><span style="min-width:0;" data-state="closed"></span><a data-native="true" href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comment/252267010" rel="nofollow" title="May 1, 2026, 8:12 PM" class="pencraft pc-reset color-secondary-ls1g8s decoration-hover-underline-ClDVRM reset-IxiVJZ"><span class="pencraft pc-reset color-secondary-ls1g8s line-height-20-t4M0El font-text-qe4AeH size-13-hZTUKr weight-regular-mUq6Gb reset-IxiVJZ">6h</span></a></div></div><div class="pencraft pc-display-flex pc-gap-4 pc-reset"><button tabindex="-1" type="button" class="pencraft pc-display-flex pc-gap-4 pc-height-20 pc-paddingLeft-6 pc-paddingRight-6 pc-paddingTop-2 pc-paddingBottom-2 pc-alignItems-center pc-reset font-text-qe4AeH size-11-NuY2Zx weight-medium-fw81nC pencraft tag-XbOVLt theme_accent-Y2sqZY priority_secondary-outline-RpooJS pencraft pc-display-flex pc-height-20 pc-paddingLeft-6 pc-paddingRight-6 pc-paddingTop-2 pc-paddingBottom-2 pc-gap-4 pc-alignItems-center pc-reset cursor-inherit-LxLBJ6 pc-borderRadius-xs font-text-qe4AeH size-11-NuY2Zx weight-medium-fw81nC"><div class="pencraft pc-display-flex pc-alignItems-center pc-reset leading-mI5Ihl fillIcon-dQ0mii"><svg role="img" style="height:14px;width:14px;" width="14" height="14" viewBox="0 0 20 20" fill="var(--color-fg-primary)" stroke-width="2.5" stroke="#000" xmlns="http://www.w3.org/2000/svg"><g><title></title><path stroke="none" d="M9.99915 16.7256C9.90515 16.7256 9.79102 16.692 9.65674 16.6249C9.52246 16.5622 9.3949 16.4906 9.27405 16.41C8.02974 15.6044 6.94657 14.7584 6.02454 13.8722C5.10697 12.9815 4.3953 12.0662 3.88953 11.1262C3.38375 10.1818 3.13086 9.23067 3.13086 8.27283C3.13086 7.63725 3.23157 7.05762 3.43298 6.53394C3.63888 6.01025 3.92086 5.55819 4.27893 5.17773C4.64148 4.79728 5.05774 4.50635 5.52771 4.30493C6.00216 4.09904 6.51241 3.99609 7.05847 3.99609C7.73433 3.99609 8.31844 4.16618 8.81079 4.50635C9.30762 4.84652 9.70374 5.28963 9.99915 5.83569C10.299 5.28516 10.6951 4.84204 11.1875 4.50635C11.6843 4.16618 12.2707 3.99609 12.9465 3.99609C13.4836 3.99609 13.9894 4.09904 14.4639 4.30493C14.9428 4.50635 15.3613 4.79728 15.7194 5.17773C16.0774 5.55819 16.3572 6.01025 16.5586 6.53394C16.7645 7.05762 16.8674 7.63725 16.8674 8.27283C16.8674 9.23067 16.6145 10.1818 16.1088 11.1262C15.603 12.0662 14.8891 12.9815 13.967 13.8722C13.0495 14.7584 11.9708 15.6044 10.731 16.41C10.6056 16.4906 10.4758 16.5622 10.3416 16.6249C10.2118 16.692 10.0976 16.7256 9.99915 16.7256Z"></path></g></svg></div>Liked by Gary Marcus</button></div></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"></div><div class="pencraft pc-display-flex pc-reset triggerContainer-eX588u"><button tabindex="0" type="button" aria-label="Ellipsis" id="radix-P0-86" aria-haspopup="menu" aria-expanded="false" data-state="closed" class="pencraft pc-reset pencraft trigger-j08Uop iconButton-mq_Et5 iconButtonBase-dJGHgN buttonBase-GK1x3M buttonStyle-r7yGCK size_sm-G3LciD priority_quaternary-kpMibu"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button></div></div><div class="comment-body expanded"><p><span>💯 Anybody who's developed real-world, large-scale, commercial software and who had to maintain and evolve said code knows this (your argument) to be true. Compiling and passing tests is a very low bar. I'd maybe expect this from an undergraduate coding exercise, but even that's being generous.</span></p></div><div class="pencraft pc-display-flex pc-gap-16 pc-paddingTop-8 pc-justifyContent-flex-start pc-alignItems-center pc-reset comment-actions withShareButton-hQzuEn"><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a class="pencraft pc-reset link-_X6et2 link-LIBpto"><div class="pencraft pc-display-flex pc-gap-6 pc-alignItems-center pc-reset"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-fg-secondary-themed)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg><div class="pencraft pc-reset color-pub-secondary-text-hGQ02T line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA">Reply</div></div></a></span><span class="pencraft pc-reset decoration-hover-underline-ClDVRM reset-IxiVJZ"><a class="pencraft pc-reset link-_X6et2 link-LIBpto"><div class="pencraft pc-display-flex pc-gap-6 pc-alignItems-center pc-reset"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-fg-secondary-themed)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg><div class="pencraft pc-reset color-pub-secondary-text-hGQ02T line-height-20-t4M0El font-meta-MWBumP size-11-NuY2Zx weight-medium-fw81nC transform-uppercase-yKDgcq reset-IxiVJZ meta-EgzBVA">Share</div></div></a></span></div><div data-state="closed" class="pencraft pc-display-flex pc-flexDirection-column pc-reset overflow-hidden-WdpwT6"></div></div></div></div></div></div><a href="https://garymarcus.substack.com/p/a-model-that-produces-code-which/comments" class="more-comments">28 more comments...</a></div></div></div><div class="single-post-section"><div class="container"><div class="visibility-check"></div><div style="margin-left:-8px;margin-right:-8px;" aria-label="Top Posts Footer" role="region" class="pencraft pc-paddingTop-24 pc-paddingBottom-24 pc-reset"><div class="portable-archive empty-list"><div aria-label="Archive sort tabs" role="navigation" class="pencraft pc-display-flex pc-gap-12 pc-paddingLeft-8 pc-paddingRight-8 pc-paddingBottom-16 pc-justifyContent-space-between pc-alignItems-center pc-reset"><div class="pencraft pc-display-flex pc-flexDirection-column pc-position-relative pc-minWidth-0 pc-reset bg-primary-zk6FDl outline-detail-vcQLyr pc-borderRadius-sm overflow-hidden-WdpwT6"><div dir="ltr" data-orientation="horizontal" class="pencraft pc-display-flex pc-flexDirection-column pc-reset flex-grow-rzmknG"><div style="outline:none;" tabindex="-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal" data-orientation="horizontal" class="pencraft pc-display-flex pc-gap-4 pc-padding-4 pc-position-relative pc-reset cursor-default-flE2S1 pc-borderRadius-sm overflow-auto-7WTsTi scrollBar-hidden-HcAIpI"><button tabindex="-1" type="button" role="tab" aria-selected="true" aria-controls="radix-P0-95-content-top" data-state="active" id="radix-P0-95-trigger-top" data-orientation="horizontal" data-radix-collection-item="" class="pencraft pc-reset flex-auto-j3S2WA pencraft segment-j4TeZ4 buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_quaternary-kpMibu size_sm-G3LciD">Top</button><button tabindex="-1" type="button" role="tab" aria-selected="false" aria-controls="radix-P0-95-content-new" data-state="inactive" id="radix-P0-95-trigger-new" data-orientation="horizontal" data-radix-collection-item="" class="pencraft pc-reset flex-auto-j3S2WA pencraft segment-j4TeZ4 buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_quaternary-kpMibu size_sm-G3LciD">Latest</button><button tabindex="-1" type="button" role="tab" aria-selected="false" aria-controls="radix-P0-95-content-community" data-state="inactive" id="radix-P0-95-trigger-community" data-orientation="horizontal" data-radix-collection-item="" class="pencraft pc-reset flex-auto-j3S2WA pencraft segment-j4TeZ4 buttonBase-GK1x3M buttonText-X0uSmG buttonStyle-r7yGCK priority_quaternary-kpMibu size_sm-G3LciD">Discussions</button><div class="pencraft pc-position-absolute pc-height-32 pc-reset bg-secondary-UUD3_J pc-borderRadius-xs sizing-border-box-DggLA4 highlight-U002IP"></div></div></div><div class="pencraft pc-display-flex pc-alignItems-center pc-reset arrowButtonContainer-O4uSiH arrowButtonOverlaidContainer-t10AyH left-Tg8vqp"><div class="overlay-zrMCxn primary-lv_sOW"></div></div><div class="pencraft pc-display-flex pc-alignItems-center pc-reset arrowButtonContainer-O4uSiH arrowButtonOverlaidContainer-t10AyH right-i3oWGi"><div class="overlay-zrMCxn primary-lv_sOW"></div></div></div><button tabindex="0" type="button" aria-label="Search" class="pencraft pc-reset pencraft iconButton-mq_Et5 iconButtonBase-dJGHgN buttonBase-GK1x3M buttonStyle-r7yGCK size_md-gCDS3o priority_tertiary-rlke8z"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></button></div><div class="portable-archive-list"><p class="portable-archive-empty">No posts</p></div></div></div></div></div><div class="visibility-check"></div><div class="pencraft pc-display-contents pc-reset pubInvertedTheme-U483dz"><div class="pencraft pc-display-flex pc-flexDirection-column pc-alignItems-center pc-justifyContent-center pc-padding-48 pc-mobile-padding-24 pc-reset bg-primary-zk6FDl container-jsOc9L"><div class="pencraft pc-display-flex pc-flexDirection-column pc-alignItems-center pc-gap-24 pc-flexWrap-wrap pc-reset content-jLbYeh"><h3 class="pencraft pc-reset color-primary-zABazT align-center-y7ZD4w line-height-28-s562kJ font-display-nhmvtD size-24-lFU3ly weight-semibold-uqA4FV reset-IxiVJZ">Ready for more?</h3><div class="container-IpPqBD"></div></div></div></div></div></div></div><div class="pencraft pc-display-flex pc-flexDirection-column pc-reset container-K5XPov"></div><div class="footer-wrap publication-footer"><div class="visibility-check"></div><div class="footer themed-background"><div class="container"><div class="footer-terms"><span>© 2026 Gary Marcus</span><span> · </span><a href="https://substack.com/privacy" target="_blank" rel="noopener" class="pencraft pc-reset decoration-underline-ClTkYc">Privacy</a><span> ∙ </span><a href="https://substack.com/tos" target="_blank" rel="noopener" class="pencraft pc-reset decoration-underline-ClTkYc">Terms</a><span> ∙ </span><a href="https://substack.com/ccpa#personal-data-collected" target="_blank" rel="noopener" class="pencraft pc-reset decoration-underline-ClTkYc">Collection notice</a></div><div class="pencraft pc-display-flex pc-gap-8 pc-justifyContent-center pc-alignItems-center pc-reset footerButtons-ap9Sk7"><a data-native="true" href="https://substack.com/signup?utm_source=substack&amp;utm_medium=web&amp;utm_content=footer" class="footerSubstackCta-v5HWfj"><svg role="img" width="1000" height="1000" viewBox="0 0 1000 1000" fill="#ff6719" stroke-width="1.8" stroke="none" xmlns="http://www.w3.org/2000/svg"><g><title></title><path d="M764.166 348.371H236.319V419.402H764.166V348.371Z"></path><path d="M236.319 483.752V813.999L500.231 666.512L764.19 813.999V483.752H236.319Z"></path><path d="M764.166 213H236.319V284.019H764.166V213Z"></path></g></svg> Start your Substack</a><a data-native="true" href="https://substack.com/app/app-store-redirect?utm_campaign=app-marketing&amp;utm_content=web-footer-button" class="footerSubstackCta-v5HWfj getTheApp-Yk3w1O noIcon-z7v9D8">Get the app</a></div><div translated="" class="pencraft pc-reset reset-IxiVJZ footer-slogan-blurb"><a href="https://substack.com/" data-native="true">Substack</a> is the home for great culture</div></div></div></div></div><div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none;"><ol tabindex="-1" style="--offset:0px;z-index:1000;" class="viewport-_BM4Bg"></ol></div><div></div>
+        </div>
+
+        
+            
+            
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+        
+
+        
+            
+            
+            
+
+            
+            
+            
+        
+
+        
+        
+
+        
+
+        <noscript>
+    <style>
+        #nojs-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 16px 16px 16px 32px;
+            width: 100%;
+            box-sizing: border-box;
+            background: red;
+            color: white;
+            font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-size: 13px;
+            line-height: 13px;
+        }
+        #nojs-banner a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div id="nojs-banner">
+        This site requires JavaScript to run correctly. Please <a href="https://enable-javascript.com/" target="_blank">turn on JavaScript</a> or unblock scripts
+    </div>
+</noscript>
+
+
+        
+
+        
+
+        
+        
+    
+
+</body></html>
