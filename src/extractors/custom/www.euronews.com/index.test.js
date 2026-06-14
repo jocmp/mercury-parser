@@ -14,20 +14,23 @@ describe('WwwEuronewsComExtractor', () => {
     beforeAll(() => {
       url =
         'http://www.euronews.com/culture/2026/03/24/chaos-connection-and-catastrophic-cringe-the-best-karaoke-scenes-in-movies';
-      const html =
-        fs.readFileSync('./fixtures/www.euronews.com/1774399076121.html');
-      result =
-        Parser.parse(url, { html, fallback: false });
+      const html = fs.readFileSync(
+        './fixtures/www.euronews.com/1774399076121.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
     });
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.strictEqual(extractor.domain, new URL(url).hostname)
-    })
+      assert.strictEqual(extractor.domain, new URL(url).hostname);
+    });
 
     it('returns the title', async () => {
       const { title } = await result;
-      assert.strictEqual(title, `Movie mic drops: The best karaoke scenes in cinema`);
+      assert.strictEqual(
+        title,
+        `Movie mic drops: The best karaoke scenes in cinema`
+      );
     });
 
     it('returns the author', async () => {

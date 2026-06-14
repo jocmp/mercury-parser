@@ -39,11 +39,7 @@ describe('AtlanticExtractor', () => {
       const { content, title, author, dek, lead_image_url } = await result;
 
       const $ = cheerio.load(content);
-      const text = $('*')
-        .first()
-        .text()
-        .trim()
-        .slice(0, 20);
+      const text = $('*').first().text().trim().slice(0, 20);
 
       assert.strictEqual(
         title,

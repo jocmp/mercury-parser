@@ -62,12 +62,7 @@ describe('WwwVersantsComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,

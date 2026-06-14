@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import-x/no-cycle
 import addScore from './add-score';
 
 // Adds 1/4 of a child's score to its parent

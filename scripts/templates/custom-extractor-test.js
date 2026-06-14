@@ -28,7 +28,7 @@ function testFor(key, value, dir) {
     `;
 }
 
-export default function(file, url, dir, result, name) {
+export default function (file, url, dir, result, name) {
   return template`
     import assert from 'assert';
     import * as cheerio from 'cheerio';

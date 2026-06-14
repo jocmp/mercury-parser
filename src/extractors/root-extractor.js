@@ -50,17 +50,13 @@ function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
       return (
         (allowMultiple || (!allowMultiple && $(s).length === 1)) &&
         $(s).attr(attr) &&
-        $(s)
-          .attr(attr)
-          .trim() !== ''
+        $(s).attr(attr).trim() !== ''
       );
     }
 
     return (
       (allowMultiple || (!allowMultiple && $(selector).length === 1)) &&
-      $(selector)
-        .text()
-        .trim() !== ''
+      $(selector).text().trim() !== ''
     );
   });
 }
@@ -146,19 +142,13 @@ export function select(opts) {
     $match = $(selector);
     $match = transformAndClean($match);
     result = $match.map((_, el) => {
-      const item = $(el)
-        .attr(attr)
-        .trim();
+      const item = $(el).attr(attr).trim();
       return transform ? transform(item) : item;
     });
   } else {
     $match = $(matchingSelector);
     $match = transformAndClean($match);
-    result = $match.map((_, el) =>
-      $(el)
-        .text()
-        .trim()
-    );
+    result = $match.map((_, el) => $(el).text().trim());
   }
 
   result =

@@ -21,9 +21,9 @@ export function makeBaseRegex(baseUrl) {
 }
 
 function makeSig($link, linkText) {
-  return `${linkText || $link.text()} ${$link.attr('class') || ''} ${$link.attr(
-    'id'
-  ) || ''}`;
+  return `${linkText || $link.text()} ${$link.attr('class') || ''} ${
+    $link.attr('id') || ''
+  }`;
 }
 
 export default function scoreLinks({

@@ -62,12 +62,7 @@ describe('PolitykaSePlExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
       assert.strictEqual(
         first13,
         'Kamila Biedrzycka, prowadząca "Express Biedrzyckiej" We wtorek (4 lutego) w "Expressie Biedrzyckiej" gośćmi'

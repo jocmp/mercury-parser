@@ -49,10 +49,8 @@ export function validateResponse(response, parseNon200 = false) {
     }
   }
 
-  const {
-    'content-type': contentType,
-    'content-length': contentLength,
-  } = response.headers;
+  const { 'content-type': contentType, 'content-length': contentLength } =
+    response.headers;
 
   // Check that the content is not in BAD_CONTENT_TYPES
   if (BAD_CONTENT_TYPES_RE.test(contentType)) {
@@ -74,10 +72,7 @@ export function validateResponse(response, parseNon200 = false) {
 // Grabs the last two pieces of the URL and joins them back together
 // This is to get the 'livejournal.com' from 'erotictrains.livejournal.com'
 export function baseDomain({ host }) {
-  return host
-    .split('.')
-    .slice(-2)
-    .join('.');
+  return host.split('.').slice(-2).join('.');
 }
 
 // Set our response attribute to the result of fetching our URL.

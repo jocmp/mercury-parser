@@ -32,9 +32,7 @@ describe('NewsPtsOrgTwExtractor', () => {
     it('returns the content', async () => {
       const { content } = await result;
       const $ = cheerio.load(content || '');
-      const text = $('*')
-        .first()
-        .text();
+      const text = $('*').first().text();
       assert.ok(text.includes('聯合國20日示警，全球已進入「水資源破產時代」'));
     });
   });
@@ -44,7 +42,9 @@ describe('NewsPtsOrgTwExtractor', () => {
     let url;
     beforeAll(() => {
       url = 'https://news.pts.org.tw/article/791642';
-      const html = fs.readFileSync('./fixtures/news.pts.org.tw--hot_topics.html');
+      const html = fs.readFileSync(
+        './fixtures/news.pts.org.tw--hot_topics.html'
+      );
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -59,9 +59,7 @@ describe('NewsPtsOrgTwExtractor', () => {
     it('returns the content', async () => {
       const { content } = await result;
       const $ = cheerio.load(content || '');
-      const text = $('*')
-        .first()
-        .text();
+      const text = $('*').first().text();
       assert.ok(text.includes('立法院藍白黨團發起總統彈劾案'));
       assert.ok(text.includes('確定不會出席'));
     });

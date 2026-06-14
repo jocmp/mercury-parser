@@ -91,12 +91,7 @@ describe('WwwQdailyComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first3 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        3
-      );
+      const first3 = excerptContent($('*').first().text(), 3);
 
       // Update these values with the expected values from
       // the article.

@@ -55,12 +55,7 @@ const Resource = {
 
     let $ = this.encodeDoc({ content, contentType, alreadyDecoded });
 
-    if (
-      $('body').children().length === 0 &&
-      $('body')
-        .text()
-        .trim() === ''
-    ) {
+    if ($('body').children().length === 0 && $('body').text().trim() === '') {
       throw new Error('No children, likely a bad parse.');
     }
 

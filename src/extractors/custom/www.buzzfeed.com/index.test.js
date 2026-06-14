@@ -98,12 +98,7 @@ describe('BuzzfeedExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('span')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('span').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -132,9 +127,7 @@ describe('BuzzfeedExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const imgSrc = $('img')
-        .first()
-        .attr('src');
+      const imgSrc = $('img').first().attr('src');
 
       assert.strictEqual(
         imgSrc,
@@ -147,12 +140,8 @@ describe('BuzzfeedExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const imgSrc = $('figure img')
-        .first()
-        .attr('src');
-      const figcaption = $('figure figcaption')
-        .first()
-        .text();
+      const imgSrc = $('figure img').first().attr('src');
+      const figcaption = $('figure figcaption').first().text();
 
       // Update these values with the expected values from
       // the article.

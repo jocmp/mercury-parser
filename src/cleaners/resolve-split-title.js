@@ -68,10 +68,7 @@ function cleanDomainFromTitle(splitTitle, url) {
     return splitTitle.slice(2).join('');
   }
 
-  const endSlug = splitTitle
-    .slice(-1)[0]
-    .toLowerCase()
-    .replace(' ', '');
+  const endSlug = splitTitle.slice(-1)[0].toLowerCase().replace(' ', '');
   const endSlugRatio = wuzzy.levenshtein(endSlug, nakedDomain);
 
   if (endSlugRatio > 0.4 && endSlug.length >= 5) {

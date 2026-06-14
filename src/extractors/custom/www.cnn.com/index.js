@@ -42,13 +42,7 @@ export const WwwCnnComExtractor = {
       // to related content but not marked as such in any way.
       '.zn-body__paragraph': $node => {
         if ($node.has('a')) {
-          if (
-            $node.text().trim() ===
-            $node
-              .find('a')
-              .text()
-              .trim()
-          ) {
+          if ($node.text().trim() === $node.find('a').text().trim()) {
             $node.remove();
           }
         }

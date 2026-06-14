@@ -6,19 +6,31 @@ export const NewsPtsOrgTwExtractor = {
   },
 
   author: {
-    selectors: [['meta[name="author"]', 'content'], ['meta[name="author"]', 'value']],
+    selectors: [
+      ['meta[name="author"]', 'content'],
+      ['meta[name="author"]', 'value'],
+    ],
   },
 
   date_published: {
-    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']],
+    selectors: [
+      ['meta[property="article:published_time"]', 'content'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
 
   dek: {
-    selectors: [['meta[name="description"]', 'content'], ['meta[name="description"]', 'value']],
+    selectors: [
+      ['meta[name="description"]', 'content'],
+      ['meta[name="description"]', 'value'],
+    ],
   },
 
   lead_image_url: {
-    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']],
+    selectors: [
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="og:image"]', 'value'],
+    ],
   },
 
   content: {

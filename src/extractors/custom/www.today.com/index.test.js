@@ -55,9 +55,7 @@ describe('WwwTodayComExtractor', () => {
       // To pass this test, fill out the date_published selector
       // in ./src/extractors/custom/www.today.com/index.js.
       const { date_published } = await result;
-      const new_date_published = dayjs(date_published)
-        .format()
-        .split('T')[0];
+      const new_date_published = dayjs(date_published).format().split('T')[0];
 
       // Update these values with the expected values from
       // the article.
@@ -86,12 +84,7 @@ describe('WwwTodayComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.

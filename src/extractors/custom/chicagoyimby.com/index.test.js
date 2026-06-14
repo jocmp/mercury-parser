@@ -28,10 +28,7 @@ describe('ChicagoyimbyComExtractor', () => {
     it('returns the title', async () => {
       const { title } = await result;
 
-      assert.strictEqual(
-        title,
-        `New Renderings Revealed For Fulton Bond`
-      );
+      assert.strictEqual(title, `New Renderings Revealed For Fulton Bond`);
     });
 
     it('returns the author', async () => {
@@ -60,12 +57,7 @@ describe('ChicagoyimbyComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,

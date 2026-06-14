@@ -81,10 +81,7 @@ export default function mergeSiblings($candidate, topScore, $) {
 
   if (
     wrappingDiv.children().length === 1 &&
-    wrappingDiv
-      .children()
-      .first()
-      .get(0) === $candidate.get(0)
+    wrappingDiv.children().first().get(0) === $candidate.get(0)
   ) {
     return $candidate;
   }

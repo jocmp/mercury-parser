@@ -87,12 +87,7 @@ describe('NYTimesExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -113,12 +108,7 @@ describe('NYTimesExtractor', () => {
 
     const { content, title, author } = await Mercury.parse(uri, { html });
     const $ = cheerio.load(content);
-    const text = excerptContent(
-      $('*')
-        .first()
-        .text(),
-      13
-    );
+    const text = excerptContent($('*').first().text(), 13);
 
     assert.strictEqual(title, 'I, Too, Sing America');
     assert.strictEqual(author, 'The New York Times');

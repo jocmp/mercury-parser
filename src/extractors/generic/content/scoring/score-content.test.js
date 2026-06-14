@@ -90,12 +90,7 @@ describe('scoreContent($, weightNodes)', () => {
     const $ = cheerio.load(html);
     scoreContent($);
 
-    assert.strictEqual(
-      $('p')
-        .first()
-        .attr('score'),
-      '5'
-    );
+    assert.strictEqual($('p').first().attr('score'), '5');
     assert.strictEqual($('div div').attr('score'), '30');
   });
 });

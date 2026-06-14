@@ -43,30 +43,18 @@ describe('cleanDatePublished(dateString)', () => {
 
   it('can handle dates formatted as "[just|right] now"', () => {
     const date1 = cleanDatePublished('now');
-    const newDate1 = dayjs(date1)
-      .format()
-      .split('T')[0];
-    const expectedDate1 = dayjs()
-      .format()
-      .split('T')[0];
+    const newDate1 = dayjs(date1).format().split('T')[0];
+    const expectedDate1 = dayjs().format().split('T')[0];
     assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('just now');
-    const newDate2 = dayjs(date2)
-      .format()
-      .split('T')[0];
-    const expectedDate2 = dayjs()
-      .format()
-      .split('T')[0];
+    const newDate2 = dayjs(date2).format().split('T')[0];
+    const expectedDate2 = dayjs().format().split('T')[0];
     assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('right now');
-    const newDate3 = dayjs(date3)
-      .format()
-      .split('T')[0];
-    const expectedDate3 = dayjs()
-      .format()
-      .split('T')[0];
+    const newDate3 = dayjs(date3).format().split('T')[0];
+    const expectedDate3 = dayjs().format().split('T')[0];
     assert.strictEqual(newDate3, expectedDate3);
   });
 
@@ -75,33 +63,18 @@ describe('cleanDatePublished(dateString)', () => {
     // "X days ago" will not be accurate down to the exact time
     // "X months ago" will not be accurate down to the exact day
     const date1 = cleanDatePublished('1 hour ago');
-    const newDate1 = dayjs(date1)
-      .format()
-      .split('T')[0];
-    const expectedDate1 = dayjs()
-      .subtract(1, 'hour')
-      .format()
-      .split('T')[0];
+    const newDate1 = dayjs(date1).format().split('T')[0];
+    const expectedDate1 = dayjs().subtract(1, 'hour').format().split('T')[0];
     assert.strictEqual(newDate1, expectedDate1);
 
     const date2 = cleanDatePublished('5 days ago');
-    const newDate2 = dayjs(date2)
-      .format()
-      .split('T')[0];
-    const expectedDate2 = dayjs()
-      .subtract(5, 'days')
-      .format()
-      .split('T')[0];
+    const newDate2 = dayjs(date2).format().split('T')[0];
+    const expectedDate2 = dayjs().subtract(5, 'days').format().split('T')[0];
     assert.strictEqual(newDate2, expectedDate2);
 
     const date3 = cleanDatePublished('10 months ago');
-    const newDate3 = dayjs(date3)
-      .format()
-      .split('T')[0];
-    const expectedDate3 = dayjs()
-      .subtract(10, 'months')
-      .format()
-      .split('T')[0];
+    const newDate3 = dayjs(date3).format().split('T')[0];
+    const expectedDate3 = dayjs().subtract(10, 'months').format().split('T')[0];
     assert.strictEqual(newDate3, expectedDate3);
   });
 });

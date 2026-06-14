@@ -41,9 +41,7 @@ describe('PitchforkComExtractor', () => {
 
     it('returns the date_published', async () => {
       const { date_published } = await result;
-      const new_date_published = dayjs(date_published)
-        .format()
-        .split('T')[0];
+      const new_date_published = dayjs(date_published).format().split('T')[0];
 
       assert.strictEqual(new_date_published, '2019-06-07');
     });
@@ -71,12 +69,7 @@ describe('PitchforkComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,

@@ -23,7 +23,6 @@ export default function extractFromSelectors(
   maxChildren = 1,
   textOnly = true
 ) {
-  // eslint-disable-next-line no-restricted-syntax
   for (const selector of selectors) {
     const nodes = $(selector);
 

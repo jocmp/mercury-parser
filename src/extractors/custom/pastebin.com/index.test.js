@@ -75,11 +75,7 @@ describe('PastebinComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const text = excerptContent(
-        $('*')
-          .first()
-          .text()
-      );
+      const text = excerptContent($('*').first().text());
 
       // Update these values with the expected values from
       // the article.
