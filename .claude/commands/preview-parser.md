@@ -23,5 +23,7 @@ with `/create-parser`). Follow these steps:
    - Do the substitution programmatically (parse the JSON, replace tokens) rather than
      by hand, so long content bodies stay intact.
 
-4. Report the tmp file path and a short summary (title, word count, number of inline
-   `<img>` tags in the content). Suggest opening it with `! open <path>`.
+4. Open the rendered file automatically with `open <path>`.
+
+5. Report the tmp file path and a short summary (title, word count, number of inline
+   `<img>` tags in the content).
