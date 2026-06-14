@@ -128,5 +128,17 @@ describe('ActualidadRtComExtractor', () => {
         );
       });
     });
+
+    it('drops placeholder <source> tags that mask the images', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      assert.strictEqual($('source').length, 0);
+      assert.ok(
+        !(content || '').includes('data:image'),
+        'expected no base64 placeholder images to remain'
+      );
+    });
   });
 });
