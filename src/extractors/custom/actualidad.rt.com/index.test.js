@@ -77,4 +77,56 @@ describe('ActualidadRtComExtractor', () => {
       );
     });
   });
+
+  describe('image-heavy article', () => {
+    let result;
+    let url;
+    beforeAll(() => {
+      url =
+        'https://actualidad.rt.com/a-fondo/610168-almuerzo-salvo-mundo-desastre-nuclear';
+      const html = fs.readFileSync(
+        './fixtures/actualidad.rt.com/1781469971715.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
+    });
+
+    it('returns the title', async () => {
+      const { title } = await result;
+
+      assert.strictEqual(
+        title,
+        `El almuerzo que salvó al mundo de un desastre nuclear en 1962`
+      );
+    });
+
+    it('returns the content', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      const first13 = excerptContent($('*').first().text(), 13);
+
+      assert.strictEqual(
+        first13,
+        'La Crisis de los Misiles de Cuba en 1962 estuvo a punto de'
+      );
+    });
+
+    it('resolves inline images to real URLs', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+      const images = $('img').toArray();
+
+      assert.ok(images.length > 0, 'expected inline images in the content');
+
+      images.forEach(img => {
+        const src = $(img).attr('src') || '';
+        assert.ok(
+          /^https?:\/\//.test(src),
+          `expected a real image URL, got: ${src}`
+        );
+      });
+    });
+  });
 });
