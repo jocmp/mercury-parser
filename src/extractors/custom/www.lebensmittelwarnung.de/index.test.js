@@ -59,12 +59,7 @@ describe('WwwLebensmittelwarnungDeExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,
@@ -77,9 +72,7 @@ describe('WwwLebensmittelwarnungDeExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const h2 = $('h2')
-        .first()
-        .text();
+      const h2 = $('h2').first().text();
 
       assert.strictEqual(h2, 'Was ist der Grund der Meldung?');
     });

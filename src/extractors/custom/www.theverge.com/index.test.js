@@ -156,7 +156,7 @@ describe('WwwThevergeComExtractor', () => {
       const { title } = await result;
       assert.strictEqual(
         title,
-        "Read Xbox president Sarah Bond\u2019s memo about leaving Microsoft."
+        'Read Xbox president Sarah Bond\u2019s memo about leaving Microsoft.'
       );
     });
 

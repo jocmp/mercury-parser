@@ -27,9 +27,7 @@ const GenericLeadImageUrlExtractor = {
   extract({ $, content, metaCache, html }) {
     let cleanUrl;
     if (!$.browser && $('head').length === 0) {
-      $('*')
-        .first()
-        .prepend(html);
+      $('*').first().prepend(html);
     }
 
     // Check to see if we have a matching meta tag that we can make use of.
@@ -85,7 +83,7 @@ const GenericLeadImageUrlExtractor = {
 
     // If nothing else worked, check to see if there are any really
     // probable nodes in the doc, like <link rel="image_src" />.
-    // eslint-disable-next-line no-restricted-syntax
+
     for (const selector of LEAD_IMAGE_URL_SELECTORS) {
       const $node = $(selector).first();
       const src = $node.attr('src');

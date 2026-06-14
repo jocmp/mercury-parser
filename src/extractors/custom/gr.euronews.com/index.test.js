@@ -14,10 +14,10 @@ describe('GrEuronewsComExtractor', () => {
     beforeAll(() => {
       url =
         'http://gr.euronews.com/my-europe/2026/03/24/amerikanos-presvhs-ee-aporripsh-emporikh-sumfwnia-oikonomikh-ameleia';
-      const html =
-        fs.readFileSync('./fixtures/gr.euronews.com/1774399621925.html');
-      result =
-        Parser.parse(url, { html, fallback: false });
+      const html = fs.readFileSync(
+        './fixtures/gr.euronews.com/1774399621925.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
     });
 
     it('is selected properly', () => {

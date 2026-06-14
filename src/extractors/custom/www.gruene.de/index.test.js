@@ -92,12 +92,7 @@ describe('WwwGrueneDeExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -110,12 +105,7 @@ describe('WwwGrueneDeExtractor', () => {
     it('does not contain navigation links', async () => {
       const { content } = await result;
       const $ = cheerio.load(content || '');
-      const lastParagraphText = excerptContent(
-        $('p')
-          .last()
-          .text(),
-        7
-      );
+      const lastParagraphText = excerptContent($('p').last().text(), 7);
       assert.strictEqual(
         lastParagraphText,
         'Wir Grüne wollen den Arbeitsmarkt so gestalten,'

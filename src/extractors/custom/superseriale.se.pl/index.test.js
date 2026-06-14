@@ -62,12 +62,7 @@ describe('SuperserialeSePlExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
       assert.strictEqual(
         first13,
         'W 3122. odcinku serialu "Barwy szczęścia" dojdzie do szczerej rozmowy między Józefiną (Elżbieta'

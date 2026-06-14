@@ -11,11 +11,7 @@ describe('normalizeSpaces(text)', () => {
       </div>
     `);
 
-    const result = normalizeSpaces(
-      $('*')
-        .first()
-        .text()
-    );
+    const result = normalizeSpaces($('*').first().text());
     assert.strictEqual(result, 'What do you think?');
   });
 

@@ -19,7 +19,8 @@ dayjs.extend(utc);
 dayjs.extend(timezonePlugin);
 dayjs.extend(customParseFormat);
 
-const TIMEZONE_ABBR_RE = /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
+const TIMEZONE_ABBR_RE =
+  /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
 // Check if string contains timezone offset info (e.g., +0000, GMT+0000, Z)
 const HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
 
@@ -28,18 +29,12 @@ function hasTimezoneInfo(str) {
 }
 
 function stripTimezoneAbbr(str) {
-  return str
-    .replace(TIMEZONE_ABBR_RE, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return str.replace(TIMEZONE_ABBR_RE, '').replace(/\s+/g, ' ').trim();
 }
 
 // Remove timezone tokens (zz, z, ZZ, Z) from format string
 function stripTimezoneFromFormat(format) {
-  return format
-    .replace(/\s*z+/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return format.replace(/\s*z+/gi, '').replace(/\s+/g, ' ').trim();
 }
 
 export function cleanDateString(dateString) {

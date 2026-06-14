@@ -88,12 +88,7 @@ describe('SectIijAdJpExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        1
-      );
+      const first13 = excerptContent($('*').first().text(), 1);
 
       // Update these values with the expected values from
       // the article.

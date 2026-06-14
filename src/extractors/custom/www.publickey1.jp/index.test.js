@@ -101,12 +101,7 @@ describe('WwwPublickey1JpExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        5
-      );
+      const first13 = excerptContent($('*').first().text(), 5);
 
       // Update these values with the expected values from
       // the article.

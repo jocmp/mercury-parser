@@ -65,12 +65,7 @@ describe('SpektrumExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // This would be the true beginning of the content. But since we have to include the dek in the content
       // in order to be able to find it (see https://github.com/postlight/mercury-parser/issues/676),

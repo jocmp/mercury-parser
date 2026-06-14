@@ -8,7 +8,6 @@ import { excerptContent } from 'utils/text';
 const fs = require('fs');
 
 // Flaky
-// eslint-disable-next-line no-undef
 xdescribe('WwwTechpowerupComExtractor', () => {
   describe('initial test case', () => {
     let result;
@@ -60,12 +59,7 @@ xdescribe('WwwTechpowerupComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,

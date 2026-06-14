@@ -62,12 +62,7 @@ describe('WwwNtvDeExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
       assert.strictEqual(
         first13,
         'Milliardär Klaus-Michael Kühne will seiner Heimatstadt eine Oper schenken. Das Gebäude soll architektonisch'

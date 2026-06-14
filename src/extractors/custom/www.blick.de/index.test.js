@@ -14,20 +14,23 @@ describe('WwwBlickDeExtractor', () => {
     beforeAll(() => {
       url =
         'https://www.blick.de/erzgebirge/fachkraeftemangel-im-erzgebirge-arztpraxen-suchen-verzweifelt-nach-personal-artikel14183771';
-      const html =
-        fs.readFileSync('./fixtures/www.blick.de/1774199156467.html');
-      result =
-        Parser.parse(url, { html, fallback: false });
+      const html = fs.readFileSync(
+        './fixtures/www.blick.de/1774199156467.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
     });
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.strictEqual(extractor.domain, new URL(url).hostname)
-    })
+      assert.strictEqual(extractor.domain, new URL(url).hostname);
+    });
 
     it('returns the title', async () => {
       const { title } = await result;
-      assert.strictEqual(title, 'Fachkräftemangel im Erzgebirge: Arztpraxen suchen verzweifelt nach Personal');
+      assert.strictEqual(
+        title,
+        'Fachkräftemangel im Erzgebirge: Arztpraxen suchen verzweifelt nach Personal'
+      );
     });
 
     it('returns the author', async () => {
@@ -42,12 +45,18 @@ describe('WwwBlickDeExtractor', () => {
 
     it('returns the dek', async () => {
       const { dek } = await result;
-      assert.strictEqual(dek, 'Ohne Bewerber drohen Einschränkungen im Praxisbetrieb');
+      assert.strictEqual(
+        dek,
+        'Ohne Bewerber drohen Einschränkungen im Praxisbetrieb'
+      );
     });
 
     it('returns the lead_image_url', async () => {
       const { lead_image_url } = await result;
-      assert.strictEqual(lead_image_url, 'https://www.blick.de/DYNIMG/fachkraeftemangel-im-erzgebirge-arztpraxen-suchen-verzweifelt-nach-personal/Zj8nFZ0BFsCl-pjZYbu5/57/11/18385711_W2040C2040x1360o0x0.jpg');
+      assert.strictEqual(
+        lead_image_url,
+        'https://www.blick.de/DYNIMG/fachkraeftemangel-im-erzgebirge-arztpraxen-suchen-verzweifelt-nach-personal/Zj8nFZ0BFsCl-pjZYbu5/57/11/18385711_W2040C2040x1360o0x0.jpg'
+      );
     });
 
     it('returns the content', async () => {
@@ -57,7 +66,10 @@ describe('WwwBlickDeExtractor', () => {
 
       const first13 = excerptContent($('*').first().text(), 13);
 
-      assert.strictEqual(first13, 'Dr. med. Hans-Hendrik Knäbchen eröffnete seine Praxis 1998. Noch nie zuvor gab es');
+      assert.strictEqual(
+        first13,
+        'Dr. med. Hans-Hendrik Knäbchen eröffnete seine Praxis 1998. Noch nie zuvor gab es'
+      );
     });
   });
 });

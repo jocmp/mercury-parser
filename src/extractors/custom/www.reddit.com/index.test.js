@@ -55,13 +55,8 @@ describe('WwwRedditComExtractor', () => {
       // To pass this test, fill out the date_published selector
       // in ./src/extractors/custom/www.reddit.com/index.js.
       const { date_published } = await result;
-      const newDatePublished = dayjs(date_published)
-        .format()
-        .split('T')[0];
-      const expectedDate = dayjs()
-        .subtract(4, 'years')
-        .format()
-        .split('T')[0];
+      const newDatePublished = dayjs(date_published).format().split('T')[0];
+      const expectedDate = dayjs().subtract(4, 'years').format().split('T')[0];
 
       // Update these values with the expected values from
       // the article.
@@ -97,12 +92,7 @@ describe('WwwRedditComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -124,12 +114,7 @@ describe('WwwRedditComExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(first13, '');
     });

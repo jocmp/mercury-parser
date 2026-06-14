@@ -8,10 +8,7 @@ import { apiExtractors } from './add-extractor';
 export default function getExtractor(url, parsedUrl, $) {
   parsedUrl = parsedUrl || URL.parse(url);
   const { hostname } = parsedUrl;
-  const baseDomain = hostname
-    .split('.')
-    .slice(-2)
-    .join('.');
+  const baseDomain = hostname.split('.').slice(-2).join('.');
 
   return (
     apiExtractors[hostname] ||

@@ -31,10 +31,8 @@ export const WwwMsnbcComExtractor = {
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '.pane-node-body': ($node, $) => {
-        const [
-          selector,
-          attr,
-        ] = WwwMsnbcComExtractor.lead_image_url.selectors[0];
+        const [selector, attr] =
+          WwwMsnbcComExtractor.lead_image_url.selectors[0];
         const src = $(selector).attr(attr);
         if (src) {
           $node.prepend(`<img src="${src}" />`);

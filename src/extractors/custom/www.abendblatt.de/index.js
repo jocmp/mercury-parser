@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-expressions */
 export const WwwAbendblattDeExtractor = {
   domain: 'www.abendblatt.de',
 
@@ -41,16 +39,16 @@ export const WwwAbendblattDeExtractor = {
           r === 177
             ? (o += '%')
             : r === 178
-            ? (o += '!')
-            : r === 180
-            ? (o += ';')
-            : r === 181
-            ? (o += '=')
-            : r === 32
-            ? (o += ' ')
-            : r === 10
-            ? (o += '\n')
-            : r > 33 && (o += String.fromCharCode(r - 1));
+              ? (o += '!')
+              : r === 180
+                ? (o += ';')
+                : r === 181
+                  ? (o += '=')
+                  : r === 32
+                    ? (o += ' ')
+                    : r === 10
+                      ? (o += '\n')
+                      : r > 33 && (o += String.fromCharCode(r - 1));
         }
 
         $node.html(o);
@@ -67,16 +65,16 @@ export const WwwAbendblattDeExtractor = {
           r === 177
             ? (o += '%')
             : r === 178
-            ? (o += '!')
-            : r === 180
-            ? (o += ';')
-            : r === 181
-            ? (o += '=')
-            : r === 32
-            ? (o += ' ')
-            : r === 10
-            ? (o += '\n')
-            : r > 33 && (o += String.fromCharCode(r - 1));
+              ? (o += '!')
+              : r === 180
+                ? (o += ';')
+                : r === 181
+                  ? (o += '=')
+                  : r === 32
+                    ? (o += ' ')
+                    : r === 10
+                      ? (o += '\n')
+                      : r > 33 && (o += String.fromCharCode(r - 1));
         }
 
         $node.html(o);

@@ -24,7 +24,8 @@ export const MediumExtractor = {
       },
       // Re-write lazy-loaded youtube videos
       iframe: $node => {
-        const ytRe = /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
+        const ytRe =
+          /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
         const thumb = decodeURIComponent($node.attr('data-thumbnail'));
         const $parent = $node.parents('figure');
 

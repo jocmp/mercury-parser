@@ -109,12 +109,7 @@ describe('MaTtiasBeExtractor', () => {
 
       // Check the first 13 words.
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,

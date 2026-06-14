@@ -71,10 +71,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
       // Update these values with the expected values from
       // the article.
       assert.strictEqual(
-        dek
-          .split(/\s/)
-          .slice(0, 4)
-          .join(' '),
+        dek.split(/\s/).slice(0, 4).join(' '),
         "Summary: Here's the latest"
       );
     });
@@ -101,12 +98,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -157,12 +149,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       // Update these values with the expected values from
       // the article.
@@ -192,12 +179,7 @@ describe('ObamawhitehouseArchivesGovExtractor', () => {
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
+      const first13 = excerptContent($('*').first().text(), 13);
 
       assert.strictEqual(
         first13,
