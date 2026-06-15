@@ -1,0 +1,88 @@
+name: Full Content Parser
+
+# Fires the moment an issue is labeled "full content request". GitHub delivers
+# the `issues` event server-side, so there is no polling — a new card picked up
+# the label (directly or via the project board) triggers this immediately.
+on:
+  issues:
+    types: [labeled]
+
+# Only run for the parser-request label.
+jobs:
+  build-parser:
+    if: github.event.label.name == 'full content request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the parser branch
+      pull-requests: write # open the draft PR
+      issues: write # comment back on the request
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: '.node-version'
+
+      - run: npm ci
+
+      # Build the bundles the create-parser flow relies on
+      # (generate-custom-parser + mercury) so Claude doesn't spend turns on it.
+      - run: npm run build && npm run build:generator
+
+      - name: Build parser with Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: |
+            --max-turns 40
+            --allowedTools Bash,Read,Write,Edit,Glob,Grep
+          prompt: |
+            You are running in CI for the mercury-parser repo, reacting to
+            GitHub issue #${{ github.event.issue.number }} in jocmp/capyreader,
+            which was just labeled "full content request". Your job is to build
+            a custom content extractor for the feed in that issue and open a
+            DRAFT pull request for human review.
+
+            Follow the repo's own playbook in `.claude/commands/create-parser.md`
+            exactly (selector priority: meta tags > semantic HTML > CSS; prefer a
+            single selector; remove boilerplate comments; tests must pass). The
+            `dist/` bundles are already built, so you can run
+            `npm run generate-parser -- <article-url>`, `npx jest <domain>`, and
+            `npx mercury-parser <article-url>` directly.
+
+            Steps:
+            1. Read the issue: `gh issue view ${{ github.event.issue.number }}
+               --repo jocmp/capyreader`. Extract the "Feed URL" field.
+            2. Fetch the feed and choose the newest real ARTICLE url (not the
+               feed/home url) to build against.
+            3. Build the parser per create-parser.md. Pay special attention to
+               IMAGES — these requests are usually about missing images. If the
+               site lazy-loads (real URL in data-src / data-srcset / a <picture>
+               <source>, with a spacer or base64 placeholder in src), add a
+               content `transform`/`clean` so real images survive and render
+               (see actualidad.rt.com and www.animenewsnetwork.com for the two
+               patterns). Verify with `npx mercury-parser` that the content has
+               real <img> src values and no spacer/base64 placeholders.
+            4. Run the single parser test with `npx jest <domain>` — it MUST
+               pass — then `npx eslint --fix` the new files. Confirm the date is
+               timezone-stable (prefer a source with an explicit offset, or set
+               `timezone` on date_published) — test under `TZ=UTC`.
+            5. Create branch `jc/${{ github.event.issue.number }}/<domain>-parser`,
+               commit `feat: Add <domain> custom parser`, push, and open a
+               **draft** PR with `gh pr create --draft` that references
+               jocmp/capyreader#${{ github.event.issue.number }} and summarizes
+               the selectors + any image handling.
+
+            STOP-AND-FLAG (do NOT open a PR) if you cannot produce a working
+            parser — e.g. the site is behind a Cloudflare/JS bot challenge or
+            returns 403 to a server-side fetch, the feed is unreachable, or the
+            article has no extractable content. In that case, comment on the
+            issue with `gh issue comment` explaining precisely why no parser
+            could be built, and exit without changing the repo.
+
+            Hard rules: open DRAFT PRs only, never merge; only touch the new
+            parser's files plus `src/extractors/custom/index.js`; do not commit
+            `dist/`.
