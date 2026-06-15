@@ -198,3 +198,4 @@ export * from './gr.euronews.com';
 export * from './www.ilfattoquotidiano.it';
 export * from './actualidad.rt.com';
 export * from './www.tweaktown.com';
+export * from './www.frandroid.com';
