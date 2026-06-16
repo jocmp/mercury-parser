@@ -203,3 +203,4 @@ export * from './www.motorsport.com';
 export * from './www.nexojornal.com.br';
 export * from './substack.com';
 export * from './www.dw.com';
+export * from './www.animenewsnetwork.com';
