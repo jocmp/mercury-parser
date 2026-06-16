@@ -28,7 +28,9 @@ export const WwwRosaGrExtractor = {
 
     // The article body is .post-text; the social-follow icons live in a
     // sibling block (.follow-google-news) and are excluded by the selector.
-    // <picture> here is a subscription promo banner, not article imagery.
-    clean: ['picture'],
+    // Within .post-text, strip the inline "read also" related-article widget
+    // (.short-read-also, whose thumbnail links elsewhere), the subscription
+    // promo banner (.widget-article), and ad slots.
+    clean: ['.short-read-also', '.widget-article', '.ad-placement'],
   },
 };

@@ -66,16 +66,18 @@ describe('WwwRosaGrExtractor', () => {
       );
     });
 
-    it('keeps article images and drops the social-follow icons', async () => {
+    it('drops related-article, promo, ad, and social widgets', async () => {
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
 
-      assert.ok($('img').length > 0, 'expected the article image to remain');
+      assert.ok($('p').length > 0, 'expected article paragraphs');
       assert.strictEqual(
-        $('img[src*="/assets/images/facebook"], .follow-link').length,
+        $(
+          '.short-read-also, .post-list, .widget-article, .ad-placement, .follow-link'
+        ).length,
         0,
-        'expected social-follow icons to be excluded'
+        'expected related-article, promo, ad, and social widgets to be removed'
       );
     });
   });
