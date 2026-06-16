@@ -7,10 +7,33 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 
 ## Unreleased
 
+- feat: Add animenewsnetwork.com custom parser by @jocmp in [#191](https://github.com/jocmp/mercury-parser/pull/191)
+- Remove full-content parser workflow by @jocmp
+- Trigger parser workflow via cross-repo dispatch by @jocmp
+- Add full-content-request parser workflow by @jocmp
+- feat: Add www.dw.com custom parser by @jocmp in [#188](https://github.com/jocmp/mercury-parser/pull/188)
+- feat: Add substack.com custom parser by @jocmp in [#177](https://github.com/jocmp/mercury-parser/pull/177)
+- feat: Add nexojornal.com.br custom parser by @jocmp in [#176](https://github.com/jocmp/mercury-parser/pull/176)
+- Add motorsport.com custom parser by @jocmp in [#175](https://github.com/jocmp/mercury-parser/pull/175)
+- feat: Add frandroid.com custom parser by @jocmp in [#174](https://github.com/jocmp/mercury-parser/pull/174)
+- feat: Add www.tweaktown.com custom parser by @jocmp in [#189](https://github.com/jocmp/mercury-parser/pull/189)
+- feat: Add actualidad.rt.com custom parser by @jocmp in [#190](https://github.com/jocmp/mercury-parser/pull/190)
+- Auto-open preview in preview-parser command by @jocmp
+- Add preview-parser skill by @jocmp
+- Migrate ESLint to v10, drop airbnb config by @jocmp in [#187](https://github.com/jocmp/mercury-parser/pull/187)
+- Remove stale CI step by @jocmp
+- Remove demo package in favor of static output by @jocmp
+
+## v3.0.8
+
+- bump version v3.0.7 -> v3.0.8 by @jocmp
+- Update changelog by @jocmp
 - feat: Add ilfattoquotidiano.it custom parser by @jocmp in [#170](https://github.com/jocmp/mercury-parser/pull/170)
 - Vendor ellipsize by @jocmp in [#164](https://github.com/jocmp/mercury-parser/pull/164)
 - Skip demo dependabots by @jocmp
 - Rework CI by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.7...v3.0.8
 
 ## v3.0.7
 
@@ -77,7 +100,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - chore: Fix PR GH Actions by @jocmp
 
 ## New Contributors
-
 - @Ben-Jian made their first contribution in [#99](https://github.com/jocmp/mercury-parser/pull/99)
 
 **Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.1...v3.0.2
@@ -910,7 +932,6 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Quick port of constants file by @adampash
 
 ## New Contributors
-
 - @jocmp made their first contribution
 - @dependabot[bot] made their first contribution in [#20](https://github.com/jocmp/mercury-parser/pull/20)
 - @touchRED made their first contribution
