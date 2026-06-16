@@ -85,5 +85,23 @@ describe('WwwRosaGrExtractor', () => {
         'expected related-article, promo, ad, and social widgets to be removed'
       );
     });
+
+    it('retains genuine section headings', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+      const headings = $('h2')
+        .toArray()
+        .map(h => $(h).text().trim());
+
+      assert.ok(
+        headings.includes('Η σκληρή πραγματικότητα της εκεχειρίας'),
+        'expected the article section heading to be kept'
+      );
+      assert.ok(
+        !headings.includes('ΔΙΑΒΑΣΤΕ ΕΠΙΣΗΣ'),
+        'expected the read-also widget heading to be dropped'
+      );
+    });
   });
 });

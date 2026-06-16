@@ -28,7 +28,11 @@ export const WwwRosaGrExtractor = {
     // block (.follow-google-news) and are excluded.
     selectors: [['.top-row .post-image', '.post-text']],
 
-    transforms: {},
+    transforms: {
+      // Preserve genuine section headings (the read-also widget's heading is
+      // already removed by the clean step below, which runs first).
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+    },
 
     // Within .post-text, strip the inline "read also" related-article widget
     // (.short-read-also, whose thumbnail links elsewhere), the subscription
