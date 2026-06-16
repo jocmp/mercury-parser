@@ -204,3 +204,4 @@ export * from './www.nexojornal.com.br';
 export * from './substack.com';
 export * from './www.dw.com';
 export * from './www.animenewsnetwork.com';
+export * from './www.rosa.gr';
