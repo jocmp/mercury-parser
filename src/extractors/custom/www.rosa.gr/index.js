@@ -22,12 +22,14 @@ export const WwwRosaGrExtractor = {
   },
 
   content: {
-    selectors: ['.post-text'],
+    // Combine the article's hero image (.top-row .post-image, which lives in
+    // the header outside the body) with the body text (.post-text) so the
+    // photo renders inline. The social-follow icons sit in a separate sibling
+    // block (.follow-google-news) and are excluded.
+    selectors: [['.top-row .post-image', '.post-text']],
 
     transforms: {},
 
-    // The article body is .post-text; the social-follow icons live in a
-    // sibling block (.follow-google-news) and are excluded by the selector.
     // Within .post-text, strip the inline "read also" related-article widget
     // (.short-read-also, whose thumbnail links elsewhere), the subscription
     // promo banner (.widget-article), and ad slots.

@@ -62,16 +62,21 @@ describe('WwwRosaGrExtractor', () => {
 
       assert.strictEqual(
         first13,
-        'Μια νέα, εξαιρετικά κρίσιμη σελίδα ανοίγει για τη Μέση Ανατολή μετά την επίσημη'
+        'ΑΠΕ-ΜΠΕ/EPA Μια νέα, εξαιρετικά κρίσιμη σελίδα ανοίγει για τη Μέση Ανατολή μετά την'
       );
     });
 
-    it('drops related-article, promo, ad, and social widgets', async () => {
+    it('includes the hero image and drops the related/promo/ad/social widgets', async () => {
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
 
       assert.ok($('p').length > 0, 'expected article paragraphs');
+      assert.strictEqual(
+        $('img[src*="livanos_irsrail"]').length,
+        1,
+        'expected the hero article image to be included'
+      );
       assert.strictEqual(
         $(
           '.short-read-also, .post-list, .widget-article, .ad-placement, .follow-link'
