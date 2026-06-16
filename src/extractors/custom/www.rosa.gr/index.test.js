@@ -86,7 +86,7 @@ describe('WwwRosaGrExtractor', () => {
       );
     });
 
-    it('retains genuine section headings', async () => {
+    it('retains section headings', async () => {
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
