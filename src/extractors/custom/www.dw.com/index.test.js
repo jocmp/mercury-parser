@@ -71,8 +71,32 @@ describe('WwwDwComExtractor', () => {
 
       assert.strictEqual(
         first13,
-        'Germany comprehensively beat Curacao 7-1 in their 2026 World Cup opener. Inside the'
+        'Now that the 2026 World Cup has started, the show element of this'
       );
+    });
+
+    it('resolves responsive image URLs', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+      const images = $('img').toArray();
+
+      assert.ok(images.length > 0, 'expected inline images in the content');
+      images.forEach(img => {
+        const src = $(img).attr('src') || '';
+        assert.ok(
+          !/\$\{formatId\}|%7BformatId%7D/.test(src),
+          `expected a resolved image URL, got: ${src}`
+        );
+      });
+    });
+
+    it('strips embedded tweets', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      assert.strictEqual($('blockquote.tweet.embed').length, 0);
     });
   });
 });
