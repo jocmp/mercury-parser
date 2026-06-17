@@ -23,7 +23,6 @@ var _Array$from = require('@babel/runtime-corejs2/core-js/array/from');
 var _Symbol = require('@babel/runtime-corejs2/core-js/symbol');
 var _Symbol$iterator = require('@babel/runtime-corejs2/core-js/symbol/iterator');
 var _Array$isArray = require('@babel/runtime-corejs2/core-js/array/is-array');
-var _typeof = require('@babel/runtime-corejs2/helpers/typeof');
 var _Object$create = require('@babel/runtime-corejs2/core-js/object/create');
 var _Object$freeze = require('@babel/runtime-corejs2/core-js/object/freeze');
 var require$$7 = require('@babel/runtime-corejs2/helpers/objectWithoutProperties');
@@ -44,51 +43,6 @@ var require$$33 = require('wuzzy');
 var require$$34 = require('difflib');
 var _taggedTemplateLiteral = require('@babel/runtime-corejs2/helpers/taggedTemplateLiteral');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
-var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
-var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
-var inquirer__default = /*#__PURE__*/_interopDefaultLegacy(inquirer);
-var ora__default = /*#__PURE__*/_interopDefaultLegacy(ora);
-var _Reflect$ownKeys__default = /*#__PURE__*/_interopDefaultLegacy(_Reflect$ownKeys);
-var _parseInt__default = /*#__PURE__*/_interopDefaultLegacy(_parseInt);
-var URL__default = /*#__PURE__*/_interopDefaultLegacy(URL$1);
-var _Object$keys__default = /*#__PURE__*/_interopDefaultLegacy(_Object$keys);
-var _Object$getOwnPropertySymbols__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertySymbols);
-var _Object$getOwnPropertyDescriptor__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptor);
-var _Object$getOwnPropertyDescriptors__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptors);
-var _Object$defineProperties__default = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperties);
-var _Object$defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperty);
-var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
-var _parseFloat__default = /*#__PURE__*/_interopDefaultLegacy(_parseFloat);
-var iconv__default = /*#__PURE__*/_interopDefaultLegacy(iconv);
-var _Set__default = /*#__PURE__*/_interopDefaultLegacy(_Set);
-var _Array$from__default = /*#__PURE__*/_interopDefaultLegacy(_Array$from);
-var _Symbol__default = /*#__PURE__*/_interopDefaultLegacy(_Symbol);
-var _Symbol$iterator__default = /*#__PURE__*/_interopDefaultLegacy(_Symbol$iterator);
-var _Array$isArray__default = /*#__PURE__*/_interopDefaultLegacy(_Array$isArray);
-var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
-var _Object$create__default = /*#__PURE__*/_interopDefaultLegacy(_Object$create);
-var _Object$freeze__default = /*#__PURE__*/_interopDefaultLegacy(_Object$freeze);
-var require$$7__default = /*#__PURE__*/_interopDefaultLegacy(require$$7);
-var require$$8__default = /*#__PURE__*/_interopDefaultLegacy(require$$8);
-var require$$9__default = /*#__PURE__*/_interopDefaultLegacy(require$$9);
-var require$$11__default = /*#__PURE__*/_interopDefaultLegacy(require$$11);
-var require$$12__default = /*#__PURE__*/_interopDefaultLegacy(require$$12);
-var require$$16__default = /*#__PURE__*/_interopDefaultLegacy(require$$16);
-var require$$17__default = /*#__PURE__*/_interopDefaultLegacy(require$$17);
-var require$$26__default = /*#__PURE__*/_interopDefaultLegacy(require$$26);
-var require$$27__default = /*#__PURE__*/_interopDefaultLegacy(require$$27);
-var require$$28__default = /*#__PURE__*/_interopDefaultLegacy(require$$28);
-var require$$29__default = /*#__PURE__*/_interopDefaultLegacy(require$$29);
-var require$$30__default = /*#__PURE__*/_interopDefaultLegacy(require$$30);
-var require$$31__default = /*#__PURE__*/_interopDefaultLegacy(require$$31);
-var require$$32__default = /*#__PURE__*/_interopDefaultLegacy(require$$32);
-var require$$33__default = /*#__PURE__*/_interopDefaultLegacy(require$$33);
-var require$$34__default = /*#__PURE__*/_interopDefaultLegacy(require$$34);
-var _taggedTemplateLiteral__default = /*#__PURE__*/_interopDefaultLegacy(_taggedTemplateLiteral);
-
 // Spacer images to be removed
 
 // The class we will use to mark elements we want to keep
@@ -102,7 +56,7 @@ function getAttrs(node) {
   var attribs = node.attribs,
     attributes = node.attributes;
   if (!attribs && attributes) {
-    var attrs = _Reflect$ownKeys__default["default"](attributes).reduce(function (acc, index) {
+    var attrs = _Reflect$ownKeys(attributes).reduce(function (acc, index) {
       var attr = attributes[index];
 
       // In browser, Reflect.ownKeys includes non-numeric keys like 'length', 'item', etc.
@@ -142,7 +96,7 @@ function absolutize($, rootUrl, attr) {
     var attrs = getAttrs(node);
     var url = attrs[attr];
     if (!url) return;
-    var absoluteUrl = URL__default["default"].resolve(baseUrl || rootUrl, url);
+    var absoluteUrl = URL$1.resolve(baseUrl || rootUrl, url);
     setAttr(node, attr, absoluteUrl);
   });
 }
@@ -160,10 +114,10 @@ function absolutizeSet($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL__default["default"].resolve(rootUrl, parts[0]);
+        parts[0] = URL$1.resolve(rootUrl, parts[0]);
         return parts.join(' ');
       });
-      var absoluteUrlSet = _toConsumableArray__default["default"](new _Set__default["default"](absoluteCandidates)).join(', ');
+      var absoluteUrlSet = _toConsumableArray(new _Set(absoluteCandidates)).join(', ');
       setAttr(node, 'srcset', absoluteUrlSet);
     }
   });
@@ -185,54 +139,48 @@ var hasRequiredMercury;
 function requireMercury() {
   if (hasRequiredMercury) return mercury;
   hasRequiredMercury = 1;
-  var _Object$keys = _Object$keys__default["default"];
-  var _Object$getOwnPropertySymbols = _Object$getOwnPropertySymbols__default["default"];
-  var _Object$getOwnPropertyDescriptor = _Object$getOwnPropertyDescriptor__default["default"];
-  var _Object$getOwnPropertyDescriptors = _Object$getOwnPropertyDescriptors__default["default"];
-  var _Object$defineProperties = _Object$defineProperties__default["default"];
-  var _Object$defineProperty = _Object$defineProperty__default["default"];
-  var _defineProperty = _defineProperty__default["default"];
-  var _objectWithoutProperties = require$$7__default["default"];
-  var _asyncToGenerator = require$$8__default["default"];
-  var _regeneratorRuntime = require$$9__default["default"];
-  var URL$1 = URL__default["default"];
-  var TurndownService = require$$11__default["default"];
-  var cheerio = require$$12__default["default"];
-  var iconv = iconv__default["default"];
-  var _parseInt = _parseInt__default["default"];
-  var _slicedToArray = _slicedToArray__default["default"];
-  var _Promise = require$$16__default["default"];
-  var request = require$$17__default["default"];
-  var _Reflect$ownKeys = _Reflect$ownKeys__default["default"];
-  var _toConsumableArray = _toConsumableArray__default["default"];
-  var _parseFloat = _parseFloat__default["default"];
-  var _Set = _Set__default["default"];
-  var _Array$from = _Array$from__default["default"];
-  var _Symbol = _Symbol__default["default"];
-  var _Symbol$iterator = _Symbol$iterator__default["default"];
-  var _Array$isArray = _Array$isArray__default["default"];
-  var _Object$assign = require$$26__default["default"];
-  var stringDirection = require$$27__default["default"];
-  var _Number$isNaN = require$$28__default["default"];
-  var dayjs = require$$29__default["default"];
-  var utc = require$$30__default["default"];
-  var timezonePlugin = require$$31__default["default"];
-  var customParseFormat = require$$32__default["default"];
-  var wuzzy = require$$33__default["default"];
-  var difflib = require$$34__default["default"];
-  function _interopDefaultLegacy(e) {
-    return e && _typeof__default["default"](e) === 'object' && 'default' in e ? e : {
-      'default': e
-    };
-  }
-  function _interopNamespace(e) {
-    if (e && e.__esModule) return e;
-    var n = _Object$create__default["default"](null);
+  var _Object$keys$1 = _Object$keys;
+  var _Object$getOwnPropertySymbols$1 = _Object$getOwnPropertySymbols;
+  var _Object$getOwnPropertyDescriptor$1 = _Object$getOwnPropertyDescriptor;
+  var _Object$getOwnPropertyDescriptors$1 = _Object$getOwnPropertyDescriptors;
+  var _Object$defineProperties$1 = _Object$defineProperties;
+  var _Object$defineProperty$1 = _Object$defineProperty;
+  var _defineProperty$1 = _defineProperty;
+  var _objectWithoutProperties = require$$7;
+  var _asyncToGenerator = require$$8;
+  var _regeneratorRuntime = require$$9;
+  var URL$1$1 = URL$1;
+  var TurndownService = require$$11;
+  var cheerio = require$$12;
+  var iconv$1 = iconv;
+  var _parseInt$1 = _parseInt;
+  var _slicedToArray$1 = _slicedToArray;
+  var _Promise = require$$16;
+  var request = require$$17;
+  var _Reflect$ownKeys$1 = _Reflect$ownKeys;
+  var _toConsumableArray$1 = _toConsumableArray;
+  var _parseFloat$1 = _parseFloat;
+  var _Set$1 = _Set;
+  var _Array$from$1 = _Array$from;
+  var _Symbol$1 = _Symbol;
+  var _Symbol$iterator$1 = _Symbol$iterator;
+  var _Array$isArray$1 = _Array$isArray;
+  var _Object$assign = require$$26;
+  var stringDirection = require$$27;
+  var _Number$isNaN = require$$28;
+  var dayjs = require$$29;
+  var utc = require$$30;
+  var timezonePlugin = require$$31;
+  var customParseFormat = require$$32;
+  var wuzzy = require$$33;
+  var difflib = require$$34;
+  function _interopNamespaceDefault(e) {
+    var n = _Object$create(null);
     if (e) {
-      _Object$keys__default["default"](e).forEach(function (k) {
+      _Object$keys(e).forEach(function (k) {
         if (k !== 'default') {
-          var d = _Object$getOwnPropertyDescriptor__default["default"](e, k);
-          _Object$defineProperty__default["default"](n, k, d.get ? d : {
+          var d = _Object$getOwnPropertyDescriptor(e, k);
+          _Object$defineProperty(n, k, d.get ? d : {
             enumerable: true,
             get: function get() {
               return e[k];
@@ -242,43 +190,9 @@ function requireMercury() {
       });
     }
     n["default"] = e;
-    return _Object$freeze__default["default"](n);
+    return _Object$freeze(n);
   }
-  var _Object$keys__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$keys);
-  var _Object$getOwnPropertySymbols__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertySymbols);
-  var _Object$getOwnPropertyDescriptor__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptor);
-  var _Object$getOwnPropertyDescriptors__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptors);
-  var _Object$defineProperties__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperties);
-  var _Object$defineProperty__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperty);
-  var _defineProperty__default$1 = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
-  var _objectWithoutProperties__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutProperties);
-  var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
-  var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
-  var URL__default$1 = /*#__PURE__*/_interopDefaultLegacy(URL$1);
-  var TurndownService__default = /*#__PURE__*/_interopDefaultLegacy(TurndownService);
-  var cheerio__namespace = /*#__PURE__*/_interopNamespace(cheerio);
-  var iconv__default$1 = /*#__PURE__*/_interopDefaultLegacy(iconv);
-  var _parseInt__default$1 = /*#__PURE__*/_interopDefaultLegacy(_parseInt);
-  var _slicedToArray__default$1 = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
-  var _Promise__default = /*#__PURE__*/_interopDefaultLegacy(_Promise);
-  var request__default = /*#__PURE__*/_interopDefaultLegacy(request);
-  var _Reflect$ownKeys__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Reflect$ownKeys);
-  var _toConsumableArray__default$1 = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
-  var _parseFloat__default$1 = /*#__PURE__*/_interopDefaultLegacy(_parseFloat);
-  var _Set__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Set);
-  var _Array$from__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Array$from);
-  var _Symbol__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Symbol);
-  var _Symbol$iterator__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Symbol$iterator);
-  var _Array$isArray__default$1 = /*#__PURE__*/_interopDefaultLegacy(_Array$isArray);
-  var _Object$assign__default = /*#__PURE__*/_interopDefaultLegacy(_Object$assign);
-  var stringDirection__default = /*#__PURE__*/_interopDefaultLegacy(stringDirection);
-  var _Number$isNaN__default = /*#__PURE__*/_interopDefaultLegacy(_Number$isNaN);
-  var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
-  var utc__default = /*#__PURE__*/_interopDefaultLegacy(utc);
-  var timezonePlugin__default = /*#__PURE__*/_interopDefaultLegacy(timezonePlugin);
-  var customParseFormat__default = /*#__PURE__*/_interopDefaultLegacy(customParseFormat);
-  var wuzzy__default = /*#__PURE__*/_interopDefaultLegacy(wuzzy);
-  var difflib__default = /*#__PURE__*/_interopDefaultLegacy(difflib);
+  var cheerio__namespace = /*#__PURE__*/_interopNamespaceDefault(cheerio);
   var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
   function normalizeSpaces(text) {
     return text.replace(NORMALIZE_RE, ' ').trim();
@@ -324,7 +238,7 @@ function requireMercury() {
   function pageNumFromUrl(url) {
     var matches = url.match(PAGE_IN_HREF_RE);
     if (!matches) return null;
-    var pageNum = _parseInt__default$1["default"](matches[6], 10);
+    var pageNum = _parseInt$1(matches[6], 10);
 
     // Return pageNum < 100, otherwise
     // return null
@@ -360,7 +274,7 @@ function requireMercury() {
   // pagination data exists in it. Useful for comparing to other links
   // that might have pagination data within them.
   function articleBaseUrl(url, parsed) {
-    var parsedUrl = parsed || URL__default$1["default"].parse(url);
+    var parsedUrl = parsed || URL$1$1.parse(url);
     var protocol = parsedUrl.protocol,
       host = parsedUrl.host,
       path = parsedUrl.path;
@@ -371,7 +285,7 @@ function requireMercury() {
       // Split off and save anything that looks like a file type.
       if (segment.includes('.')) {
         var _segment$split = segment.split('.'),
-          _segment$split2 = _slicedToArray__default$1["default"](_segment$split, 2),
+          _segment$split2 = _slicedToArray$1(_segment$split, 2),
           possibleSegment = _segment$split2[0],
           fileExt = _segment$split2[1];
         if (IS_ALPHA_RE.test(fileExt)) {
@@ -420,10 +334,10 @@ function requireMercury() {
     var encoding = DEFAULT_ENCODING;
     var matches = ENCODING_RE.exec(str);
     if (matches !== null) {
-      var _matches = _slicedToArray__default$1["default"](matches, 2);
+      var _matches = _slicedToArray$1(matches, 2);
       str = _matches[1];
     }
-    if (iconv__default$1["default"].encodingExists(str)) {
+    if (iconv$1.encodingExists(str)) {
       encoding = str;
     }
     return encoding;
@@ -449,11 +363,11 @@ function requireMercury() {
   // for us to attempt parsing. Defaults to 5 MB.
   var MAX_CONTENT_LENGTH = 5242880;
   function ownKeys$h(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -461,17 +375,17 @@ function requireMercury() {
   function _objectSpread$h(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$h(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$h(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$h(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$h(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
   }
   function get(options) {
-    return new _Promise__default["default"](function (resolve, reject) {
-      request__default["default"](options, function (err, response, body) {
+    return new _Promise(function (resolve, reject) {
+      request(options, function (err, response, body) {
         if (err) {
           reject(err);
         } else {
@@ -530,7 +444,7 @@ function requireMercury() {
     return _fetchResource.apply(this, arguments);
   }
   function _fetchResource() {
-    _fetchResource = _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(url, parsedUrl) {
+    _fetchResource = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(url, parsedUrl) {
       var headers,
         options,
         _yield$get,
@@ -538,11 +452,11 @@ function requireMercury() {
         body,
         _args = arguments,
         _t;
-      return _regeneratorRuntime__default["default"].wrap(function (_context) {
+      return _regeneratorRuntime.wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-            parsedUrl = parsedUrl || URL__default$1["default"].parse(encodeURI(url));
+            parsedUrl = parsedUrl || URL$1$1.parse(encodeURI(url));
             options = _objectSpread$h({
               url: parsedUrl.href,
               headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
@@ -801,7 +715,7 @@ function requireMercury() {
     var attribs = node.attribs,
       attributes = node.attributes;
     if (!attribs && attributes) {
-      var attrs = _Reflect$ownKeys__default$1["default"](attributes).reduce(function (acc, index) {
+      var attrs = _Reflect$ownKeys$1(attributes).reduce(function (acc, index) {
         var attr = attributes[index];
 
         // In browser, Reflect.ownKeys includes non-numeric keys like 'length', 'item', etc.
@@ -820,7 +734,7 @@ function requireMercury() {
       return $;
     }
     var attrs = getAttrs(node) || {};
-    var attribString = _Reflect$ownKeys__default$1["default"](attrs).map(function (key) {
+    var attribString = _Reflect$ownKeys$1(attrs).map(function (key) {
       return "".concat(key, "=").concat(attrs[key]);
     }).join(' ');
     var html;
@@ -877,8 +791,8 @@ function requireMercury() {
     return $;
   }
   function cleanForHeight($img, $) {
-    var height = _parseInt__default$1["default"]($img.attr('height'), 10);
-    var width = _parseInt__default$1["default"]($img.attr('width'), 10) || 20;
+    var height = _parseInt$1($img.attr('height'), 10);
+    var width = _parseInt$1($img.attr('width'), 10) || 20;
 
     // Remove images that explicitly have very small heights or
     // widths, because they are most likely shims or icons,
@@ -916,10 +830,10 @@ function requireMercury() {
       tags = KEEP_SELECTORS;
     }
     if (url) {
-      var _URL$parse = URL__default$1["default"].parse(url),
+      var _URL$parse = URL$1$1.parse(url),
         protocol = _URL$parse.protocol,
         hostname = _URL$parse.hostname;
-      tags = [].concat(_toConsumableArray__default$1["default"](tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
+      tags = [].concat(_toConsumableArray$1(tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
     }
     $(tags.join(','), article).addClass(KEEP_CLASS);
     return $;
@@ -959,18 +873,18 @@ function requireMercury() {
       while (node.attributes.length > 0) {
         node.removeAttribute(node.attributes[0].name);
       }
-      _Reflect$ownKeys__default$1["default"](attrs).forEach(function (key) {
+      _Reflect$ownKeys$1(attrs).forEach(function (key) {
         node.setAttribute(key, attrs[key]);
       });
     }
     return node;
   }
   function ownKeys$g(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -978,10 +892,10 @@ function requireMercury() {
   function _objectSpread$g(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$g(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$g(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$g(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -989,9 +903,9 @@ function requireMercury() {
   function removeAllButWhitelist($article, $) {
     $article.find('*').each(function (index, node) {
       var attrs = getAttrs(node);
-      setAttrs(node, _Reflect$ownKeys__default$1["default"](attrs).reduce(function (acc, attr) {
+      setAttrs(node, _Reflect$ownKeys$1(attrs).reduce(function (acc, attr) {
         if (WHITELIST_ATTRS_RE.test(attr)) {
-          return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty__default$1["default"]({}, attr, attrs[attr]));
+          return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty$1({}, attr, attrs[attr]));
         }
         return acc;
       }, {}));
@@ -1021,7 +935,7 @@ function requireMercury() {
   // the node's score attribute
   // returns null if no score set
   function getScore($node) {
-    return _parseFloat__default$1["default"]($node.attr('score')) || null;
+    return _parseFloat$1($node.attr('score')) || null;
   }
   function setScore($node, $, score) {
     $node.attr('score', score);
@@ -1203,7 +1117,7 @@ function requireMercury() {
     return score;
   }
 
-  // eslint-disable-next-line import/no-cycle
+  // eslint-disable-next-line import-x/no-cycle
   function addScore($node, $, amount) {
     try {
       var score = getOrInitScore($node, $) + amount;
@@ -1214,7 +1128,7 @@ function requireMercury() {
     return $node;
   }
 
-  // eslint-disable-next-line import/no-cycle
+  // eslint-disable-next-line import-x/no-cycle
 
   // Adds 1/4 of a child's score to its parent
   function addToParent(node, $, score) {
@@ -1406,7 +1320,7 @@ function requireMercury() {
       var attrs = getAttrs(node);
       var url = attrs[attr];
       if (!url) return;
-      var absoluteUrl = URL__default$1["default"].resolve(baseUrl || rootUrl, url);
+      var absoluteUrl = URL$1$1.resolve(baseUrl || rootUrl, url);
       setAttr(node, attr, absoluteUrl);
     });
   }
@@ -1424,10 +1338,10 @@ function requireMercury() {
           // a candidate URL cannot start or end with a comma
           // descriptors are separated from the URLs by unescaped whitespace
           var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-          parts[0] = URL__default$1["default"].resolve(rootUrl, parts[0]);
+          parts[0] = URL$1$1.resolve(rootUrl, parts[0]);
           return parts.join(' ');
         });
-        var absoluteUrlSet = _toConsumableArray__default$1["default"](new _Set__default$1["default"](absoluteCandidates)).join(', ');
+        var absoluteUrlSet = _toConsumableArray$1(new _Set$1(absoluteCandidates)).join(', ');
         setAttr(node, 'srcset', absoluteUrlSet);
       }
     });
@@ -1448,9 +1362,9 @@ function requireMercury() {
     return cleanText === '' ? text : cleanText;
   }
   function _createForOfIteratorHelper$4(r, e) {
-    var t = "undefined" != typeof _Symbol__default$1["default"] && r[_Symbol$iterator__default$1["default"]] || r["@@iterator"];
+    var t = "undefined" != typeof _Symbol$1 && r[_Symbol$iterator$1] || r["@@iterator"];
     if (!t) {
-      if (_Array$isArray__default$1["default"](r) || (t = _unsupportedIterableToArray$4(r)) || e && r && "number" == typeof r.length) {
+      if (_Array$isArray$1(r) || (t = _unsupportedIterableToArray$4(r)) || e) {
         t && (r = t);
         var _n = 0,
           F = function F() {};
@@ -1458,9 +1372,9 @@ function requireMercury() {
           s: F,
           n: function n() {
             return _n >= r.length ? {
-              done: !0
+              done: true
             } : {
-              done: !1,
+              done: false,
               value: r[_n++]
             };
           },
@@ -1473,8 +1387,8 @@ function requireMercury() {
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
     var o,
-      a = !0,
-      u = !1;
+      a = true,
+      u = false;
     return {
       s: function s() {
         t = t.call(r);
@@ -1484,7 +1398,7 @@ function requireMercury() {
         return a = r.done, r;
       },
       e: function e(r) {
-        u = !0, o = r;
+        u = true, o = r;
       },
       f: function f() {
         try {
@@ -1499,7 +1413,7 @@ function requireMercury() {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray$4(r, a);
       var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default$1["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0;
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from$1(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0;
     }
   }
   function _arrayLikeToArray$4(r, a) {
@@ -1515,8 +1429,6 @@ function requireMercury() {
     var foundNames = metaNames.filter(function (name) {
       return cachedNames.indexOf(name) !== -1;
     });
-
-    // eslint-disable-next-line no-restricted-syntax
     var _iterator = _createForOfIteratorHelper$4(foundNames),
       _step;
     try {
@@ -1546,7 +1458,7 @@ function requireMercury() {
             if (cleanTags) {
               metaValue = stripTags(values[0], $);
             } else {
-              var _values = _slicedToArray__default$1["default"](values, 1);
+              var _values = _slicedToArray$1(values, 1);
               metaValue = _values[0];
             }
             return {
@@ -1580,9 +1492,9 @@ function requireMercury() {
     return commentParent !== undefined;
   }
   function _createForOfIteratorHelper$3(r, e) {
-    var t = "undefined" != typeof _Symbol__default$1["default"] && r[_Symbol$iterator__default$1["default"]] || r["@@iterator"];
+    var t = "undefined" != typeof _Symbol$1 && r[_Symbol$iterator$1] || r["@@iterator"];
     if (!t) {
-      if (_Array$isArray__default$1["default"](r) || (t = _unsupportedIterableToArray$3(r)) || e && r && "number" == typeof r.length) {
+      if (_Array$isArray$1(r) || (t = _unsupportedIterableToArray$3(r)) || e) {
         t && (r = t);
         var _n = 0,
           F = function F() {};
@@ -1590,9 +1502,9 @@ function requireMercury() {
           s: F,
           n: function n() {
             return _n >= r.length ? {
-              done: !0
+              done: true
             } : {
-              done: !1,
+              done: false,
               value: r[_n++]
             };
           },
@@ -1605,8 +1517,8 @@ function requireMercury() {
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
     var o,
-      a = !0,
-      u = !1;
+      a = true,
+      u = false;
     return {
       s: function s() {
         t = t.call(r);
@@ -1616,7 +1528,7 @@ function requireMercury() {
         return a = r.done, r;
       },
       e: function e(r) {
-        u = !0, o = r;
+        u = true, o = r;
       },
       f: function f() {
         try {
@@ -1631,7 +1543,7 @@ function requireMercury() {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray$3(r, a);
       var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default$1["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0;
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from$1(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0;
     }
   }
   function _arrayLikeToArray$3(r, a) {
@@ -1658,7 +1570,6 @@ function requireMercury() {
   function extractFromSelectors($, selectors) {
     var maxChildren = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
     var textOnly = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-    // eslint-disable-next-line no-restricted-syntax
     var _iterator = _createForOfIteratorHelper$3(selectors),
       _step;
     try {
@@ -1725,7 +1636,7 @@ function requireMercury() {
     };
     $('img').each(function (_, img) {
       var attrs = getAttrs(img);
-      _Reflect$ownKeys__default$1["default"](attrs).forEach(function (attr) {
+      _Reflect$ownKeys$1(attrs).forEach(function (attr) {
         var value = attrs[attr];
         if (attr !== 'srcset' && IS_LINK.test(value) && IS_SRCSET.test(value)) {
           $(img).attr('srcset', value);
@@ -1765,9 +1676,9 @@ function requireMercury() {
     create: function create(url, preparedResponse, parsedUrl) {
       var _arguments = arguments,
         _this = this;
-      return _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
         var headers, result, validResponse;
-        return _regeneratorRuntime__default["default"].wrap(function (_context) {
+        return _regeneratorRuntime.wrap(function (_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               headers = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : {};
@@ -1847,7 +1758,7 @@ function requireMercury() {
       }
       var encoding = getEncoding(contentType);
       // UTF-8 is handled natively by Node.js, skip iconv-lite
-      var decodedContent = encoding === 'utf-8' ? content.toString('utf-8') : iconv__default$1["default"].decode(content, encoding);
+      var decodedContent = encoding === 'utf-8' ? content.toString('utf-8') : iconv$1.decode(content, encoding);
       var $ = cheerio__namespace.load(decodedContent);
       // after first cheerio.load, check to see if encoding matches
       var contentTypeSelector = isBrowser ? 'meta[http-equiv=content-type]' : 'meta[http-equiv=content-type i]';
@@ -1856,7 +1767,7 @@ function requireMercury() {
 
       // if encodings in the header/body dont match, use the one in the body
       if (metaContentType && properEncoding !== encoding) {
-        decodedContent = properEncoding === 'utf-8' ? content.toString('utf-8') : iconv__default$1["default"].decode(content, properEncoding);
+        decodedContent = properEncoding === 'utf-8' ? content.toString('utf-8') : iconv$1.decode(content, properEncoding);
         $ = cheerio__namespace.load(decodedContent);
       }
       return $;
@@ -1865,8 +1776,8 @@ function requireMercury() {
   function range() {
     var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
     var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-    return /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
-      return _regeneratorRuntime__default["default"].wrap(function (_context) {
+    return /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+      return _regeneratorRuntime.wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             if (!(start <= end)) {
@@ -1899,7 +1810,7 @@ function requireMercury() {
     }, {});
   };
   function mergeSupportedDomains(extractor) {
-    return extractor.supportedDomains ? merge(extractor, [extractor.domain].concat(_toConsumableArray__default$1["default"](extractor.supportedDomains))) : merge(extractor, [extractor.domain]);
+    return extractor.supportedDomains ? merge(extractor, [extractor.domain].concat(_toConsumableArray$1(extractor.supportedDomains))) : merge(extractor, [extractor.domain]);
   }
   var apiExtractors = {};
   function addExtractor(extractor) {
@@ -1909,7 +1820,7 @@ function requireMercury() {
         message: 'Unable to add custom extractor. Invalid parameters.'
       };
     }
-    _Object$assign__default["default"](apiExtractors, mergeSupportedDomains(extractor));
+    _Object$assign(apiExtractors, mergeSupportedDomains(extractor));
     return apiExtractors;
   }
   var BalloonJuiceComExtractor = {
@@ -2610,7 +2521,7 @@ function requireMercury() {
           var $parent = $node.parents('figure');
           if (ytRe.test(thumb)) {
             var _thumb$match = thumb.match(ytRe),
-              _thumb$match2 = _slicedToArray__default$1["default"](_thumb$match, 2);
+              _thumb$match2 = _slicedToArray$1(_thumb$match, 2);
             _thumb$match2[0];
             var youtubeId = _thumb$match2[1]; // eslint-disable-line
             $node.attr('src', "https://www.youtube.com/embed/".concat(youtubeId));
@@ -2633,7 +2544,7 @@ function requireMercury() {
         // Remove any smaller images that did not get caught by the generic image
         // cleaner (author photo 48px, leading sentence images 79px, etc.).
         img: function img($node) {
-          var width = _parseInt__default$1["default"]($node.attr('width'), 10);
+          var width = _parseInt$1($node.attr('width'), 10);
           if (width < 100) $node.remove();
         }
       },
@@ -3501,7 +3412,7 @@ function requireMercury() {
       // before it's consumable content? E.g., unusual lazy loaded images
       transforms: {
         '.pane-node-body': function paneNodeBody($node, $) {
-          var _WwwMsnbcComExtractor = _slicedToArray__default$1["default"](WwwMsnbcComExtractor.lead_image_url.selectors[0], 2),
+          var _WwwMsnbcComExtractor = _slicedToArray$1(WwwMsnbcComExtractor.lead_image_url.selectors[0], 2),
             selector = _WwwMsnbcComExtractor[0],
             attr = _WwwMsnbcComExtractor[1];
           var src = $(selector).attr(attr);
@@ -5573,7 +5484,7 @@ function requireMercury() {
         'img[data-original]': function imgDataOriginal($node) {
           var dataOriginal = $node.attr('data-original');
           var src = $node.attr('src');
-          var url = URL__default$1["default"].resolve(src, dataOriginal);
+          var url = URL$1$1.resolve(src, dataOriginal);
           $node.attr('src', url);
         }
       },
@@ -5865,9 +5776,6 @@ function requireMercury() {
       clean: []
     }
   };
-
-  /* eslint-disable no-nested-ternary */
-  /* eslint-disable no-unused-expressions */
   var WwwAbendblattDeExtractor = {
     domain: 'www.abendblatt.de',
     title: {
@@ -6466,11 +6374,11 @@ function requireMercury() {
     }
   };
   function ownKeys$f(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6478,10 +6386,10 @@ function requireMercury() {
   function _objectSpread$f(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$f(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$f(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$f(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6490,11 +6398,11 @@ function requireMercury() {
     domain: 'sport.se.pl'
   });
   function ownKeys$e(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6502,10 +6410,10 @@ function requireMercury() {
   function _objectSpread$e(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$e(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$e(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$e(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$e(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6541,11 +6449,11 @@ function requireMercury() {
     }
   };
   function ownKeys$d(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6553,10 +6461,10 @@ function requireMercury() {
   function _objectSpread$d(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$d(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$d(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$d(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6565,11 +6473,11 @@ function requireMercury() {
     domain: 'szczecin.se.pl'
   });
   function ownKeys$c(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6577,10 +6485,10 @@ function requireMercury() {
   function _objectSpread$c(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$c(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$c(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$c(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$c(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6589,11 +6497,11 @@ function requireMercury() {
     domain: 'superbiz.se.pl'
   });
   function ownKeys$b(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6601,10 +6509,10 @@ function requireMercury() {
   function _objectSpread$b(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$b(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$b(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$b(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$b(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6634,11 +6542,11 @@ function requireMercury() {
     }
   };
   function ownKeys$a(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6646,10 +6554,10 @@ function requireMercury() {
   function _objectSpread$a(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$a(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$a(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$a(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6658,11 +6566,11 @@ function requireMercury() {
     domain: 'lodz.se.pl'
   });
   function ownKeys$9(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6670,10 +6578,10 @@ function requireMercury() {
   function _objectSpread$9(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$9(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$9(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$9(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$9(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6682,11 +6590,11 @@ function requireMercury() {
     domain: 'wroclaw.se.pl'
   });
   function ownKeys$8(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6694,10 +6602,10 @@ function requireMercury() {
   function _objectSpread$8(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$8(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$8(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$8(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$8(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6706,11 +6614,11 @@ function requireMercury() {
     domain: 'lublin.se.pl'
   });
   function ownKeys$7(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -6718,10 +6626,10 @@ function requireMercury() {
   function _objectSpread$7(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$7(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$7(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$7(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$7(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -6971,7 +6879,7 @@ function requireMercury() {
         img: function img($node) {
           var srcset = $node.attr('srcset');
           var _split = (srcset || '').split(','),
-            _split2 = _slicedToArray__default$1["default"](_split, 1),
+            _split2 = _slicedToArray$1(_split, 1),
             src = _split2[0];
           if (src) {
             $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
@@ -7010,7 +6918,7 @@ function requireMercury() {
         img: function img($node) {
           var srcset = $node.attr('srcset');
           var _split = (srcset || '').split(','),
-            _split2 = _slicedToArray__default$1["default"](_split, 1),
+            _split2 = _slicedToArray$1(_split, 1),
             src = _split2[0];
           if (src) {
             $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
@@ -7525,11 +7433,11 @@ function requireMercury() {
     }
   };
   function ownKeys$6(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -7537,10 +7445,10 @@ function requireMercury() {
   function _objectSpread$6(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$6(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$6(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$6(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -7572,213 +7480,421 @@ function requireMercury() {
       clean: []
     }
   };
-  var CustomExtractors = /*#__PURE__*/_Object$freeze__default["default"]({
+  var ActualidadRtComExtractor = {
+    domain: 'actualidad.rt.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: [['meta[name="article:author"]', 'value']]
+    },
+    date_published: {
+      selectors: [['meta[name="mediator_published_time"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.ArticleView-text'],
+      transforms: {},
+      // RT wraps each <img> in a <picture> whose <source> elements carry a
+      // base64 placeholder srcset; browsers honor that over the real <img src>,
+      // so drop the sources and let the <img> (real URL) render.
+      clean: ['.ReadMore-root', 'source']
+    }
+  };
+  var WwwTweaktownComExtractor = {
+    domain: 'www.tweaktown.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: ['.info-bar-div2 a[rel="author"]']
+    },
+    date_published: {
+      selectors: [['meta[name="article:published_time"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['#article-body'],
+      transforms: {},
+      clean: []
+    }
+  };
+  var WwwFrandroidComExtractor = {
+    domain: 'www.frandroid.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: [['meta[name="parsely-author"]', 'value']]
+    },
+    date_published: {
+      selectors: [['meta[name="article:published_time"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['section.article-content'],
+      transforms: {
+        h2: function h2(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        },
+        h3: function h3(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        }
+      },
+      clean: ['.index-menu-wrapper', '.is-gastric-kingfisher', '.newsletter-form', '.share', '.article-footer', '.js-feed-posts', '.optidigital-adslot', '[id^="optidigital-adslot"]']
+    }
+  };
+  var WwwMotorsportComExtractor = {
+    domain: 'www.motorsport.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: ['.msnt-author-toolbar a[href*="/info/about-us/"]']
+    },
+    date_published: {
+      selectors: [['meta[name="datePublished"]', 'value']]
+    },
+    dek: {
+      selectors: ['h2.text-article-description']
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.ms-article-content'],
+      transforms: {
+        h2: function h2(node) {
+          return node.attr('class', 'mercury-parser-keep');
+        }
+      },
+      clean: ['msnt-survey-promo', '.article-fullwidth-gallery_item ~ .article-fullwidth-gallery_item', '.ms-inarticle-widgets', '.relatedContent', '.ms-apb', '.ms-ap-native', '.outstream_partner']
+    }
+  };
+  var SubstackComExtractor = {
+    domain: 'substack.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: [['meta[name="author"]', 'value']]
+    },
+    date_published: {
+      selectors: [['meta[name="article:published_time"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.available-content'],
+      transforms: {
+        'div.captioned-image-container': 'figure',
+        'div.image-link': function divImageLink($node) {
+          $node.replaceWith($node.find('img'));
+        }
+      },
+      clean: ['.subscribe-widget', '.subscription-widget-wrap', '.subscription-widget-wrap-editor', '.button-wrapper', '.poll-embed', '.share-dialog']
+    }
+  };
+  var WwwDwComExtractor = {
+    domain: 'www.dw.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: {
+      selectors: ['.author-name .author-link']
+    },
+    date_published: {
+      selectors: [['meta[name="date"]', 'value']]
+    },
+    dek: {
+      selectors: [['meta[name="og:description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['[data-tracking-name="rich-text"]'],
+      transforms: {
+        // DW inline images are responsive: the real template lives in data-url
+        // with a literal ${formatId} size token that JS would replace, leaving a
+        // broken src in the raw HTML. Resolve it to a standard content size.
+        img: function img(node) {
+          var template = node.attr('data-url') || node.attr('src') || '';
+          if (template.includes('${formatId}')) {
+            node.attr('src', template.replace('${formatId}', '6'));
+          }
+        }
+      },
+      // Embedded tweets are non-functional fallback markup without JS.
+      clean: ['blockquote.tweet.embed']
+    }
+  };
+  var WwwAnimenewsnetworkComExtractor = {
+    domain: 'www.animenewsnetwork.com',
+    title: {
+      selectors: [['meta[name="og:title"]', 'value']]
+    },
+    author: null,
+    date_published: {
+      selectors: [['small time', 'datetime']]
+    },
+    dek: {
+      selectors: [['meta[name="description"]', 'value']]
+    },
+    lead_image_url: {
+      selectors: [['meta[name="og:image"]', 'value']]
+    },
+    content: {
+      selectors: ['.KonaBody'],
+      transforms: {
+        // Images are lazy-loaded: real URL in data-src, a spacer.gif in src.
+        // Promote data-src so the images survive cleaning and render.
+        img: function img(node) {
+          var dataSrc = node.attr('data-src');
+          if (dataSrc) {
+            var src = dataSrc.startsWith('/') ? "https://www.animenewsnetwork.com".concat(dataSrc) : dataSrc;
+            node.attr('src', src);
+            node.removeAttr('data-src');
+          }
+        }
+      },
+      // .intro duplicates the dek; instaread-player is an audio widget.
+      clean: ['.intro', 'instaread-player']
+    }
+  };
+  var CustomExtractors = /*#__PURE__*/_Object$freeze({
     __proto__: null,
-    BalloonJuiceComExtractor: BalloonJuiceComExtractor,
-    BloggerExtractor: BloggerExtractor,
-    NYMagExtractor: NYMagExtractor,
-    WikipediaExtractor: WikipediaExtractor,
-    TwitterExtractor: TwitterExtractor,
-    NYTimesExtractor: NYTimesExtractor,
-    TheAtlanticExtractor: TheAtlanticExtractor,
-    NewYorkerExtractor: NewYorkerExtractor,
-    WiredExtractor: WiredExtractor,
-    MSNExtractor: MSNExtractor,
-    YahooExtractor: YahooExtractor,
-    BuzzfeedExtractor: BuzzfeedExtractor,
-    WikiaExtractor: WikiaExtractor,
-    LittleThingsExtractor: LittleThingsExtractor,
-    PoliticoExtractor: PoliticoExtractor,
-    DeadspinExtractor: DeadspinExtractor,
-    BroadwayWorldExtractor: BroadwayWorldExtractor,
-    ApartmentTherapyExtractor: ApartmentTherapyExtractor,
-    MediumExtractor: MediumExtractor,
-    WwwTmzComExtractor: WwwTmzComExtractor,
-    WwwWashingtonpostComExtractor: WwwWashingtonpostComExtractor,
-    WwwHuffingtonpostComExtractor: WwwHuffingtonpostComExtractor,
-    NewrepublicComExtractor: NewrepublicComExtractor,
-    MoneyCnnComExtractor: MoneyCnnComExtractor,
-    WwwCnnComExtractor: WwwCnnComExtractor,
-    WwwAolComExtractor: WwwAolComExtractor,
-    WwwYoutubeComExtractor: WwwYoutubeComExtractor,
-    WwwTheguardianComExtractor: WwwTheguardianComExtractor,
-    WwwSbnationComExtractor: WwwSbnationComExtractor,
-    WwwBloombergComExtractor: WwwBloombergComExtractor,
-    WwwBustleComExtractor: WwwBustleComExtractor,
-    WwwNprOrgExtractor: WwwNprOrgExtractor,
-    WwwRecodeNetExtractor: WwwRecodeNetExtractor,
-    QzComExtractor: QzComExtractor,
-    WwwDmagazineComExtractor: WwwDmagazineComExtractor,
-    WwwReutersComExtractor: WwwReutersComExtractor,
-    MashableComExtractor: MashableComExtractor,
-    WwwChicagotribuneComExtractor: WwwChicagotribuneComExtractor,
-    WwwVoxComExtractor: WwwVoxComExtractor,
-    NewsNationalgeographicComExtractor: NewsNationalgeographicComExtractor,
-    WwwNationalgeographicComExtractor: WwwNationalgeographicComExtractor,
-    WwwLatimesComExtractor: WwwLatimesComExtractor,
-    PagesixComExtractor: PagesixComExtractor,
-    ThefederalistpapersOrgExtractor: ThefederalistpapersOrgExtractor,
-    WwwCbssportsComExtractor: WwwCbssportsComExtractor,
-    WwwMsnbcComExtractor: WwwMsnbcComExtractor,
-    WwwThepoliticalinsiderComExtractor: WwwThepoliticalinsiderComExtractor,
-    WwwMentalflossComExtractor: WwwMentalflossComExtractor,
     AbcnewsGoComExtractor: AbcnewsGoComExtractor,
-    WwwNydailynewsComExtractor: WwwNydailynewsComExtractor,
-    WwwCnbcComExtractor: WwwCnbcComExtractor,
-    WwwPopsugarComExtractor: WwwPopsugarComExtractor,
-    ObserverComExtractor: ObserverComExtractor,
-    PeopleComExtractor: PeopleComExtractor,
-    WwwUsmagazineComExtractor: WwwUsmagazineComExtractor,
-    WwwRollingstoneComExtractor: WwwRollingstoneComExtractor,
-    twofortysevensportsComExtractor: twofortysevensportsComExtractor,
-    UproxxComExtractor: UproxxComExtractor,
-    WwwEonlineComExtractor: WwwEonlineComExtractor,
-    WwwMiamiheraldComExtractor: WwwMiamiheraldComExtractor,
-    WwwRefinery29ComExtractor: WwwRefinery29ComExtractor,
-    WwwMacrumorsComExtractor: WwwMacrumorsComExtractor,
-    WwwAndroidcentralComExtractor: WwwAndroidcentralComExtractor,
-    WwwSiComExtractor: WwwSiComExtractor,
-    WwwRawstoryComExtractor: WwwRawstoryComExtractor,
-    WwwCnetComExtractor: WwwCnetComExtractor,
-    WwwTodayComExtractor: WwwTodayComExtractor,
-    WwwAlComExtractor: WwwAlComExtractor,
-    WwwThepennyhoarderComExtractor: WwwThepennyhoarderComExtractor,
-    WwwWesternjournalismComExtractor: WwwWesternjournalismComExtractor,
-    WwwAmericanowComExtractor: WwwAmericanowComExtractor,
-    ScienceflyComExtractor: ScienceflyComExtractor,
-    HellogigglesComExtractor: HellogigglesComExtractor,
-    ThoughtcatalogComExtractor: ThoughtcatalogComExtractor,
-    WwwInquisitrComExtractor: WwwInquisitrComExtractor,
-    WwwNbcnewsComExtractor: WwwNbcnewsComExtractor,
-    FortuneComExtractor: FortuneComExtractor,
-    WwwLinkedinComExtractor: WwwLinkedinComExtractor,
-    ObamawhitehouseArchivesGovExtractor: ObamawhitehouseArchivesGovExtractor,
-    WwwOpposingviewsComExtractor: WwwOpposingviewsComExtractor,
-    WwwProspectmagazineCoUkExtractor: WwwProspectmagazineCoUkExtractor,
-    ForwardComExtractor: ForwardComExtractor,
-    WwwQdailyComExtractor: WwwQdailyComExtractor,
-    GothamistComExtractor: GothamistComExtractor,
-    WwwFoolComExtractor: WwwFoolComExtractor,
-    WwwSlateComExtractor: WwwSlateComExtractor,
-    IciRadioCanadaCaExtractor: IciRadioCanadaCaExtractor,
-    WwwFortinetComExtractor: WwwFortinetComExtractor,
-    WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
-    BlisterreviewComExtractor: BlisterreviewComExtractor,
-    NewsMynaviJpExtractor: NewsMynaviJpExtractor,
-    ClinicaltrialsGovExtractor: ClinicaltrialsGovExtractor,
-    GithubComExtractor: GithubComExtractor,
-    WwwRedditComExtractor: WwwRedditComExtractor,
-    OtrsComExtractor: OtrsComExtractor,
-    WwwOssnewsJpExtractor: WwwOssnewsJpExtractor,
-    BuzzapJpExtractor: BuzzapJpExtractor,
-    WwwAsahiComExtractor: WwwAsahiComExtractor,
-    WwwSanwaCoJpExtractor: WwwSanwaCoJpExtractor,
-    WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
-    ScanNetsecurityNeJpExtractor: ScanNetsecurityNeJpExtractor,
-    JvndbJvnJpExtractor: JvndbJvnJpExtractor,
-    GeniusComExtractor: GeniusComExtractor,
-    WwwJnsaOrgExtractor: WwwJnsaOrgExtractor,
-    PhpspotOrgExtractor: PhpspotOrgExtractor,
-    WwwInfoqComExtractor: WwwInfoqComExtractor,
-    WwwMoongiftJpExtractor: WwwMoongiftJpExtractor,
-    WwwItmediaCoJpExtractor: WwwItmediaCoJpExtractor,
-    WwwPublickey1JpExtractor: WwwPublickey1JpExtractor,
-    TakagihiromitsuJpExtractor: TakagihiromitsuJpExtractor,
-    BookwalkerJpExtractor: BookwalkerJpExtractor,
-    WwwYomiuriCoJpExtractor: WwwYomiuriCoJpExtractor,
-    JapanCnetComExtractor: JapanCnetComExtractor,
-    DeadlineComExtractor: DeadlineComExtractor,
-    WwwGizmodoJpExtractor: WwwGizmodoJpExtractor,
-    GetnewsJpExtractor: GetnewsJpExtractor,
-    WwwLifehackerJpExtractor: WwwLifehackerJpExtractor,
-    SectIijAdJpExtractor: SectIijAdJpExtractor,
-    WwwOreillyCoJpExtractor: WwwOreillyCoJpExtractor,
-    WwwIpaGoJpExtractor: WwwIpaGoJpExtractor,
-    WeeklyAsciiJpExtractor: WeeklyAsciiJpExtractor,
-    TechlogIijAdJpExtractor: TechlogIijAdJpExtractor,
-    WiredJpExtractor: WiredJpExtractor,
-    JapanZdnetComExtractor: JapanZdnetComExtractor,
-    WwwRbbtodayComExtractor: WwwRbbtodayComExtractor,
-    WwwLemondeFrExtractor: WwwLemondeFrExtractor,
-    WwwPhoronixComExtractor: WwwPhoronixComExtractor,
-    PitchforkComExtractor: PitchforkComExtractor,
-    BiorxivOrgExtractor: BiorxivOrgExtractor,
-    EpaperZeitDeExtractor: EpaperZeitDeExtractor,
-    WwwLadbibleComExtractor: WwwLadbibleComExtractor,
-    TimesofindiaIndiatimesComExtractor: TimesofindiaIndiatimesComExtractor,
-    MaTtiasBeExtractor: MaTtiasBeExtractor,
-    PastebinComExtractor: PastebinComExtractor,
-    WwwAbendblattDeExtractor: WwwAbendblattDeExtractor,
-    WwwGrueneDeExtractor: WwwGrueneDeExtractor,
+    ActualidadRtComExtractor: ActualidadRtComExtractor,
+    ApartmentTherapyExtractor: ApartmentTherapyExtractor,
     ArstechnicaComExtractor: ArstechnicaComExtractor,
-    WwwNdtvComExtractor: WwwNdtvComExtractor,
-    SpektrumExtractor: SpektrumExtractor,
-    WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
-    WwwCbcCaExtractor: WwwCbcCaExtractor,
-    WwwVersantsComExtractor: WwwVersantsComExtractor,
-    Www1pezeshkComExtractor: Www1pezeshkComExtractor,
-    WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
-    TechcrunchComExtractor: TechcrunchComExtractor,
-    WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
-    WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
-    MobilesyrupComExtractor: MobilesyrupComExtractor,
-    WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
-    WccftechComExtractor: WccftechComExtractor,
-    WwwHeiseDeExtractor: WwwHeiseDeExtractor,
-    TldrTechExtractor: TldrTechExtractor,
+    BalloonJuiceComExtractor: BalloonJuiceComExtractor,
+    BialystokSePlExtractor: BialystokSePlExtractor,
+    BiorxivOrgExtractor: BiorxivOrgExtractor,
+    BlisterreviewComExtractor: BlisterreviewComExtractor,
+    BloggerExtractor: BloggerExtractor,
+    BookwalkerJpExtractor: BookwalkerJpExtractor,
+    BroadwayWorldExtractor: BroadwayWorldExtractor,
     BskyAppExtractor: BskyAppExtractor,
-    WwwNtvDeExtractor: WwwNtvDeExtractor,
-    SportSePlExtractor: SportSePlExtractor,
-    WwwSePlExtractor: WwwSePlExtractor,
+    BuzzapJpExtractor: BuzzapJpExtractor,
+    BuzzfeedExtractor: BuzzfeedExtractor,
+    ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
+    ClinicaltrialsGovExtractor: ClinicaltrialsGovExtractor,
+    DeadlineComExtractor: DeadlineComExtractor,
+    DeadspinExtractor: DeadspinExtractor,
+    EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
+    EpaperZeitDeExtractor: EpaperZeitDeExtractor,
+    FactorioComExtractor: FactorioComExtractor,
+    FortuneComExtractor: FortuneComExtractor,
+    ForwardComExtractor: ForwardComExtractor,
+    GeniusComExtractor: GeniusComExtractor,
+    GetnewsJpExtractor: GetnewsJpExtractor,
+    GithubComExtractor: GithubComExtractor,
+    GonintendoComExtractor: GonintendoComExtractor,
+    GothamistComExtractor: GothamistComExtractor,
+    GrEuronewsComExtractor: GrEuronewsComExtractor,
+    HellogigglesComExtractor: HellogigglesComExtractor,
+    IciRadioCanadaCaExtractor: IciRadioCanadaCaExtractor,
+    JapanCnetComExtractor: JapanCnetComExtractor,
+    JapanZdnetComExtractor: JapanZdnetComExtractor,
+    JvndbJvnJpExtractor: JvndbJvnJpExtractor,
+    LittleThingsExtractor: LittleThingsExtractor,
+    LodzSePlExtractor: LodzSePlExtractor,
+    LublinSePlExtractor: LublinSePlExtractor,
+    MSNExtractor: MSNExtractor,
+    MaTtiasBeExtractor: MaTtiasBeExtractor,
+    MashableComExtractor: MashableComExtractor,
+    MediumExtractor: MediumExtractor,
+    MobilesyrupComExtractor: MobilesyrupComExtractor,
+    MoneyCnnComExtractor: MoneyCnnComExtractor,
+    NYMagExtractor: NYMagExtractor,
+    NYTimesExtractor: NYTimesExtractor,
+    NewYorkerExtractor: NewYorkerExtractor,
+    NewrepublicComExtractor: NewrepublicComExtractor,
+    NewsMynaviJpExtractor: NewsMynaviJpExtractor,
+    NewsNationalgeographicComExtractor: NewsNationalgeographicComExtractor,
+    NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
+    Nineto5googleComExtractor: Nineto5googleComExtractor,
+    Nineto5linuxComExtractor: Nineto5linuxComExtractor,
+    Nineto5macComExtractor: Nineto5macComExtractor,
+    ObamawhitehouseArchivesGovExtractor: ObamawhitehouseArchivesGovExtractor,
+    ObserverComExtractor: ObserverComExtractor,
+    OrfAtExtractor: OrfAtExtractor,
+    OtrsComExtractor: OtrsComExtractor,
+    PagesixComExtractor: PagesixComExtractor,
+    PastebinComExtractor: PastebinComExtractor,
+    PeopleComExtractor: PeopleComExtractor,
+    PhpspotOrgExtractor: PhpspotOrgExtractor,
+    PitchforkComExtractor: PitchforkComExtractor,
+    PoliticoExtractor: PoliticoExtractor,
     PolitykaSePlExtractor: PolitykaSePlExtractor,
+    PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor,
+    PortalobronnySePlExtractor: PortalobronnySePlExtractor,
+    QzComExtractor: QzComExtractor,
+    ScanNetsecurityNeJpExtractor: ScanNetsecurityNeJpExtractor,
+    ScienceflyComExtractor: ScienceflyComExtractor,
+    SectIijAdJpExtractor: SectIijAdJpExtractor,
+    SgNewsYahooComExtractor: SgNewsYahooComExtractor,
+    SpektrumExtractor: SpektrumExtractor,
+    SportSePlExtractor: SportSePlExtractor,
+    SubstackComExtractor: SubstackComExtractor,
+    SuperbizSePlExtractor: SuperbizSePlExtractor,
     SuperserialeSePlExtractor: SuperserialeSePlExtractor,
     SzczecinSePlExtractor: SzczecinSePlExtractor,
-    SuperbizSePlExtractor: SuperbizSePlExtractor,
-    PortalobronnySePlExtractor: PortalobronnySePlExtractor,
-    PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor,
-    LodzSePlExtractor: LodzSePlExtractor,
-    WroclawSePlExtractor: WroclawSePlExtractor,
-    LublinSePlExtractor: LublinSePlExtractor,
-    BialystokSePlExtractor: BialystokSePlExtractor,
-    WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
-    WwwQbitaiComExtractor: WwwQbitaiComExtractor,
-    EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
-    FactorioComExtractor: FactorioComExtractor,
-    WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
-    Nineto5googleComExtractor: Nineto5googleComExtractor,
-    WwwEngadgetComExtractor: WwwEngadgetComExtractor,
+    TakagihiromitsuJpExtractor: TakagihiromitsuJpExtractor,
     TarnkappeInfoExtractor: TarnkappeInfoExtractor,
-    WwwVortezNetExtractor: WwwVortezNetExtractor,
-    WwwPolygonComExtractor: WwwPolygonComExtractor,
-    WwwThevergeComExtractor: WwwThevergeComExtractor,
-    WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
-    WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
-    Nineto5macComExtractor: Nineto5macComExtractor,
-    WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
-    WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
-    SgNewsYahooComExtractor: SgNewsYahooComExtractor,
-    GonintendoComExtractor: GonintendoComExtractor,
-    OrfAtExtractor: OrfAtExtractor,
-    WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
-    WwwNumeramaComExtractor: WwwNumeramaComExtractor,
+    TechcrunchComExtractor: TechcrunchComExtractor,
+    TechlogIijAdJpExtractor: TechlogIijAdJpExtractor,
     TerminaltroveComExtractor: TerminaltroveComExtractor,
-    NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
-    WwwThedriveComExtractor: WwwThedriveComExtractor,
-    ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
-    WwwJalopnikComExtractor: WwwJalopnikComExtractor,
-    Nineto5linuxComExtractor: Nineto5linuxComExtractor,
-    WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
+    TheAtlanticExtractor: TheAtlanticExtractor,
+    ThefederalistpapersOrgExtractor: ThefederalistpapersOrgExtractor,
+    ThoughtcatalogComExtractor: ThoughtcatalogComExtractor,
+    TimesofindiaIndiatimesComExtractor: TimesofindiaIndiatimesComExtractor,
+    TldrTechExtractor: TldrTechExtractor,
+    TwitterExtractor: TwitterExtractor,
+    UproxxComExtractor: UproxxComExtractor,
+    WccftechComExtractor: WccftechComExtractor,
+    WeeklyAsciiJpExtractor: WeeklyAsciiJpExtractor,
+    WikiaExtractor: WikiaExtractor,
+    WikipediaExtractor: WikipediaExtractor,
+    WiredExtractor: WiredExtractor,
+    WiredJpExtractor: WiredJpExtractor,
+    WroclawSePlExtractor: WroclawSePlExtractor,
+    Www1pezeshkComExtractor: Www1pezeshkComExtractor,
+    WwwAbendblattDeExtractor: WwwAbendblattDeExtractor,
+    WwwAlComExtractor: WwwAlComExtractor,
+    WwwAmericanowComExtractor: WwwAmericanowComExtractor,
+    WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
+    WwwAndroidcentralComExtractor: WwwAndroidcentralComExtractor,
+    WwwAnimenewsnetworkComExtractor: WwwAnimenewsnetworkComExtractor,
+    WwwAolComExtractor: WwwAolComExtractor,
+    WwwAsahiComExtractor: WwwAsahiComExtractor,
     WwwBlickDeExtractor: WwwBlickDeExtractor,
+    WwwBloombergComExtractor: WwwBloombergComExtractor,
+    WwwBustleComExtractor: WwwBustleComExtractor,
+    WwwCbcCaExtractor: WwwCbcCaExtractor,
+    WwwCbssportsComExtractor: WwwCbssportsComExtractor,
+    WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
+    WwwChicagotribuneComExtractor: WwwChicagotribuneComExtractor,
+    WwwCnbcComExtractor: WwwCnbcComExtractor,
+    WwwCnetComExtractor: WwwCnetComExtractor,
+    WwwCnnComExtractor: WwwCnnComExtractor,
+    WwwDmagazineComExtractor: WwwDmagazineComExtractor,
+    WwwDwComExtractor: WwwDwComExtractor,
+    WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
+    WwwEngadgetComExtractor: WwwEngadgetComExtractor,
+    WwwEonlineComExtractor: WwwEonlineComExtractor,
     WwwEuronewsComExtractor: WwwEuronewsComExtractor,
-    GrEuronewsComExtractor: GrEuronewsComExtractor,
-    WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor
+    WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
+    WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
+    WwwFoolComExtractor: WwwFoolComExtractor,
+    WwwFortinetComExtractor: WwwFortinetComExtractor,
+    WwwFrandroidComExtractor: WwwFrandroidComExtractor,
+    WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
+    WwwGizmodoJpExtractor: WwwGizmodoJpExtractor,
+    WwwGrueneDeExtractor: WwwGrueneDeExtractor,
+    WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
+    WwwHeiseDeExtractor: WwwHeiseDeExtractor,
+    WwwHuffingtonpostComExtractor: WwwHuffingtonpostComExtractor,
+    WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor,
+    WwwInfoqComExtractor: WwwInfoqComExtractor,
+    WwwInquisitrComExtractor: WwwInquisitrComExtractor,
+    WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
+    WwwIpaGoJpExtractor: WwwIpaGoJpExtractor,
+    WwwItmediaCoJpExtractor: WwwItmediaCoJpExtractor,
+    WwwJalopnikComExtractor: WwwJalopnikComExtractor,
+    WwwJnsaOrgExtractor: WwwJnsaOrgExtractor,
+    WwwLadbibleComExtractor: WwwLadbibleComExtractor,
+    WwwLatimesComExtractor: WwwLatimesComExtractor,
+    WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
+    WwwLemondeFrExtractor: WwwLemondeFrExtractor,
+    WwwLifehackerJpExtractor: WwwLifehackerJpExtractor,
+    WwwLinkedinComExtractor: WwwLinkedinComExtractor,
+    WwwMacrumorsComExtractor: WwwMacrumorsComExtractor,
+    WwwMentalflossComExtractor: WwwMentalflossComExtractor,
+    WwwMiamiheraldComExtractor: WwwMiamiheraldComExtractor,
+    WwwMoongiftJpExtractor: WwwMoongiftJpExtractor,
+    WwwMotorsportComExtractor: WwwMotorsportComExtractor,
+    WwwMsnbcComExtractor: WwwMsnbcComExtractor,
+    WwwNationalgeographicComExtractor: WwwNationalgeographicComExtractor,
+    WwwNbcnewsComExtractor: WwwNbcnewsComExtractor,
+    WwwNdtvComExtractor: WwwNdtvComExtractor,
+    WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
+    WwwNprOrgExtractor: WwwNprOrgExtractor,
+    WwwNtvDeExtractor: WwwNtvDeExtractor,
+    WwwNumeramaComExtractor: WwwNumeramaComExtractor,
+    WwwNydailynewsComExtractor: WwwNydailynewsComExtractor,
+    WwwOpposingviewsComExtractor: WwwOpposingviewsComExtractor,
+    WwwOreillyCoJpExtractor: WwwOreillyCoJpExtractor,
+    WwwOssnewsJpExtractor: WwwOssnewsJpExtractor,
+    WwwPhoronixComExtractor: WwwPhoronixComExtractor,
+    WwwPolygonComExtractor: WwwPolygonComExtractor,
+    WwwPopsugarComExtractor: WwwPopsugarComExtractor,
+    WwwProspectmagazineCoUkExtractor: WwwProspectmagazineCoUkExtractor,
+    WwwPublickey1JpExtractor: WwwPublickey1JpExtractor,
+    WwwQbitaiComExtractor: WwwQbitaiComExtractor,
+    WwwQdailyComExtractor: WwwQdailyComExtractor,
+    WwwRawstoryComExtractor: WwwRawstoryComExtractor,
+    WwwRbbtodayComExtractor: WwwRbbtodayComExtractor,
+    WwwRecodeNetExtractor: WwwRecodeNetExtractor,
+    WwwRedditComExtractor: WwwRedditComExtractor,
+    WwwRefinery29ComExtractor: WwwRefinery29ComExtractor,
+    WwwReutersComExtractor: WwwReutersComExtractor,
+    WwwRollingstoneComExtractor: WwwRollingstoneComExtractor,
+    WwwSanwaCoJpExtractor: WwwSanwaCoJpExtractor,
+    WwwSbnationComExtractor: WwwSbnationComExtractor,
+    WwwSePlExtractor: WwwSePlExtractor,
+    WwwSiComExtractor: WwwSiComExtractor,
+    WwwSlateComExtractor: WwwSlateComExtractor,
+    WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
+    WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
+    WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
+    WwwThedriveComExtractor: WwwThedriveComExtractor,
+    WwwTheguardianComExtractor: WwwTheguardianComExtractor,
+    WwwThepennyhoarderComExtractor: WwwThepennyhoarderComExtractor,
+    WwwThepoliticalinsiderComExtractor: WwwThepoliticalinsiderComExtractor,
+    WwwThevergeComExtractor: WwwThevergeComExtractor,
+    WwwTmzComExtractor: WwwTmzComExtractor,
+    WwwTodayComExtractor: WwwTodayComExtractor,
+    WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
+    WwwTweaktownComExtractor: WwwTweaktownComExtractor,
+    WwwUsmagazineComExtractor: WwwUsmagazineComExtractor,
+    WwwVersantsComExtractor: WwwVersantsComExtractor,
+    WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
+    WwwVortezNetExtractor: WwwVortezNetExtractor,
+    WwwVoxComExtractor: WwwVoxComExtractor,
+    WwwWashingtonpostComExtractor: WwwWashingtonpostComExtractor,
+    WwwWesternjournalismComExtractor: WwwWesternjournalismComExtractor,
+    WwwYomiuriCoJpExtractor: WwwYomiuriCoJpExtractor,
+    WwwYoutubeComExtractor: WwwYoutubeComExtractor,
+    YahooExtractor: YahooExtractor,
+    twofortysevensportsComExtractor: twofortysevensportsComExtractor
   });
   function ownKeys$5(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -7786,15 +7902,15 @@ function requireMercury() {
   function _objectSpread$5(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$5(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$5(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$5(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$5(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
   }
-  var Extractors = _Object$keys__default$1["default"](CustomExtractors).reduce(function (acc, key) {
+  var Extractors = _Object$keys$1(CustomExtractors).reduce(function (acc, key) {
     var extractor = CustomExtractors[key];
     return _objectSpread$5(_objectSpread$5({}, acc), mergeSupportedDomains(extractor));
   }, {});
@@ -7862,9 +7978,9 @@ function requireMercury() {
     if (TEXT_LINK_RE.test(dekText)) return null;
     return normalizeSpaces(dekText.trim());
   }
-  dayjs__default["default"].extend(utc__default["default"]);
-  dayjs__default["default"].extend(timezonePlugin__default["default"]);
-  dayjs__default["default"].extend(customParseFormat__default["default"]);
+  dayjs.extend(utc);
+  dayjs.extend(timezonePlugin);
+  dayjs.extend(customParseFormat);
   var TIMEZONE_ABBR_RE = /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
   // Check if string contains timezone offset info (e.g., +0000, GMT+0000, Z)
   var HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
@@ -7884,53 +8000,53 @@ function requireMercury() {
   }
   function createDate(dateString, timezone, format) {
     if (TIME_WITH_OFFSET_RE.test(dateString)) {
-      return dayjs__default["default"](new Date(dateString));
+      return dayjs(new Date(dateString));
     }
     if (TIME_AGO_STRING.test(dateString)) {
       var fragments = TIME_AGO_STRING.exec(dateString);
-      return dayjs__default["default"]().subtract(fragments[1], fragments[2]);
+      return dayjs().subtract(fragments[1], fragments[2]);
     }
     if (TIME_NOW_STRING.test(dateString)) {
-      return dayjs__default["default"]();
+      return dayjs();
     }
     var stringHasTimezone = hasTimezoneInfo(dateString);
     var cleanedDateString = stripTimezoneAbbr(dateString);
     if (stringHasTimezone) {
       var _nativeDate = new Date(dateString);
-      if (!_Number$isNaN__default["default"](_nativeDate.getTime())) {
-        return dayjs__default["default"](_nativeDate);
+      if (!_Number$isNaN(_nativeDate.getTime())) {
+        return dayjs(_nativeDate);
       }
     }
     if (timezone && !stringHasTimezone) {
       if (format) {
         var cleanedFormat = stripTimezoneFromFormat(format);
         try {
-          var _parsed = dayjs__default["default"].tz(cleanedDateString, cleanedFormat, timezone);
+          var _parsed = dayjs.tz(cleanedDateString, cleanedFormat, timezone);
           if (_parsed.isValid()) return _parsed;
         } catch (_unused) {
           // Fall through
         }
       }
       var _nativeDate2 = new Date(cleanedDateString);
-      if (!_Number$isNaN__default["default"](_nativeDate2.getTime())) {
-        return dayjs__default["default"](_nativeDate2).tz(timezone, true);
+      if (!_Number$isNaN(_nativeDate2.getTime())) {
+        return dayjs(_nativeDate2).tz(timezone, true);
       }
-      var parsed = dayjs__default["default"](cleanedDateString);
+      var parsed = dayjs(cleanedDateString);
       if (parsed.isValid()) {
         return parsed.tz(timezone, true);
       }
-      return dayjs__default["default"](null);
+      return dayjs(null);
     }
     if (format) {
       var _cleanedFormat = stripTimezoneFromFormat(format);
-      var _parsed2 = dayjs__default["default"](cleanedDateString, _cleanedFormat);
+      var _parsed2 = dayjs(cleanedDateString, _cleanedFormat);
       if (_parsed2.isValid()) return _parsed2;
     }
     var nativeDate = new Date(cleanedDateString);
-    if (!_Number$isNaN__default["default"](nativeDate.getTime())) {
-      return dayjs__default["default"](nativeDate);
+    if (!_Number$isNaN(nativeDate.getTime())) {
+      return dayjs(nativeDate);
     }
-    return dayjs__default["default"](cleanedDateString);
+    return dayjs(cleanedDateString);
   }
 
   // Take a date published string, and hopefully return a date out of
@@ -7941,10 +8057,10 @@ function requireMercury() {
       format = _ref.format;
     // If string is in milliseconds or seconds, convert to int and return
     if (MS_DATE_STRING.test(dateString)) {
-      return new Date(_parseInt__default$1["default"](dateString, 10)).toISOString();
+      return new Date(_parseInt$1(dateString, 10)).toISOString();
     }
     if (SEC_DATE_STRING.test(dateString)) {
-      return new Date(_parseInt__default$1["default"](dateString, 10) * 1000).toISOString();
+      return new Date(_parseInt$1(dateString, 10) * 1000).toISOString();
     }
     var date = createDate(dateString, timezone, format);
     if (!date.isValid()) {
@@ -8018,13 +8134,13 @@ function requireMercury() {
         acc[titleText] = acc[titleText] ? acc[titleText] + 1 : 1;
         return acc;
       }, {});
-      var _Reflect$ownKeys$redu = _Reflect$ownKeys__default$1["default"](termCounts).reduce(function (acc, key) {
+      var _Reflect$ownKeys$redu = _Reflect$ownKeys$1(termCounts).reduce(function (acc, key) {
           if (acc[1] < termCounts[key]) {
             return [key, termCounts[key]];
           }
           return acc;
         }, [0, 0]),
-        _Reflect$ownKeys$redu2 = _slicedToArray__default$1["default"](_Reflect$ownKeys$redu, 2),
+        _Reflect$ownKeys$redu2 = _slicedToArray$1(_Reflect$ownKeys$redu, 2),
         maxTerm = _Reflect$ownKeys$redu2[0],
         termCount = _Reflect$ownKeys$redu2[1];
 
@@ -8053,16 +8169,16 @@ function requireMercury() {
     //
     // Strip out the big TLDs - it just makes the matching a bit more
     // accurate. Not the end of the world if it doesn't strip right.
-    var _URL$parse = URL__default$1["default"].parse(url),
+    var _URL$parse = URL$1$1.parse(url),
       host = _URL$parse.host;
     var nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
     var startSlug = splitTitle[0].toLowerCase().replace(' ', '');
-    var startSlugRatio = wuzzy__default["default"].levenshtein(startSlug, nakedDomain);
+    var startSlugRatio = wuzzy.levenshtein(startSlug, nakedDomain);
     if (startSlugRatio > 0.4 && startSlug.length > 5) {
       return splitTitle.slice(2).join('');
     }
     var endSlug = splitTitle.slice(-1)[0].toLowerCase().replace(' ', '');
-    var endSlugRatio = wuzzy__default["default"].levenshtein(endSlug, nakedDomain);
+    var endSlugRatio = wuzzy.levenshtein(endSlug, nakedDomain);
     if (endSlugRatio > 0.4 && endSlug.length >= 5) {
       return splitTitle.slice(0, -2).join('');
     }
@@ -8159,7 +8275,7 @@ function requireMercury() {
     // First, look for special hNews based selectors and give them a big
     // boost, if they exist
     HNEWS_CONTENT_SELECTORS.forEach(function (_ref) {
-      var _ref2 = _slicedToArray__default$1["default"](_ref, 2),
+      var _ref2 = _slicedToArray$1(_ref, 2),
         parentSelector = _ref2[0],
         childSelector = _ref2[1];
       $("".concat(parentSelector, " ").concat(childSelector)).each(function (index, node) {
@@ -8291,9 +8407,9 @@ function requireMercury() {
     return $topCandidate;
   }
   function _createForOfIteratorHelper$2(r, e) {
-    var t = "undefined" != typeof _Symbol__default$1["default"] && r[_Symbol$iterator__default$1["default"]] || r["@@iterator"];
+    var t = "undefined" != typeof _Symbol$1 && r[_Symbol$iterator$1] || r["@@iterator"];
     if (!t) {
-      if (_Array$isArray__default$1["default"](r) || (t = _unsupportedIterableToArray$2(r)) || e && r && "number" == typeof r.length) {
+      if (_Array$isArray$1(r) || (t = _unsupportedIterableToArray$2(r)) || e) {
         t && (r = t);
         var _n = 0,
           F = function F() {};
@@ -8301,9 +8417,9 @@ function requireMercury() {
           s: F,
           n: function n() {
             return _n >= r.length ? {
-              done: !0
+              done: true
             } : {
-              done: !1,
+              done: false,
               value: r[_n++]
             };
           },
@@ -8316,8 +8432,8 @@ function requireMercury() {
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
     var o,
-      a = !0,
-      u = !1;
+      a = true,
+      u = false;
     return {
       s: function s() {
         t = t.call(r);
@@ -8327,7 +8443,7 @@ function requireMercury() {
         return a = r.done, r;
       },
       e: function e(r) {
-        u = !0, o = r;
+        u = true, o = r;
       },
       f: function f() {
         try {
@@ -8342,7 +8458,7 @@ function requireMercury() {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray$2(r, a);
       var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default$1["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$2(r, a) : void 0;
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from$1(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$2(r, a) : void 0;
     }
   }
   function _arrayLikeToArray$2(r, a) {
@@ -8351,11 +8467,11 @@ function requireMercury() {
     return n;
   }
   function ownKeys$4(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -8363,10 +8479,10 @@ function requireMercury() {
   function _objectSpread$4(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$4(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$4(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$4(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -8413,8 +8529,7 @@ function requireMercury() {
 
       // We didn't succeed on first pass, one by one disable our
       // extraction opts and try again.
-      // eslint-disable-next-line no-restricted-syntax
-      var _iterator = _createForOfIteratorHelper$2(_Reflect$ownKeys__default$1["default"](opts).filter(function (k) {
+      var _iterator = _createForOfIteratorHelper$2(_Reflect$ownKeys$1(opts).filter(function (k) {
           return opts[k] === true;
         })),
         _step;
@@ -8541,9 +8656,9 @@ function requireMercury() {
   var bylineRe = /^[\n\s]*By/i;
   var BYLINE_SELECTORS_RE = [['#byline', bylineRe], ['.byline', bylineRe]];
   function _createForOfIteratorHelper$1(r, e) {
-    var t = "undefined" != typeof _Symbol__default$1["default"] && r[_Symbol$iterator__default$1["default"]] || r["@@iterator"];
+    var t = "undefined" != typeof _Symbol$1 && r[_Symbol$iterator$1] || r["@@iterator"];
     if (!t) {
-      if (_Array$isArray__default$1["default"](r) || (t = _unsupportedIterableToArray$1(r)) || e && r && "number" == typeof r.length) {
+      if (_Array$isArray$1(r) || (t = _unsupportedIterableToArray$1(r)) || e) {
         t && (r = t);
         var _n = 0,
           F = function F() {};
@@ -8551,9 +8666,9 @@ function requireMercury() {
           s: F,
           n: function n() {
             return _n >= r.length ? {
-              done: !0
+              done: true
             } : {
-              done: !1,
+              done: false,
               value: r[_n++]
             };
           },
@@ -8566,8 +8681,8 @@ function requireMercury() {
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
     var o,
-      a = !0,
-      u = !1;
+      a = true,
+      u = false;
     return {
       s: function s() {
         t = t.call(r);
@@ -8577,7 +8692,7 @@ function requireMercury() {
         return a = r.done, r;
       },
       e: function e(r) {
-        u = !0, o = r;
+        u = true, o = r;
       },
       f: function f() {
         try {
@@ -8592,7 +8707,7 @@ function requireMercury() {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray$1(r, a);
       var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default$1["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0;
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from$1(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0;
     }
   }
   function _arrayLikeToArray$1(r, a) {
@@ -8621,12 +8736,11 @@ function requireMercury() {
 
       // Last, use our looser regular-expression based selectors for
       // potential authors.
-      // eslint-disable-next-line no-restricted-syntax
       var _iterator = _createForOfIteratorHelper$1(BYLINE_SELECTORS_RE),
         _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = _slicedToArray__default$1["default"](_step.value, 2),
+          var _step$value = _slicedToArray$1(_step.value, 2),
             selector = _step$value[0],
             regex = _step$value[1];
           var node = $(selector);
@@ -8781,8 +8895,8 @@ function requireMercury() {
   }
   function scoreByDimensions($img) {
     var score = 0;
-    var width = _parseFloat__default$1["default"]($img.attr('width'));
-    var height = _parseFloat__default$1["default"]($img.attr('height'));
+    var width = _parseFloat$1($img.attr('width'));
+    var height = _parseFloat$1($img.attr('height'));
     var src = $img.attr('src');
 
     // Penalty for skinny images
@@ -8809,9 +8923,9 @@ function requireMercury() {
     return $imgs.length / 2 - index;
   }
   function _createForOfIteratorHelper(r, e) {
-    var t = "undefined" != typeof _Symbol__default$1["default"] && r[_Symbol$iterator__default$1["default"]] || r["@@iterator"];
+    var t = "undefined" != typeof _Symbol$1 && r[_Symbol$iterator$1] || r["@@iterator"];
     if (!t) {
-      if (_Array$isArray__default$1["default"](r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
+      if (_Array$isArray$1(r) || (t = _unsupportedIterableToArray(r)) || e) {
         t && (r = t);
         var _n = 0,
           F = function F() {};
@@ -8819,9 +8933,9 @@ function requireMercury() {
           s: F,
           n: function n() {
             return _n >= r.length ? {
-              done: !0
+              done: true
             } : {
-              done: !1,
+              done: false,
               value: r[_n++]
             };
           },
@@ -8834,8 +8948,8 @@ function requireMercury() {
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
     var o,
-      a = !0,
-      u = !1;
+      a = true,
+      u = false;
     return {
       s: function s() {
         t = t.call(r);
@@ -8845,7 +8959,7 @@ function requireMercury() {
         return a = r.done, r;
       },
       e: function e(r) {
-        u = !0, o = r;
+        u = true, o = r;
       },
       f: function f() {
         try {
@@ -8860,7 +8974,7 @@ function requireMercury() {
     if (r) {
       if ("string" == typeof r) return _arrayLikeToArray(r, a);
       var t = {}.toString.call(r).slice(8, -1);
-      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default$1["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from$1(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
     }
   }
   function _arrayLikeToArray(r, a) {
@@ -8916,10 +9030,10 @@ function requireMercury() {
         score += scoreByPosition(imgs, index);
         imgScores[src] = score;
       });
-      var _Reflect$ownKeys$redu = _Reflect$ownKeys__default$1["default"](imgScores).reduce(function (acc, key) {
+      var _Reflect$ownKeys$redu = _Reflect$ownKeys$1(imgScores).reduce(function (acc, key) {
           return imgScores[key] > acc[1] ? [key, imgScores[key]] : acc;
         }, [null, 0]),
-        _Reflect$ownKeys$redu2 = _slicedToArray__default$1["default"](_Reflect$ownKeys$redu, 2),
+        _Reflect$ownKeys$redu2 = _slicedToArray$1(_Reflect$ownKeys$redu, 2),
         topUrl = _Reflect$ownKeys$redu2[0],
         topScore = _Reflect$ownKeys$redu2[1];
       if (topScore > 0) {
@@ -8929,7 +9043,6 @@ function requireMercury() {
 
       // If nothing else worked, check to see if there are any really
       // probable nodes in the doc, like <link rel="image_src" />.
-      // eslint-disable-next-line no-restricted-syntax
       var _iterator = _createForOfIteratorHelper(LEAD_IMAGE_URL_SELECTORS),
         _step;
       try {
@@ -8967,7 +9080,7 @@ function requireMercury() {
     // sliding scale, subtract points from this link based on
     // similarity.
     if (score > 0) {
-      var similarity = new difflib__default["default"].SequenceMatcher(null, articleUrl, href).ratio();
+      var similarity = new difflib.SequenceMatcher(null, articleUrl, href).ratio();
       // Subtract .1 from diff_percent when calculating modifier,
       // which means that if it's less than 10% different, we give a
       // bonus instead. Ex:
@@ -8987,7 +9100,7 @@ function requireMercury() {
     // get scored, and sorted properly by score.
     var score = 0;
     if (IS_DIGIT_RE.test(linkText.trim())) {
-      var linkTextAsNum = _parseInt__default$1["default"](linkText, 10);
+      var linkTextAsNum = _parseInt$1(linkText, 10);
       // If it's the first page, we already got it on the first call.
       // Give it a negative score. Otherwise, up to page 10, give a
       // small bonus.
@@ -9052,7 +9165,7 @@ function requireMercury() {
     var positiveMatch = false;
     var negativeMatch = false;
     var score = 0;
-    _Array$from__default$1["default"](range(0, 4)).forEach(function () {
+    _Array$from$1(range(0, 4)).forEach(function () {
       if ($parent.length === 0) {
         return;
       }
@@ -9100,7 +9213,7 @@ function requireMercury() {
       return false;
     }
     var hostname = parsedUrl.hostname;
-    var _URL$parse = URL__default$1["default"].parse(href),
+    var _URL$parse = URL$1$1.parse(href),
       linkHost = _URL$parse.hostname;
 
     // Domain mismatch.
@@ -9171,7 +9284,7 @@ function requireMercury() {
       $ = _ref.$,
       _ref$previousUrls = _ref.previousUrls,
       previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-    parsedUrl = parsedUrl || URL__default$1["default"].parse(articleUrl);
+    parsedUrl = parsedUrl || URL$1$1.parse(articleUrl);
     var baseRegex = makeBaseRegex(baseUrl);
     var isWp = isWordpress($);
 
@@ -9222,7 +9335,7 @@ function requireMercury() {
       possiblePage.score = score;
       return possiblePages;
     }, {});
-    return _Reflect$ownKeys__default$1["default"](scoredPages).length === 0 ? null : scoredPages;
+    return _Reflect$ownKeys$1(scoredPages).length === 0 ? null : scoredPages;
   }
 
   // Looks for and returns next page url
@@ -9234,7 +9347,7 @@ function requireMercury() {
         parsedUrl = _ref.parsedUrl,
         _ref$previousUrls = _ref.previousUrls,
         previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-      parsedUrl = parsedUrl || URL__default$1["default"].parse(url);
+      parsedUrl = parsedUrl || URL$1$1.parse(url);
       var articleUrl = removeAnchor(url);
       var baseUrl = articleBaseUrl(url, parsedUrl);
       var links = $('a[href]').toArray();
@@ -9252,7 +9365,7 @@ function requireMercury() {
 
       // now that we've scored all possible pages,
       // find the biggest one.
-      var topPage = _Reflect$ownKeys__default$1["default"](scoredLinks).reduce(function (acc, link) {
+      var topPage = _Reflect$ownKeys$1(scoredLinks).reduce(function (acc, link) {
         var scoredLink = scoredLinks[link];
         return scoredLink.score > acc.score ? scoredLink : acc;
       }, {
@@ -9269,7 +9382,7 @@ function requireMercury() {
   };
   var CANONICAL_META_SELECTORS = ['og:url'];
   function parseDomain(url) {
-    var parsedUrl = URL__default$1["default"].parse(url);
+    var parsedUrl = URL$1$1.parse(url);
     var hostname = parsedUrl.hostname;
     return hostname;
   }
@@ -9339,7 +9452,7 @@ function requireMercury() {
     if (typeof str !== 'string' || str.length === 0) return '';
     if (max === 0) return '';
     opts = opts || {};
-    _Object$keys__default$1["default"](defaults).forEach(function (key) {
+    _Object$keys$1(defaults).forEach(function (key) {
       if (opts[key] === null || typeof opts[key] === 'undefined') {
         opts[key] = defaults[key];
       }
@@ -9392,11 +9505,11 @@ function requireMercury() {
     }
   };
   function ownKeys$3(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -9404,10 +9517,10 @@ function requireMercury() {
   function _objectSpread$3(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$3(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$3(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$3(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -9427,7 +9540,7 @@ function requireMercury() {
     word_count: GenericWordCountExtractor.extract,
     direction: function direction(_ref) {
       var title = _ref.title;
-      return stringDirection__default["default"].getDirection(title);
+      return stringDirection.getDirection(title);
     },
     extract: function extract(options) {
       var html = options.html,
@@ -9482,24 +9595,24 @@ function requireMercury() {
     'meta[name="generator"][value="blogger"]': BloggerExtractor
   };
   function detectByHtml($) {
-    var selector = _Reflect$ownKeys__default$1["default"](Detectors).find(function (s) {
+    var selector = _Reflect$ownKeys$1(Detectors).find(function (s) {
       return $(s).length > 0;
     });
     return Detectors[selector];
   }
   function getExtractor(url, parsedUrl, $) {
-    parsedUrl = parsedUrl || URL__default$1["default"].parse(url);
+    parsedUrl = parsedUrl || URL$1$1.parse(url);
     var _parsedUrl = parsedUrl,
       hostname = _parsedUrl.hostname;
     var baseDomain = hostname.split('.').slice(-2).join('.');
     return apiExtractors[hostname] || apiExtractors[baseDomain] || Extractors[hostname] || Extractors[baseDomain] || detectByHtml($) || GenericExtractor;
   }
   function ownKeys$2(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -9507,10 +9620,10 @@ function requireMercury() {
   function _objectSpread$2(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$2(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$2(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$2(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -9528,7 +9641,7 @@ function requireMercury() {
   function transformElements($content, $, _ref2) {
     var transforms = _ref2.transforms;
     if (!transforms) return $content;
-    _Reflect$ownKeys__default$1["default"](transforms).forEach(function (key) {
+    _Reflect$ownKeys$1(transforms).forEach(function (key) {
       var $matches = $(key, $content);
       var value = transforms[key];
 
@@ -9552,13 +9665,13 @@ function requireMercury() {
   }
   function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
     return selectors.find(function (selector) {
-      if (_Array$isArray__default$1["default"](selector)) {
+      if (_Array$isArray$1(selector)) {
         if (extractHtml) {
           return selector.reduce(function (acc, s) {
             return acc && $(s).length > 0;
           }, true);
         }
-        var _selector = _slicedToArray__default$1["default"](selector, 2),
+        var _selector = _slicedToArray$1(selector, 2),
           s = _selector[0],
           attr = _selector[1];
         return (allowMultiple || !allowMultiple && $(s).length === 1) && $(s).attr(attr) && $(s).attr(attr).trim() !== '';
@@ -9600,7 +9713,7 @@ function requireMercury() {
       // multi-match selection, which allows the parser to choose several
       // selectors to include in the result. Note that all selectors in the
       // array must match in order for this selector to trigger
-      if (_Array$isArray__default$1["default"](matchingSelector)) {
+      if (_Array$isArray$1(matchingSelector)) {
         $content = $(matchingSelector.join(','));
         var $wrapper = $('<div></div>');
         $content.each(function (_, element) {
@@ -9634,8 +9747,8 @@ function requireMercury() {
     var result;
     // if selector is an array (e.g., ['img', 'src']),
     // extract the attr
-    if (_Array$isArray__default$1["default"](matchingSelector)) {
-      var _matchingSelector = _slicedToArray__default$1["default"](matchingSelector, 3),
+    if (_Array$isArray$1(matchingSelector)) {
+      var _matchingSelector = _slicedToArray$1(matchingSelector, 3),
         selector = _matchingSelector[0],
         attr = _matchingSelector[1],
         transform = _matchingSelector[2];
@@ -9652,7 +9765,7 @@ function requireMercury() {
         return $(el).text().trim();
       });
     }
-    result = _Array$isArray__default$1["default"](result.toArray()) && allowMultiple ? result.toArray() : result[0];
+    result = _Array$isArray$1(result.toArray()) && allowMultiple ? result.toArray() : result[0];
     // Allow custom extractor to skip default cleaner
     // for this type; defaults to true
     if (defaultCleaner && Cleaners[type]) {
@@ -9662,7 +9775,7 @@ function requireMercury() {
   }
   function selectExtendedTypes(extend, opts) {
     var results = {};
-    _Reflect$ownKeys__default$1["default"](extend).forEach(function (t) {
+    _Reflect$ownKeys$1(extend).forEach(function (t) {
       if (!results[t]) {
         results[t] = select(_objectSpread$2(_objectSpread$2({}, opts), {}, {
           type: t,
@@ -9780,11 +9893,11 @@ function requireMercury() {
     }
   };
   function ownKeys$1(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -9792,10 +9905,10 @@ function requireMercury() {
   function _objectSpread$1(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys$1(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys$1(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys$1(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -9804,9 +9917,9 @@ function requireMercury() {
     return _collectAllPages.apply(this, arguments);
   }
   function _collectAllPages() {
-    _collectAllPages = _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(_ref) {
+    _collectAllPages = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(_ref) {
       var next_page_url, html, $, metaCache, result, Extractor, title, url, pages, previousUrls, extractorOpts, nextPageResult, word_count;
-      return _regeneratorRuntime__default["default"].wrap(function (_context) {
+      return _regeneratorRuntime.wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             next_page_url = _ref.next_page_url, html = _ref.html, $ = _ref.$, metaCache = _ref.metaCache, result = _ref.result, Extractor = _ref.Extractor, title = _ref.title, url = _ref.url;
@@ -9821,7 +9934,6 @@ function requireMercury() {
               break;
             }
             pages += 1;
-            // eslint-disable-next-line no-await-in-loop
             _context.next = 2;
             return Resource.create(next_page_url);
           case 2:
@@ -9862,11 +9974,11 @@ function requireMercury() {
   }
   var _excluded = ["html"];
   function ownKeys(e, r) {
-    var t = _Object$keys__default$1["default"](e);
-    if (_Object$getOwnPropertySymbols__default$1["default"]) {
-      var o = _Object$getOwnPropertySymbols__default$1["default"](e);
+    var t = _Object$keys$1(e);
+    if (_Object$getOwnPropertySymbols$1) {
+      var o = _Object$getOwnPropertySymbols$1(e);
       r && (o = o.filter(function (r) {
-        return _Object$getOwnPropertyDescriptor__default$1["default"](e, r).enumerable;
+        return _Object$getOwnPropertyDescriptor$1(e, r).enumerable;
       })), t.push.apply(t, o);
     }
     return t;
@@ -9874,10 +9986,10 @@ function requireMercury() {
   function _objectSpread(e) {
     for (var r = 1; r < arguments.length; r++) {
       var t = null != arguments[r] ? arguments[r] : {};
-      r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
-        _defineProperty__default$1["default"](e, r, t[r]);
-      }) : _Object$getOwnPropertyDescriptors__default$1["default"] ? _Object$defineProperties__default$1["default"](e, _Object$getOwnPropertyDescriptors__default$1["default"](t)) : ownKeys(Object(t)).forEach(function (r) {
-        _Object$defineProperty__default$1["default"](e, r, _Object$getOwnPropertyDescriptor__default$1["default"](t, r));
+      r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
+        _defineProperty$1(e, r, t[r]);
+      }) : _Object$getOwnPropertyDescriptors$1 ? _Object$defineProperties$1(e, _Object$getOwnPropertyDescriptors$1(t)) : ownKeys(Object(t)).forEach(function (r) {
+        _Object$defineProperty$1(e, r, _Object$getOwnPropertyDescriptor$1(t, r));
       });
     }
     return e;
@@ -9885,12 +9997,12 @@ function requireMercury() {
   var Parser = {
     parse: function parse(url) {
       var _arguments = arguments;
-      return _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
         var _ref, html, opts, _opts$fetchAllPages, fetchAllPages, _opts$fallback, fallback, _opts$contentType, contentType, _opts$headers, headers, extend, customExtractor, parsedUrl, $, Extractor, metaCache, extendedTypes, result, _result, title, next_page_url, turndownService;
-        return _regeneratorRuntime__default["default"].wrap(function (_context) {
+        return _regeneratorRuntime.wrap(function (_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _ref = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {}, html = _ref.html, opts = _objectWithoutProperties__default["default"](_ref, _excluded);
+              _ref = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {}, html = _ref.html, opts = _objectWithoutProperties(_ref, _excluded);
               _opts$fetchAllPages = opts.fetchAllPages, fetchAllPages = _opts$fetchAllPages === void 0 ? true : _opts$fetchAllPages, _opts$fallback = opts.fallback, fallback = _opts$fallback === void 0 ? true : _opts$fallback, _opts$contentType = opts.contentType, contentType = _opts$contentType === void 0 ? 'html' : _opts$contentType, _opts$headers = opts.headers, headers = _opts$headers === void 0 ? {} : _opts$headers, extend = opts.extend, customExtractor = opts.customExtractor; // if no url was passed and this is the browser version,
               // set url to window.location.href and load the html
               // from the current page
@@ -9898,7 +10010,7 @@ function requireMercury() {
                 url = window.location.href; // eslint-disable-line no-undef
                 html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
               }
-              parsedUrl = URL__default$1["default"].parse(url);
+              parsedUrl = URL$1$1.parse(url);
               if (validateUrl(parsedUrl)) {
                 _context.next = 1;
                 break;
@@ -9978,7 +10090,7 @@ function requireMercury() {
               });
             case 6:
               if (contentType === 'markdown') {
-                turndownService = new TurndownService__default["default"]();
+                turndownService = new TurndownService();
                 result.content = turndownService.turndown(result.content);
               } else if (contentType === 'text') {
                 result.content = $.text($(result.content));
@@ -10034,7 +10146,7 @@ function template(strings) {
   }
   var compiled = insertValues.apply(void 0, [strings].concat(values));
   var _ref = compiled.match(bodyPattern) || [],
-    _ref2 = _slicedToArray__default["default"](_ref, 1),
+    _ref2 = _slicedToArray(_ref, 1),
     body = _ref2[0];
   var indentLevel = /^\s{0,4}(.+)$/g;
   if (!body) {
@@ -10052,7 +10164,7 @@ function template(strings) {
 
 var _templateObject$1;
 function extractorTemplate (hostname, name) {
-  return template(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral__default["default"](["\n    export const ", " = {\n      domain: '", "',\n\n      title: {\n        selectors: [\n          // enter title selectors\n        ],\n      },\n\n      author: {\n        selectors: [\n          // enter author selectors\n        ],\n      },\n\n      date_published: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      lead_image_url: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      content: {\n        selectors: [\n          // enter content selectors\n        ],\n\n        // Is there anything in the content you selected that needs transformed\n        // before it's consumable content? E.g., unusual lazy loaded images\n        transforms: {\n        },\n\n        // Is there anything that is in the result that shouldn't be?\n        // The clean selectors will remove anything that matches from\n        // the result\n        clean: [\n\n        ]\n      },\n    }\n  "])), name, hostname);
+  return template(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n    export const ", " = {\n      domain: '", "',\n\n      title: {\n        selectors: [\n          // enter title selectors\n        ],\n      },\n\n      author: {\n        selectors: [\n          // enter author selectors\n        ],\n      },\n\n      date_published: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      lead_image_url: {\n        selectors: [\n          // enter selectors\n        ],\n      },\n\n      content: {\n        selectors: [\n          // enter content selectors\n        ],\n\n        // Is there anything in the content you selected that needs transformed\n        // before it's consumable content? E.g., unusual lazy loaded images\n        transforms: {\n        },\n\n        // Is there anything that is in the result that shouldn't be?\n        // The clean selectors will remove anything that matches from\n        // the result\n        clean: [\n\n        ]\n      },\n    }\n  "])), name, hostname);
 }
 
 var _templateObject, _templateObject2;
@@ -10061,10 +10173,10 @@ function testFor(key, value, dir) {
   if (IGNORE.find(function (k) {
     return k === key;
   })) return '';
-  return template(_templateObject || (_templateObject = _taggedTemplateLiteral__default["default"](["\n  it('returns the ", "', async () => {\n            // To pass this test, fill out the ", " selector\n            // in ", "/index.js.\n            const { ", " } = await result\n\n            // Update these values with the expected values from\n            // the article.\n            assert.strictEqual(", ", ", ")\n          });\n    "])), key, key, dir, key, key, value ? "`".concat(value, "`") : "''");
+  return template(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  it('returns the ", "', async () => {\n            // To pass this test, fill out the ", " selector\n            // in ", "/index.js.\n            const { ", " } = await result\n\n            // Update these values with the expected values from\n            // the article.\n            assert.strictEqual(", ", ", ")\n          });\n    "])), key, key, dir, key, key, value ? "`".concat(value, "`") : "''");
 }
 function extractorTestTemplate (file, url, dir, result, name) {
-  return template(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral__default["default"](["\n    import assert from 'assert';\n    import * as cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, new URL(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from the article.\n          // Add the first 13 words of the article here\n          assert.strictEqual(first13, null);\n        });\n      });\n    });\n  "])), name, url, file, _Reflect$ownKeys__default["default"](result).map(function (k) {
+  return template(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    import assert from 'assert';\n    import * as cheerio from 'cheerio';\n\n    import Parser from 'mercury';\n    import getExtractor from 'extractors/get-extractor';\n    import { excerptContent } from 'utils/text';\n\n    const fs = require('fs');\n\n    describe('", "', () => {\n      describe('initial test case', () => {\n        let result;\n        let url;\n        beforeAll(() => {\n          url =\n            '", "';\n          const html =\n            fs.readFileSync('", "');\n          result =\n            Parser.parse(url, { html, fallback: false });\n        });\n\n        it('is selected properly', () => {\n          // This test should be passing by default.\n          // It sanity checks that the correct parser\n          // is being selected for URLs from this domain\n          const extractor = getExtractor(url);\n          assert.strictEqual(extractor.domain, new URL(url).hostname)\n        })\n\n          ", "\n\n        it('returns the content', async () => {\n          // To pass this test, fill out the content selector\n          // in ", "/index.js.\n          // You may also want to make use of the clean and transform\n          // options.\n          const { content } = await result;\n\n          const $ = cheerio.load(content || '');\n\n          const first13 = excerptContent($('*').first().text(), 13)\n\n          // Update these values with the expected values from the article.\n          // Add the first 13 words of the article here\n          assert.strictEqual(first13, null);\n        });\n      });\n    });\n  "])), name, url, file, _Reflect$ownKeys(result).map(function (k) {
     return testFor(k, result[k], dir);
   }).join('\n\n'), dir);
 }
@@ -10082,11 +10194,11 @@ var questions = [{
 }];
 var spinner;
 function confirm(fn, args, msg, newParser) {
-  spinner = ora__default["default"]({
+  spinner = ora({
     text: msg
   });
   spinner.start();
-  var result = fn.apply(void 0, _toConsumableArray__default["default"](args));
+  var result = fn.apply(void 0, _toConsumableArray(args));
   if (result && result.then) {
     result.then(function (r) {
       if (r && r.error) {
@@ -10106,8 +10218,8 @@ function confirm(fn, args, msg, newParser) {
   return result;
 }
 function confirmCreateDir(dir, msg) {
-  if (!fs__default["default"].existsSync(dir)) {
-    confirm(fs__default["default"].mkdirSync, [dir], msg);
+  if (!fs.existsSync(dir)) {
+    confirm(fs.mkdirSync, [dir], msg);
   }
 }
 function getDir(url) {
@@ -10120,7 +10232,7 @@ function scaffoldCustomParser(url) {
   var _URL3 = new URL(url),
     hostname = _URL3.hostname;
   var newParser = false;
-  if (!fs__default["default"].existsSync(dir)) {
+  if (!fs.existsSync(dir)) {
     newParser = true;
     confirmCreateDir(dir, "Creating ".concat(hostname, " directory"));
     confirmCreateDir("./fixtures/".concat(hostname), 'Creating fixtures directory');
@@ -10133,7 +10245,7 @@ var urlArg = process.argv[2];
 if (urlArg) {
   scaffoldCustomParser(urlArg);
 } else {
-  inquirer__default["default"].prompt(questions).then(function (answers) {
+  inquirer.prompt(questions).then(function (answers) {
     scaffoldCustomParser(answers.website);
   });
 }
@@ -10142,13 +10254,13 @@ function generateScaffold(url, file, result) {
     hostname = _URL4.hostname;
   var extractor = extractorTemplate(hostname, extractorName(hostname));
   var extractorTest = extractorTestTemplate(file, url, getDir(url), result, extractorName(hostname));
-  fs__default["default"].writeFileSync("".concat(getDir(url), "/index.js"), extractor);
-  fs__default["default"].writeFileSync("".concat(getDir(url), "/index.test.js"), extractorTest);
-  fs__default["default"].appendFileSync('./src/extractors/custom/index.js', exportString(url));
+  fs.writeFileSync("".concat(getDir(url), "/index.js"), extractor);
+  fs.writeFileSync("".concat(getDir(url), "/index.test.js"), extractorTest);
+  fs.appendFileSync('./src/extractors/custom/index.js', exportString(url));
   child_process.exec("npm run lint-fix-quiet -- ".concat(getDir(url), "/*.js"));
 }
 function savePage($, _ref, newParser) {
-  var _ref2 = _slicedToArray__default["default"](_ref, 1),
+  var _ref2 = _slicedToArray(_ref, 1),
     url = _ref2[0];
   var _URL5 = new URL(url),
     hostname = _URL5.hostname;
@@ -10165,7 +10277,7 @@ function savePage($, _ref, newParser) {
     }
   });
   var html = stripJunkTags($('*').first(), $, ['script']).html();
-  fs__default["default"].writeFileSync(file, html);
+  fs.writeFileSync(file, html);
   Parser.parse(url, {
     html: html
   }).then(function (result) {

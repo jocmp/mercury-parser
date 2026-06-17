@@ -36,10 +36,7 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 var wuzzy = require('wuzzy');
 var difflib = require('difflib');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-function _interopNamespace(e) {
-  if (e && e.__esModule) return e;
+function _interopNamespaceDefault(e) {
   var n = Object.create(null);
   if (e) {
     Object.keys(e).forEach(function (k) {
@@ -52,45 +49,11 @@ function _interopNamespace(e) {
       }
     });
   }
-  n["default"] = e;
+  n.default = e;
   return Object.freeze(n);
 }
 
-var _Object$keys__default = /*#__PURE__*/_interopDefaultLegacy(_Object$keys);
-var _Object$getOwnPropertySymbols__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertySymbols);
-var _Object$getOwnPropertyDescriptor__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptor);
-var _Object$getOwnPropertyDescriptors__default = /*#__PURE__*/_interopDefaultLegacy(_Object$getOwnPropertyDescriptors);
-var _Object$defineProperties__default = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperties);
-var _Object$defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_Object$defineProperty);
-var _defineProperty__default = /*#__PURE__*/_interopDefaultLegacy(_defineProperty);
-var _objectWithoutProperties__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutProperties);
-var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
-var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
-var URL__default = /*#__PURE__*/_interopDefaultLegacy(URL$1);
-var TurndownService__default = /*#__PURE__*/_interopDefaultLegacy(TurndownService);
-var cheerio__namespace = /*#__PURE__*/_interopNamespace(cheerio);
-var iconv__default = /*#__PURE__*/_interopDefaultLegacy(iconv);
-var _parseInt__default = /*#__PURE__*/_interopDefaultLegacy(_parseInt);
-var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
-var _Promise__default = /*#__PURE__*/_interopDefaultLegacy(_Promise);
-var request__default = /*#__PURE__*/_interopDefaultLegacy(request);
-var _Reflect$ownKeys__default = /*#__PURE__*/_interopDefaultLegacy(_Reflect$ownKeys);
-var _toConsumableArray__default = /*#__PURE__*/_interopDefaultLegacy(_toConsumableArray);
-var _parseFloat__default = /*#__PURE__*/_interopDefaultLegacy(_parseFloat);
-var _Set__default = /*#__PURE__*/_interopDefaultLegacy(_Set);
-var _Array$from__default = /*#__PURE__*/_interopDefaultLegacy(_Array$from);
-var _Symbol__default = /*#__PURE__*/_interopDefaultLegacy(_Symbol);
-var _Symbol$iterator__default = /*#__PURE__*/_interopDefaultLegacy(_Symbol$iterator);
-var _Array$isArray__default = /*#__PURE__*/_interopDefaultLegacy(_Array$isArray);
-var _Object$assign__default = /*#__PURE__*/_interopDefaultLegacy(_Object$assign);
-var stringDirection__default = /*#__PURE__*/_interopDefaultLegacy(stringDirection);
-var _Number$isNaN__default = /*#__PURE__*/_interopDefaultLegacy(_Number$isNaN);
-var dayjs__default = /*#__PURE__*/_interopDefaultLegacy(dayjs);
-var utc__default = /*#__PURE__*/_interopDefaultLegacy(utc);
-var timezonePlugin__default = /*#__PURE__*/_interopDefaultLegacy(timezonePlugin);
-var customParseFormat__default = /*#__PURE__*/_interopDefaultLegacy(customParseFormat);
-var wuzzy__default = /*#__PURE__*/_interopDefaultLegacy(wuzzy);
-var difflib__default = /*#__PURE__*/_interopDefaultLegacy(difflib);
+var cheerio__namespace = /*#__PURE__*/_interopNamespaceDefault(cheerio);
 
 var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
 function normalizeSpaces(text) {
@@ -138,7 +101,7 @@ var DEFAULT_ENCODING = 'utf-8';
 function pageNumFromUrl(url) {
   var matches = url.match(PAGE_IN_HREF_RE);
   if (!matches) return null;
-  var pageNum = _parseInt__default["default"](matches[6], 10);
+  var pageNum = _parseInt(matches[6], 10);
 
   // Return pageNum < 100, otherwise
   // return null
@@ -176,7 +139,7 @@ function isGoodSegment(segment, index, firstSegmentHasLetters) {
 // pagination data exists in it. Useful for comparing to other links
 // that might have pagination data within them.
 function articleBaseUrl(url, parsed) {
-  var parsedUrl = parsed || URL__default["default"].parse(url);
+  var parsedUrl = parsed || URL$1.parse(url);
   var protocol = parsedUrl.protocol,
     host = parsedUrl.host,
     path = parsedUrl.path;
@@ -187,7 +150,7 @@ function articleBaseUrl(url, parsed) {
     // Split off and save anything that looks like a file type.
     if (segment.includes('.')) {
       var _segment$split = segment.split('.'),
-        _segment$split2 = _slicedToArray__default["default"](_segment$split, 2),
+        _segment$split2 = _slicedToArray(_segment$split, 2),
         possibleSegment = _segment$split2[0],
         fileExt = _segment$split2[1];
       if (IS_ALPHA_RE.test(fileExt)) {
@@ -237,10 +200,10 @@ function getEncoding(str) {
   var encoding = DEFAULT_ENCODING;
   var matches = ENCODING_RE.exec(str);
   if (matches !== null) {
-    var _matches = _slicedToArray__default["default"](matches, 2);
+    var _matches = _slicedToArray(matches, 2);
     str = _matches[1];
   }
-  if (iconv__default["default"].encodingExists(str)) {
+  if (iconv.encodingExists(str)) {
     encoding = str;
   }
   return encoding;
@@ -266,11 +229,11 @@ var BAD_CONTENT_TYPES_RE = new RegExp("^(".concat(BAD_CONTENT_TYPES.join('|'), "
 // for us to attempt parsing. Defaults to 5 MB.
 var MAX_CONTENT_LENGTH = 5242880;
 
-function ownKeys$h(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$h(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$h(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$h(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$h(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 function get(options) {
-  return new _Promise__default["default"](function (resolve, reject) {
-    request__default["default"](options, function (err, response, body) {
+  return new _Promise(function (resolve, reject) {
+    request(options, function (err, response, body) {
       if (err) {
         reject(err);
       } else {
@@ -329,7 +292,7 @@ function fetchResource(_x, _x2) {
   return _fetchResource.apply(this, arguments);
 }
 function _fetchResource() {
-  _fetchResource = _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(url, parsedUrl) {
+  _fetchResource = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(url, parsedUrl) {
     var headers,
       options,
       _yield$get,
@@ -337,11 +300,11 @@ function _fetchResource() {
       body,
       _args = arguments,
       _t;
-    return _regeneratorRuntime__default["default"].wrap(function (_context) {
+    return _regeneratorRuntime.wrap(function (_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-          parsedUrl = parsedUrl || URL__default["default"].parse(encodeURI(url));
+          parsedUrl = parsedUrl || URL$1.parse(encodeURI(url));
           options = _objectSpread$h({
             url: parsedUrl.href,
             headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
@@ -603,7 +566,7 @@ function getAttrs(node) {
   var attribs = node.attribs,
     attributes = node.attributes;
   if (!attribs && attributes) {
-    var attrs = _Reflect$ownKeys__default["default"](attributes).reduce(function (acc, index) {
+    var attrs = _Reflect$ownKeys(attributes).reduce(function (acc, index) {
       var attr = attributes[index];
 
       // In browser, Reflect.ownKeys includes non-numeric keys like 'length', 'item', etc.
@@ -623,7 +586,7 @@ function convertNodeTo($node, $) {
     return $;
   }
   var attrs = getAttrs(node) || {};
-  var attribString = _Reflect$ownKeys__default["default"](attrs).map(function (key) {
+  var attribString = _Reflect$ownKeys(attrs).map(function (key) {
     return "".concat(key, "=").concat(attrs[key]);
   }).join(' ');
   var html;
@@ -682,8 +645,8 @@ function convertToParagraphs($) {
 }
 
 function cleanForHeight($img, $) {
-  var height = _parseInt__default["default"]($img.attr('height'), 10);
-  var width = _parseInt__default["default"]($img.attr('width'), 10) || 20;
+  var height = _parseInt($img.attr('height'), 10);
+  var width = _parseInt($img.attr('width'), 10) || 20;
 
   // Remove images that explicitly have very small heights or
   // widths, because they are most likely shims or icons,
@@ -722,10 +685,10 @@ function markToKeep(article, $, url) {
     tags = KEEP_SELECTORS;
   }
   if (url) {
-    var _URL$parse = URL__default["default"].parse(url),
+    var _URL$parse = URL$1.parse(url),
       protocol = _URL$parse.protocol,
       hostname = _URL$parse.hostname;
-    tags = [].concat(_toConsumableArray__default["default"](tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
+    tags = [].concat(_toConsumableArray(tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
   }
   $(tags.join(','), article).addClass(KEEP_CLASS);
   return $;
@@ -767,21 +730,21 @@ function setAttrs(node, attrs) {
     while (node.attributes.length > 0) {
       node.removeAttribute(node.attributes[0].name);
     }
-    _Reflect$ownKeys__default["default"](attrs).forEach(function (key) {
+    _Reflect$ownKeys(attrs).forEach(function (key) {
       node.setAttribute(key, attrs[key]);
     });
   }
   return node;
 }
 
-function ownKeys$g(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$g(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$g(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 function removeAllButWhitelist($article, $) {
   $article.find('*').each(function (index, node) {
     var attrs = getAttrs(node);
-    setAttrs(node, _Reflect$ownKeys__default["default"](attrs).reduce(function (acc, attr) {
+    setAttrs(node, _Reflect$ownKeys(attrs).reduce(function (acc, attr) {
       if (WHITELIST_ATTRS_RE.test(attr)) {
-        return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty__default["default"]({}, attr, attrs[attr]));
+        return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty({}, attr, attrs[attr]));
       }
       return acc;
     }, {}));
@@ -812,7 +775,7 @@ function removeEmpty($article, $) {
 // the node's score attribute
 // returns null if no score set
 function getScore($node) {
-  return _parseFloat__default["default"]($node.attr('score')) || null;
+  return _parseFloat($node.attr('score')) || null;
 }
 
 function setScore($node, $, score) {
@@ -877,6 +840,7 @@ function scoreParagraph(node) {
 }
 
 // // CONTENT FETCHING CONSTANTS ////
+
 
 // A list of tags that should be ignored when trying to find the top candidate
 // for a document.
@@ -996,7 +960,7 @@ function getWeight(node) {
   return score;
 }
 
-// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import-x/no-cycle
 function addScore($node, $, amount) {
   try {
     var score = getOrInitScore($node, $) + amount;
@@ -1007,7 +971,7 @@ function addScore($node, $, amount) {
   return $node;
 }
 
-// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import-x/no-cycle
 
 // Adds 1/4 of a child's score to its parent
 function addToParent(node, $, score) {
@@ -1204,7 +1168,7 @@ function absolutize($, rootUrl, attr) {
     var attrs = getAttrs(node);
     var url = attrs[attr];
     if (!url) return;
-    var absoluteUrl = URL__default["default"].resolve(baseUrl || rootUrl, url);
+    var absoluteUrl = URL$1.resolve(baseUrl || rootUrl, url);
     setAttr(node, attr, absoluteUrl);
   });
 }
@@ -1222,10 +1186,10 @@ function absolutizeSet($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL__default["default"].resolve(rootUrl, parts[0]);
+        parts[0] = URL$1.resolve(rootUrl, parts[0]);
         return parts.join(' ');
       });
-      var absoluteUrlSet = _toConsumableArray__default["default"](new _Set__default["default"](absoluteCandidates)).join(', ');
+      var absoluteUrlSet = _toConsumableArray(new _Set(absoluteCandidates)).join(', ');
       setAttr(node, 'srcset', absoluteUrlSet);
     }
   });
@@ -1246,8 +1210,8 @@ function stripTags(text, $) {
   return cleanText === '' ? text : cleanText;
 }
 
-function _createForOfIteratorHelper$4(r, e) { var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"]; if (!t) { if (_Array$isArray__default["default"](r) || (t = _unsupportedIterableToArray$4(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$4(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$4(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0; } }
+function _createForOfIteratorHelper$4(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$4(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$4(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$4(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0; } }
 function _arrayLikeToArray$4(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 // Given a node type to search for, and a list of meta tag names to
@@ -1257,8 +1221,6 @@ function extractFromMeta($, metaNames, cachedNames) {
   var foundNames = metaNames.filter(function (name) {
     return cachedNames.indexOf(name) !== -1;
   });
-
-  // eslint-disable-next-line no-restricted-syntax
   var _iterator = _createForOfIteratorHelper$4(foundNames),
     _step;
   try {
@@ -1288,7 +1250,7 @@ function extractFromMeta($, metaNames, cachedNames) {
           if (cleanTags) {
             metaValue = stripTags(values[0], $);
           } else {
-            var _values = _slicedToArray__default["default"](values, 1);
+            var _values = _slicedToArray(values, 1);
             metaValue = _values[0];
           }
           return {
@@ -1323,8 +1285,8 @@ function withinComment($node) {
   return commentParent !== undefined;
 }
 
-function _createForOfIteratorHelper$3(r, e) { var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"]; if (!t) { if (_Array$isArray__default["default"](r) || (t = _unsupportedIterableToArray$3(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$3(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$3(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0; } }
+function _createForOfIteratorHelper$3(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$3(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$3(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$3(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0; } }
 function _arrayLikeToArray$3(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function isGoodNode($node, maxChildren) {
   // If it has a number of children, it's more likely a container
@@ -1345,7 +1307,6 @@ function isGoodNode($node, maxChildren) {
 function extractFromSelectors($, selectors) {
   var maxChildren = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var textOnly = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  // eslint-disable-next-line no-restricted-syntax
   var _iterator = _createForOfIteratorHelper$3(selectors),
     _step;
   try {
@@ -1414,7 +1375,7 @@ function convertLazyLoadedImages($) {
   };
   $('img').each(function (_, img) {
     var attrs = getAttrs(img);
-    _Reflect$ownKeys__default["default"](attrs).forEach(function (attr) {
+    _Reflect$ownKeys(attrs).forEach(function (attr) {
       var value = attrs[attr];
       if (attr !== 'srcset' && IS_LINK.test(value) && IS_SRCSET.test(value)) {
         $(img).attr('srcset', value);
@@ -1456,9 +1417,9 @@ var Resource = {
   create: function create(url, preparedResponse, parsedUrl) {
     var _arguments = arguments,
       _this = this;
-    return _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
+    return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
       var headers, result, validResponse;
-      return _regeneratorRuntime__default["default"].wrap(function (_context) {
+      return _regeneratorRuntime.wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             headers = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : {};
@@ -1538,7 +1499,7 @@ var Resource = {
     }
     var encoding = getEncoding(contentType);
     // UTF-8 is handled natively by Node.js, skip iconv-lite
-    var decodedContent = encoding === 'utf-8' ? content.toString('utf-8') : iconv__default["default"].decode(content, encoding);
+    var decodedContent = encoding === 'utf-8' ? content.toString('utf-8') : iconv.decode(content, encoding);
     var $ = cheerio__namespace.load(decodedContent);
     // after first cheerio.load, check to see if encoding matches
     var contentTypeSelector = isBrowser ? 'meta[http-equiv=content-type]' : 'meta[http-equiv=content-type i]';
@@ -1547,7 +1508,7 @@ var Resource = {
 
     // if encodings in the header/body dont match, use the one in the body
     if (metaContentType && properEncoding !== encoding) {
-      decodedContent = properEncoding === 'utf-8' ? content.toString('utf-8') : iconv__default["default"].decode(content, properEncoding);
+      decodedContent = properEncoding === 'utf-8' ? content.toString('utf-8') : iconv.decode(content, properEncoding);
       $ = cheerio__namespace.load(decodedContent);
     }
     return $;
@@ -1557,8 +1518,8 @@ var Resource = {
 function range() {
   var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
   var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  return /*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
-    return _regeneratorRuntime__default["default"].wrap(function (_context) {
+  return /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+    return _regeneratorRuntime.wrap(function (_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!(start <= end)) {
@@ -1592,7 +1553,7 @@ var merge = function merge(extractor, domains) {
   }, {});
 };
 function mergeSupportedDomains(extractor) {
-  return extractor.supportedDomains ? merge(extractor, [extractor.domain].concat(_toConsumableArray__default["default"](extractor.supportedDomains))) : merge(extractor, [extractor.domain]);
+  return extractor.supportedDomains ? merge(extractor, [extractor.domain].concat(_toConsumableArray(extractor.supportedDomains))) : merge(extractor, [extractor.domain]);
 }
 
 var apiExtractors = {};
@@ -1603,7 +1564,7 @@ function addExtractor(extractor) {
       message: 'Unable to add custom extractor. Invalid parameters.'
     };
   }
-  _Object$assign__default["default"](apiExtractors, mergeSupportedDomains(extractor));
+  _Object$assign(apiExtractors, mergeSupportedDomains(extractor));
   return apiExtractors;
 }
 
@@ -2313,7 +2274,7 @@ var MediumExtractor = {
         var $parent = $node.parents('figure');
         if (ytRe.test(thumb)) {
           var _thumb$match = thumb.match(ytRe),
-            _thumb$match2 = _slicedToArray__default["default"](_thumb$match, 2);
+            _thumb$match2 = _slicedToArray(_thumb$match, 2);
             _thumb$match2[0];
             var youtubeId = _thumb$match2[1]; // eslint-disable-line
           $node.attr('src', "https://www.youtube.com/embed/".concat(youtubeId));
@@ -2336,7 +2297,7 @@ var MediumExtractor = {
       // Remove any smaller images that did not get caught by the generic image
       // cleaner (author photo 48px, leading sentence images 79px, etc.).
       img: function img($node) {
-        var width = _parseInt__default["default"]($node.attr('width'), 10);
+        var width = _parseInt($node.attr('width'), 10);
         if (width < 100) $node.remove();
       }
     },
@@ -3231,7 +3192,7 @@ var WwwMsnbcComExtractor = {
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '.pane-node-body': function paneNodeBody($node, $) {
-        var _WwwMsnbcComExtractor = _slicedToArray__default["default"](WwwMsnbcComExtractor.lead_image_url.selectors[0], 2),
+        var _WwwMsnbcComExtractor = _slicedToArray(WwwMsnbcComExtractor.lead_image_url.selectors[0], 2),
           selector = _WwwMsnbcComExtractor[0],
           attr = _WwwMsnbcComExtractor[1];
         var src = $(selector).attr(attr);
@@ -5380,7 +5341,7 @@ var WiredJpExtractor = {
       'img[data-original]': function imgDataOriginal($node) {
         var dataOriginal = $node.attr('data-original');
         var src = $node.attr('src');
-        var url = URL__default["default"].resolve(src, dataOriginal);
+        var url = URL$1.resolve(src, dataOriginal);
         $node.attr('src', url);
       }
     },
@@ -5684,8 +5645,6 @@ var PastebinComExtractor = {
   }
 };
 
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-expressions */
 var WwwAbendblattDeExtractor = {
   domain: 'www.abendblatt.de',
   title: {
@@ -6304,14 +6263,14 @@ var WwwSePlExtractor = {
   }
 };
 
-function ownKeys$f(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$f(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$f(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$f(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$f(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$f(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var SportSePlExtractor = _objectSpread$f(_objectSpread$f({}, WwwSePlExtractor), {}, {
   domain: 'sport.se.pl'
 });
 
-function ownKeys$e(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$e(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$e(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$e(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$e(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$e(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$e(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$e(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var PolitykaSePlExtractor = _objectSpread$e(_objectSpread$e({}, WwwSePlExtractor), {}, {
   domain: 'polityka.se.pl'
 });
@@ -6344,20 +6303,20 @@ var SuperserialeSePlExtractor = {
   }
 };
 
-function ownKeys$d(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$d(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$d(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$d(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$d(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$d(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var SzczecinSePlExtractor = _objectSpread$d(_objectSpread$d({}, WwwSePlExtractor), {}, {
   domain: 'szczecin.se.pl'
 });
 
-function ownKeys$c(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$c(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$c(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$c(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$c(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$c(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$c(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var SuperbizSePlExtractor = _objectSpread$c(_objectSpread$c({}, WwwSePlExtractor), {}, {
   domain: 'superbiz.se.pl'
 });
 
-function ownKeys$b(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$b(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$b(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$b(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$b(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$b(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$b(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var PortalobronnySePlExtractor = _objectSpread$b(_objectSpread$b({}, WwwSePlExtractor), {}, {
   domain: 'portalobronny.se.pl'
 });
@@ -6384,26 +6343,26 @@ var PolskisamorzadSePlExtractor = {
   }
 };
 
-function ownKeys$a(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$a(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$a(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$a(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$a(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$a(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var LodzSePlExtractor = _objectSpread$a(_objectSpread$a({}, WwwSePlExtractor), {}, {
   domain: 'lodz.se.pl'
 });
 
-function ownKeys$9(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$9(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$9(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$9(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$9(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$9(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$9(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$9(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var WroclawSePlExtractor = _objectSpread$9(_objectSpread$9({}, WwwSePlExtractor), {}, {
   domain: 'wroclaw.se.pl'
 });
 
-function ownKeys$8(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$8(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$8(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$8(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$8(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$8(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$8(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var LublinSePlExtractor = _objectSpread$8(_objectSpread$8({}, WwwSePlExtractor), {}, {
   domain: 'lublin.se.pl'
 });
 
-function ownKeys$7(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$7(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$7(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$7(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$7(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$7(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$7(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var BialystokSePlExtractor = _objectSpread$7(_objectSpread$7({}, WwwSePlExtractor), {}, {
   domain: 'bialystok.se.pl'
 });
@@ -6659,7 +6618,7 @@ var WwwPolygonComExtractor = {
       img: function img($node) {
         var srcset = $node.attr('srcset');
         var _split = (srcset || '').split(','),
-          _split2 = _slicedToArray__default["default"](_split, 1),
+          _split2 = _slicedToArray(_split, 1),
           src = _split2[0];
         if (src) {
           $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
@@ -6699,7 +6658,7 @@ var WwwThevergeComExtractor = {
       img: function img($node) {
         var srcset = $node.attr('srcset');
         var _split = (srcset || '').split(','),
-          _split2 = _slicedToArray__default["default"](_split, 1),
+          _split2 = _slicedToArray(_split, 1),
           src = _split2[0];
         if (src) {
           $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
@@ -7233,8 +7192,8 @@ var WwwEuronewsComExtractor = {
   }
 };
 
-function ownKeys$6(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$6(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$6(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$6(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$6(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var GrEuronewsComExtractor = _objectSpread$6(_objectSpread$6({}, WwwEuronewsComExtractor), {}, {
   domain: 'gr.euronews.com'
 });
@@ -7264,211 +7223,426 @@ var WwwIlfattoquotidianoItExtractor = {
   }
 };
 
+var ActualidadRtComExtractor = {
+  domain: 'actualidad.rt.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="article:author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="mediator_published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.ArticleView-text'],
+    transforms: {},
+    // RT wraps each <img> in a <picture> whose <source> elements carry a
+    // base64 placeholder srcset; browsers honor that over the real <img src>,
+    // so drop the sources and let the <img> (real URL) render.
+    clean: ['.ReadMore-root', 'source']
+  }
+};
+
+var WwwTweaktownComExtractor = {
+  domain: 'www.tweaktown.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.info-bar-div2 a[rel="author"]']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['#article-body'],
+    transforms: {},
+    clean: []
+  }
+};
+
+var WwwFrandroidComExtractor = {
+  domain: 'www.frandroid.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="parsely-author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['section.article-content'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      },
+      h3: function h3(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['.index-menu-wrapper', '.is-gastric-kingfisher', '.newsletter-form', '.share', '.article-footer', '.js-feed-posts', '.optidigital-adslot', '[id^="optidigital-adslot"]']
+  }
+};
+
+var WwwMotorsportComExtractor = {
+  domain: 'www.motorsport.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.msnt-author-toolbar a[href*="/info/about-us/"]']
+  },
+  date_published: {
+    selectors: [['meta[name="datePublished"]', 'value']]
+  },
+  dek: {
+    selectors: ['h2.text-article-description']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.ms-article-content'],
+    transforms: {
+      h2: function h2(node) {
+        return node.attr('class', 'mercury-parser-keep');
+      }
+    },
+    clean: ['msnt-survey-promo', '.article-fullwidth-gallery_item ~ .article-fullwidth-gallery_item', '.ms-inarticle-widgets', '.relatedContent', '.ms-apb', '.ms-ap-native', '.outstream_partner']
+  }
+};
+
+var SubstackComExtractor = {
+  domain: 'substack.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.available-content'],
+    transforms: {
+      'div.captioned-image-container': 'figure',
+      'div.image-link': function divImageLink($node) {
+        $node.replaceWith($node.find('img'));
+      }
+    },
+    clean: ['.subscribe-widget', '.subscription-widget-wrap', '.subscription-widget-wrap-editor', '.button-wrapper', '.poll-embed', '.share-dialog']
+  }
+};
+
+var WwwDwComExtractor = {
+  domain: 'www.dw.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.author-name .author-link']
+  },
+  date_published: {
+    selectors: [['meta[name="date"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['[data-tracking-name="rich-text"]'],
+    transforms: {
+      // DW inline images are responsive: the real template lives in data-url
+      // with a literal ${formatId} size token that JS would replace, leaving a
+      // broken src in the raw HTML. Resolve it to a standard content size.
+      img: function img(node) {
+        var template = node.attr('data-url') || node.attr('src') || '';
+        if (template.includes('${formatId}')) {
+          node.attr('src', template.replace('${formatId}', '6'));
+        }
+      }
+    },
+    // Embedded tweets are non-functional fallback markup without JS.
+    clean: ['blockquote.tweet.embed']
+  }
+};
+
+var WwwAnimenewsnetworkComExtractor = {
+  domain: 'www.animenewsnetwork.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: null,
+  date_published: {
+    selectors: [['small time', 'datetime']]
+  },
+  dek: {
+    selectors: [['meta[name="description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.KonaBody'],
+    transforms: {
+      // Images are lazy-loaded: real URL in data-src, a spacer.gif in src.
+      // Promote data-src so the images survive cleaning and render.
+      img: function img(node) {
+        var dataSrc = node.attr('data-src');
+        if (dataSrc) {
+          var src = dataSrc.startsWith('/') ? "https://www.animenewsnetwork.com".concat(dataSrc) : dataSrc;
+          node.attr('src', src);
+          node.removeAttr('data-src');
+        }
+      }
+    },
+    // .intro duplicates the dek; instaread-player is an audio widget.
+    clean: ['.intro', 'instaread-player']
+  }
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  BalloonJuiceComExtractor: BalloonJuiceComExtractor,
-  BloggerExtractor: BloggerExtractor,
-  NYMagExtractor: NYMagExtractor,
-  WikipediaExtractor: WikipediaExtractor,
-  TwitterExtractor: TwitterExtractor,
-  NYTimesExtractor: NYTimesExtractor,
-  TheAtlanticExtractor: TheAtlanticExtractor,
-  NewYorkerExtractor: NewYorkerExtractor,
-  WiredExtractor: WiredExtractor,
-  MSNExtractor: MSNExtractor,
-  YahooExtractor: YahooExtractor,
-  BuzzfeedExtractor: BuzzfeedExtractor,
-  WikiaExtractor: WikiaExtractor,
-  LittleThingsExtractor: LittleThingsExtractor,
-  PoliticoExtractor: PoliticoExtractor,
-  DeadspinExtractor: DeadspinExtractor,
-  BroadwayWorldExtractor: BroadwayWorldExtractor,
-  ApartmentTherapyExtractor: ApartmentTherapyExtractor,
-  MediumExtractor: MediumExtractor,
-  WwwTmzComExtractor: WwwTmzComExtractor,
-  WwwWashingtonpostComExtractor: WwwWashingtonpostComExtractor,
-  WwwHuffingtonpostComExtractor: WwwHuffingtonpostComExtractor,
-  NewrepublicComExtractor: NewrepublicComExtractor,
-  MoneyCnnComExtractor: MoneyCnnComExtractor,
-  WwwCnnComExtractor: WwwCnnComExtractor,
-  WwwAolComExtractor: WwwAolComExtractor,
-  WwwYoutubeComExtractor: WwwYoutubeComExtractor,
-  WwwTheguardianComExtractor: WwwTheguardianComExtractor,
-  WwwSbnationComExtractor: WwwSbnationComExtractor,
-  WwwBloombergComExtractor: WwwBloombergComExtractor,
-  WwwBustleComExtractor: WwwBustleComExtractor,
-  WwwNprOrgExtractor: WwwNprOrgExtractor,
-  WwwRecodeNetExtractor: WwwRecodeNetExtractor,
-  QzComExtractor: QzComExtractor,
-  WwwDmagazineComExtractor: WwwDmagazineComExtractor,
-  WwwReutersComExtractor: WwwReutersComExtractor,
-  MashableComExtractor: MashableComExtractor,
-  WwwChicagotribuneComExtractor: WwwChicagotribuneComExtractor,
-  WwwVoxComExtractor: WwwVoxComExtractor,
-  NewsNationalgeographicComExtractor: NewsNationalgeographicComExtractor,
-  WwwNationalgeographicComExtractor: WwwNationalgeographicComExtractor,
-  WwwLatimesComExtractor: WwwLatimesComExtractor,
-  PagesixComExtractor: PagesixComExtractor,
-  ThefederalistpapersOrgExtractor: ThefederalistpapersOrgExtractor,
-  WwwCbssportsComExtractor: WwwCbssportsComExtractor,
-  WwwMsnbcComExtractor: WwwMsnbcComExtractor,
-  WwwThepoliticalinsiderComExtractor: WwwThepoliticalinsiderComExtractor,
-  WwwMentalflossComExtractor: WwwMentalflossComExtractor,
   AbcnewsGoComExtractor: AbcnewsGoComExtractor,
-  WwwNydailynewsComExtractor: WwwNydailynewsComExtractor,
-  WwwCnbcComExtractor: WwwCnbcComExtractor,
-  WwwPopsugarComExtractor: WwwPopsugarComExtractor,
-  ObserverComExtractor: ObserverComExtractor,
-  PeopleComExtractor: PeopleComExtractor,
-  WwwUsmagazineComExtractor: WwwUsmagazineComExtractor,
-  WwwRollingstoneComExtractor: WwwRollingstoneComExtractor,
-  twofortysevensportsComExtractor: twofortysevensportsComExtractor,
-  UproxxComExtractor: UproxxComExtractor,
-  WwwEonlineComExtractor: WwwEonlineComExtractor,
-  WwwMiamiheraldComExtractor: WwwMiamiheraldComExtractor,
-  WwwRefinery29ComExtractor: WwwRefinery29ComExtractor,
-  WwwMacrumorsComExtractor: WwwMacrumorsComExtractor,
-  WwwAndroidcentralComExtractor: WwwAndroidcentralComExtractor,
-  WwwSiComExtractor: WwwSiComExtractor,
-  WwwRawstoryComExtractor: WwwRawstoryComExtractor,
-  WwwCnetComExtractor: WwwCnetComExtractor,
-  WwwTodayComExtractor: WwwTodayComExtractor,
-  WwwAlComExtractor: WwwAlComExtractor,
-  WwwThepennyhoarderComExtractor: WwwThepennyhoarderComExtractor,
-  WwwWesternjournalismComExtractor: WwwWesternjournalismComExtractor,
-  WwwAmericanowComExtractor: WwwAmericanowComExtractor,
-  ScienceflyComExtractor: ScienceflyComExtractor,
-  HellogigglesComExtractor: HellogigglesComExtractor,
-  ThoughtcatalogComExtractor: ThoughtcatalogComExtractor,
-  WwwInquisitrComExtractor: WwwInquisitrComExtractor,
-  WwwNbcnewsComExtractor: WwwNbcnewsComExtractor,
-  FortuneComExtractor: FortuneComExtractor,
-  WwwLinkedinComExtractor: WwwLinkedinComExtractor,
-  ObamawhitehouseArchivesGovExtractor: ObamawhitehouseArchivesGovExtractor,
-  WwwOpposingviewsComExtractor: WwwOpposingviewsComExtractor,
-  WwwProspectmagazineCoUkExtractor: WwwProspectmagazineCoUkExtractor,
-  ForwardComExtractor: ForwardComExtractor,
-  WwwQdailyComExtractor: WwwQdailyComExtractor,
-  GothamistComExtractor: GothamistComExtractor,
-  WwwFoolComExtractor: WwwFoolComExtractor,
-  WwwSlateComExtractor: WwwSlateComExtractor,
-  IciRadioCanadaCaExtractor: IciRadioCanadaCaExtractor,
-  WwwFortinetComExtractor: WwwFortinetComExtractor,
-  WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
-  BlisterreviewComExtractor: BlisterreviewComExtractor,
-  NewsMynaviJpExtractor: NewsMynaviJpExtractor,
-  ClinicaltrialsGovExtractor: ClinicaltrialsGovExtractor,
-  GithubComExtractor: GithubComExtractor,
-  WwwRedditComExtractor: WwwRedditComExtractor,
-  OtrsComExtractor: OtrsComExtractor,
-  WwwOssnewsJpExtractor: WwwOssnewsJpExtractor,
-  BuzzapJpExtractor: BuzzapJpExtractor,
-  WwwAsahiComExtractor: WwwAsahiComExtractor,
-  WwwSanwaCoJpExtractor: WwwSanwaCoJpExtractor,
-  WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
-  ScanNetsecurityNeJpExtractor: ScanNetsecurityNeJpExtractor,
-  JvndbJvnJpExtractor: JvndbJvnJpExtractor,
-  GeniusComExtractor: GeniusComExtractor,
-  WwwJnsaOrgExtractor: WwwJnsaOrgExtractor,
-  PhpspotOrgExtractor: PhpspotOrgExtractor,
-  WwwInfoqComExtractor: WwwInfoqComExtractor,
-  WwwMoongiftJpExtractor: WwwMoongiftJpExtractor,
-  WwwItmediaCoJpExtractor: WwwItmediaCoJpExtractor,
-  WwwPublickey1JpExtractor: WwwPublickey1JpExtractor,
-  TakagihiromitsuJpExtractor: TakagihiromitsuJpExtractor,
-  BookwalkerJpExtractor: BookwalkerJpExtractor,
-  WwwYomiuriCoJpExtractor: WwwYomiuriCoJpExtractor,
-  JapanCnetComExtractor: JapanCnetComExtractor,
-  DeadlineComExtractor: DeadlineComExtractor,
-  WwwGizmodoJpExtractor: WwwGizmodoJpExtractor,
-  GetnewsJpExtractor: GetnewsJpExtractor,
-  WwwLifehackerJpExtractor: WwwLifehackerJpExtractor,
-  SectIijAdJpExtractor: SectIijAdJpExtractor,
-  WwwOreillyCoJpExtractor: WwwOreillyCoJpExtractor,
-  WwwIpaGoJpExtractor: WwwIpaGoJpExtractor,
-  WeeklyAsciiJpExtractor: WeeklyAsciiJpExtractor,
-  TechlogIijAdJpExtractor: TechlogIijAdJpExtractor,
-  WiredJpExtractor: WiredJpExtractor,
-  JapanZdnetComExtractor: JapanZdnetComExtractor,
-  WwwRbbtodayComExtractor: WwwRbbtodayComExtractor,
-  WwwLemondeFrExtractor: WwwLemondeFrExtractor,
-  WwwPhoronixComExtractor: WwwPhoronixComExtractor,
-  PitchforkComExtractor: PitchforkComExtractor,
-  BiorxivOrgExtractor: BiorxivOrgExtractor,
-  EpaperZeitDeExtractor: EpaperZeitDeExtractor,
-  WwwLadbibleComExtractor: WwwLadbibleComExtractor,
-  TimesofindiaIndiatimesComExtractor: TimesofindiaIndiatimesComExtractor,
-  MaTtiasBeExtractor: MaTtiasBeExtractor,
-  PastebinComExtractor: PastebinComExtractor,
-  WwwAbendblattDeExtractor: WwwAbendblattDeExtractor,
-  WwwGrueneDeExtractor: WwwGrueneDeExtractor,
+  ActualidadRtComExtractor: ActualidadRtComExtractor,
+  ApartmentTherapyExtractor: ApartmentTherapyExtractor,
   ArstechnicaComExtractor: ArstechnicaComExtractor,
-  WwwNdtvComExtractor: WwwNdtvComExtractor,
-  SpektrumExtractor: SpektrumExtractor,
-  WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
-  WwwCbcCaExtractor: WwwCbcCaExtractor,
-  WwwVersantsComExtractor: WwwVersantsComExtractor,
-  Www1pezeshkComExtractor: Www1pezeshkComExtractor,
-  WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
-  TechcrunchComExtractor: TechcrunchComExtractor,
-  WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
-  WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
-  MobilesyrupComExtractor: MobilesyrupComExtractor,
-  WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
-  WccftechComExtractor: WccftechComExtractor,
-  WwwHeiseDeExtractor: WwwHeiseDeExtractor,
-  TldrTechExtractor: TldrTechExtractor,
+  BalloonJuiceComExtractor: BalloonJuiceComExtractor,
+  BialystokSePlExtractor: BialystokSePlExtractor,
+  BiorxivOrgExtractor: BiorxivOrgExtractor,
+  BlisterreviewComExtractor: BlisterreviewComExtractor,
+  BloggerExtractor: BloggerExtractor,
+  BookwalkerJpExtractor: BookwalkerJpExtractor,
+  BroadwayWorldExtractor: BroadwayWorldExtractor,
   BskyAppExtractor: BskyAppExtractor,
-  WwwNtvDeExtractor: WwwNtvDeExtractor,
-  SportSePlExtractor: SportSePlExtractor,
-  WwwSePlExtractor: WwwSePlExtractor,
+  BuzzapJpExtractor: BuzzapJpExtractor,
+  BuzzfeedExtractor: BuzzfeedExtractor,
+  ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
+  ClinicaltrialsGovExtractor: ClinicaltrialsGovExtractor,
+  DeadlineComExtractor: DeadlineComExtractor,
+  DeadspinExtractor: DeadspinExtractor,
+  EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
+  EpaperZeitDeExtractor: EpaperZeitDeExtractor,
+  FactorioComExtractor: FactorioComExtractor,
+  FortuneComExtractor: FortuneComExtractor,
+  ForwardComExtractor: ForwardComExtractor,
+  GeniusComExtractor: GeniusComExtractor,
+  GetnewsJpExtractor: GetnewsJpExtractor,
+  GithubComExtractor: GithubComExtractor,
+  GonintendoComExtractor: GonintendoComExtractor,
+  GothamistComExtractor: GothamistComExtractor,
+  GrEuronewsComExtractor: GrEuronewsComExtractor,
+  HellogigglesComExtractor: HellogigglesComExtractor,
+  IciRadioCanadaCaExtractor: IciRadioCanadaCaExtractor,
+  JapanCnetComExtractor: JapanCnetComExtractor,
+  JapanZdnetComExtractor: JapanZdnetComExtractor,
+  JvndbJvnJpExtractor: JvndbJvnJpExtractor,
+  LittleThingsExtractor: LittleThingsExtractor,
+  LodzSePlExtractor: LodzSePlExtractor,
+  LublinSePlExtractor: LublinSePlExtractor,
+  MSNExtractor: MSNExtractor,
+  MaTtiasBeExtractor: MaTtiasBeExtractor,
+  MashableComExtractor: MashableComExtractor,
+  MediumExtractor: MediumExtractor,
+  MobilesyrupComExtractor: MobilesyrupComExtractor,
+  MoneyCnnComExtractor: MoneyCnnComExtractor,
+  NYMagExtractor: NYMagExtractor,
+  NYTimesExtractor: NYTimesExtractor,
+  NewYorkerExtractor: NewYorkerExtractor,
+  NewrepublicComExtractor: NewrepublicComExtractor,
+  NewsMynaviJpExtractor: NewsMynaviJpExtractor,
+  NewsNationalgeographicComExtractor: NewsNationalgeographicComExtractor,
+  NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
+  Nineto5googleComExtractor: Nineto5googleComExtractor,
+  Nineto5linuxComExtractor: Nineto5linuxComExtractor,
+  Nineto5macComExtractor: Nineto5macComExtractor,
+  ObamawhitehouseArchivesGovExtractor: ObamawhitehouseArchivesGovExtractor,
+  ObserverComExtractor: ObserverComExtractor,
+  OrfAtExtractor: OrfAtExtractor,
+  OtrsComExtractor: OtrsComExtractor,
+  PagesixComExtractor: PagesixComExtractor,
+  PastebinComExtractor: PastebinComExtractor,
+  PeopleComExtractor: PeopleComExtractor,
+  PhpspotOrgExtractor: PhpspotOrgExtractor,
+  PitchforkComExtractor: PitchforkComExtractor,
+  PoliticoExtractor: PoliticoExtractor,
   PolitykaSePlExtractor: PolitykaSePlExtractor,
+  PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor,
+  PortalobronnySePlExtractor: PortalobronnySePlExtractor,
+  QzComExtractor: QzComExtractor,
+  ScanNetsecurityNeJpExtractor: ScanNetsecurityNeJpExtractor,
+  ScienceflyComExtractor: ScienceflyComExtractor,
+  SectIijAdJpExtractor: SectIijAdJpExtractor,
+  SgNewsYahooComExtractor: SgNewsYahooComExtractor,
+  SpektrumExtractor: SpektrumExtractor,
+  SportSePlExtractor: SportSePlExtractor,
+  SubstackComExtractor: SubstackComExtractor,
+  SuperbizSePlExtractor: SuperbizSePlExtractor,
   SuperserialeSePlExtractor: SuperserialeSePlExtractor,
   SzczecinSePlExtractor: SzczecinSePlExtractor,
-  SuperbizSePlExtractor: SuperbizSePlExtractor,
-  PortalobronnySePlExtractor: PortalobronnySePlExtractor,
-  PolskisamorzadSePlExtractor: PolskisamorzadSePlExtractor,
-  LodzSePlExtractor: LodzSePlExtractor,
-  WroclawSePlExtractor: WroclawSePlExtractor,
-  LublinSePlExtractor: LublinSePlExtractor,
-  BialystokSePlExtractor: BialystokSePlExtractor,
-  WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
-  WwwQbitaiComExtractor: WwwQbitaiComExtractor,
-  EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
-  FactorioComExtractor: FactorioComExtractor,
-  WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
-  Nineto5googleComExtractor: Nineto5googleComExtractor,
-  WwwEngadgetComExtractor: WwwEngadgetComExtractor,
+  TakagihiromitsuJpExtractor: TakagihiromitsuJpExtractor,
   TarnkappeInfoExtractor: TarnkappeInfoExtractor,
-  WwwVortezNetExtractor: WwwVortezNetExtractor,
-  WwwPolygonComExtractor: WwwPolygonComExtractor,
-  WwwThevergeComExtractor: WwwThevergeComExtractor,
-  WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
-  WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
-  Nineto5macComExtractor: Nineto5macComExtractor,
-  WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
-  WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
-  SgNewsYahooComExtractor: SgNewsYahooComExtractor,
-  GonintendoComExtractor: GonintendoComExtractor,
-  OrfAtExtractor: OrfAtExtractor,
-  WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
-  WwwNumeramaComExtractor: WwwNumeramaComExtractor,
+  TechcrunchComExtractor: TechcrunchComExtractor,
+  TechlogIijAdJpExtractor: TechlogIijAdJpExtractor,
   TerminaltroveComExtractor: TerminaltroveComExtractor,
-  NewsPtsOrgTwExtractor: NewsPtsOrgTwExtractor,
-  WwwThedriveComExtractor: WwwThedriveComExtractor,
-  ChicagoyimbyComExtractor: ChicagoyimbyComExtractor,
-  WwwJalopnikComExtractor: WwwJalopnikComExtractor,
-  Nineto5linuxComExtractor: Nineto5linuxComExtractor,
-  WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
+  TheAtlanticExtractor: TheAtlanticExtractor,
+  ThefederalistpapersOrgExtractor: ThefederalistpapersOrgExtractor,
+  ThoughtcatalogComExtractor: ThoughtcatalogComExtractor,
+  TimesofindiaIndiatimesComExtractor: TimesofindiaIndiatimesComExtractor,
+  TldrTechExtractor: TldrTechExtractor,
+  TwitterExtractor: TwitterExtractor,
+  UproxxComExtractor: UproxxComExtractor,
+  WccftechComExtractor: WccftechComExtractor,
+  WeeklyAsciiJpExtractor: WeeklyAsciiJpExtractor,
+  WikiaExtractor: WikiaExtractor,
+  WikipediaExtractor: WikipediaExtractor,
+  WiredExtractor: WiredExtractor,
+  WiredJpExtractor: WiredJpExtractor,
+  WroclawSePlExtractor: WroclawSePlExtractor,
+  Www1pezeshkComExtractor: Www1pezeshkComExtractor,
+  WwwAbendblattDeExtractor: WwwAbendblattDeExtractor,
+  WwwAlComExtractor: WwwAlComExtractor,
+  WwwAmericanowComExtractor: WwwAmericanowComExtractor,
+  WwwAndroidauthorityComExtractor: WwwAndroidauthorityComExtractor,
+  WwwAndroidcentralComExtractor: WwwAndroidcentralComExtractor,
+  WwwAnimenewsnetworkComExtractor: WwwAnimenewsnetworkComExtractor,
+  WwwAolComExtractor: WwwAolComExtractor,
+  WwwAsahiComExtractor: WwwAsahiComExtractor,
   WwwBlickDeExtractor: WwwBlickDeExtractor,
+  WwwBloombergComExtractor: WwwBloombergComExtractor,
+  WwwBustleComExtractor: WwwBustleComExtractor,
+  WwwCbcCaExtractor: WwwCbcCaExtractor,
+  WwwCbssportsComExtractor: WwwCbssportsComExtractor,
+  WwwChannelnewsasiaComExtractor: WwwChannelnewsasiaComExtractor,
+  WwwChicagotribuneComExtractor: WwwChicagotribuneComExtractor,
+  WwwCnbcComExtractor: WwwCnbcComExtractor,
+  WwwCnetComExtractor: WwwCnetComExtractor,
+  WwwCnnComExtractor: WwwCnnComExtractor,
+  WwwDmagazineComExtractor: WwwDmagazineComExtractor,
+  WwwDwComExtractor: WwwDwComExtractor,
+  WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
+  WwwEngadgetComExtractor: WwwEngadgetComExtractor,
+  WwwEonlineComExtractor: WwwEonlineComExtractor,
   WwwEuronewsComExtractor: WwwEuronewsComExtractor,
-  GrEuronewsComExtractor: GrEuronewsComExtractor,
-  WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor
+  WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
+  WwwFlatpanelshdComExtractor: WwwFlatpanelshdComExtractor,
+  WwwFoolComExtractor: WwwFoolComExtractor,
+  WwwFortinetComExtractor: WwwFortinetComExtractor,
+  WwwFrandroidComExtractor: WwwFrandroidComExtractor,
+  WwwFuturaSciencesComExtractor: WwwFuturaSciencesComExtractor,
+  WwwGizmodoJpExtractor: WwwGizmodoJpExtractor,
+  WwwGrueneDeExtractor: WwwGrueneDeExtractor,
+  WwwHardwarezoneComSgExtractor: WwwHardwarezoneComSgExtractor,
+  WwwHeiseDeExtractor: WwwHeiseDeExtractor,
+  WwwHuffingtonpostComExtractor: WwwHuffingtonpostComExtractor,
+  WwwIlfattoquotidianoItExtractor: WwwIlfattoquotidianoItExtractor,
+  WwwInfoqComExtractor: WwwInfoqComExtractor,
+  WwwInquisitrComExtractor: WwwInquisitrComExtractor,
+  WwwInvestmentexecutiveComExtractor: WwwInvestmentexecutiveComExtractor,
+  WwwIpaGoJpExtractor: WwwIpaGoJpExtractor,
+  WwwItmediaCoJpExtractor: WwwItmediaCoJpExtractor,
+  WwwJalopnikComExtractor: WwwJalopnikComExtractor,
+  WwwJnsaOrgExtractor: WwwJnsaOrgExtractor,
+  WwwLadbibleComExtractor: WwwLadbibleComExtractor,
+  WwwLatimesComExtractor: WwwLatimesComExtractor,
+  WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
+  WwwLemondeFrExtractor: WwwLemondeFrExtractor,
+  WwwLifehackerJpExtractor: WwwLifehackerJpExtractor,
+  WwwLinkedinComExtractor: WwwLinkedinComExtractor,
+  WwwMacrumorsComExtractor: WwwMacrumorsComExtractor,
+  WwwMentalflossComExtractor: WwwMentalflossComExtractor,
+  WwwMiamiheraldComExtractor: WwwMiamiheraldComExtractor,
+  WwwMoongiftJpExtractor: WwwMoongiftJpExtractor,
+  WwwMotorsportComExtractor: WwwMotorsportComExtractor,
+  WwwMsnbcComExtractor: WwwMsnbcComExtractor,
+  WwwNationalgeographicComExtractor: WwwNationalgeographicComExtractor,
+  WwwNbcnewsComExtractor: WwwNbcnewsComExtractor,
+  WwwNdtvComExtractor: WwwNdtvComExtractor,
+  WwwNotebookcheckNetExtractor: WwwNotebookcheckNetExtractor,
+  WwwNprOrgExtractor: WwwNprOrgExtractor,
+  WwwNtvDeExtractor: WwwNtvDeExtractor,
+  WwwNumeramaComExtractor: WwwNumeramaComExtractor,
+  WwwNydailynewsComExtractor: WwwNydailynewsComExtractor,
+  WwwOpposingviewsComExtractor: WwwOpposingviewsComExtractor,
+  WwwOreillyCoJpExtractor: WwwOreillyCoJpExtractor,
+  WwwOssnewsJpExtractor: WwwOssnewsJpExtractor,
+  WwwPhoronixComExtractor: WwwPhoronixComExtractor,
+  WwwPolygonComExtractor: WwwPolygonComExtractor,
+  WwwPopsugarComExtractor: WwwPopsugarComExtractor,
+  WwwProspectmagazineCoUkExtractor: WwwProspectmagazineCoUkExtractor,
+  WwwPublickey1JpExtractor: WwwPublickey1JpExtractor,
+  WwwQbitaiComExtractor: WwwQbitaiComExtractor,
+  WwwQdailyComExtractor: WwwQdailyComExtractor,
+  WwwRawstoryComExtractor: WwwRawstoryComExtractor,
+  WwwRbbtodayComExtractor: WwwRbbtodayComExtractor,
+  WwwRecodeNetExtractor: WwwRecodeNetExtractor,
+  WwwRedditComExtractor: WwwRedditComExtractor,
+  WwwRefinery29ComExtractor: WwwRefinery29ComExtractor,
+  WwwReutersComExtractor: WwwReutersComExtractor,
+  WwwRollingstoneComExtractor: WwwRollingstoneComExtractor,
+  WwwSanwaCoJpExtractor: WwwSanwaCoJpExtractor,
+  WwwSbnationComExtractor: WwwSbnationComExtractor,
+  WwwSePlExtractor: WwwSePlExtractor,
+  WwwSiComExtractor: WwwSiComExtractor,
+  WwwSlateComExtractor: WwwSlateComExtractor,
+  WwwSpiegelDeExtractor: WwwSpiegelDeExtractor,
+  WwwTagesschauDeExtractor: WwwTagesschauDeExtractor,
+  WwwTechpowerupComExtractor: WwwTechpowerupComExtractor,
+  WwwThedriveComExtractor: WwwThedriveComExtractor,
+  WwwTheguardianComExtractor: WwwTheguardianComExtractor,
+  WwwThepennyhoarderComExtractor: WwwThepennyhoarderComExtractor,
+  WwwThepoliticalinsiderComExtractor: WwwThepoliticalinsiderComExtractor,
+  WwwThevergeComExtractor: WwwThevergeComExtractor,
+  WwwTmzComExtractor: WwwTmzComExtractor,
+  WwwTodayComExtractor: WwwTodayComExtractor,
+  WwwTransfermarktDeExtractor: WwwTransfermarktDeExtractor,
+  WwwTweaktownComExtractor: WwwTweaktownComExtractor,
+  WwwUsmagazineComExtractor: WwwUsmagazineComExtractor,
+  WwwVersantsComExtractor: WwwVersantsComExtractor,
+  WwwVideogameschronicleComExtractor: WwwVideogameschronicleComExtractor,
+  WwwVortezNetExtractor: WwwVortezNetExtractor,
+  WwwVoxComExtractor: WwwVoxComExtractor,
+  WwwWashingtonpostComExtractor: WwwWashingtonpostComExtractor,
+  WwwWesternjournalismComExtractor: WwwWesternjournalismComExtractor,
+  WwwYomiuriCoJpExtractor: WwwYomiuriCoJpExtractor,
+  WwwYoutubeComExtractor: WwwYoutubeComExtractor,
+  YahooExtractor: YahooExtractor,
+  twofortysevensportsComExtractor: twofortysevensportsComExtractor
 });
 
-function ownKeys$5(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$5(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
-var Extractors = _Object$keys__default["default"](CustomExtractors).reduce(function (acc, key) {
+function ownKeys$5(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
+var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
   var extractor = CustomExtractors[key];
   return _objectSpread$5(_objectSpread$5({}, acc), mergeSupportedDomains(extractor));
 }, {});
@@ -7538,9 +7712,9 @@ function cleanDek(dek, _ref) {
   return normalizeSpaces(dekText.trim());
 }
 
-dayjs__default["default"].extend(utc__default["default"]);
-dayjs__default["default"].extend(timezonePlugin__default["default"]);
-dayjs__default["default"].extend(customParseFormat__default["default"]);
+dayjs.extend(utc);
+dayjs.extend(timezonePlugin);
+dayjs.extend(customParseFormat);
 var TIMEZONE_ABBR_RE = /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
 // Check if string contains timezone offset info (e.g., +0000, GMT+0000, Z)
 var HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
@@ -7560,53 +7734,53 @@ function cleanDateString(dateString) {
 }
 function createDate(dateString, timezone, format) {
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
-    return dayjs__default["default"](new Date(dateString));
+    return dayjs(new Date(dateString));
   }
   if (TIME_AGO_STRING.test(dateString)) {
     var fragments = TIME_AGO_STRING.exec(dateString);
-    return dayjs__default["default"]().subtract(fragments[1], fragments[2]);
+    return dayjs().subtract(fragments[1], fragments[2]);
   }
   if (TIME_NOW_STRING.test(dateString)) {
-    return dayjs__default["default"]();
+    return dayjs();
   }
   var stringHasTimezone = hasTimezoneInfo(dateString);
   var cleanedDateString = stripTimezoneAbbr(dateString);
   if (stringHasTimezone) {
     var _nativeDate = new Date(dateString);
-    if (!_Number$isNaN__default["default"](_nativeDate.getTime())) {
-      return dayjs__default["default"](_nativeDate);
+    if (!_Number$isNaN(_nativeDate.getTime())) {
+      return dayjs(_nativeDate);
     }
   }
   if (timezone && !stringHasTimezone) {
     if (format) {
       var cleanedFormat = stripTimezoneFromFormat(format);
       try {
-        var _parsed = dayjs__default["default"].tz(cleanedDateString, cleanedFormat, timezone);
+        var _parsed = dayjs.tz(cleanedDateString, cleanedFormat, timezone);
         if (_parsed.isValid()) return _parsed;
       } catch (_unused) {
         // Fall through
       }
     }
     var _nativeDate2 = new Date(cleanedDateString);
-    if (!_Number$isNaN__default["default"](_nativeDate2.getTime())) {
-      return dayjs__default["default"](_nativeDate2).tz(timezone, true);
+    if (!_Number$isNaN(_nativeDate2.getTime())) {
+      return dayjs(_nativeDate2).tz(timezone, true);
     }
-    var parsed = dayjs__default["default"](cleanedDateString);
+    var parsed = dayjs(cleanedDateString);
     if (parsed.isValid()) {
       return parsed.tz(timezone, true);
     }
-    return dayjs__default["default"](null);
+    return dayjs(null);
   }
   if (format) {
     var _cleanedFormat = stripTimezoneFromFormat(format);
-    var _parsed2 = dayjs__default["default"](cleanedDateString, _cleanedFormat);
+    var _parsed2 = dayjs(cleanedDateString, _cleanedFormat);
     if (_parsed2.isValid()) return _parsed2;
   }
   var nativeDate = new Date(cleanedDateString);
-  if (!_Number$isNaN__default["default"](nativeDate.getTime())) {
-    return dayjs__default["default"](nativeDate);
+  if (!_Number$isNaN(nativeDate.getTime())) {
+    return dayjs(nativeDate);
   }
-  return dayjs__default["default"](cleanedDateString);
+  return dayjs(cleanedDateString);
 }
 
 // Take a date published string, and hopefully return a date out of
@@ -7617,10 +7791,10 @@ function cleanDatePublished(dateString) {
     format = _ref.format;
   // If string is in milliseconds or seconds, convert to int and return
   if (MS_DATE_STRING.test(dateString)) {
-    return new Date(_parseInt__default["default"](dateString, 10)).toISOString();
+    return new Date(_parseInt(dateString, 10)).toISOString();
   }
   if (SEC_DATE_STRING.test(dateString)) {
-    return new Date(_parseInt__default["default"](dateString, 10) * 1000).toISOString();
+    return new Date(_parseInt(dateString, 10) * 1000).toISOString();
   }
   var date = createDate(dateString, timezone, format);
   if (!date.isValid()) {
@@ -7695,13 +7869,13 @@ function extractBreadcrumbTitle(splitTitle, text) {
       acc[titleText] = acc[titleText] ? acc[titleText] + 1 : 1;
       return acc;
     }, {});
-    var _Reflect$ownKeys$redu = _Reflect$ownKeys__default["default"](termCounts).reduce(function (acc, key) {
+    var _Reflect$ownKeys$redu = _Reflect$ownKeys(termCounts).reduce(function (acc, key) {
         if (acc[1] < termCounts[key]) {
           return [key, termCounts[key]];
         }
         return acc;
       }, [0, 0]),
-      _Reflect$ownKeys$redu2 = _slicedToArray__default["default"](_Reflect$ownKeys$redu, 2),
+      _Reflect$ownKeys$redu2 = _slicedToArray(_Reflect$ownKeys$redu, 2),
       maxTerm = _Reflect$ownKeys$redu2[0],
       termCount = _Reflect$ownKeys$redu2[1];
 
@@ -7730,16 +7904,16 @@ function cleanDomainFromTitle(splitTitle, url) {
   //
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
-  var _URL$parse = URL__default["default"].parse(url),
+  var _URL$parse = URL$1.parse(url),
     host = _URL$parse.host;
   var nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
   var startSlug = splitTitle[0].toLowerCase().replace(' ', '');
-  var startSlugRatio = wuzzy__default["default"].levenshtein(startSlug, nakedDomain);
+  var startSlugRatio = wuzzy.levenshtein(startSlug, nakedDomain);
   if (startSlugRatio > 0.4 && startSlug.length > 5) {
     return splitTitle.slice(2).join('');
   }
   var endSlug = splitTitle.slice(-1)[0].toLowerCase().replace(' ', '');
-  var endSlugRatio = wuzzy__default["default"].levenshtein(endSlug, nakedDomain);
+  var endSlugRatio = wuzzy.levenshtein(endSlug, nakedDomain);
   if (endSlugRatio > 0.4 && endSlug.length >= 5) {
     return splitTitle.slice(0, -2).join('');
   }
@@ -7839,7 +8013,7 @@ function scoreContent($) {
   // First, look for special hNews based selectors and give them a big
   // boost, if they exist
   HNEWS_CONTENT_SELECTORS.forEach(function (_ref) {
-    var _ref2 = _slicedToArray__default["default"](_ref, 2),
+    var _ref2 = _slicedToArray(_ref, 2),
       parentSelector = _ref2[0],
       childSelector = _ref2[1];
     $("".concat(parentSelector, " ").concat(childSelector)).each(function (index, node) {
@@ -7971,11 +8145,11 @@ function extractBestNode($, opts) {
   return $topCandidate;
 }
 
-function _createForOfIteratorHelper$2(r, e) { var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"]; if (!t) { if (_Array$isArray__default["default"](r) || (t = _unsupportedIterableToArray$2(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$2(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$2(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$2(r, a) : void 0; } }
+function _createForOfIteratorHelper$2(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$2(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$2(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$2(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$2(r, a) : void 0; } }
 function _arrayLikeToArray$2(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function ownKeys$4(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$4(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$4(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var GenericContentExtractor = {
   defaultOpts: {
     stripUnlikelyCandidates: true,
@@ -8018,8 +8192,7 @@ var GenericContentExtractor = {
 
     // We didn't succeed on first pass, one by one disable our
     // extraction opts and try again.
-    // eslint-disable-next-line no-restricted-syntax
-    var _iterator = _createForOfIteratorHelper$2(_Reflect$ownKeys__default["default"](opts).filter(function (k) {
+    var _iterator = _createForOfIteratorHelper$2(_Reflect$ownKeys(opts).filter(function (k) {
         return opts[k] === true;
       })),
       _step;
@@ -8147,8 +8320,8 @@ var AUTHOR_SELECTORS = ['.entry .entry-author', '.author.vcard .fn', '.author .v
 var bylineRe = /^[\n\s]*By/i;
 var BYLINE_SELECTORS_RE = [['#byline', bylineRe], ['.byline', bylineRe]];
 
-function _createForOfIteratorHelper$1(r, e) { var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"]; if (!t) { if (_Array$isArray__default["default"](r) || (t = _unsupportedIterableToArray$1(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$1(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$1(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0; } }
+function _createForOfIteratorHelper$1(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$1(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$1(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$1(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0; } }
 function _arrayLikeToArray$1(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 var GenericAuthorExtractor = {
   extract: function extract(_ref) {
@@ -8171,12 +8344,11 @@ var GenericAuthorExtractor = {
 
     // Last, use our looser regular-expression based selectors for
     // potential authors.
-    // eslint-disable-next-line no-restricted-syntax
     var _iterator = _createForOfIteratorHelper$1(BYLINE_SELECTORS_RE),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var _step$value = _slicedToArray__default["default"](_step.value, 2),
+        var _step$value = _slicedToArray(_step.value, 2),
           selector = _step$value[0],
           regex = _step$value[1];
         var node = $(selector);
@@ -8333,8 +8505,8 @@ function scoreBySibling($img) {
 }
 function scoreByDimensions($img) {
   var score = 0;
-  var width = _parseFloat__default["default"]($img.attr('width'));
-  var height = _parseFloat__default["default"]($img.attr('height'));
+  var width = _parseFloat($img.attr('width'));
+  var height = _parseFloat($img.attr('height'));
   var src = $img.attr('src');
 
   // Penalty for skinny images
@@ -8361,8 +8533,8 @@ function scoreByPosition($imgs, index) {
   return $imgs.length / 2 - index;
 }
 
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof _Symbol__default["default"] && r[_Symbol$iterator__default["default"]] || r["@@iterator"]; if (!t) { if (_Array$isArray__default["default"](r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from__default["default"](r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 // Given a resource, try to find the lead image URL from within
@@ -8412,10 +8584,10 @@ var GenericLeadImageUrlExtractor = {
       score += scoreByPosition(imgs, index);
       imgScores[src] = score;
     });
-    var _Reflect$ownKeys$redu = _Reflect$ownKeys__default["default"](imgScores).reduce(function (acc, key) {
+    var _Reflect$ownKeys$redu = _Reflect$ownKeys(imgScores).reduce(function (acc, key) {
         return imgScores[key] > acc[1] ? [key, imgScores[key]] : acc;
       }, [null, 0]),
-      _Reflect$ownKeys$redu2 = _slicedToArray__default["default"](_Reflect$ownKeys$redu, 2),
+      _Reflect$ownKeys$redu2 = _slicedToArray(_Reflect$ownKeys$redu, 2),
       topUrl = _Reflect$ownKeys$redu2[0],
       topScore = _Reflect$ownKeys$redu2[1];
     if (topScore > 0) {
@@ -8425,7 +8597,6 @@ var GenericLeadImageUrlExtractor = {
 
     // If nothing else worked, check to see if there are any really
     // probable nodes in the doc, like <link rel="image_src" />.
-    // eslint-disable-next-line no-restricted-syntax
     var _iterator = _createForOfIteratorHelper(LEAD_IMAGE_URL_SELECTORS),
       _step;
     try {
@@ -8464,7 +8635,7 @@ function scoreSimilarity(score, articleUrl, href) {
   // sliding scale, subtract points from this link based on
   // similarity.
   if (score > 0) {
-    var similarity = new difflib__default["default"].SequenceMatcher(null, articleUrl, href).ratio();
+    var similarity = new difflib.SequenceMatcher(null, articleUrl, href).ratio();
     // Subtract .1 from diff_percent when calculating modifier,
     // which means that if it's less than 10% different, we give a
     // bonus instead. Ex:
@@ -8485,7 +8656,7 @@ function scoreLinkText(linkText, pageNum) {
   // get scored, and sorted properly by score.
   var score = 0;
   if (IS_DIGIT_RE.test(linkText.trim())) {
-    var linkTextAsNum = _parseInt__default["default"](linkText, 10);
+    var linkTextAsNum = _parseInt(linkText, 10);
     // If it's the first page, we already got it on the first call.
     // Give it a negative score. Otherwise, up to page 10, give a
     // small bonus.
@@ -8554,7 +8725,7 @@ function scoreByParents($link) {
   var positiveMatch = false;
   var negativeMatch = false;
   var score = 0;
-  _Array$from__default["default"](range(0, 4)).forEach(function () {
+  _Array$from(range(0, 4)).forEach(function () {
     if ($parent.length === 0) {
       return;
     }
@@ -8604,7 +8775,7 @@ function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrl
     return false;
   }
   var hostname = parsedUrl.hostname;
-  var _URL$parse = URL__default["default"].parse(href),
+  var _URL$parse = URL$1.parse(href),
     linkHost = _URL$parse.hostname;
 
   // Domain mismatch.
@@ -8679,7 +8850,7 @@ function scoreLinks(_ref) {
     $ = _ref.$,
     _ref$previousUrls = _ref.previousUrls,
     previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-  parsedUrl = parsedUrl || URL__default["default"].parse(articleUrl);
+  parsedUrl = parsedUrl || URL$1.parse(articleUrl);
   var baseRegex = makeBaseRegex(baseUrl);
   var isWp = isWordpress($);
 
@@ -8730,7 +8901,7 @@ function scoreLinks(_ref) {
     possiblePage.score = score;
     return possiblePages;
   }, {});
-  return _Reflect$ownKeys__default["default"](scoredPages).length === 0 ? null : scoredPages;
+  return _Reflect$ownKeys(scoredPages).length === 0 ? null : scoredPages;
 }
 
 // Looks for and returns next page url
@@ -8742,7 +8913,7 @@ var GenericNextPageUrlExtractor = {
       parsedUrl = _ref.parsedUrl,
       _ref$previousUrls = _ref.previousUrls,
       previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-    parsedUrl = parsedUrl || URL__default["default"].parse(url);
+    parsedUrl = parsedUrl || URL$1.parse(url);
     var articleUrl = removeAnchor(url);
     var baseUrl = articleBaseUrl(url, parsedUrl);
     var links = $('a[href]').toArray();
@@ -8760,7 +8931,7 @@ var GenericNextPageUrlExtractor = {
 
     // now that we've scored all possible pages,
     // find the biggest one.
-    var topPage = _Reflect$ownKeys__default["default"](scoredLinks).reduce(function (acc, link) {
+    var topPage = _Reflect$ownKeys(scoredLinks).reduce(function (acc, link) {
       var scoredLink = scoredLinks[link];
       return scoredLink.score > acc.score ? scoredLink : acc;
     }, {
@@ -8779,7 +8950,7 @@ var GenericNextPageUrlExtractor = {
 var CANONICAL_META_SELECTORS = ['og:url'];
 
 function parseDomain(url) {
-  var parsedUrl = URL__default["default"].parse(url);
+  var parsedUrl = URL$1.parse(url);
   var hostname = parsedUrl.hostname;
   return hostname;
 }
@@ -8850,7 +9021,7 @@ var ellipsize$1 = (function (str, max, opts) {
   if (typeof str !== 'string' || str.length === 0) return '';
   if (max === 0) return '';
   opts = opts || {};
-  _Object$keys__default["default"](defaults).forEach(function (key) {
+  _Object$keys(defaults).forEach(function (key) {
     if (opts[key] === null || typeof opts[key] === 'undefined') {
       opts[key] = defaults[key];
     }
@@ -8906,8 +9077,8 @@ var GenericWordCountExtractor = {
   }
 };
 
-function ownKeys$3(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$3(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$3(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var GenericExtractor = {
   // This extractor is the default for all domains
   domain: '*',
@@ -8923,7 +9094,7 @@ var GenericExtractor = {
   word_count: GenericWordCountExtractor.extract,
   direction: function direction(_ref) {
     var title = _ref.title;
-    return stringDirection__default["default"].getDirection(title);
+    return stringDirection.getDirection(title);
   },
   extract: function extract(options) {
     var html = options.html,
@@ -8979,22 +9150,22 @@ var Detectors = {
   'meta[name="generator"][value="blogger"]': BloggerExtractor
 };
 function detectByHtml($) {
-  var selector = _Reflect$ownKeys__default["default"](Detectors).find(function (s) {
+  var selector = _Reflect$ownKeys(Detectors).find(function (s) {
     return $(s).length > 0;
   });
   return Detectors[selector];
 }
 
 function getExtractor(url, parsedUrl, $) {
-  parsedUrl = parsedUrl || URL__default["default"].parse(url);
+  parsedUrl = parsedUrl || URL$1.parse(url);
   var _parsedUrl = parsedUrl,
     hostname = _parsedUrl.hostname;
   var baseDomain = hostname.split('.').slice(-2).join('.');
   return apiExtractors[hostname] || apiExtractors[baseDomain] || Extractors[hostname] || Extractors[baseDomain] || detectByHtml($) || GenericExtractor;
 }
 
-function ownKeys$2(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$2(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$2(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 
 // Remove elements by an array of selectors
 function cleanBySelectors($content, $, _ref) {
@@ -9008,7 +9179,7 @@ function cleanBySelectors($content, $, _ref) {
 function transformElements($content, $, _ref2) {
   var transforms = _ref2.transforms;
   if (!transforms) return $content;
-  _Reflect$ownKeys__default["default"](transforms).forEach(function (key) {
+  _Reflect$ownKeys(transforms).forEach(function (key) {
     var $matches = $(key, $content);
     var value = transforms[key];
 
@@ -9032,13 +9203,13 @@ function transformElements($content, $, _ref2) {
 }
 function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
   return selectors.find(function (selector) {
-    if (_Array$isArray__default["default"](selector)) {
+    if (_Array$isArray(selector)) {
       if (extractHtml) {
         return selector.reduce(function (acc, s) {
           return acc && $(s).length > 0;
         }, true);
       }
-      var _selector = _slicedToArray__default["default"](selector, 2),
+      var _selector = _slicedToArray(selector, 2),
         s = _selector[0],
         attr = _selector[1];
       return (allowMultiple || !allowMultiple && $(s).length === 1) && $(s).attr(attr) && $(s).attr(attr).trim() !== '';
@@ -9080,7 +9251,7 @@ function select(opts) {
     // multi-match selection, which allows the parser to choose several
     // selectors to include in the result. Note that all selectors in the
     // array must match in order for this selector to trigger
-    if (_Array$isArray__default["default"](matchingSelector)) {
+    if (_Array$isArray(matchingSelector)) {
       $content = $(matchingSelector.join(','));
       var $wrapper = $('<div></div>');
       $content.each(function (_, element) {
@@ -9114,8 +9285,8 @@ function select(opts) {
   var result;
   // if selector is an array (e.g., ['img', 'src']),
   // extract the attr
-  if (_Array$isArray__default["default"](matchingSelector)) {
-    var _matchingSelector = _slicedToArray__default["default"](matchingSelector, 3),
+  if (_Array$isArray(matchingSelector)) {
+    var _matchingSelector = _slicedToArray(matchingSelector, 3),
       selector = _matchingSelector[0],
       attr = _matchingSelector[1],
       transform = _matchingSelector[2];
@@ -9132,7 +9303,7 @@ function select(opts) {
       return $(el).text().trim();
     });
   }
-  result = _Array$isArray__default["default"](result.toArray()) && allowMultiple ? result.toArray() : result[0];
+  result = _Array$isArray(result.toArray()) && allowMultiple ? result.toArray() : result[0];
   // Allow custom extractor to skip default cleaner
   // for this type; defaults to true
   if (defaultCleaner && Cleaners[type]) {
@@ -9142,7 +9313,7 @@ function select(opts) {
 }
 function selectExtendedTypes(extend, opts) {
   var results = {};
-  _Reflect$ownKeys__default["default"](extend).forEach(function (t) {
+  _Reflect$ownKeys(extend).forEach(function (t) {
     if (!results[t]) {
       results[t] = select(_objectSpread$2(_objectSpread$2({}, opts), {}, {
         type: t,
@@ -9260,15 +9431,15 @@ var RootExtractor = {
   }
 };
 
-function ownKeys$1(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys$1(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys$1(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 function collectAllPages(_x) {
   return _collectAllPages.apply(this, arguments);
 }
 function _collectAllPages() {
-  _collectAllPages = _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee(_ref) {
+  _collectAllPages = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(_ref) {
     var next_page_url, html, $, metaCache, result, Extractor, title, url, pages, previousUrls, extractorOpts, nextPageResult, word_count;
-    return _regeneratorRuntime__default["default"].wrap(function (_context) {
+    return _regeneratorRuntime.wrap(function (_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           next_page_url = _ref.next_page_url, html = _ref.html, $ = _ref.$, metaCache = _ref.metaCache, result = _ref.result, Extractor = _ref.Extractor, title = _ref.title, url = _ref.url;
@@ -9282,7 +9453,6 @@ function _collectAllPages() {
             break;
           }
           pages += 1;
-          // eslint-disable-next-line no-await-in-loop
           _context.next = 2;
           return Resource.create(next_page_url);
         case 2:
@@ -9323,17 +9493,17 @@ function _collectAllPages() {
 }
 
 var _excluded = ["html"];
-function ownKeys(e, r) { var t = _Object$keys__default["default"](e); if (_Object$getOwnPropertySymbols__default["default"]) { var o = _Object$getOwnPropertySymbols__default["default"](e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor__default["default"](e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty__default["default"](e, r, t[r]); }) : _Object$getOwnPropertyDescriptors__default["default"] ? _Object$defineProperties__default["default"](e, _Object$getOwnPropertyDescriptors__default["default"](t)) : ownKeys(Object(t)).forEach(function (r) { _Object$defineProperty__default["default"](e, r, _Object$getOwnPropertyDescriptor__default["default"](t, r)); }); } return e; }
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 var Parser = {
   parse: function parse(url) {
     var _arguments = arguments;
-    return _asyncToGenerator__default["default"](/*#__PURE__*/_regeneratorRuntime__default["default"].mark(function _callee() {
+    return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
       var _ref, html, opts, _opts$fetchAllPages, fetchAllPages, _opts$fallback, fallback, _opts$contentType, contentType, _opts$headers, headers, extend, customExtractor, parsedUrl, $, Extractor, metaCache, extendedTypes, result, _result, title, next_page_url, turndownService;
-      return _regeneratorRuntime__default["default"].wrap(function (_context) {
+      return _regeneratorRuntime.wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            _ref = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {}, html = _ref.html, opts = _objectWithoutProperties__default["default"](_ref, _excluded);
+            _ref = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {}, html = _ref.html, opts = _objectWithoutProperties(_ref, _excluded);
             _opts$fetchAllPages = opts.fetchAllPages, fetchAllPages = _opts$fetchAllPages === void 0 ? true : _opts$fetchAllPages, _opts$fallback = opts.fallback, fallback = _opts$fallback === void 0 ? true : _opts$fallback, _opts$contentType = opts.contentType, contentType = _opts$contentType === void 0 ? 'html' : _opts$contentType, _opts$headers = opts.headers, headers = _opts$headers === void 0 ? {} : _opts$headers, extend = opts.extend, customExtractor = opts.customExtractor; // if no url was passed and this is the browser version,
             // set url to window.location.href and load the html
             // from the current page
@@ -9341,7 +9511,7 @@ var Parser = {
               url = window.location.href; // eslint-disable-line no-undef
               html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
             }
-            parsedUrl = URL__default["default"].parse(url);
+            parsedUrl = URL$1.parse(url);
             if (validateUrl(parsedUrl)) {
               _context.next = 1;
               break;
@@ -9421,7 +9591,7 @@ var Parser = {
             });
           case 6:
             if (contentType === 'markdown') {
-              turndownService = new TurndownService__default["default"]();
+              turndownService = new TurndownService();
               result.content = turndownService.turndown(result.content);
             } else if (contentType === 'text') {
               result.content = $.text($(result.content));
