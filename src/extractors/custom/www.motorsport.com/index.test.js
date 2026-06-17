@@ -76,5 +76,21 @@ describe('WwwMotorsportComExtractor', () => {
         'The Red Bull Formula 1 team is still evaluating its plans for a'
       );
     });
+
+    it('drops the survey promo widget', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      assert.strictEqual($('msnt-survey-promo').length, 0);
+    });
+
+    it('keeps only the first full-width gallery photo', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      assert.strictEqual($('.article-fullwidth-gallery_item').length, 1);
+    });
   });
 });

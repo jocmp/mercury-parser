@@ -17,3 +17,7 @@ test-output.json
 
 # Vitest screenshots
 **/__screenshots__/
+
+# direnv / local secrets
+.envrc
+.env

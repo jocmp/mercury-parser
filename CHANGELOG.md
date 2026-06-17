@@ -5,8 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
-## Unreleased
+## v3.0.9
 
+- Clean survey promo widget from motorsport by @jocmp
+- Retain h2 and h3 headings in frandroid content by @jocmp
+- Resolve DW responsive image URLs by @jocmp
+- Revert "feat: Add nexojornal.com.br custom parser " by @jocmp
+- Update changelog by @jocmp
 - feat: Add animenewsnetwork.com custom parser by @jocmp in [#191](https://github.com/jocmp/mercury-parser/pull/191)
 - Remove full-content parser workflow by @jocmp
 - Trigger parser workflow via cross-repo dispatch by @jocmp

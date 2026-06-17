@@ -27,6 +27,9 @@ export const WwwMotorsportComExtractor = {
       h2: node => node.attr('class', 'mercury-parser-keep'),
     },
     clean: [
+      'msnt-survey-promo',
+      '.article-fullwidth-gallery_item ~ .article-fullwidth-gallery_item',
+      '.ms-inarticle-widgets',
       '.relatedContent',
       '.ms-apb',
       '.ms-ap-native',
