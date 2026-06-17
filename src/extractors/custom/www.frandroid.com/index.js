@@ -24,7 +24,10 @@ export const WwwFrandroidComExtractor = {
   content: {
     selectors: ['section.article-content'],
 
-    transforms: {},
+    transforms: {
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h3: node => node.attr('class', 'mercury-parser-keep'),
+    },
 
     clean: [
       '.index-menu-wrapper',

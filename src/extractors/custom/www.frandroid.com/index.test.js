@@ -76,5 +76,14 @@ describe('WwwFrandroidComExtractor', () => {
         'Le vélo cargo électrique est un investissement non négligeable pour la petite famille.'
       );
     });
+
+    it('retains section headings', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+
+      assert.ok($('h2').length > 0, 'expected h2 section headings');
+      assert.ok($('h3').length > 0, 'expected h3 section headings');
+    });
   });
 });
