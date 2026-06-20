@@ -57,7 +57,7 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-env": "^8.0.2",
     "@babel/runtime": "^7.0.0",
     "@eslint/js": "^10.0.1",
     "@jesses/circle-github-bot": "^2.1.0",
