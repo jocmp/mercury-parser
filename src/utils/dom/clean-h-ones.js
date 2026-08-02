@@ -1,10 +1,11 @@
 import convertNodeTo from './convert-node-to';
+import findWithin from './find-within';
 
 // H1 tags are typically the article title, which should be extracted
 // by the title extractor instead. If there's less than 3 of them (<3),
 // strip them. Otherwise, turn 'em into H2s.
 export default function cleanHOnes(article, $) {
-  const $hOnes = $('h1', article);
+  const $hOnes = findWithin(article, 'h1');
 
   if ($hOnes.length < 3) {
     $hOnes.each((index, node) => $(node).remove());

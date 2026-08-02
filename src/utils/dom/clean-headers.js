@@ -1,10 +1,11 @@
 import getWeight from '../../extractors/generic/content/scoring/get-weight';
 
 import { HEADER_TAG_LIST, KEEP_CLASS } from './constants';
+import findWithin from './find-within';
 import { normalizeSpaces } from '../text';
 
 export default function cleanHeaders($article, $, title = '') {
-  $(HEADER_TAG_LIST, $article).each((index, header) => {
+  findWithin($article, HEADER_TAG_LIST).each((index, header) => {
     const $header = $(header);
 
     if ($(header).hasClass(KEEP_CLASS)) {

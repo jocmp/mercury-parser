@@ -16,7 +16,7 @@ describe('cleanAttributes($)', () => {
       false
     );
 
-    const result = cleanAttributes($('*').first(), $);
+    const result = cleanAttributes($('*').first());
     assertClean(
       $.html(result),
       `
@@ -38,7 +38,7 @@ describe('cleanAttributes($)', () => {
       false
     );
 
-    const result = cleanAttributes($('*').first(), $);
+    const result = cleanAttributes($('*').first());
     assertClean(
       $.html(result),
       `

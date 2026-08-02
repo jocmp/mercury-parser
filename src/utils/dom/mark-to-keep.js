@@ -1,6 +1,7 @@
 import URL from 'url';
 
 import { KEEP_SELECTORS, KEEP_CLASS } from './constants';
+import findWithin from './find-within';
 
 export default function markToKeep(article, $, url, tags = []) {
   if (tags.length === 0) {
@@ -12,7 +13,7 @@ export default function markToKeep(article, $, url, tags = []) {
     tags = [...tags, `iframe[src^="${protocol}//${hostname}"]`];
   }
 
-  $(tags.join(','), article).addClass(KEEP_CLASS);
+  findWithin(article, tags.join(',')).addClass(KEEP_CLASS);
 
   return $;
 }

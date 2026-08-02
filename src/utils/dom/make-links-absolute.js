@@ -1,6 +1,7 @@
 import URL from 'url';
 
 import getAttrs from './get-attrs';
+import findWithin from './find-within';
 import setAttr from './set-attr';
 
 function absolutize($, rootUrl, attr) {
@@ -17,7 +18,7 @@ function absolutize($, rootUrl, attr) {
 }
 
 function absolutizeSet($, rootUrl, $content) {
-  $('[srcset]', $content).each((_, node) => {
+  findWithin($content, '[srcset]').each((_, node) => {
     const attrs = getAttrs(node);
     const urlSet = attrs.srcset;
 

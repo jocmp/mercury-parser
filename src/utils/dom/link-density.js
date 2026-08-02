@@ -1,3 +1,5 @@
+import findWithin from './find-within';
+
 export function textLength(text) {
   return text.trim().replace(/\s+/g, ' ').length;
 }
@@ -8,7 +10,7 @@ export function textLength(text) {
 export function linkDensity($node) {
   const totalTextLength = textLength($node.text());
 
-  const linkText = $node.find('a').text();
+  const linkText = findWithin($node, 'a').text();
   const linkLength = textLength(linkText);
 
   if (totalTextLength > 0) {

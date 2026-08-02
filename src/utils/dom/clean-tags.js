@@ -4,6 +4,7 @@ import getOrInitScore from '../../extractors/generic/content/scoring/get-or-init
 import scoreCommas from '../../extractors/generic/content/scoring/score-commas';
 
 import { CLEAN_CONDITIONALLY_TAGS, KEEP_CLASS } from './constants';
+import findWithin from './find-within';
 import { normalizeSpaces } from '../text';
 import { linkDensity } from './link-density';
 
@@ -19,8 +20,8 @@ function removeUnlessContent($node, $, weight) {
   const content = normalizeSpaces($node.text());
 
   if (scoreCommas(content) < 10) {
-    const pCount = $('p', $node).length;
-    const inputCount = $('input', $node).length;
+    const pCount = findWithin($node, 'p').length;
+    const inputCount = findWithin($node, 'input').length;
 
     // Looks like a form, too many inputs.
     if (inputCount > pCount / 3) {
@@ -29,7 +30,7 @@ function removeUnlessContent($node, $, weight) {
     }
 
     const contentLength = content.length;
-    const imgCount = $('img', $node).length;
+    const imgCount = findWithin($node, 'img').length;
 
     // Content is too short, and there are no images, so
     // this is probably junk content.
@@ -70,7 +71,7 @@ function removeUnlessContent($node, $, weight) {
       return;
     }
 
-    const scriptCount = $('script', $node).length;
+    const scriptCount = findWithin($node, 'script').length;
 
     // Too many script tags, not enough content.
     if (scriptCount > 0 && contentLength < 150) {
@@ -87,10 +88,13 @@ function removeUnlessContent($node, $, weight) {
 //
 // Return this same doc.
 export default function cleanTags($article, $) {
-  $(CLEAN_CONDITIONALLY_TAGS, $article).each((index, node) => {
+  findWithin($article, CLEAN_CONDITIONALLY_TAGS).each((index, node) => {
     const $node = $(node);
     // If marked to keep, skip it
-    if ($node.hasClass(KEEP_CLASS) || $node.find(`.${KEEP_CLASS}`).length > 0)
+    if (
+      $node.hasClass(KEEP_CLASS) ||
+      findWithin($node, `.${KEEP_CLASS}`).length > 0
+    )
       return;
 
     let weight = getScore($node);

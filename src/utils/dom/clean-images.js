@@ -1,4 +1,5 @@
 import { SPACER_RE } from './constants';
+import findWithin from './find-within';
 
 function cleanForHeight($img, $) {
   const height = parseInt($img.attr('height'), 10);
@@ -30,7 +31,7 @@ function removeSpacers($img, $) {
 }
 
 export default function cleanImages($article, $) {
-  $article.find('img').each((index, img) => {
+  findWithin($article, 'img').each((index, img) => {
     const $img = $(img);
 
     cleanForHeight($img, $);

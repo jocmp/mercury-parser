@@ -55,7 +55,7 @@ export default function extractCleanNode(
   removeEmpty(article, $);
 
   // Remove unnecessary attributes
-  cleanAttributes(article, $);
+  cleanAttributes(article);
 
   return article;
 }
