@@ -82,4 +82,22 @@ describe('convertLazyLoadedImages($)', () => {
       '<img src="http://example.com/foo.jpg" srcset="http://example.com/foo2x.jpg 2x, http://example.com/foo.jpg">'
     );
   });
+
+  // Guards against O(n^2) backtracking in IS_SRCSET: the image-url check runs on
+  // every attribute of every <img>, so a long numeric query string must not hang.
+  it('handles image URLs with long numeric query strings in linear time', () => {
+    const value = `http://example.com/a.png?${'9'.repeat(50000)}`;
+    const $ = cheerio.load(`<img data-src="${value}">`);
+
+    const start = performance.now();
+    convertLazyLoadedImages($);
+    const elapsedMs = performance.now() - start;
+
+    assert.ok(
+      elapsedMs < 1000,
+      `convertLazyLoadedImages took ${elapsedMs.toFixed(
+        0
+      )}ms; expected < 1000ms`
+    );
+  }, 20000);
 });

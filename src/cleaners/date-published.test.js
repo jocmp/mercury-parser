@@ -77,6 +77,21 @@ describe('cleanDatePublished(dateString)', () => {
     const expectedDate3 = dayjs().subtract(10, 'months').format().split('T')[0];
     assert.strictEqual(newDate3, expectedDate3);
   });
+
+  // Guards against O(n^2) backtracking in the date regexes (TIME_AGO_STRING and
+  // TIME_MERIDIAN_SPACE_RE): a long meta-date value must not hang the parse.
+  it('handles a huge numeric date string in linear time', () => {
+    const dateString = '9'.repeat(40000);
+
+    const start = performance.now();
+    cleanDatePublished(dateString);
+    const elapsedMs = performance.now() - start;
+
+    assert.ok(
+      elapsedMs < 1000,
+      `cleanDatePublished took ${elapsedMs.toFixed(0)}ms; expected < 1000ms`
+    );
+  }, 20000);
 });
 
 describe('cleanDateString(dateString)', () => {

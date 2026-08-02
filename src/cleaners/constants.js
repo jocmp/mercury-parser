@@ -25,7 +25,9 @@ export const DEK_SELECTORS = ['.entry-summary'];
 export const MS_DATE_STRING = /^\d{13}$/i;
 export const SEC_DATE_STRING = /^\d{10}$/i;
 export const CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
-export const TIME_MERIDIAN_SPACE_RE = /(.*\d)(am|pm)(.*)/i;
+// Anchored so the leading `.*` isn't retried from every position; unanchored
+// this was O(n^2) on long digit strings containing no am/pm.
+export const TIME_MERIDIAN_SPACE_RE = /^(.*\d)(am|pm)(.*)/i;
 export const TIME_MERIDIAN_DOTS_RE = /\.m\./i;
 export const TIME_NOW_STRING = /^\s*(just|right)?\s*now\s*/i;
 const timeUnits = [
@@ -38,8 +40,10 @@ const timeUnits = [
   'years?',
 ];
 const allTimeUnits = timeUnits.join('|');
+// `(?<!\d)` pins the digit run to its start, so the scan can't re-run `\d+`
+// from every position; without it this was O(n^2) on long digit strings.
 export const TIME_AGO_STRING = new RegExp(
-  `(\\d+)\\s+(${allTimeUnits})\\s+ago`,
+  `(?<!\\d)(\\d+)\\s+(${allTimeUnits})\\s+ago`,
   'i'
 );
 const months = [
