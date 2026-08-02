@@ -72,6 +72,10 @@ export const TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
 // CLEAN TITLE CONSTANTS
 // A regular expression that will match separating characters on a
 // title, that usually denote breadcrumbs or something similar.
-export const TITLE_SPLITTERS_RE = /(: | - | \| )/g;
+//
+// Deliberately not /g: cleanTitle calls `.test()` on it, and /g makes `.test()`
+// stateful, advancing lastIndex between parses. The other consumer,
+// `title.split(TITLE_SPLITTERS_RE)`, is unaffected — split ignores the flag.
+export const TITLE_SPLITTERS_RE = /(: | - | \| )/;
 
 export const DOMAIN_ENDINGS_RE = new RegExp('.com$|.net$|.org$|.co.uk$', 'g');
