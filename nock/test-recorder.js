@@ -35,7 +35,7 @@ export function record(name, options = {}) {
       }
     },
 
-    after: done => {
+    after: () => {
       if (!has_fixtures && !isBrowser) {
         has_fixtures = nock.recorder.play();
 
@@ -46,8 +46,6 @@ export function record(name, options = {}) {
         );
         // const text = `const nock = require('nock');\n${has_fixtures.join('\n')}`;
         // fs.writeFile(fp, text, done);
-      } else {
-        done();
       }
     },
   };

@@ -22,5 +22,5 @@ jobs:
           node-version-file: '.node-version'
           registry-url: "https://registry.npmjs.org"
           scope: "@jocmp"
-      - run: npm install --legacy-peer-deps
+      - run: npm install
       - run: npm publish --access public

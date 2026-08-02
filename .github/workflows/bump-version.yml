@@ -28,7 +28,7 @@ jobs:
       - name: Setup build dependencies
         run: |
           make deps
-          npm install --legacy-peer-deps
+          npm install
       - name: Configure Git user
         run: |
           git config user.name "jocmp"

@@ -1,0 +1,9 @@
+# The browser bundles ship untranspiled, so this is the floor the artifact
+# actually meets, not an aspiration. `npm run check:compat` enforces it.
+chrome >= 80
+edge >= 80
+firefox >= 72
+safari >= 13.1
+ios_saf >= 13.4
+opera >= 67
+samsung >= 13

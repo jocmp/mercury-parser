@@ -1,14 +1,9 @@
-import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
+import srcAlias from '../rollup.src-alias.js';
 
 export default {
   input: 'scripts/generate-custom-parser.js',
-  plugins: [
-    commonjs(),
-    babel({
-      babelHelpers: 'runtime',
-    }),
-  ],
+  plugins: [srcAlias(), commonjs()],
   treeshake: true,
   output: {
     file: 'dist/generate-custom-parser.js',
