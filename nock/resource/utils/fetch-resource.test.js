@@ -5,6 +5,8 @@ import { record } from '../../test-recorder';
 import fetchResource, {
   baseDomain,
   validateResponse,
+  buildRequestOptions,
+  get,
 } from '../../../src/resource/utils/fetch-resource';
 import { MAX_CONTENT_LENGTH } from '../../../src/resource/utils/constants';
 
@@ -136,6 +138,40 @@ describe('validateResponse(response)', () => {
     assert.throws(() => {
       validateResponse(invalidResponse);
     }, /Content for this resource was too large/i);
+  });
+});
+
+describe('fetch hardening', () => {
+  it('bounds the response size and isolates cookies per request', () => {
+    const parsedUrl = URL.parse('http://example.com/');
+    const options = buildRequestOptions('http://example.com/', parsedUrl, {});
+
+    // Cap the streamed (decompressed) body so an oversized/chunked body or a
+    // gzip bomb cannot exhaust memory.
+    assert.strictEqual(options.maxResponseSize, MAX_CONTENT_LENGTH);
+
+    // A per-request cookie jar, not the process-wide shared jar (`jar: true`),
+    // which would accumulate cookies for every domain forever.
+    assert.notStrictEqual(options.jar, true);
+    assert.strictEqual(typeof options.jar, 'object');
+    assert.ok(options.jar);
+  });
+
+  it('aborts a fetch that exceeds the maximum total time', async () => {
+    let aborted = false;
+    // A requester that never invokes its callback — simulates a slow-trickle
+    // response that keeps resetting the inter-byte timeout.
+    const hangingRequester = () => ({
+      abort: () => {
+        aborted = true;
+      },
+    });
+
+    await assert.rejects(
+      () => get({}, { maxFetchTime: 20, requester: hangingRequester }),
+      /exceeded maximum/i
+    );
+    assert.strictEqual(aborted, true);
   });
 });
 

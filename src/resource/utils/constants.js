@@ -8,8 +8,13 @@ export const REQUEST_HEADERS = isBrowser
         'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
     };
 
-// The number of milliseconds to attempt to fetch a resource before timing out.
+// Connect and inter-byte idle timeout. Note this does not bound total download
+// time; MAX_FETCH_TIME does.
 export const FETCH_TIMEOUT = 10000;
+
+// Hard ceiling on total elapsed fetch time, so a slow-trickle response that
+// keeps resetting FETCH_TIMEOUT cannot hang the request forever.
+export const MAX_FETCH_TIME = 30000;
 
 // Content types that we do not extract content from
 const BAD_CONTENT_TYPES = [
