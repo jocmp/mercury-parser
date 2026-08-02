@@ -62,6 +62,7 @@
     "@rollup/plugin-terser": "^1.0.0",
     "@vitest/browser": "^4.0.17",
     "@vitest/browser-playwright": "^4.0.17",
+    "browserslist": "^4.28.7",
     "es-check": "^9.6.4",
     "eslint": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
