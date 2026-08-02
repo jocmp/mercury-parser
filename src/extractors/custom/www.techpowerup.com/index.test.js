@@ -8,7 +8,7 @@ import { excerptContent } from 'utils/text';
 const fs = require('fs');
 
 // Flaky
-xdescribe('WwwTechpowerupComExtractor', () => {
+describe.skip('WwwTechpowerupComExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;

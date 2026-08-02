@@ -1,14 +1,9 @@
-import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
+import srcAlias from './rollup.src-alias.js';
 
 export default {
   input: 'src/mercury.js',
-  plugins: [
-    commonjs(),
-    babel({
-      babelHelpers: 'runtime',
-    }),
-  ],
+  plugins: [srcAlias(), commonjs()],
   treeshake: true,
   output: {
     file: process.env.MERCURY_TEST_BUILD
