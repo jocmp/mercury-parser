@@ -55,9 +55,46 @@ function _interopNamespaceDefault(e) {
 
 var cheerio__namespace = /*#__PURE__*/_interopNamespaceDefault(cheerio);
 
-var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
+// Whitespace-significant elements, whose contents must be preserved verbatim.
+var OPEN_BLOCK_RE = /<(pre|code|textarea)[^>]*>/gi;
+var CLOSE_BLOCK_RE = {
+  pre: /<\/pre>/gi,
+  code: /<\/code>/gi,
+  textarea: /<\/textarea>/gi
+};
+var WHITESPACE_RE = /\s{2,}/g;
+
+// Collapse runs of whitespace, except inside <pre>/<code>/<textarea>.
+//
+// Walks the string, carving out those blocks and collapsing only the segments
+// between them. This replaces a single regex whose
+// `(?![^<>]*<\/(pre|code|textarea)>)` lookahead re-scanned to end-of-string at
+// every whitespace run, making it O(n^2) on tag-free text such as $node.text().
+//
+// Each opening tag costs at most one forward search for its close, and an
+// unmatched open ends the walk instead of restarting a character later, so the
+// pass stays linear even on malformed input.
 function normalizeSpaces(text) {
-  return text.replace(NORMALIZE_RE, ' ').trim();
+  var result = '';
+  var cursor = 0;
+  var open;
+
+  // `exec` on a /g regex is stateful, and the loop below can exit early.
+  OPEN_BLOCK_RE.lastIndex = 0;
+  while ((open = OPEN_BLOCK_RE.exec(text)) !== null) {
+    var closeRe = CLOSE_BLOCK_RE[open[1].toLowerCase()];
+    closeRe.lastIndex = OPEN_BLOCK_RE.lastIndex;
+    var close = closeRe.exec(text);
+
+    // Unclosed block: nothing further to preserve, so collapse the rest below.
+    if (close === null) break;
+    var blockEnd = close.index + close[0].length;
+    result += text.slice(cursor, open.index).replace(WHITESPACE_RE, ' ');
+    result += text.slice(open.index, blockEnd);
+    cursor = blockEnd;
+    OPEN_BLOCK_RE.lastIndex = blockEnd;
+  }
+  return (result + text.slice(cursor).replace(WHITESPACE_RE, ' ')).trim();
 }
 
 // Given a node type to search for, and a list of regular expressions,
@@ -218,8 +255,13 @@ var REQUEST_HEADERS = isBrowser ? {} : {
   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
 };
 
-// The number of milliseconds to attempt to fetch a resource before timing out.
+// Connect and inter-byte idle timeout. Note this does not bound total download
+// time; MAX_FETCH_TIME does.
 var FETCH_TIMEOUT = 10000;
+
+// Hard ceiling on total elapsed fetch time, so a slow-trickle response that
+// keeps resetting FETCH_TIMEOUT cannot hang the request forever.
+var MAX_FETCH_TIME = 30000;
 
 // Content types that we do not extract content from
 var BAD_CONTENT_TYPES = ['audio/mpeg', 'image/gif', 'image/jpeg', 'image/jpg'];
@@ -231,18 +273,35 @@ var MAX_CONTENT_LENGTH = 5242880;
 
 function ownKeys$h(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread$h(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
+
+// Perform the request under a hard ceiling on total elapsed time. FETCH_TIMEOUT
+// only bounds connect and inter-byte gaps, so a response that trickles bytes
+// just often enough would never time out on its own. `requester` is injectable
+// for testing.
 function get(options) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    _ref$maxFetchTime = _ref.maxFetchTime,
+    maxFetchTime = _ref$maxFetchTime === void 0 ? MAX_FETCH_TIME : _ref$maxFetchTime,
+    _ref$requester = _ref.requester,
+    requester = _ref$requester === void 0 ? request : _ref$requester;
   return new _Promise(function (resolve, reject) {
-    request(options, function (err, response, body) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve({
-          body: body,
-          response: response
-        });
-      }
+    var expired = false;
+    var req = requester(options, function (err, response, body) {
+      if (expired) return;
+      clearTimeout(deadline);
+      if (err) reject(err);else resolve({
+        body: body,
+        response: response
+      });
     });
+    var deadline = setTimeout(function () {
+      expired = true;
+      if (req && typeof req.abort === 'function') req.abort();
+      reject(new Error("Fetch exceeded maximum time of ".concat(maxFetchTime, "ms")));
+    }, maxFetchTime);
+
+    // Don't let the deadline timer keep the process alive on its own.
+    if (typeof deadline.unref === 'function') deadline.unref();
   });
 }
 
@@ -285,9 +344,33 @@ function validateResponse(response) {
 // Set our response attribute to the result of fetching our URL.
 // TODO: This should gracefully handle timeouts and raise the
 //       proper exceptions on the many failure cases of HTTP.
-// TODO: Ensure we are not fetching something enormous. Always return
-//       unicode content for HTML, with charset conversion.
+// TODO: Always return unicode content for HTML, with charset conversion.
 
+function buildRequestOptions(url, parsedUrl) {
+  var headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  parsedUrl = parsedUrl || URL$1.parse(encodeURI(url));
+  return _objectSpread$h({
+    url: parsedUrl.href,
+    headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
+    timeout: FETCH_TIMEOUT,
+    // Abort once this many decompressed bytes have arrived, so an oversized
+    // body or a gzip bomb cannot exhaust memory.
+    maxResponseSize: MAX_CONTENT_LENGTH,
+    // Accept cookies, but per request: `jar: true` shares one process-wide jar
+    // that grows unbounded across domains in a long-running process.
+    jar: request.jar(),
+    // Set to null so the response returns as binary and body as buffer
+    // https://github.com/request/request#requestoptions-callback
+    encoding: null,
+    // Accept and decode gzip
+    gzip: true,
+    // Follow any non-GET redirects
+    followAllRedirects: true
+  }, typeof window !== 'undefined' ? {} : {
+    // Follow GET redirects; this option is for Node only
+    followRedirect: true
+  });
+}
 function fetchResource(_x, _x2) {
   return _fetchResource.apply(this, arguments);
 }
@@ -304,24 +387,7 @@ function _fetchResource() {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-          parsedUrl = parsedUrl || URL$1.parse(encodeURI(url));
-          options = _objectSpread$h({
-            url: parsedUrl.href,
-            headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
-            timeout: FETCH_TIMEOUT,
-            // Accept cookies
-            jar: true,
-            // Set to null so the response returns as binary and body as buffer
-            // https://github.com/request/request#requestoptions-callback
-            encoding: null,
-            // Accept and decode gzip
-            gzip: true,
-            // Follow any non-GET redirects
-            followAllRedirects: true
-          }, typeof window !== 'undefined' ? {} : {
-            // Follow GET redirects; this option is for Node only
-            followRedirect: true
-          });
+          options = buildRequestOptions(url, parsedUrl, headers);
           _context.next = 1;
           return get(options);
         case 1:
@@ -644,6 +710,24 @@ function convertToParagraphs($) {
   return $;
 }
 
+// Find descendants of $context matching selector, in time linear in the size
+// of the subtree.
+//
+// Both `$context.find(selector)` and `$(selector, $context)` hand cheerio the
+// context's direct children as the search roots, and cheerio deduplicates that
+// list with `domutils.removeSubsets()`, which is quadratic in the number of
+// roots. An article body with thousands of direct children spends most of the
+// parse there.
+//
+// Cheerio takes a different path for selectors starting with `:scope`, using
+// the context node itself as the single search root. `:is()` applies that to
+// compound and comma-separated selectors too. Cheerio's `:scope` still matches
+// the context node, so it is filtered back out to preserve descendant-only
+// semantics.
+function findWithin($context, selector) {
+  return $context.find(":scope :is(".concat(selector, ")")).not($context);
+}
+
 function cleanForHeight($img, $) {
   var height = _parseInt($img.attr('height'), 10);
   var width = _parseInt($img.attr('width'), 10) || 20;
@@ -671,7 +755,7 @@ function removeSpacers($img, $) {
   return $;
 }
 function cleanImages($article, $) {
-  $article.find('img').each(function (index, img) {
+  findWithin($article, 'img').each(function (index, img) {
     var $img = $(img);
     cleanForHeight($img, $);
     removeSpacers($img, $);
@@ -690,7 +774,7 @@ function markToKeep(article, $, url) {
       hostname = _URL$parse.hostname;
     tags = [].concat(_toConsumableArray(tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
   }
-  $(tags.join(','), article).addClass(KEEP_CLASS);
+  findWithin(article, tags.join(',')).addClass(KEEP_CLASS);
   return $;
 }
 
@@ -702,7 +786,7 @@ function stripJunkTags(article, $) {
 
   // Remove matching elements, but ignore
   // any element with a class of mercury-parser-keep
-  $(tags.join(','), article).not(".".concat(KEEP_CLASS)).remove();
+  findWithin(article, tags.join(',')).not(".".concat(KEEP_CLASS)).remove();
   return $;
 }
 
@@ -710,7 +794,7 @@ function stripJunkTags(article, $) {
 // by the title extractor instead. If there's less than 3 of them (<3),
 // strip them. Otherwise, turn 'em into H2s.
 function cleanHOnes(article, $) {
-  var $hOnes = $('h1', article);
+  var $hOnes = findWithin(article, 'h1');
   if ($hOnes.length < 3) {
     $hOnes.each(function (index, node) {
       return $(node).remove();
@@ -739,8 +823,8 @@ function setAttrs(node, attrs) {
 
 function ownKeys$g(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-function removeAllButWhitelist($article, $) {
-  $article.find('*').each(function (index, node) {
+function removeAllButWhitelist($article) {
+  findWithin($article, '*').each(function (index, node) {
     var attrs = getAttrs(node);
     setAttrs(node, _Reflect$ownKeys(attrs).reduce(function (acc, attr) {
       if (WHITELIST_ATTRS_RE.test(attr)) {
@@ -751,22 +835,22 @@ function removeAllButWhitelist($article, $) {
   });
 
   // Remove the mercury-parser-keep class from result
-  $(".".concat(KEEP_CLASS), $article).removeClass(KEEP_CLASS);
+  findWithin($article, ".".concat(KEEP_CLASS)).removeClass(KEEP_CLASS);
   return $article;
 }
 
 // Remove attributes like style or align
-function cleanAttributes($article, $) {
+function cleanAttributes($article) {
   // Grabbing the parent because at this point
   // $article will be wrapped in a div which will
   // have a score set on it.
-  return removeAllButWhitelist($article.parent().length ? $article.parent() : $article, $);
+  return removeAllButWhitelist($article.parent().length ? $article.parent() : $article);
 }
 
 function removeEmpty($article, $) {
-  $article.find('p').each(function (index, p) {
+  findWithin($article, 'p').each(function (index, p) {
     var $p = $(p);
-    if ($p.find('iframe, img').length === 0 && $p.text().trim() === '') $p.remove();
+    if (findWithin($p, 'iframe, img').length === 0 && $p.text().trim() === '') $p.remove();
   });
   return $;
 }
@@ -1008,7 +1092,7 @@ function textLength(text) {
 // Takes a node, returns a float
 function linkDensity($node) {
   var totalTextLength = textLength($node.text());
-  var linkText = $node.find('a').text();
+  var linkText = findWithin($node, 'a').text();
   var linkLength = textLength(linkText);
   if (totalTextLength > 0) {
     return linkLength / totalTextLength;
@@ -1029,8 +1113,8 @@ function removeUnlessContent($node, $, weight) {
   }
   var content = normalizeSpaces($node.text());
   if (scoreCommas(content) < 10) {
-    var pCount = $('p', $node).length;
-    var inputCount = $('input', $node).length;
+    var pCount = findWithin($node, 'p').length;
+    var inputCount = findWithin($node, 'input').length;
 
     // Looks like a form, too many inputs.
     if (inputCount > pCount / 3) {
@@ -1038,7 +1122,7 @@ function removeUnlessContent($node, $, weight) {
       return;
     }
     var contentLength = content.length;
-    var imgCount = $('img', $node).length;
+    var imgCount = findWithin($node, 'img').length;
 
     // Content is too short, and there are no images, so
     // this is probably junk content.
@@ -1073,7 +1157,7 @@ function removeUnlessContent($node, $, weight) {
       $node.remove();
       return;
     }
-    var scriptCount = $('script', $node).length;
+    var scriptCount = findWithin($node, 'script').length;
 
     // Too many script tags, not enough content.
     if (scriptCount > 0 && contentLength < 150) {
@@ -1090,10 +1174,10 @@ function removeUnlessContent($node, $, weight) {
 //
 // Return this same doc.
 function cleanTags($article, $) {
-  $(CLEAN_CONDITIONALLY_TAGS, $article).each(function (index, node) {
+  findWithin($article, CLEAN_CONDITIONALLY_TAGS).each(function (index, node) {
     var $node = $(node);
     // If marked to keep, skip it
-    if ($node.hasClass(KEEP_CLASS) || $node.find(".".concat(KEEP_CLASS)).length > 0) return;
+    if ($node.hasClass(KEEP_CLASS) || findWithin($node, ".".concat(KEEP_CLASS)).length > 0) return;
     var weight = getScore($node);
     if (!weight) {
       weight = getOrInitScore($node, $);
@@ -1113,7 +1197,7 @@ function cleanTags($article, $) {
 
 function cleanHeaders($article, $) {
   var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  $(HEADER_TAG_LIST, $article).each(function (index, header) {
+  findWithin($article, HEADER_TAG_LIST).each(function (index, header) {
     var $header = $(header);
     if ($(header).hasClass(KEEP_CLASS)) {
       return $header;
@@ -1173,7 +1257,7 @@ function absolutize($, rootUrl, attr) {
   });
 }
 function absolutizeSet($, rootUrl, $content) {
-  $('[srcset]', $content).each(function (_, node) {
+  findWithin($content, '[srcset]').each(function (_, node) {
     var attrs = getAttrs(node);
     var urlSet = attrs.srcset;
     if (urlSet) {
@@ -1210,9 +1294,9 @@ function stripTags(text, $) {
   return cleanText === '' ? text : cleanText;
 }
 
-function _createForOfIteratorHelper$4(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$4(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$4(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$4(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0; } }
-function _arrayLikeToArray$4(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _createForOfIteratorHelper$5(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$5(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$5(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$5(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$5(r, a) : void 0; } }
+function _arrayLikeToArray$5(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 // Given a node type to search for, and a list of meta tag names to
 // search for, find a meta tag associated.
@@ -1221,7 +1305,7 @@ function extractFromMeta($, metaNames, cachedNames) {
   var foundNames = metaNames.filter(function (name) {
     return cachedNames.indexOf(name) !== -1;
   });
-  var _iterator = _createForOfIteratorHelper$4(foundNames),
+  var _iterator = _createForOfIteratorHelper$5(foundNames),
     _step;
   try {
     var _loop = function _loop() {
@@ -1285,9 +1369,9 @@ function withinComment($node) {
   return commentParent !== undefined;
 }
 
-function _createForOfIteratorHelper$3(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$3(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$3(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$3(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0; } }
-function _arrayLikeToArray$3(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _createForOfIteratorHelper$4(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$4(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$4(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$4(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0; } }
+function _arrayLikeToArray$4(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function isGoodNode($node, maxChildren) {
   // If it has a number of children, it's more likely a container
   // element. Skip it.
@@ -1307,7 +1391,7 @@ function isGoodNode($node, maxChildren) {
 function extractFromSelectors($, selectors) {
   var maxChildren = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var textOnly = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  var _iterator = _createForOfIteratorHelper$3(selectors),
+  var _iterator = _createForOfIteratorHelper$4(selectors),
     _step;
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -1354,7 +1438,10 @@ function isWordpress($) {
 var IS_LINK = new RegExp('https?://', 'i');
 var IMAGE_RE = '.(png|gif|jpe?g)';
 var IS_IMAGE = new RegExp("".concat(IMAGE_RE), 'i');
-var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\?\\S+)?(\\s*[\\d.]+[wx])"), 'i');
+// A srcset descriptor is always whitespace-separated, so requiring `\s+` (not
+// `\s*`) removes the overlap between the greedy `\S+` query and the `[\d.]+`
+// descriptor that made this O(n^2) on long numeric query strings.
+var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\?\\S+)?(\\s+[\\d.]+[wx])"), 'i');
 var TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 
 // Convert all instances of images with potentially
@@ -1393,11 +1480,41 @@ function convertLazyLoadedImages($) {
   return $;
 }
 
-function isComment(index, node) {
-  return node.type === 'comment';
-}
+function _createForOfIteratorHelper$3(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$3(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray$3(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$3(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0; } }
+function _arrayLikeToArray$3(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+// Walk the tree explicitly rather than using
+// `$.root().find('*').contents().filter(isComment)`, which builds its combined
+// child list by repeated array concatenation and so is quadratic in node count.
 function cleanComments($) {
-  $.root().find('*').contents().filter(isComment).remove();
+  var root = $.root().get(0);
+  var stack = root ? [root] : [];
+  var comments = [];
+  while (stack.length > 0) {
+    var node = stack.pop();
+    if (node.type === 'comment') {
+      comments.push(node);
+    } else if (node.children) {
+      // One at a time: spreading a wide child list exceeds the argument limit
+      // on documents with hundreds of thousands of siblings.
+      var _iterator = _createForOfIteratorHelper$3(node.children),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var child = _step.value;
+          stack.push(child);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+  }
+
+  // Remove after the walk so sibling links stay intact while traversing.
+  $(comments).remove();
   return $;
 }
 function clean$2($) {
@@ -7657,12 +7774,16 @@ var TEXT_LINK_RE = new RegExp('http(s)?://', 'i');
 var MS_DATE_STRING = /^\d{13}$/i;
 var SEC_DATE_STRING = /^\d{10}$/i;
 var CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
-var TIME_MERIDIAN_SPACE_RE = /(.*\d)(am|pm)(.*)/i;
+// Anchored so the leading `.*` isn't retried from every position; unanchored
+// this was O(n^2) on long digit strings containing no am/pm.
+var TIME_MERIDIAN_SPACE_RE = /^(.*\d)(am|pm)(.*)/i;
 var TIME_MERIDIAN_DOTS_RE = /\.m\./i;
 var TIME_NOW_STRING = /^\s*(just|right)?\s*now\s*/i;
 var timeUnits = ['seconds?', 'minutes?', 'hours?', 'days?', 'weeks?', 'months?', 'years?'];
 var allTimeUnits = timeUnits.join('|');
-var TIME_AGO_STRING = new RegExp("(\\d+)\\s+(".concat(allTimeUnits, ")\\s+ago"), 'i');
+// `(?<!\d)` pins the digit run to its start, so the scan can't re-run `\d+`
+// from every position; without it this was O(n^2) on long digit strings.
+var TIME_AGO_STRING = new RegExp("(?<!\\d)(\\d+)\\s+(".concat(allTimeUnits, ")\\s+ago"), 'i');
 var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 var allMonths = months.join('|');
 var timestamp1 = '[0-9]{1,2}:[0-9]{2,2}( ?[ap].?m.?)?';
@@ -7677,7 +7798,11 @@ var TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
 // CLEAN TITLE CONSTANTS
 // A regular expression that will match separating characters on a
 // title, that usually denote breadcrumbs or something similar.
-var TITLE_SPLITTERS_RE = /(: | - | \| )/g;
+//
+// Deliberately not /g: cleanTitle calls `.test()` on it, and /g makes `.test()`
+// stateful, advancing lastIndex between parses. The other consumer,
+// `title.split(TITLE_SPLITTERS_RE)`, is unaffected — split ignores the flag.
+var TITLE_SPLITTERS_RE = /(: | - | \| )/;
 var DOMAIN_ENDINGS_RE = new RegExp('.com$|.net$|.org$|.co.uk$', 'g');
 
 // Take an author string (like 'By David Smith ') and clean it to
@@ -7853,7 +7978,7 @@ function extractCleanNode(article, _ref) {
   removeEmpty(article, $);
 
   // Remove unnecessary attributes
-  cleanAttributes(article, $);
+  cleanAttributes(article);
   return article;
 }
 
