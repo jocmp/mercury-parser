@@ -5,8 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.1.0
+
+- fix: make parser regexes linear on pathological input by @benubois in [#198](https://github.com/jocmp/mercury-parser/pull/198)
+- fix: collapse whitespace in large text blocks in linear time by @benubois in [#203](https://github.com/jocmp/mercury-parser/pull/203)
+- fix: remove comments with a linear tree walk by @benubois in [#201](https://github.com/jocmp/mercury-parser/pull/201)
+- fix: scope cleaner descendant searches with :scope by @benubois in [#202](https://github.com/jocmp/mercury-parser/pull/202)
+- fix: drop /g from TITLE_SPLITTERS_RE by @benubois in [#199](https://github.com/jocmp/mercury-parser/pull/199)
+- fix: bound fetch time, response size, and cookie growth by @benubois in [#200](https://github.com/jocmp/mercury-parser/pull/200)
+
 ## v3.0.9
 
+- bump version v3.0.8 -> v3.0.9 by @jocmp
 - Clean survey promo widget from motorsport by @jocmp
 - Retain h2 and h3 headings in frandroid content by @jocmp
 - Resolve DW responsive image URLs by @jocmp
@@ -28,6 +38,8 @@ and this project adheres to [Romantic Versioning](https://github.com/romversioni
 - Migrate ESLint to v10, drop airbnb config by @jocmp in [#187](https://github.com/jocmp/mercury-parser/pull/187)
 - Remove stale CI step by @jocmp
 - Remove demo package in favor of static output by @jocmp
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.8...v3.0.9
 
 ## v3.0.8
 
