@@ -22,8 +22,7 @@
         [
           "@babel/plugin-transform-runtime",
           {
-            "corejs": 2,
-            "regenerator": true
+            "corejs": 2
           }
         ]
       ]
