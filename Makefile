@@ -40,3 +40,7 @@ check:
 .PHONY: test
 test:
 	npm test
+
+.PHONY: consumer-test
+consumer-test: build-node
+	scripts/consumer-test.sh
