@@ -5,14 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.1.1
+
+- refactor: replace legacy url module with WHATWG URL by @jocmp in [#214](https://github.com/jocmp/mercury-parser/pull/214)
+- refactor: replace legacy url module with WHATWG URL by @jocmp
+- ci: RSSHub-style consumer test by @jocmp in [#213](https://github.com/jocmp/mercury-parser/pull/213)
+- feat: Add www.digitalfoundry.net custom parser by @jocmp in [#212](https://github.com/jocmp/mercury-parser/pull/212)
+- build: drop babel from the build and tests by @jocmp in [#206](https://github.com/jocmp/mercury-parser/pull/206)
+
 ## v3.1.0
 
+- bump version v3.0.9 -> v3.1.0 by @jocmp
+- ci: use npm trusted publishing by @jocmp in [#205](https://github.com/jocmp/mercury-parser/pull/205)
+- Update changelog by @jocmp
 - fix: make parser regexes linear on pathological input by @benubois in [#198](https://github.com/jocmp/mercury-parser/pull/198)
 - fix: collapse whitespace in large text blocks in linear time by @benubois in [#203](https://github.com/jocmp/mercury-parser/pull/203)
 - fix: remove comments with a linear tree walk by @benubois in [#201](https://github.com/jocmp/mercury-parser/pull/201)
 - fix: scope cleaner descendant searches with :scope by @benubois in [#202](https://github.com/jocmp/mercury-parser/pull/202)
 - fix: drop /g from TITLE_SPLITTERS_RE by @benubois in [#199](https://github.com/jocmp/mercury-parser/pull/199)
 - fix: bound fetch time, response size, and cookie growth by @benubois in [#200](https://github.com/jocmp/mercury-parser/pull/200)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.0.9...v3.1.0
 
 ## v3.0.9
 
