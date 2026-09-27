@@ -21,11 +21,10 @@ export default function shouldScore(
     return false;
   }
 
-  const { hostname } = parsedUrl;
-  const linkHost = parseUrl(href)?.hostname;
+  const linkUrl = parseUrl(href);
 
   // Domain mismatch.
-  if (linkHost !== hostname) {
+  if (!linkUrl || linkUrl.hostname !== parsedUrl.hostname) {
     return false;
   }
 
