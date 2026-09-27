@@ -1,5 +1,4 @@
 import assert from 'assert';
-import URL from 'url';
 
 import { record } from '../../test-recorder';
 import fetchResource, {
@@ -25,7 +24,7 @@ describe('fetchResource(url)', () => {
   it('passes custom headers in requests', async () => {
     // A GET request to this endpoint returns the list of all request headers as part of the response JSON
     const url = 'https://postman-echo.com/headers';
-    const parsedUrl = URL.parse(url);
+    const parsedUrl = new URL(url);
     const headers = {
       'my-custom-header': 'Lorem ipsum dolor sit amet',
     };
@@ -143,7 +142,7 @@ describe('validateResponse(response)', () => {
 
 describe('fetch hardening', () => {
   it('bounds the response size and isolates cookies per request', () => {
-    const parsedUrl = URL.parse('http://example.com/');
+    const parsedUrl = new URL('http://example.com/');
     const options = buildRequestOptions('http://example.com/', parsedUrl, {});
 
     // Cap the streamed (decompressed) body so an oversized/chunked body or a
@@ -178,14 +177,14 @@ describe('fetch hardening', () => {
 describe('baseDomain(parsedUrl)', () => {
   it('returns the base domain, excluding subdomain', () => {
     const url = 'https://www.npmjs.com/package/request#streaming';
-    const parsedUrl = URL.parse(url);
+    const parsedUrl = new URL(url);
 
     assert.strictEqual(baseDomain(parsedUrl), 'npmjs.com');
   });
 
   it('returns the base domain as is if no subdomain', () => {
     const url = 'https://npmjs.com/package/request#streaming';
-    const parsedUrl = URL.parse(url);
+    const parsedUrl = new URL(url);
 
     assert.strictEqual(baseDomain(parsedUrl), 'npmjs.com');
   });

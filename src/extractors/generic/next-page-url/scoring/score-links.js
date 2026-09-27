@@ -1,5 +1,3 @@
-import URL from 'url';
-
 import { getAttrs, isWordpress } from 'utils/dom';
 import { removeAnchor, pageNumFromUrl } from 'utils/text';
 
@@ -34,7 +32,7 @@ export default function scoreLinks({
   $,
   previousUrls = [],
 }) {
-  parsedUrl = parsedUrl || URL.parse(articleUrl);
+  parsedUrl = parsedUrl || new URL(articleUrl);
   const baseRegex = makeBaseRegex(baseUrl);
   const isWp = isWordpress($);
 

@@ -1,5 +1,4 @@
 import assert from 'assert';
-import URL from 'url';
 import * as cheerio from 'cheerio';
 
 import Mercury from 'mercury';
@@ -16,7 +15,7 @@ describe('WwwUsmagazineComExtractor', () => {
     const url =
       'http://www.usmagazine.com/celebrity-news/news/lady-gaga-shares-pic-of-ex-taylor-kinney-with-her-mom-w454419';
     const extractor = getExtractor(url);
-    assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+    assert.strictEqual(extractor.domain, new URL(url).hostname);
   });
 
   it('returns the title', async () => {

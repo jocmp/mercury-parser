@@ -1,5 +1,3 @@
-import URL from 'url';
-
 import { articleBaseUrl, removeAnchor } from 'utils/text';
 import scoreLinks from './scoring/score-links';
 
@@ -7,7 +5,7 @@ import scoreLinks from './scoring/score-links';
 // for multi-page articles
 const GenericNextPageUrlExtractor = {
   extract({ $, url, parsedUrl, previousUrls = [] }) {
-    parsedUrl = parsedUrl || URL.parse(url);
+    parsedUrl = parsedUrl || new URL(url);
 
     const articleUrl = removeAnchor(url);
     const baseUrl = articleBaseUrl(url, parsedUrl);

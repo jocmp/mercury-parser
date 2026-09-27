@@ -1,5 +1,6 @@
-import URL from 'url';
 import wuzzy from 'wuzzy';
+
+import parseUrl from 'utils/parse-url';
 
 import { TITLE_SPLITTERS_RE, DOMAIN_ENDINGS_RE } from './constants';
 
@@ -58,7 +59,10 @@ function cleanDomainFromTitle(splitTitle, url) {
   //
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
-  const { host } = URL.parse(url);
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  const { host } = parsedUrl;
   const nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
 
   const startSlug = splitTitle[0].toLowerCase().replace(' ', '');

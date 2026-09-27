@@ -1,5 +1,4 @@
 import assert from 'assert';
-import URL from 'url';
 
 import shouldScore from './should-score';
 
@@ -7,7 +6,7 @@ describe('shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUr
   it('returns false if href has already been fetched', () => {
     const previousUrls = ['http://example.com/foo/bar/2'];
     const href = 'http://example.com/foo/bar/2';
-    const parsedUrl = URL.parse(href);
+    const parsedUrl = new URL(href);
 
     assert.strictEqual(
       shouldScore(href, '', '', parsedUrl, '', previousUrls),
@@ -18,7 +17,7 @@ describe('shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUr
   it('returns true if href has not been fetched', () => {
     const previousUrls = ['http://example.com/foo/bar'];
     const href = 'http://example.com/foo/bar/2';
-    const parsedUrl = URL.parse(href);
+    const parsedUrl = new URL(href);
 
     assert.strictEqual(
       shouldScore(href, '', '', parsedUrl, '', previousUrls),

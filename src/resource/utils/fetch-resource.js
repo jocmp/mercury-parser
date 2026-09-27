@@ -1,4 +1,3 @@
-import URL from 'url';
 import request from 'postman-request';
 
 import {
@@ -97,7 +96,7 @@ export function baseDomain({ host }) {
 // TODO: Always return unicode content for HTML, with charset conversion.
 
 export function buildRequestOptions(url, parsedUrl, headers = {}) {
-  parsedUrl = parsedUrl || URL.parse(encodeURI(url));
+  parsedUrl = parsedUrl || new URL(encodeURI(url));
   return {
     url: parsedUrl.href,
     headers: { ...REQUEST_HEADERS, ...headers },

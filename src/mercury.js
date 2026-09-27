@@ -1,9 +1,9 @@
-import URL from 'url';
 import TurndownService from 'turndown';
 
 import Resource from 'resource';
 import { validateUrl } from 'utils';
 import isBrowser from 'utils/is-browser';
+import parseUrl from 'utils/parse-url';
 import addCustomExtractor from 'extractors/add-extractor';
 import getExtractor from 'extractors/get-extractor';
 import RootExtractor, { selectExtendedTypes } from 'extractors/root-extractor';
@@ -28,7 +28,7 @@ const Parser = {
       html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
     }
 
-    const parsedUrl = URL.parse(url);
+    const parsedUrl = parseUrl(url);
 
     if (!validateUrl(parsedUrl)) {
       return {

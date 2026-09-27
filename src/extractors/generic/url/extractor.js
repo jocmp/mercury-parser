@@ -1,12 +1,13 @@
-import URL from 'url';
 import { extractFromMeta } from 'utils/dom';
+import parseUrl from 'utils/parse-url';
 
 import { CANONICAL_META_SELECTORS } from './constants';
 
 function parseDomain(url) {
-  const parsedUrl = URL.parse(url);
-  const { hostname } = parsedUrl;
-  return hostname;
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  return parsedUrl.hostname;
 }
 
 function result(url) {

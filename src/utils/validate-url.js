@@ -1,5 +1,5 @@
 // extremely simple url validation as a first step
-export default function validateUrl({ hostname }) {
+export default function validateUrl(parsedUrl) {
   // If this isn't a valid url, return an error message
-  return !!hostname;
+  return !!parsedUrl?.hostname;
 }
