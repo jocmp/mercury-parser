@@ -3,7 +3,6 @@
 const { execFile, execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const URL = require('url');
 const octokit = require('@octokit/rest')();
 
 const Parser = require('../dist/mercury');
@@ -83,7 +82,7 @@ const updateFixture = ({ fixture, url, baseDomain }) => {
           return res();
         }
         console.log(`updatedUrl`, updatedUrl);
-        const { hostname } = URL.parse(updatedUrl);
+        const { hostname } = new URL(updatedUrl);
         if (hostname !== baseDomain) {
           console.log('Base URL has changed!!! Do something different');
           console.log(`url`, url);

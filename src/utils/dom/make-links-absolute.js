@@ -1,17 +1,17 @@
-import URL from 'url';
+import resolveUrl from 'utils/resolve-url';
 
 import getAttrs from './get-attrs';
 import findWithin from './find-within';
 import setAttr from './set-attr';
 
 function absolutize($, rootUrl, attr) {
-  const baseUrl = $('base').attr('href');
+  const baseUrl = resolveUrl($('base').attr('href') || rootUrl, rootUrl);
 
   $(`[${attr}]`).each((_, node) => {
     const attrs = getAttrs(node);
     const url = attrs[attr];
     if (!url) return;
-    const absoluteUrl = URL.resolve(baseUrl || rootUrl, url);
+    const absoluteUrl = resolveUrl(url, baseUrl);
 
     setAttr(node, attr, absoluteUrl);
   });
@@ -34,7 +34,7 @@ function absolutizeSet($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         const parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL.resolve(rootUrl, parts[0]);
+        parts[0] = resolveUrl(parts[0], rootUrl);
         return parts.join(' ');
       });
       const absoluteUrlSet = [...new Set(absoluteCandidates)].join(', ');

@@ -1,5 +1,4 @@
 import assert from 'assert';
-import URL from 'url';
 import * as cheerio from 'cheerio';
 
 import Mercury from 'mercury';
@@ -21,7 +20,7 @@ describe('SpektrumExtractor', () => {
 
     it('is selected properly', () => {
       const extractor = getExtractor(url);
-      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, new URL(url).hostname);
     });
 
     it('returns the title', async () => {

@@ -1,6 +1,5 @@
 import assert from 'assert';
 import * as cheerio from 'cheerio';
-import URL from 'url';
 
 import getExtractor from 'extractors/get-extractor';
 import { excerptContent } from 'utils/text';
@@ -26,7 +25,7 @@ describe('NYTimesExtractor', () => {
       // then add your new extractor to
       // src/extractors/all.js
       const extractor = getExtractor(url);
-      assert.strictEqual(extractor.domain, URL.parse(url).hostname);
+      assert.strictEqual(extractor.domain, new URL(url).hostname);
     });
 
     it('returns the title', async () => {

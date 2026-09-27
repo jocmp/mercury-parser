@@ -1,18 +1,18 @@
 import assert from 'assert';
-import URL from 'url';
 
+import parseUrl from './parse-url';
 import validateUrl from './validate-url';
 
 describe('validateUrl(parsedUrl)', () => {
   it('returns false if url is not valid', () => {
-    const url = URL.parse('example.com');
+    const url = parseUrl('example.com');
     const valid = validateUrl(url);
 
     assert.strictEqual(valid, false);
   });
 
   it('returns true if url is valid', () => {
-    const url = URL.parse('http://example.com');
+    const url = parseUrl('http://example.com');
     const valid = validateUrl(url);
 
     assert.strictEqual(valid, true);

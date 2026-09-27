@@ -1,4 +1,4 @@
-import URL from 'url';
+import resolveUrl from 'utils/resolve-url';
 
 export const WiredJpExtractor = {
   domain: 'wired.jp',
@@ -39,7 +39,7 @@ export const WiredJpExtractor = {
       'img[data-original]': $node => {
         const dataOriginal = $node.attr('data-original');
         const src = $node.attr('src');
-        const url = URL.resolve(src, dataOriginal);
+        const url = resolveUrl(dataOriginal, src);
         $node.attr('src', url);
       },
     },
