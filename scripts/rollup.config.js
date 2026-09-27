@@ -9,5 +9,6 @@ export default {
     file: 'dist/generate-custom-parser.js',
     format: 'cjs',
     sourcemap: true,
+    interop: 'auto',
   },
 };

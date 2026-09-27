@@ -1,10 +1,9 @@
 import fs from 'fs';
 import inquirer from 'inquirer';
-import ora from 'ora';
 import { exec } from 'child_process';
 
 import { stripJunkTags, makeLinksAbsolute } from 'utils/dom';
-import Parser from '../dist/mercury';
+import Parser from 'mercury';
 import extractorTemplate from './templates/custom-extractor';
 import extractorTestTemplate from './templates/custom-extractor-test';
 
@@ -22,10 +21,37 @@ const questions = [
     },
   },
 ];
+const SPINNER_FRAMES = ['|', '/', '-', '\\'];
+
+function createSpinner(text) {
+  let frame = 0;
+  let timer;
+
+  const stop = symbol => {
+    clearInterval(timer);
+    process.stdout.write(`\r${symbol} ${text}\n`);
+  };
+
+  return {
+    start() {
+      if (!process.stdout.isTTY) return;
+
+      process.stdout.write(`${SPINNER_FRAMES[frame]} ${text}`);
+      timer = setInterval(() => {
+        frame = (frame + 1) % SPINNER_FRAMES.length;
+        process.stdout.write(`\r${SPINNER_FRAMES[frame]} ${text}`);
+      }, 100);
+      timer.unref();
+    },
+    succeed: () => stop('✔'),
+    fail: () => stop('✖'),
+  };
+}
+
 let spinner;
 
 function confirm(fn, args, msg, newParser) {
-  spinner = ora({ text: msg });
+  spinner = createSpinner(msg);
   spinner.start();
   const result = fn(...args);
 
