@@ -3,7 +3,6 @@
 var fs = require('fs');
 var inquirer = require('inquirer');
 var child_process = require('child_process');
-var URL$1 = require('url');
 var iconv = require('iconv-lite');
 var TurndownService = require('turndown');
 var cheerio = require('cheerio');
@@ -38,7 +37,6 @@ function _interopNamespace(e) {
 
 var fs__default = /*#__PURE__*/_interopDefault(fs);
 var inquirer__default = /*#__PURE__*/_interopDefault(inquirer);
-var URL__default = /*#__PURE__*/_interopDefault(URL$1);
 var iconv__default = /*#__PURE__*/_interopDefault(iconv);
 var TurndownService__default = /*#__PURE__*/_interopDefault(TurndownService);
 var cheerio__namespace = /*#__PURE__*/_interopNamespace(cheerio);
@@ -627,13 +625,22 @@ function cleanImages($article, $) {
   return $;
 }
 
+function parseUrl(url) {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
+  }
+}
+
 function markToKeep(article, $, url, tags = []) {
   if (tags.length === 0) {
     tags = KEEP_SELECTORS;
   }
 
-  if (url) {
-    const { protocol, hostname } = URL__default.default.parse(url);
+  const parsedUrl = parseUrl(url);
+  if (parsedUrl) {
+    const { protocol, hostname } = parsedUrl;
     tags = [...tags, `iframe[src^="${protocol}//${hostname}"]`];
   }
 
@@ -1199,8 +1206,9 @@ function isGoodSegment(segment, index, firstSegmentHasLetters) {
 // pagination data exists in it. Useful for comparing to other links
 // that might have pagination data within them.
 function articleBaseUrl(url, parsed) {
-  const parsedUrl = parsed || URL__default.default.parse(url);
-  const { protocol, host, path } = parsedUrl;
+  const parsedUrl = parsed || new URL(url);
+  const { protocol, host, pathname, search } = parsedUrl;
+  const path = `${pathname}${search}`;
 
   let firstSegmentHasLetters = false;
   const cleanedSegments = path
@@ -1443,6 +1451,14 @@ function rewriteTopLevel(article, $) {
   return $;
 }
 
+function resolveUrl(url, base) {
+  try {
+    return new URL(url, base).href;
+  } catch {
+    return url;
+  }
+}
+
 function setAttr(node, attr, val) {
   if (node.attribs) {
     node.attribs[attr] = val;
@@ -1454,13 +1470,13 @@ function setAttr(node, attr, val) {
 }
 
 function absolutize($, rootUrl, attr) {
-  const baseUrl = $('base').attr('href');
+  const baseUrl = resolveUrl($('base').attr('href') || rootUrl, rootUrl);
 
   $(`[${attr}]`).each((_, node) => {
     const attrs = getAttrs(node);
     const url = attrs[attr];
     if (!url) return;
-    const absoluteUrl = URL__default.default.resolve(baseUrl || rootUrl, url);
+    const absoluteUrl = resolveUrl(url, baseUrl);
 
     setAttr(node, attr, absoluteUrl);
   });
@@ -1483,7 +1499,7 @@ function absolutizeSet($, rootUrl, $content) {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
         const parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL__default.default.resolve(rootUrl, parts[0]);
+        parts[0] = resolveUrl(parts[0], rootUrl);
         return parts.join(' ');
       });
       const absoluteUrlSet = [...new Set(absoluteCandidates)].join(', ');
@@ -1741,7 +1757,7 @@ function validateResponse(response, parseNon200 = false) {
 // TODO: Always return unicode content for HTML, with charset conversion.
 
 function buildRequestOptions(url, parsedUrl, headers = {}) {
-  parsedUrl = parsedUrl || URL__default.default.parse(encodeURI(url));
+  parsedUrl = parsedUrl || new URL(encodeURI(url));
   return {
     url: parsedUrl.href,
     headers: { ...REQUEST_HEADERS, ...headers },
@@ -2003,9 +2019,9 @@ function* range(start = 1, end = 1) {
 }
 
 // extremely simple url validation as a first step
-function validateUrl({ hostname }) {
+function validateUrl(parsedUrl) {
   // If this isn't a valid url, return an error message
-  return !!hostname;
+  return !!parsedUrl && !!parsedUrl.hostname;
 }
 
 const merge = (extractor, domains) =>
@@ -7298,7 +7314,7 @@ const WiredJpExtractor = {
       'img[data-original]': $node => {
         const dataOriginal = $node.attr('data-original');
         const src = $node.attr('src');
-        const url = URL__default.default.resolve(src, dataOriginal);
+        const url = resolveUrl(dataOriginal, src);
         $node.attr('src', url);
       },
     },
@@ -10026,6 +10042,38 @@ const WwwAnimenewsnetworkComExtractor = {
   },
 };
 
+const WwwDigitalfoundryNetExtractor = {
+  domain: 'www.digitalfoundry.net',
+
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']],
+  },
+
+  author: {
+    selectors: [['meta[name="author"]', 'value']],
+  },
+
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['.article-text', 'article'],
+
+    transforms: {
+      'iframe[data-src]': node => {
+        node.attr('src', node.attr('data-src'));
+      },
+    },
+
+    clean: ['.youtube-sub', '.object-related', '.poll', '.insert', '.see-also'],
+  },
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   AbcnewsGoComExtractor: AbcnewsGoComExtractor,
@@ -10143,6 +10191,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwCnbcComExtractor: WwwCnbcComExtractor,
   WwwCnetComExtractor: WwwCnetComExtractor,
   WwwCnnComExtractor: WwwCnnComExtractor,
+  WwwDigitalfoundryNetExtractor: WwwDigitalfoundryNetExtractor,
   WwwDmagazineComExtractor: WwwDmagazineComExtractor,
   WwwDwComExtractor: WwwDwComExtractor,
   WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
@@ -10561,7 +10610,10 @@ function cleanDomainFromTitle(splitTitle, url) {
   //
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
-  const { host } = URL__default.default.parse(url);
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  const { host } = parsedUrl;
   const nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
 
   const startSlug = splitTitle[0].toLowerCase().replace(' ', '');
@@ -11641,11 +11693,10 @@ function shouldScore(
     return false;
   }
 
-  const { hostname } = parsedUrl;
-  const { hostname: linkHost } = URL__default.default.parse(href);
+  const linkUrl = parseUrl(href);
 
   // Domain mismatch.
-  if (linkHost !== hostname) {
+  if (!linkUrl || linkUrl.hostname !== parsedUrl.hostname) {
     return false;
   }
 
@@ -11724,7 +11775,7 @@ function scoreLinks({
   $,
   previousUrls = [],
 }) {
-  parsedUrl = parsedUrl || URL__default.default.parse(articleUrl);
+  parsedUrl = parsedUrl || new URL(articleUrl);
   const baseRegex = makeBaseRegex(baseUrl);
   const isWp = isWordpress($);
 
@@ -11793,7 +11844,7 @@ function scoreLinks({
 // for multi-page articles
 const GenericNextPageUrlExtractor = {
   extract({ $, url, parsedUrl, previousUrls = [] }) {
-    parsedUrl = parsedUrl || URL__default.default.parse(url);
+    parsedUrl = parsedUrl || new URL(url);
 
     const articleUrl = removeAnchor(url);
     const baseUrl = articleBaseUrl(url, parsedUrl);
@@ -11835,9 +11886,10 @@ const GenericNextPageUrlExtractor = {
 const CANONICAL_META_SELECTORS = ['og:url'];
 
 function parseDomain(url) {
-  const parsedUrl = URL__default.default.parse(url);
-  const { hostname } = parsedUrl;
-  return hostname;
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  return parsedUrl.hostname;
 }
 
 function result(url) {
@@ -12041,7 +12093,7 @@ function detectByHtml($) {
 }
 
 function getExtractor(url, parsedUrl, $) {
-  parsedUrl = parsedUrl || URL__default.default.parse(url);
+  parsedUrl = parsedUrl || new URL(url);
   const { hostname } = parsedUrl;
   const baseDomain = hostname.split('.').slice(-2).join('.');
 
@@ -12385,7 +12437,7 @@ const Parser = {
       html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
     }
 
-    const parsedUrl = URL__default.default.parse(url);
+    const parsedUrl = parseUrl(url);
 
     if (!validateUrl(parsedUrl)) {
       return {

@@ -1,34 +1,10 @@
 'use strict';
 
-var _Object$keys = require('@babel/runtime-corejs2/core-js/object/keys');
-var _Object$getOwnPropertySymbols = require('@babel/runtime-corejs2/core-js/object/get-own-property-symbols');
-var _Object$getOwnPropertyDescriptor = require('@babel/runtime-corejs2/core-js/object/get-own-property-descriptor');
-var _Object$getOwnPropertyDescriptors = require('@babel/runtime-corejs2/core-js/object/get-own-property-descriptors');
-var _Object$defineProperties = require('@babel/runtime-corejs2/core-js/object/define-properties');
-var _Object$defineProperty = require('@babel/runtime-corejs2/core-js/object/define-property');
-var _defineProperty = require('@babel/runtime-corejs2/helpers/defineProperty');
-var _objectWithoutProperties = require('@babel/runtime-corejs2/helpers/objectWithoutProperties');
-var _asyncToGenerator = require('@babel/runtime-corejs2/helpers/asyncToGenerator');
-var _regeneratorRuntime = require('@babel/runtime-corejs2/regenerator');
-var URL$1 = require('url');
 var TurndownService = require('turndown');
 var cheerio = require('cheerio');
 var iconv = require('iconv-lite');
-var _parseInt = require('@babel/runtime-corejs2/core-js/parse-int');
-var _slicedToArray = require('@babel/runtime-corejs2/helpers/slicedToArray');
-var _Promise = require('@babel/runtime-corejs2/core-js/promise');
 var request = require('postman-request');
-var _Reflect$ownKeys = require('@babel/runtime-corejs2/core-js/reflect/own-keys');
-var _toConsumableArray = require('@babel/runtime-corejs2/helpers/toConsumableArray');
-var _parseFloat = require('@babel/runtime-corejs2/core-js/parse-float');
-var _Set = require('@babel/runtime-corejs2/core-js/set');
-var _Array$from = require('@babel/runtime-corejs2/core-js/array/from');
-var _Symbol = require('@babel/runtime-corejs2/core-js/symbol');
-var _Symbol$iterator = require('@babel/runtime-corejs2/core-js/symbol/iterator');
-var _Array$isArray = require('@babel/runtime-corejs2/core-js/array/is-array');
-var _Object$assign = require('@babel/runtime-corejs2/core-js/object/assign');
 var stringDirection = require('string-direction');
-var _Number$isNaN = require('@babel/runtime-corejs2/core-js/number/is-nan');
 var dayjs = require('dayjs');
 var utc = require('dayjs/plugin/utc');
 var timezonePlugin = require('dayjs/plugin/timezone');
@@ -56,13 +32,14 @@ function _interopNamespaceDefault(e) {
 var cheerio__namespace = /*#__PURE__*/_interopNamespaceDefault(cheerio);
 
 // Whitespace-significant elements, whose contents must be preserved verbatim.
-var OPEN_BLOCK_RE = /<(pre|code|textarea)[^>]*>/gi;
-var CLOSE_BLOCK_RE = {
+const OPEN_BLOCK_RE = /<(pre|code|textarea)[^>]*>/gi;
+const CLOSE_BLOCK_RE = {
   pre: /<\/pre>/gi,
   code: /<\/code>/gi,
-  textarea: /<\/textarea>/gi
+  textarea: /<\/textarea>/gi,
 };
-var WHITESPACE_RE = /\s{2,}/g;
+
+const WHITESPACE_RE = /\s{2,}/g;
 
 // Collapse runs of whitespace, except inside <pre>/<code>/<textarea>.
 //
@@ -75,25 +52,28 @@ var WHITESPACE_RE = /\s{2,}/g;
 // unmatched open ends the walk instead of restarting a character later, so the
 // pass stays linear even on malformed input.
 function normalizeSpaces(text) {
-  var result = '';
-  var cursor = 0;
-  var open;
+  let result = '';
+  let cursor = 0;
+  let open;
 
   // `exec` on a /g regex is stateful, and the loop below can exit early.
   OPEN_BLOCK_RE.lastIndex = 0;
+
   while ((open = OPEN_BLOCK_RE.exec(text)) !== null) {
-    var closeRe = CLOSE_BLOCK_RE[open[1].toLowerCase()];
+    const closeRe = CLOSE_BLOCK_RE[open[1].toLowerCase()];
     closeRe.lastIndex = OPEN_BLOCK_RE.lastIndex;
-    var close = closeRe.exec(text);
+    const close = closeRe.exec(text);
 
     // Unclosed block: nothing further to preserve, so collapse the rest below.
     if (close === null) break;
-    var blockEnd = close.index + close[0].length;
+
+    const blockEnd = close.index + close[0].length;
     result += text.slice(cursor, open.index).replace(WHITESPACE_RE, ' ');
     result += text.slice(open.index, blockEnd);
     cursor = blockEnd;
     OPEN_BLOCK_RE.lastIndex = blockEnd;
   }
+
   return (result + text.slice(cursor).replace(WHITESPACE_RE, ' ')).trim();
 }
 
@@ -103,12 +83,11 @@ function normalizeSpaces(text) {
 // string to be cleaned.
 // Only used for date_published currently.
 function extractFromUrl(url, regexList) {
-  var matchRe = regexList.find(function (re) {
-    return re.test(url);
-  });
+  const matchRe = regexList.find(re => re.test(url));
   if (matchRe) {
     return matchRe.exec(url)[1];
   }
+
   return null;
 }
 
@@ -128,17 +107,24 @@ function extractFromUrl(url, regexList) {
 // Does not match:
 //  pg=102
 //  page:2
-var PAGE_IN_HREF_RE = new RegExp('(page|paging|(p(a|g|ag)?(e|enum|ewanted|ing|ination)))?(=|/)([0-9]{1,3})', 'i');
-var HAS_ALPHA_RE = /[a-z]/i;
-var IS_ALPHA_RE = /^[a-z]+$/i;
-var IS_DIGIT_RE = /^[0-9]+$/i;
-var ENCODING_RE = /charset=([\w-]+)\b/;
-var DEFAULT_ENCODING = 'utf-8';
+const PAGE_IN_HREF_RE = new RegExp(
+  '(page|paging|(p(a|g|ag)?(e|enum|ewanted|ing|ination)))?(=|/)([0-9]{1,3})',
+  'i'
+);
+
+const HAS_ALPHA_RE = /[a-z]/i;
+
+const IS_ALPHA_RE = /^[a-z]+$/i;
+const IS_DIGIT_RE = /^[0-9]+$/i;
+
+const ENCODING_RE = /charset=([\w-]+)\b/;
+const DEFAULT_ENCODING = 'utf-8';
 
 function pageNumFromUrl(url) {
-  var matches = url.match(PAGE_IN_HREF_RE);
+  const matches = url.match(PAGE_IN_HREF_RE);
   if (!matches) return null;
-  var pageNum = _parseInt(matches[6], 10);
+
+  const pageNum = parseInt(matches[6], 10);
 
   // Return pageNum < 100, otherwise
   // return null
@@ -150,7 +136,7 @@ function removeAnchor(url) {
 }
 
 function isGoodSegment(segment, index, firstSegmentHasLetters) {
-  var goodSegment = true;
+  let goodSegment = true;
 
   // If this is purely a number, and it's the first or second
   // url_segment, it's probably a page number. Remove it.
@@ -169,6 +155,7 @@ function isGoodSegment(segment, index, firstSegmentHasLetters) {
   if (index < 2 && segment.length < 3 && !firstSegmentHasLetters) {
     goodSegment = false;
   }
+
   return goodSegment;
 }
 
@@ -176,57 +163,58 @@ function isGoodSegment(segment, index, firstSegmentHasLetters) {
 // pagination data exists in it. Useful for comparing to other links
 // that might have pagination data within them.
 function articleBaseUrl(url, parsed) {
-  var parsedUrl = parsed || URL$1.parse(url);
-  var protocol = parsedUrl.protocol,
-    host = parsedUrl.host,
-    path = parsedUrl.path;
-  var firstSegmentHasLetters = false;
-  var cleanedSegments = path.split('/').reverse().reduce(function (acc, rawSegment, index) {
-    var segment = rawSegment;
+  const parsedUrl = parsed || new URL(url);
+  const { protocol, host, pathname, search } = parsedUrl;
+  const path = `${pathname}${search}`;
 
-    // Split off and save anything that looks like a file type.
-    if (segment.includes('.')) {
-      var _segment$split = segment.split('.'),
-        _segment$split2 = _slicedToArray(_segment$split, 2),
-        possibleSegment = _segment$split2[0],
-        fileExt = _segment$split2[1];
-      if (IS_ALPHA_RE.test(fileExt)) {
-        segment = possibleSegment;
+  let firstSegmentHasLetters = false;
+  const cleanedSegments = path
+    .split('/')
+    .reverse()
+    .reduce((acc, rawSegment, index) => {
+      let segment = rawSegment;
+
+      // Split off and save anything that looks like a file type.
+      if (segment.includes('.')) {
+        const [possibleSegment, fileExt] = segment.split('.');
+        if (IS_ALPHA_RE.test(fileExt)) {
+          segment = possibleSegment;
+        }
       }
-    }
 
-    // If our first or second segment has anything looking like a page
-    // number, remove it.
-    if (PAGE_IN_HREF_RE.test(segment) && index < 2) {
-      segment = segment.replace(PAGE_IN_HREF_RE, '');
-    }
+      // If our first or second segment has anything looking like a page
+      // number, remove it.
+      if (PAGE_IN_HREF_RE.test(segment) && index < 2) {
+        segment = segment.replace(PAGE_IN_HREF_RE, '');
+      }
 
-    // If we're on the first segment, check to see if we have any
-    // characters in it. The first segment is actually the last bit of
-    // the URL, and this will be helpful to determine if we're on a URL
-    // segment that looks like "/2/" for example.
-    if (index === 0) {
-      firstSegmentHasLetters = HAS_ALPHA_RE.test(segment);
-    }
+      // If we're on the first segment, check to see if we have any
+      // characters in it. The first segment is actually the last bit of
+      // the URL, and this will be helpful to determine if we're on a URL
+      // segment that looks like "/2/" for example.
+      if (index === 0) {
+        firstSegmentHasLetters = HAS_ALPHA_RE.test(segment);
+      }
 
-    // If it's not marked for deletion, push it to cleaned_segments.
-    if (isGoodSegment(segment, index, firstSegmentHasLetters)) {
-      acc.push(segment);
-    }
-    return acc;
-  }, []);
-  return "".concat(protocol, "//").concat(host).concat(cleanedSegments.reverse().join('/'));
+      // If it's not marked for deletion, push it to cleaned_segments.
+      if (isGoodSegment(segment, index, firstSegmentHasLetters)) {
+        acc.push(segment);
+      }
+
+      return acc;
+    }, []);
+
+  return `${protocol}//${host}${cleanedSegments.reverse().join('/')}`;
 }
 
 // Given a string, return True if it appears to have an ending sentence
 // within it, false otherwise.
-var SENTENCE_END_RE = new RegExp('.( |$)');
+const SENTENCE_END_RE = new RegExp('.( |$)');
 function hasSentenceEnd(text) {
   return SENTENCE_END_RE.test(text);
 }
 
-function excerptContent(content) {
-  var words = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+function excerptContent(content, words = 10) {
   return content.trim().split(/\s+/).slice(0, words).join(' ');
 }
 
@@ -234,11 +222,10 @@ function excerptContent(content) {
 // used in our fetchResource function to
 // ensure correctly encoded responses
 function getEncoding(str) {
-  var encoding = DEFAULT_ENCODING;
-  var matches = ENCODING_RE.exec(str);
+  let encoding = DEFAULT_ENCODING;
+  const matches = ENCODING_RE.exec(str);
   if (matches !== null) {
-    var _matches = _slicedToArray(matches, 2);
-    str = _matches[1];
+    [, str] = matches;
   }
   if (iconv.encodingExists(str)) {
     encoding = str;
@@ -248,56 +235,64 @@ function getEncoding(str) {
 
 /* eslint-disable no-undef */
 // Simple browser detection utility
-var isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+const isBrowser =
+  typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 // Browser does not like us setting user agent
-var REQUEST_HEADERS = isBrowser ? {} : {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
-};
+const REQUEST_HEADERS = isBrowser
+  ? {}
+  : {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+    };
 
 // Connect and inter-byte idle timeout. Note this does not bound total download
 // time; MAX_FETCH_TIME does.
-var FETCH_TIMEOUT = 10000;
+const FETCH_TIMEOUT = 10000;
 
 // Hard ceiling on total elapsed fetch time, so a slow-trickle response that
 // keeps resetting FETCH_TIMEOUT cannot hang the request forever.
-var MAX_FETCH_TIME = 30000;
+const MAX_FETCH_TIME = 30000;
 
 // Content types that we do not extract content from
-var BAD_CONTENT_TYPES = ['audio/mpeg', 'image/gif', 'image/jpeg', 'image/jpg'];
-var BAD_CONTENT_TYPES_RE = new RegExp("^(".concat(BAD_CONTENT_TYPES.join('|'), ")$"), 'i');
+const BAD_CONTENT_TYPES = [
+  'audio/mpeg',
+  'image/gif',
+  'image/jpeg',
+  'image/jpg',
+];
+
+const BAD_CONTENT_TYPES_RE = new RegExp(
+  `^(${BAD_CONTENT_TYPES.join('|')})$`,
+  'i'
+);
 
 // Use this setting as the maximum size an article can be
 // for us to attempt parsing. Defaults to 5 MB.
-var MAX_CONTENT_LENGTH = 5242880;
-
-function ownKeys$h(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$h(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
+const MAX_CONTENT_LENGTH = 5242880;
 
 // Perform the request under a hard ceiling on total elapsed time. FETCH_TIMEOUT
 // only bounds connect and inter-byte gaps, so a response that trickles bytes
 // just often enough would never time out on its own. `requester` is injectable
 // for testing.
-function get(options) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref$maxFetchTime = _ref.maxFetchTime,
-    maxFetchTime = _ref$maxFetchTime === void 0 ? MAX_FETCH_TIME : _ref$maxFetchTime,
-    _ref$requester = _ref.requester,
-    requester = _ref$requester === void 0 ? request : _ref$requester;
-  return new _Promise(function (resolve, reject) {
-    var expired = false;
-    var req = requester(options, function (err, response, body) {
+function get(
+  options,
+  { maxFetchTime = MAX_FETCH_TIME, requester = request } = {}
+) {
+  return new Promise((resolve, reject) => {
+    let expired = false;
+
+    const req = requester(options, (err, response, body) => {
       if (expired) return;
       clearTimeout(deadline);
-      if (err) reject(err);else resolve({
-        body: body,
-        response: response
-      });
+      if (err) reject(err);
+      else resolve({ body, response });
     });
-    var deadline = setTimeout(function () {
+
+    const deadline = setTimeout(() => {
       expired = true;
       if (req && typeof req.abort === 'function') req.abort();
-      reject(new Error("Fetch exceeded maximum time of ".concat(maxFetchTime, "ms")));
+      reject(new Error(`Fetch exceeded maximum time of ${maxFetchTime}ms`));
     }, maxFetchTime);
 
     // Don't let the deadline timer keep the process alive on its own.
@@ -310,34 +305,45 @@ function get(options) {
 // Validation here means that we haven't found reason to bail from
 // further processing of this url.
 
-function validateResponse(response) {
-  var parseNon200 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+function validateResponse(response, parseNon200 = false) {
   // Check if we got a valid status code
   // This isn't great, but I'm requiring a statusMessage to be set
   // before short circuiting b/c nock doesn't set it in tests
   // statusMessage only not set in nock response, in which case
   // I check statusCode, which is currently only 200 for OK responses
   // in tests
-  if (response.statusMessage && response.statusMessage !== 'OK' || response.statusCode !== 200) {
+  if (
+    (response.statusMessage && response.statusMessage !== 'OK') ||
+    response.statusCode !== 200
+  ) {
     if (!response.statusCode) {
-      throw new Error("Unable to fetch content. Original exception was ".concat(response.error));
+      throw new Error(
+        `Unable to fetch content. Original exception was ${response.error}`
+      );
     } else if (!parseNon200) {
-      throw new Error("Resource returned a response status code of ".concat(response.statusCode, " and resource was instructed to reject non-200 status codes."));
+      throw new Error(
+        `Resource returned a response status code of ${response.statusCode} and resource was instructed to reject non-200 status codes.`
+      );
     }
   }
-  var _response$headers = response.headers,
-    contentType = _response$headers['content-type'],
-    contentLength = _response$headers['content-length'];
+
+  const { 'content-type': contentType, 'content-length': contentLength } =
+    response.headers;
 
   // Check that the content is not in BAD_CONTENT_TYPES
   if (BAD_CONTENT_TYPES_RE.test(contentType)) {
-    throw new Error("Content-type for this resource was ".concat(contentType, " and is not allowed."));
+    throw new Error(
+      `Content-type for this resource was ${contentType} and is not allowed.`
+    );
   }
 
   // Check that the content length is below maximum
   if (contentLength > MAX_CONTENT_LENGTH) {
-    throw new Error("Content for this resource was too large. Maximum content length is ".concat(MAX_CONTENT_LENGTH, "."));
+    throw new Error(
+      `Content for this resource was too large. Maximum content length is ${MAX_CONTENT_LENGTH}.`
+    );
   }
+
   return true;
 }
 
@@ -346,12 +352,11 @@ function validateResponse(response) {
 //       proper exceptions on the many failure cases of HTTP.
 // TODO: Always return unicode content for HTML, with charset conversion.
 
-function buildRequestOptions(url, parsedUrl) {
-  var headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  parsedUrl = parsedUrl || URL$1.parse(encodeURI(url));
-  return _objectSpread$h({
+function buildRequestOptions(url, parsedUrl, headers = {}) {
+  parsedUrl = parsedUrl || new URL(encodeURI(url));
+  return {
     url: parsedUrl.href,
-    headers: _objectSpread$h(_objectSpread$h({}, REQUEST_HEADERS), headers),
+    headers: { ...REQUEST_HEADERS, ...headers },
     timeout: FETCH_TIMEOUT,
     // Abort once this many decompressed bytes have arrived, so an oversized
     // body or a gzip bomb cannot exhaust memory.
@@ -365,64 +370,44 @@ function buildRequestOptions(url, parsedUrl) {
     // Accept and decode gzip
     gzip: true,
     // Follow any non-GET redirects
-    followAllRedirects: true
-  }, typeof window !== 'undefined' ? {} : {
-    // Follow GET redirects; this option is for Node only
-    followRedirect: true
-  });
+    followAllRedirects: true,
+    ...(typeof window !== 'undefined'
+      ? {}
+      : {
+          // Follow GET redirects; this option is for Node only
+          followRedirect: true,
+        }),
+  };
 }
-function fetchResource(_x, _x2) {
-  return _fetchResource.apply(this, arguments);
-}
-function _fetchResource() {
-  _fetchResource = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(url, parsedUrl) {
-    var headers,
-      options,
-      _yield$get,
-      response,
+
+async function fetchResource(url, parsedUrl, headers = {}) {
+  const options = buildRequestOptions(url, parsedUrl, headers);
+
+  const { response, body } = await get(options);
+
+  try {
+    validateResponse(response);
+    return {
       body,
-      _args = arguments,
-      _t;
-    return _regeneratorRuntime.wrap(function (_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-          options = buildRequestOptions(url, parsedUrl, headers);
-          _context.next = 1;
-          return get(options);
-        case 1:
-          _yield$get = _context.sent;
-          response = _yield$get.response;
-          body = _yield$get.body;
-          _context.prev = 2;
-          validateResponse(response);
-          return _context.abrupt("return", {
-            body: body,
-            response: response
-          });
-        case 3:
-          _context.prev = 3;
-          _t = _context["catch"](2);
-          return _context.abrupt("return", {
-            error: true,
-            message: _t.message
-          });
-        case 4:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee, null, [[2, 3]]);
-  }));
-  return _fetchResource.apply(this, arguments);
+      response,
+    };
+  } catch (e) {
+    return {
+      error: true,
+      message: e.message,
+    };
+  }
 }
 
 function convertMetaProp($, from, to) {
-  $("meta[".concat(from, "]")).each(function (_, node) {
-    var $node = $(node);
-    var value = $node.attr(from);
+  $(`meta[${from}]`).each((_, node) => {
+    const $node = $(node);
+
+    const value = $node.attr(from);
     $node.attr(to, value);
     $node.removeAttr(from);
   });
+
   return $;
 }
 
@@ -440,24 +425,66 @@ function normalizeMetaTags($) {
 }
 
 // Spacer images to be removed
-var SPACER_RE = new RegExp('transparent|spacer|blank', 'i');
+const SPACER_RE = new RegExp('transparent|spacer|blank', 'i');
 
 // The class we will use to mark elements we want to keep
 // but would normally remove
-var KEEP_CLASS = 'mercury-parser-keep';
-var KEEP_SELECTORS = ['iframe[src^="https://www.youtube.com"]', 'iframe[src^="https://www.youtube-nocookie.com"]', 'iframe[src^="http://www.youtube.com"]', 'iframe[src^="https://player.vimeo"]', 'iframe[src^="http://player.vimeo"]', 'iframe[src^="https://www.redditmedia.com"]'];
+const KEEP_CLASS = 'mercury-parser-keep';
+
+const KEEP_SELECTORS = [
+  'iframe[src^="https://www.youtube.com"]',
+  'iframe[src^="https://www.youtube-nocookie.com"]',
+  'iframe[src^="http://www.youtube.com"]',
+  'iframe[src^="https://player.vimeo"]',
+  'iframe[src^="http://player.vimeo"]',
+  'iframe[src^="https://www.redditmedia.com"]',
+];
 
 // A list of tags to strip from the output if we encounter them.
-var STRIP_OUTPUT_TAGS = ['title', 'script', 'noscript', 'link', 'style', 'hr', 'embed', 'iframe', 'object'];
-var WHITELIST_ATTRS = ['src', 'srcset', 'start', 'sizes', 'type', 'href', 'class', 'id', 'alt', 'xlink:href', 'width', 'height'];
-var WHITELIST_ATTRS_RE = new RegExp("^(".concat(WHITELIST_ATTRS.join('|'), ")$"), 'i');
+const STRIP_OUTPUT_TAGS = [
+  'title',
+  'script',
+  'noscript',
+  'link',
+  'style',
+  'hr',
+  'embed',
+  'iframe',
+  'object',
+];
+const WHITELIST_ATTRS = [
+  'src',
+  'srcset',
+  'start',
+  'sizes',
+  'type',
+  'href',
+  'class',
+  'id',
+  'alt',
+  'xlink:href',
+  'width',
+  'height',
+];
+
+const WHITELIST_ATTRS_RE = new RegExp(
+  `^(${WHITELIST_ATTRS.join('|')})$`,
+  'i'
+);
 
 // cleanTags
-var CLEAN_CONDITIONALLY_TAGS = ['ul', 'ol', 'table', 'div', 'button', 'form'].join(',');
+const CLEAN_CONDITIONALLY_TAGS = [
+  'ul',
+  'ol',
+  'table',
+  'div',
+  'button',
+  'form',
+].join(',');
 
 // cleanHeaders
-var HEADER_TAGS = ['h2', 'h3', 'h4', 'h5', 'h6'];
-var HEADER_TAG_LIST = HEADER_TAGS.join(',');
+const HEADER_TAGS = ['h2', 'h3', 'h4', 'h5', 'h6'];
+const HEADER_TAG_LIST = HEADER_TAGS.join(',');
 
 // // CONTENT FETCHING CONSTANTS ////
 
@@ -465,15 +492,48 @@ var HEADER_TAG_LIST = HEADER_TAGS.join(',');
 // extracting content from a resource. These strings are joined together
 // and then tested for existence using re:test, so may contain simple,
 // non-pipe style regular expression queries if necessary.
-var UNLIKELY_CANDIDATES_BLACKLIST = ['ad-break', 'adbox', 'advert', 'addthis', 'agegate', 'aux', 'blogger-labels', 'combx', 'comment', 'conversation', 'disqus', 'entry-unrelated', 'extra', 'foot',
-// 'form', // This is too generic, has too many false positives
-'header', 'hidden', 'loader', 'login',
-// Note: This can hit 'blogindex'.
-'menu', 'meta', 'nav', 'outbrain', 'pager', 'pagination', 'predicta',
-// readwriteweb inline ad box
-'presence_control_external',
-// lifehacker.com container full of false positives
-'popup', 'printfriendly', 'related', 'remove', 'remark', 'rss', 'share', 'shoutbox', 'sidebar', 'sociable', 'sponsor', 'taboola', 'tools'];
+const UNLIKELY_CANDIDATES_BLACKLIST = [
+  'ad-break',
+  'adbox',
+  'advert',
+  'addthis',
+  'agegate',
+  'aux',
+  'blogger-labels',
+  'combx',
+  'comment',
+  'conversation',
+  'disqus',
+  'entry-unrelated',
+  'extra',
+  'foot',
+  // 'form', // This is too generic, has too many false positives
+  'header',
+  'hidden',
+  'loader',
+  'login', // Note: This can hit 'blogindex'.
+  'menu',
+  'meta',
+  'nav',
+  'outbrain',
+  'pager',
+  'pagination',
+  'predicta', // readwriteweb inline ad box
+  'presence_control_external', // lifehacker.com container full of false positives
+  'popup',
+  'printfriendly',
+  'related',
+  'remove',
+  'remark',
+  'rss',
+  'share',
+  'shoutbox',
+  'sidebar',
+  'sociable',
+  'sponsor',
+  'taboola',
+  'tools',
+];
 
 // A list of strings that can be considered LIKELY candidates when
 // extracting content from a resource. Essentially, the inverse of the
@@ -486,63 +546,208 @@ var UNLIKELY_CANDIDATES_BLACKLIST = ['ad-break', 'adbox', 'advert', 'addthis', '
 // These strings are joined together and then tested for existence using
 // re:test, so may contain simple, non-pipe style regular expression queries
 // if necessary.
-var UNLIKELY_CANDIDATES_WHITELIST = ['and', 'article', 'body', 'blogindex', 'column', 'content', 'entry-content-asset', 'format',
-// misuse of form
-'hfeed', 'hentry', 'hatom', 'main', 'page', 'posts', 'shadow'];
+const UNLIKELY_CANDIDATES_WHITELIST = [
+  'and',
+  'article',
+  'body',
+  'blogindex',
+  'column',
+  'content',
+  'entry-content-asset',
+  'format', // misuse of form
+  'hfeed',
+  'hentry',
+  'hatom',
+  'main',
+  'page',
+  'posts',
+  'shadow',
+];
 
 // A list of tags which, if found inside, should cause a <div /> to NOT
 // be turned into a paragraph tag. Shallow div tags without these elements
 // should be turned into <p /> tags.
-var DIV_TO_P_BLOCK_TAGS = ['a', 'blockquote', 'dl', 'div', 'img', 'p', 'pre', 'table'].join(',');
+const DIV_TO_P_BLOCK_TAGS = [
+  'a',
+  'blockquote',
+  'dl',
+  'div',
+  'img',
+  'p',
+  'pre',
+  'table',
+].join(',');
 
 // A list of strings that denote a positive scoring for this content as being
 // an article container. Checked against className and id.
 //
 // TODO: Perhaps have these scale based on their odds of being quality?
-var POSITIVE_SCORE_HINTS$1 = ['article', 'articlecontent', 'instapaper_body', 'blog', 'body', 'content', 'entry-content-asset', 'entry', 'hentry', 'main', 'Normal', 'page', 'pagination', 'permalink', 'post', 'story', 'text', '[-_]copy',
-// usatoday
-'\\Bcopy'];
+const POSITIVE_SCORE_HINTS$1 = [
+  'article',
+  'articlecontent',
+  'instapaper_body',
+  'blog',
+  'body',
+  'content',
+  'entry-content-asset',
+  'entry',
+  'hentry',
+  'main',
+  'Normal',
+  'page',
+  'pagination',
+  'permalink',
+  'post',
+  'story',
+  'text',
+  '[-_]copy', // usatoday
+  '\\Bcopy',
+];
 
 // The above list, joined into a matching regular expression
-var POSITIVE_SCORE_RE$1 = new RegExp(POSITIVE_SCORE_HINTS$1.join('|'), 'i');
+const POSITIVE_SCORE_RE$1 = new RegExp(
+  POSITIVE_SCORE_HINTS$1.join('|'),
+  'i'
+);
 
 // A list of strings that denote a negative scoring for this content as being
 // an article container. Checked against className and id.
 //
 // TODO: Perhaps have these scale based on their odds of being quality?
-var NEGATIVE_SCORE_HINTS$1 = ['adbox', 'advert', 'author', 'bio', 'bookmark', 'bottom', 'byline', 'clear', 'com-', 'combx', 'comment', 'comment\\B', 'contact', 'copy', 'credit', 'crumb', 'date', 'deck', 'excerpt', 'featured',
-// tnr.com has a featured_content which throws us off
-'foot', 'footer', 'footnote', 'graf', 'head', 'info', 'infotext',
-// newscientist.com copyright
-'instapaper_ignore', 'jump', 'linebreak', 'link', 'masthead', 'media', 'meta', 'modal', 'outbrain',
-// slate.com junk
-'promo', 'pr_',
-// autoblog - press release
-'related', 'respond', 'roundcontent',
-// lifehacker restricted content warning
-'scroll', 'secondary', 'share', 'shopping', 'shoutbox', 'side', 'sidebar', 'sponsor', 'stamp', 'sub', 'summary', 'tags', 'tools', 'widget'];
+const NEGATIVE_SCORE_HINTS$1 = [
+  'adbox',
+  'advert',
+  'author',
+  'bio',
+  'bookmark',
+  'bottom',
+  'byline',
+  'clear',
+  'com-',
+  'combx',
+  'comment',
+  'comment\\B',
+  'contact',
+  'copy',
+  'credit',
+  'crumb',
+  'date',
+  'deck',
+  'excerpt',
+  'featured', // tnr.com has a featured_content which throws us off
+  'foot',
+  'footer',
+  'footnote',
+  'graf',
+  'head',
+  'info',
+  'infotext', // newscientist.com copyright
+  'instapaper_ignore',
+  'jump',
+  'linebreak',
+  'link',
+  'masthead',
+  'media',
+  'meta',
+  'modal',
+  'outbrain', // slate.com junk
+  'promo',
+  'pr_', // autoblog - press release
+  'related',
+  'respond',
+  'roundcontent', // lifehacker restricted content warning
+  'scroll',
+  'secondary',
+  'share',
+  'shopping',
+  'shoutbox',
+  'side',
+  'sidebar',
+  'sponsor',
+  'stamp',
+  'sub',
+  'summary',
+  'tags',
+  'tools',
+  'widget',
+];
 // The above list, joined into a matching regular expression
-var NEGATIVE_SCORE_RE$1 = new RegExp(NEGATIVE_SCORE_HINTS$1.join('|'), 'i');
+const NEGATIVE_SCORE_RE$1 = new RegExp(
+  NEGATIVE_SCORE_HINTS$1.join('|'),
+  'i'
+);
 
 // XPath to try to determine if a page is wordpress. Not always successful.
-var IS_WP_SELECTOR = 'meta[name=generator][value^=WordPress]';
+const IS_WP_SELECTOR = 'meta[name=generator][value^=WordPress]';
 
 // Match any phrase that looks like it could be page, or paging, or pagination
-var PAGE_RE = new RegExp('pag(e|ing|inat)', 'i');
+const PAGE_RE = new RegExp('pag(e|ing|inat)', 'i');
 
 // A list of all of the block level tags known in HTML5 and below. Taken from
 // http://bit.ly/qneNIT
-var BLOCK_LEVEL_TAGS = ['article', 'aside', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'col', 'colgroup', 'dd', 'div', 'dl', 'dt', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'li', 'map', 'object', 'ol', 'output', 'p', 'pre', 'progress', 'section', 'table', 'tbody', 'textarea', 'tfoot', 'th', 'thead', 'tr', 'ul', 'video'];
-var BLOCK_LEVEL_TAGS_RE = new RegExp("^(".concat(BLOCK_LEVEL_TAGS.join('|'), ")$"), 'i');
+const BLOCK_LEVEL_TAGS = [
+  'article',
+  'aside',
+  'blockquote',
+  'body',
+  'br',
+  'button',
+  'canvas',
+  'caption',
+  'col',
+  'colgroup',
+  'dd',
+  'div',
+  'dl',
+  'dt',
+  'embed',
+  'fieldset',
+  'figcaption',
+  'figure',
+  'footer',
+  'form',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'header',
+  'hgroup',
+  'hr',
+  'li',
+  'map',
+  'object',
+  'ol',
+  'output',
+  'p',
+  'pre',
+  'progress',
+  'section',
+  'table',
+  'tbody',
+  'textarea',
+  'tfoot',
+  'th',
+  'thead',
+  'tr',
+  'ul',
+  'video',
+];
+const BLOCK_LEVEL_TAGS_RE = new RegExp(
+  `^(${BLOCK_LEVEL_TAGS.join('|')})$`,
+  'i'
+);
 
 // The removal is implemented as a blacklist and whitelist, this test finds
 // blacklisted elements that aren't whitelisted. We do this all in one
 // expression-both because it's only one pass, and because this skips the
 // serialization for whitelisted nodes.
-var candidatesBlacklist = UNLIKELY_CANDIDATES_BLACKLIST.join('|');
-var CANDIDATES_BLACKLIST = new RegExp(candidatesBlacklist, 'i');
-var candidatesWhitelist = UNLIKELY_CANDIDATES_WHITELIST.join('|');
-var CANDIDATES_WHITELIST = new RegExp(candidatesWhitelist, 'i');
+const candidatesBlacklist = UNLIKELY_CANDIDATES_BLACKLIST.join('|');
+const CANDIDATES_BLACKLIST = new RegExp(candidatesBlacklist, 'i');
+
+const candidatesWhitelist = UNLIKELY_CANDIDATES_WHITELIST.join('|');
+const CANDIDATES_WHITELIST = new RegExp(candidatesWhitelist, 'i');
 
 function stripUnlikelyCandidates($) {
   //  Loop through the provided document and remove any non-link nodes
@@ -554,19 +759,23 @@ function stripUnlikelyCandidates($) {
   //
   //  :param $: a cheerio object to strip nodes from
   //  :return $: the cleaned cheerio object
-  $('*').not('a').each(function (index, node) {
-    var $node = $(node);
-    var classes = $node.attr('class');
-    var id = $node.attr('id');
-    if (!id && !classes) return;
-    var classAndId = "".concat(classes || '', " ").concat(id || '');
-    if (CANDIDATES_WHITELIST.test(classAndId)) {
-      return;
-    }
-    if (CANDIDATES_BLACKLIST.test(classAndId)) {
-      $node.remove();
-    }
-  });
+  $('*')
+    .not('a')
+    .each((index, node) => {
+      const $node = $(node);
+      const classes = $node.attr('class');
+      const id = $node.attr('id');
+      if (!id && !classes) return;
+
+      const classAndId = `${classes || ''} ${id || ''}`;
+      if (CANDIDATES_WHITELIST.test(classAndId)) {
+        return;
+      }
+      if (CANDIDATES_BLACKLIST.test(classAndId)) {
+        $node.remove();
+      }
+    });
+
   return $;
 }
 
@@ -581,25 +790,29 @@ function stripUnlikelyCandidates($) {
 // :param $: The cheerio object to handle dom manipulation
 // :param br: Whether or not the passed node is a br
 
-function paragraphize(node, $) {
-  var br = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var $node = $(node);
+function paragraphize(node, $, br = false) {
+  const $node = $(node);
+
   if (br) {
-    var sibling = node.nextSibling;
-    var p = $('<p></p>');
+    let sibling = node.nextSibling;
+    const p = $('<p></p>');
 
     // while the next node is text or not a block level element
     // append it to a new p node
-    while (sibling && !(sibling.tagName && BLOCK_LEVEL_TAGS_RE.test(sibling.tagName))) {
-      var _sibling = sibling,
-        nextSibling = _sibling.nextSibling;
+    while (
+      sibling &&
+      !(sibling.tagName && BLOCK_LEVEL_TAGS_RE.test(sibling.tagName))
+    ) {
+      const { nextSibling } = sibling;
       $(sibling).appendTo(p);
       sibling = nextSibling;
     }
+
     $node.replaceWith(p);
     $node.remove();
     return $;
   }
+
   return $;
 }
 
@@ -613,10 +826,11 @@ function paragraphize(node, $) {
 //  :param $: A cheerio object
 
 function brsToPs($) {
-  var collapsing = false;
-  $('br').each(function (index, element) {
-    var $element = $(element);
-    var nextElement = $element.next().get(0);
+  let collapsing = false;
+  $('br').each((index, element) => {
+    const $element = $(element);
+    const nextElement = $element.next().get(0);
+
     if (nextElement && nextElement.tagName.toLowerCase() === 'br') {
       collapsing = true;
       $element.remove();
@@ -625,69 +839,81 @@ function brsToPs($) {
       paragraphize(element, $, true);
     }
   });
+
   return $;
 }
 
 function getAttrs(node) {
-  var attribs = node.attribs,
-    attributes = node.attributes;
+  const { attribs, attributes } = node;
+
   if (!attribs && attributes) {
-    var attrs = _Reflect$ownKeys(attributes).reduce(function (acc, index) {
-      var attr = attributes[index];
+    const attrs = Reflect.ownKeys(attributes).reduce((acc, index) => {
+      const attr = attributes[index];
 
       // In browser, Reflect.ownKeys includes non-numeric keys like 'length', 'item', etc.
       if (!attr || !attr.name || !attr.value) return acc;
+
       acc[attr.name] = attr.value;
       return acc;
     }, {});
     return attrs;
   }
+
   return attribs;
 }
 
-function convertNodeTo($node, $) {
-  var tag = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'p';
-  var node = $node.get(0);
+function convertNodeTo($node, $, tag = 'p') {
+  const node = $node.get(0);
   if (!node) {
     return $;
   }
-  var attrs = getAttrs(node) || {};
-  var attribString = _Reflect$ownKeys(attrs).map(function (key) {
-    return "".concat(key, "=").concat(attrs[key]);
-  }).join(' ');
-  var html;
+  const attrs = getAttrs(node) || {};
+
+  const attribString = Reflect.ownKeys(attrs)
+    .map(key => `${key}=${attrs[key]}`)
+    .join(' ');
+  let html;
+
   if (isBrowser) {
     // In the browser, the contents of noscript tags aren't rendered, therefore
     // transforms on the noscript tag (commonly used for lazy-loading) don't work
     // as expected. This test case handles that
-    html = node.tagName.toLowerCase() === 'noscript' ? $node.text() : $node.html();
+    html =
+      node.tagName.toLowerCase() === 'noscript' ? $node.text() : $node.html();
   } else {
     // In Cheerio 1.x, noscript content is text, but $node.html() returns it correctly
     // For other tags, use contents() to preserve structure
-    html = node.tagName.toLowerCase() === 'noscript' ? $node.html() : $node.contents();
+    html =
+      node.tagName.toLowerCase() === 'noscript'
+        ? $node.html()
+        : $node.contents();
   }
-  $node.replaceWith("<".concat(tag, " ").concat(attribString, ">").concat(html, "</").concat(tag, ">"));
+  $node.replaceWith(`<${tag} ${attribString}>${html}</${tag}>`);
   return $;
 }
 
 function convertDivs($) {
-  $('div').each(function (index, div) {
-    var $div = $(div);
-    var convertible = $div.children(DIV_TO_P_BLOCK_TAGS).length === 0;
+  $('div').each((index, div) => {
+    const $div = $(div);
+    const convertible = $div.children(DIV_TO_P_BLOCK_TAGS).length === 0;
+
     if (convertible) {
       convertNodeTo($div, $, 'p');
     }
   });
+
   return $;
 }
+
 function convertSpans$1($) {
-  $('span').each(function (index, span) {
-    var $span = $(span);
-    var convertible = $span.parents('p, div, li, figcaption').length === 0;
+  $('span').each((index, span) => {
+    const $span = $(span);
+    const convertible = $span.parents('p, div, li, figcaption').length === 0;
     if (convertible) {
       convertNodeTo($span, $, 'p');
     }
   });
+
   return $;
 }
 
@@ -707,6 +933,7 @@ function convertToParagraphs($) {
   $ = brsToPs($);
   $ = convertDivs($);
   $ = convertSpans$1($);
+
   return $;
 }
 
@@ -725,12 +952,12 @@ function convertToParagraphs($) {
 // the context node, so it is filtered back out to preserve descendant-only
 // semantics.
 function findWithin($context, selector) {
-  return $context.find(":scope :is(".concat(selector, ")")).not($context);
+  return $context.find(`:scope :is(${selector})`).not($context);
 }
 
 function cleanForHeight($img, $) {
-  var height = _parseInt($img.attr('height'), 10);
-  var width = _parseInt($img.attr('width'), 10) || 20;
+  const height = parseInt($img.attr('height'), 10);
+  const width = parseInt($img.attr('width'), 10) || 20;
 
   // Remove images that explicitly have very small heights or
   // widths, because they are most likely shims or icons,
@@ -743,6 +970,7 @@ function cleanForHeight($img, $) {
     // aspect ratio.
     $img.removeAttr('height');
   }
+
   return $;
 }
 
@@ -752,41 +980,54 @@ function removeSpacers($img, $) {
   if (SPACER_RE.test($img.attr('src'))) {
     $img.remove();
   }
+
   return $;
 }
+
 function cleanImages($article, $) {
-  findWithin($article, 'img').each(function (index, img) {
-    var $img = $(img);
+  findWithin($article, 'img').each((index, img) => {
+    const $img = $(img);
+
     cleanForHeight($img, $);
     removeSpacers($img, $);
   });
+
   return $;
 }
 
-function markToKeep(article, $, url) {
-  var tags = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+function parseUrl(url) {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
+  }
+}
+
+function markToKeep(article, $, url, tags = []) {
   if (tags.length === 0) {
     tags = KEEP_SELECTORS;
   }
-  if (url) {
-    var _URL$parse = URL$1.parse(url),
-      protocol = _URL$parse.protocol,
-      hostname = _URL$parse.hostname;
-    tags = [].concat(_toConsumableArray(tags), ["iframe[src^=\"".concat(protocol, "//").concat(hostname, "\"]")]);
+
+  const parsedUrl = parseUrl(url);
+  if (parsedUrl) {
+    const { protocol, hostname } = parsedUrl;
+    tags = [...tags, `iframe[src^="${protocol}//${hostname}"]`];
   }
+
   findWithin(article, tags.join(',')).addClass(KEEP_CLASS);
+
   return $;
 }
 
-function stripJunkTags(article, $) {
-  var tags = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+function stripJunkTags(article, $, tags = []) {
   if (tags.length === 0) {
     tags = STRIP_OUTPUT_TAGS;
   }
 
   // Remove matching elements, but ignore
   // any element with a class of mercury-parser-keep
-  findWithin(article, tags.join(',')).not(".".concat(KEEP_CLASS)).remove();
+  findWithin(article, tags.join(',')).not(`.${KEEP_CLASS}`).remove();
+
   return $;
 }
 
@@ -794,16 +1035,16 @@ function stripJunkTags(article, $) {
 // by the title extractor instead. If there's less than 3 of them (<3),
 // strip them. Otherwise, turn 'em into H2s.
 function cleanHOnes(article, $) {
-  var $hOnes = findWithin(article, 'h1');
+  const $hOnes = findWithin(article, 'h1');
+
   if ($hOnes.length < 3) {
-    $hOnes.each(function (index, node) {
-      return $(node).remove();
-    });
+    $hOnes.each((index, node) => $(node).remove());
   } else {
-    $hOnes.each(function (index, node) {
+    $hOnes.each((index, node) => {
       convertNodeTo($(node), $, 'h2');
     });
   }
+
   return $;
 }
 
@@ -814,28 +1055,34 @@ function setAttrs(node, attrs) {
     while (node.attributes.length > 0) {
       node.removeAttribute(node.attributes[0].name);
     }
-    _Reflect$ownKeys(attrs).forEach(function (key) {
+
+    Reflect.ownKeys(attrs).forEach(key => {
       node.setAttribute(key, attrs[key]);
     });
   }
+
   return node;
 }
 
-function ownKeys$g(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 function removeAllButWhitelist($article) {
-  findWithin($article, '*').each(function (index, node) {
-    var attrs = getAttrs(node);
-    setAttrs(node, _Reflect$ownKeys(attrs).reduce(function (acc, attr) {
-      if (WHITELIST_ATTRS_RE.test(attr)) {
-        return _objectSpread$g(_objectSpread$g({}, acc), {}, _defineProperty({}, attr, attrs[attr]));
-      }
-      return acc;
-    }, {}));
+  findWithin($article, '*').each((index, node) => {
+    const attrs = getAttrs(node);
+
+    setAttrs(
+      node,
+      Reflect.ownKeys(attrs).reduce((acc, attr) => {
+        if (WHITELIST_ATTRS_RE.test(attr)) {
+          return { ...acc, [attr]: attrs[attr] };
+        }
+
+        return acc;
+      }, {})
+    );
   });
 
   // Remove the mercury-parser-keep class from result
-  findWithin($article, ".".concat(KEEP_CLASS)).removeClass(KEEP_CLASS);
+  findWithin($article, `.${KEEP_CLASS}`).removeClass(KEEP_CLASS);
+
   return $article;
 }
 
@@ -844,14 +1091,18 @@ function cleanAttributes($article) {
   // Grabbing the parent because at this point
   // $article will be wrapped in a div which will
   // have a score set on it.
-  return removeAllButWhitelist($article.parent().length ? $article.parent() : $article);
+  return removeAllButWhitelist(
+    $article.parent().length ? $article.parent() : $article
+  );
 }
 
 function removeEmpty($article, $) {
-  findWithin($article, 'p').each(function (index, p) {
-    var $p = $(p);
-    if (findWithin($p, 'iframe, img').length === 0 && $p.text().trim() === '') $p.remove();
+  findWithin($article, 'p').each((index, p) => {
+    const $p = $(p);
+    if (findWithin($p, 'iframe, img').length === 0 && $p.text().trim() === '')
+      $p.remove();
   });
+
   return $;
 }
 
@@ -859,7 +1110,7 @@ function removeEmpty($article, $) {
 // the node's score attribute
 // returns null if no score set
 function getScore($node) {
-  return _parseFloat($node.attr('score')) || null;
+  return parseFloat($node.attr('score')) || null;
 }
 
 function setScore($node, $, score) {
@@ -872,12 +1123,13 @@ function scoreCommas(text) {
   return (text.match(/,/g) || []).length;
 }
 
-var idkRe = new RegExp('^(p|pre)$', 'i');
-function scoreLength(textLength) {
-  var tagName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'p';
-  var chunks = textLength / 50;
+const idkRe = new RegExp('^(p|pre)$', 'i');
+
+function scoreLength(textLength, tagName = 'p') {
+  const chunks = textLength / 50;
+
   if (chunks > 0) {
-    var lengthBonus;
+    let lengthBonus;
 
     // No idea why p or pre are being tamped down here
     // but just following the source for now
@@ -889,17 +1141,19 @@ function scoreLength(textLength) {
     } else {
       lengthBonus = chunks - 1.25;
     }
+
     return Math.min(Math.max(lengthBonus, 0), 3);
   }
+
   return 0;
 }
 
 // Score a paragraph using various methods. Things like number of
 // commas, etc. Higher is better.
 function scoreParagraph(node) {
-  var score = 1;
-  var text = node.text().trim();
-  var textLength = text.length;
+  let score = 1;
+  const text = node.text().trim();
+  const textLength = text.length;
 
   // If this paragraph is less than 25 characters, don't count it.
   if (textLength < 25) {
@@ -920,6 +1174,7 @@ function scoreParagraph(node) {
   if (text.slice(-1) === ':') {
     score -= 1;
   }
+
   return score;
 }
 
@@ -928,56 +1183,151 @@ function scoreParagraph(node) {
 
 // A list of tags that should be ignored when trying to find the top candidate
 // for a document.
-var NON_TOP_CANDIDATE_TAGS = ['br', 'b', 'i', 'label', 'hr', 'area', 'base', 'basefont', 'input', 'img', 'link', 'meta'];
-var NON_TOP_CANDIDATE_TAGS_RE = new RegExp("^(".concat(NON_TOP_CANDIDATE_TAGS.join('|'), ")$"), 'i');
+const NON_TOP_CANDIDATE_TAGS = [
+  'br',
+  'b',
+  'i',
+  'label',
+  'hr',
+  'area',
+  'base',
+  'basefont',
+  'input',
+  'img',
+  'link',
+  'meta',
+];
+
+const NON_TOP_CANDIDATE_TAGS_RE = new RegExp(
+  `^(${NON_TOP_CANDIDATE_TAGS.join('|')})$`,
+  'i'
+);
 
 // A list of selectors that specify, very clearly, either hNews or other
 // very content-specific style content, like Blogger templates.
 // More examples here: http://microformats.org/wiki/blog-post-formats
-var HNEWS_CONTENT_SELECTORS = [['.hentry', '.entry-content'], ['entry', '.entry-content'], ['.entry', '.entry_content'], ['.post', '.postbody'], ['.post', '.post_body'], ['.post', '.post-body']];
-var PHOTO_HINTS = ['figure', 'photo', 'image', 'caption'];
-var PHOTO_HINTS_RE = new RegExp(PHOTO_HINTS.join('|'), 'i');
+const HNEWS_CONTENT_SELECTORS = [
+  ['.hentry', '.entry-content'],
+  ['entry', '.entry-content'],
+  ['.entry', '.entry_content'],
+  ['.post', '.postbody'],
+  ['.post', '.post_body'],
+  ['.post', '.post-body'],
+];
+
+const PHOTO_HINTS = ['figure', 'photo', 'image', 'caption'];
+const PHOTO_HINTS_RE = new RegExp(PHOTO_HINTS.join('|'), 'i');
 
 // A list of strings that denote a positive scoring for this content as being
 // an article container. Checked against className and id.
 //
 // TODO: Perhaps have these scale based on their odds of being quality?
-var POSITIVE_SCORE_HINTS = ['article', 'articlecontent', 'instapaper_body', 'blog', 'body', 'content', 'entry-content-asset', 'entry', 'hentry', 'main', 'Normal', 'page', 'pagination', 'permalink', 'post', 'story', 'text', '[-_]copy',
-// usatoday
-'\\Bcopy'];
+const POSITIVE_SCORE_HINTS = [
+  'article',
+  'articlecontent',
+  'instapaper_body',
+  'blog',
+  'body',
+  'content',
+  'entry-content-asset',
+  'entry',
+  'hentry',
+  'main',
+  'Normal',
+  'page',
+  'pagination',
+  'permalink',
+  'post',
+  'story',
+  'text',
+  '[-_]copy', // usatoday
+  '\\Bcopy',
+];
 
 // The above list, joined into a matching regular expression
-var POSITIVE_SCORE_RE = new RegExp(POSITIVE_SCORE_HINTS.join('|'), 'i');
+const POSITIVE_SCORE_RE = new RegExp(
+  POSITIVE_SCORE_HINTS.join('|'),
+  'i'
+);
 
 // Readability publisher-specific guidelines
-var READABILITY_ASSET = new RegExp('entry-content-asset', 'i');
+const READABILITY_ASSET = new RegExp('entry-content-asset', 'i');
 
 // A list of strings that denote a negative scoring for this content as being
 // an article container. Checked against className and id.
 //
 // TODO: Perhaps have these scale based on their odds of being quality?
-var NEGATIVE_SCORE_HINTS = ['adbox', 'advert', 'author', 'bio', 'bookmark', 'bottom', 'byline', 'clear', 'com-', 'combx', 'comment', 'comment\\B', 'contact', 'copy', 'credit', 'crumb', 'date', 'deck', 'excerpt', 'featured',
-// tnr.com has a featured_content which throws us off
-'foot', 'footer', 'footnote', 'graf', 'head', 'info', 'infotext',
-// newscientist.com copyright
-'instapaper_ignore', 'jump', 'linebreak', 'link', 'masthead', 'media', 'meta', 'modal', 'outbrain',
-// slate.com junk
-'promo', 'pr_',
-// autoblog - press release
-'related', 'respond', 'roundcontent',
-// lifehacker restricted content warning
-'scroll', 'secondary', 'share', 'shopping', 'shoutbox', 'side', 'sidebar', 'sponsor', 'stamp', 'sub', 'summary', 'tags', 'tools', 'widget'];
+const NEGATIVE_SCORE_HINTS = [
+  'adbox',
+  'advert',
+  'author',
+  'bio',
+  'bookmark',
+  'bottom',
+  'byline',
+  'clear',
+  'com-',
+  'combx',
+  'comment',
+  'comment\\B',
+  'contact',
+  'copy',
+  'credit',
+  'crumb',
+  'date',
+  'deck',
+  'excerpt',
+  'featured', // tnr.com has a featured_content which throws us off
+  'foot',
+  'footer',
+  'footnote',
+  'graf',
+  'head',
+  'info',
+  'infotext', // newscientist.com copyright
+  'instapaper_ignore',
+  'jump',
+  'linebreak',
+  'link',
+  'masthead',
+  'media',
+  'meta',
+  'modal',
+  'outbrain', // slate.com junk
+  'promo',
+  'pr_', // autoblog - press release
+  'related',
+  'respond',
+  'roundcontent', // lifehacker restricted content warning
+  'scroll',
+  'secondary',
+  'share',
+  'shopping',
+  'shoutbox',
+  'side',
+  'sidebar',
+  'sponsor',
+  'stamp',
+  'sub',
+  'summary',
+  'tags',
+  'tools',
+  'widget',
+];
 // The above list, joined into a matching regular expression
-var NEGATIVE_SCORE_RE = new RegExp(NEGATIVE_SCORE_HINTS.join('|'), 'i');
-var PARAGRAPH_SCORE_TAGS = new RegExp('^(p|li|span|pre)$', 'i');
-var CHILD_CONTENT_TAGS = new RegExp('^(td|blockquote|ol|ul|dl)$', 'i');
-var BAD_TAGS = new RegExp('^(address|form)$', 'i');
+const NEGATIVE_SCORE_RE = new RegExp(
+  NEGATIVE_SCORE_HINTS.join('|'),
+  'i'
+);
+
+const PARAGRAPH_SCORE_TAGS = new RegExp('^(p|li|span|pre)$', 'i');
+const CHILD_CONTENT_TAGS = new RegExp('^(td|blockquote|ol|ul|dl)$', 'i');
+const BAD_TAGS = new RegExp('^(address|form)$', 'i');
 
 // Score an individual node. Has some smarts for paragraphs, otherwise
 // just scores based on tag.
 function scoreNode($node) {
-  var _$node$get = $node.get(0),
-    tagName = _$node$get.tagName;
+  const { tagName } = $node.get(0);
 
   // TODO: Consider ordering by most likely.
   // E.g., if divs are a more common tag on a page,
@@ -997,14 +1347,16 @@ function scoreNode($node) {
   if (tagName.toLowerCase() === 'th') {
     return -5;
   }
+
   return 0;
 }
 
 // Get the score of a node based on its className and id.
 function getWeight(node) {
-  var classes = node.attr('class');
-  var id = node.attr('id');
-  var score = 0;
+  const classes = node.attr('class');
+  const id = node.attr('id');
+  let score = 0;
+
   if (id) {
     // if id exists, try to score on both positive and negative
     if (POSITIVE_SCORE_RE.test(id)) {
@@ -1014,6 +1366,7 @@ function getWeight(node) {
       score -= 25;
     }
   }
+
   if (classes) {
     if (score === 0) {
       // if classes exist and id did not contribute to score
@@ -1041,17 +1394,20 @@ function getWeight(node) {
       score += 25;
     }
   }
+
   return score;
 }
 
 // eslint-disable-next-line import-x/no-cycle
+
 function addScore($node, $, amount) {
   try {
-    var score = getOrInitScore($node, $) + amount;
+    const score = getOrInitScore($node, $) + amount;
     setScore($node, $, score);
-  } catch (_unused) {
+  } catch {
     // Ignoring; error occurs in scoreNode
   }
+
   return $node;
 }
 
@@ -1059,27 +1415,32 @@ function addScore($node, $, amount) {
 
 // Adds 1/4 of a child's score to its parent
 function addToParent(node, $, score) {
-  var parent = node.parent();
+  const parent = node.parent();
   if (parent) {
     addScore(parent, $, score * 0.25);
   }
+
   return node;
 }
 
 // gets and returns the score if it exists
 // if not, initializes a score based on
 // the node's tag type
-function getOrInitScore($node, $) {
-  var weightNodes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  var score = getScore($node);
+function getOrInitScore($node, $, weightNodes = true) {
+  let score = getScore($node);
+
   if (score) {
     return score;
   }
+
   score = scoreNode($node);
+
   if (weightNodes) {
     score += getWeight($node);
   }
+
   addToParent($node, $, score);
+
   return score;
 }
 
@@ -1091,15 +1452,18 @@ function textLength(text) {
 // in a node is link text
 // Takes a node, returns a float
 function linkDensity($node) {
-  var totalTextLength = textLength($node.text());
-  var linkText = findWithin($node, 'a').text();
-  var linkLength = textLength(linkText);
+  const totalTextLength = textLength($node.text());
+
+  const linkText = findWithin($node, 'a').text();
+  const linkLength = textLength(linkText);
+
   if (totalTextLength > 0) {
     return linkLength / totalTextLength;
   }
   if (totalTextLength === 0 && linkLength > 0) {
     return 1;
   }
+
   return 0;
 }
 
@@ -1111,18 +1475,21 @@ function removeUnlessContent($node, $, weight) {
   if ($node.hasClass('entry-content-asset')) {
     return;
   }
-  var content = normalizeSpaces($node.text());
+
+  const content = normalizeSpaces($node.text());
+
   if (scoreCommas(content) < 10) {
-    var pCount = findWithin($node, 'p').length;
-    var inputCount = findWithin($node, 'input').length;
+    const pCount = findWithin($node, 'p').length;
+    const inputCount = findWithin($node, 'input').length;
 
     // Looks like a form, too many inputs.
     if (inputCount > pCount / 3) {
       $node.remove();
       return;
     }
-    var contentLength = content.length;
-    var imgCount = findWithin($node, 'img').length;
+
+    const contentLength = content.length;
+    const imgCount = findWithin($node, 'img').length;
 
     // Content is too short, and there are no images, so
     // this is probably junk content.
@@ -1130,7 +1497,8 @@ function removeUnlessContent($node, $, weight) {
       $node.remove();
       return;
     }
-    var density = linkDensity($node);
+
+    const density = linkDensity($node);
 
     // Too high of link density, is probably a menu or
     // something similar.
@@ -1146,18 +1514,23 @@ function removeUnlessContent($node, $, weight) {
       // Don't remove the node if it's a list and the
       // previous sibling starts with a colon though. That
       // means it's probably content.
-      var tagName = $node.get(0).tagName.toLowerCase();
-      var nodeIsList = tagName === 'ol' || tagName === 'ul';
+      const tagName = $node.get(0).tagName.toLowerCase();
+      const nodeIsList = tagName === 'ol' || tagName === 'ul';
       if (nodeIsList) {
-        var previousNode = $node.prev();
-        if (previousNode && normalizeSpaces(previousNode.text()).slice(-1) === ':') {
+        const previousNode = $node.prev();
+        if (
+          previousNode &&
+          normalizeSpaces(previousNode.text()).slice(-1) === ':'
+        ) {
           return;
         }
       }
+
       $node.remove();
       return;
     }
-    var scriptCount = findWithin($node, 'script').length;
+
+    const scriptCount = findWithin($node, 'script').length;
 
     // Too many script tags, not enough content.
     if (scriptCount > 0 && contentLength < 150) {
@@ -1174,11 +1547,16 @@ function removeUnlessContent($node, $, weight) {
 //
 // Return this same doc.
 function cleanTags($article, $) {
-  findWithin($article, CLEAN_CONDITIONALLY_TAGS).each(function (index, node) {
-    var $node = $(node);
+  findWithin($article, CLEAN_CONDITIONALLY_TAGS).each((index, node) => {
+    const $node = $(node);
     // If marked to keep, skip it
-    if ($node.hasClass(KEEP_CLASS) || findWithin($node, ".".concat(KEEP_CLASS)).length > 0) return;
-    var weight = getScore($node);
+    if (
+      $node.hasClass(KEEP_CLASS) ||
+      findWithin($node, `.${KEEP_CLASS}`).length > 0
+    )
+      return;
+
+    let weight = getScore($node);
     if (!weight) {
       weight = getOrInitScore($node, $);
       setScore($node, $, weight);
@@ -1192,13 +1570,14 @@ function cleanTags($article, $) {
       removeUnlessContent($node, $, weight);
     }
   });
+
   return $;
 }
 
-function cleanHeaders($article, $) {
-  var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  findWithin($article, HEADER_TAG_LIST).each(function (index, header) {
-    var $header = $(header);
+function cleanHeaders($article, $, title = '') {
+  findWithin($article, HEADER_TAG_LIST).each((index, header) => {
+    const $header = $(header);
+
     if ($(header).hasClass(KEEP_CLASS)) {
       return $header;
     }
@@ -1221,8 +1600,10 @@ function cleanHeaders($article, $) {
     if (getWeight($(header)) < 0) {
       return $header.remove();
     }
+
     return $header;
   });
+
   return $;
 }
 
@@ -1234,7 +1615,16 @@ function rewriteTopLevel(article, $) {
   // top-level/root node - AP
   $ = convertNodeTo($('html'), $, 'div');
   $ = convertNodeTo($('body'), $, 'div');
+
   return $;
+}
+
+function resolveUrl(url, base) {
+  try {
+    return new URL(url, base).href;
+  } catch {
+    return url;
+  }
 }
 
 function setAttr(node, attr, val) {
@@ -1243,46 +1633,53 @@ function setAttr(node, attr, val) {
   } else if (node.attributes) {
     node.setAttribute(attr, val);
   }
+
   return node;
 }
 
 function absolutize($, rootUrl, attr) {
-  var baseUrl = $('base').attr('href');
-  $("[".concat(attr, "]")).each(function (_, node) {
-    var attrs = getAttrs(node);
-    var url = attrs[attr];
+  const baseUrl = resolveUrl($('base').attr('href') || rootUrl, rootUrl);
+
+  $(`[${attr}]`).each((_, node) => {
+    const attrs = getAttrs(node);
+    const url = attrs[attr];
     if (!url) return;
-    var absoluteUrl = URL$1.resolve(baseUrl || rootUrl, url);
+    const absoluteUrl = resolveUrl(url, baseUrl);
+
     setAttr(node, attr, absoluteUrl);
   });
 }
+
 function absolutizeSet($, rootUrl, $content) {
-  findWithin($content, '[srcset]').each(function (_, node) {
-    var attrs = getAttrs(node);
-    var urlSet = attrs.srcset;
+  findWithin($content, '[srcset]').each((_, node) => {
+    const attrs = getAttrs(node);
+    const urlSet = attrs.srcset;
+
     if (urlSet) {
       // a comma should be considered part of the candidate URL unless preceded by a descriptor
       // descriptors can only contain positive numbers followed immediately by either 'w' or 'x'
       // space characters inside the URL should be encoded (%20 or +)
-      var candidates = urlSet.match(/(?:\s*)(\S+(?:\s*[\d.]+[wx])?)(?:\s*,\s*)?/g);
+      const candidates = urlSet.match(
+        /(?:\s*)(\S+(?:\s*[\d.]+[wx])?)(?:\s*,\s*)?/g
+      );
       if (!candidates) return;
-      var absoluteCandidates = candidates.map(function (candidate) {
+      const absoluteCandidates = candidates.map(candidate => {
         // a candidate URL cannot start or end with a comma
         // descriptors are separated from the URLs by unescaped whitespace
-        var parts = candidate.trim().replace(/,$/, '').split(/\s+/);
-        parts[0] = URL$1.resolve(rootUrl, parts[0]);
+        const parts = candidate.trim().replace(/,$/, '').split(/\s+/);
+        parts[0] = resolveUrl(parts[0], rootUrl);
         return parts.join(' ');
       });
-      var absoluteUrlSet = _toConsumableArray(new _Set(absoluteCandidates)).join(', ');
+      const absoluteUrlSet = [...new Set(absoluteCandidates)].join(', ');
       setAttr(node, 'srcset', absoluteUrlSet);
     }
   });
 }
+
 function makeLinksAbsolute($content, $, url) {
-  ['href', 'src'].forEach(function (attr) {
-    return absolutize($, url, attr);
-  });
+  ['href', 'src'].forEach(attr => absolutize($, url, attr));
   absolutizeSet($, url, $content);
+
   return $content;
 }
 
@@ -1290,88 +1687,68 @@ function makeLinksAbsolute($content, $, url) {
 function stripTags(text, $) {
   // Wrapping text in html element prevents errors when text
   // has no html
-  var cleanText = $("<span>".concat(text, "</span>")).text();
+  const cleanText = $(`<span>${text}</span>`).text();
   return cleanText === '' ? text : cleanText;
 }
 
-function _createForOfIteratorHelper$5(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$5(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$5(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$5(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$5(r, a) : void 0; } }
-function _arrayLikeToArray$5(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-
 // Given a node type to search for, and a list of meta tag names to
 // search for, find a meta tag associated.
-function extractFromMeta($, metaNames, cachedNames) {
-  var cleanTags = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  var foundNames = metaNames.filter(function (name) {
-    return cachedNames.indexOf(name) !== -1;
-  });
-  var _iterator = _createForOfIteratorHelper$5(foundNames),
-    _step;
-  try {
-    var _loop = function _loop() {
-        var name = _step.value;
-        var type = 'name';
-        var value = 'value';
-        var nodes = $("meta[".concat(type, "=\"").concat(name, "\"]"));
+function extractFromMeta(
+  $,
+  metaNames,
+  cachedNames,
+  cleanTags = true
+) {
+  const foundNames = metaNames.filter(name => cachedNames.indexOf(name) !== -1);
 
-        // Get the unique value of every matching node, in case there
-        // are two meta tags with the same name and value.
-        // Remove empty values.
-        var values = nodes.map(function (index, node) {
-          return $(node).attr(value);
-        }).toArray().filter(function (text) {
-          return text !== '';
-        });
+  for (const name of foundNames) {
+    const type = 'name';
+    const value = 'value';
 
-        // If we have more than one value for the same name, we have a
-        // conflict and can't trust any of them. Skip this name. If we have
-        // zero, that means our meta tags had no values. Skip this name
-        // also.
-        if (values.length === 1) {
-          var metaValue;
-          // Meta values that contain HTML should be stripped, as they
-          // weren't subject to cleaning previously.
-          if (cleanTags) {
-            metaValue = stripTags(values[0], $);
-          } else {
-            var _values = _slicedToArray(values, 1);
-            metaValue = _values[0];
-          }
-          return {
-            v: metaValue
-          };
-        }
-      },
-      _ret;
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      _ret = _loop();
-      if (_ret) return _ret.v;
+    const nodes = $(`meta[${type}="${name}"]`);
+
+    // Get the unique value of every matching node, in case there
+    // are two meta tags with the same name and value.
+    // Remove empty values.
+    const values = nodes
+      .map((index, node) => $(node).attr(value))
+      .toArray()
+      .filter(text => text !== '');
+
+    // If we have more than one value for the same name, we have a
+    // conflict and can't trust any of them. Skip this name. If we have
+    // zero, that means our meta tags had no values. Skip this name
+    // also.
+    if (values.length === 1) {
+      let metaValue;
+      // Meta values that contain HTML should be stripped, as they
+      // weren't subject to cleaning previously.
+      if (cleanTags) {
+        metaValue = stripTags(values[0], $);
+      } else {
+        [metaValue] = values;
+      }
+
+      return metaValue;
     }
-
-    // If nothing is found, return null
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
   }
+
+  // If nothing is found, return null
   return null;
 }
 
 function withinComment($node) {
-  var parents = $node.parents().toArray();
-  var commentParent = parents.find(function (parent) {
-    var attrs = getAttrs(parent);
-    var nodeClass = attrs["class"],
-      id = attrs.id;
-    var classAndId = "".concat(nodeClass, " ").concat(id);
+  const parents = $node.parents().toArray();
+  const commentParent = parents.find(parent => {
+    const attrs = getAttrs(parent);
+    const { class: nodeClass, id } = attrs;
+    const classAndId = `${nodeClass} ${id}`;
     return classAndId.includes('comment');
   });
+
   return commentParent !== undefined;
 }
 
-function _createForOfIteratorHelper$4(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$4(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$4(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$4(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$4(r, a) : void 0; } }
-function _arrayLikeToArray$4(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function isGoodNode($node, maxChildren) {
   // If it has a number of children, it's more likely a container
   // element. Skip it.
@@ -1382,44 +1759,42 @@ function isGoodNode($node, maxChildren) {
   if (withinComment($node)) {
     return false;
   }
+
   return true;
 }
 
 // Given a a list of selectors find content that may
 // be extractable from the document. This is for flat
 // meta-information, like author, title, date published, etc.
-function extractFromSelectors($, selectors) {
-  var maxChildren = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-  var textOnly = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  var _iterator = _createForOfIteratorHelper$4(selectors),
-    _step;
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var selector = _step.value;
-      var nodes = $(selector);
+function extractFromSelectors(
+  $,
+  selectors,
+  maxChildren = 1,
+  textOnly = true
+) {
+  for (const selector of selectors) {
+    const nodes = $(selector);
 
-      // If we didn't get exactly one of this selector, this may be
-      // a list of articles or comments. Skip it.
-      if (nodes.length === 1) {
-        var $node = $(nodes[0]);
-        if (isGoodNode($node, maxChildren)) {
-          var content = void 0;
-          if (textOnly) {
-            content = $node.text();
-          } else {
-            content = $node.html();
-          }
-          if (content) {
-            return content;
-          }
+    // If we didn't get exactly one of this selector, this may be
+    // a list of articles or comments. Skip it.
+    if (nodes.length === 1) {
+      const $node = $(nodes[0]);
+
+      if (isGoodNode($node, maxChildren)) {
+        let content;
+        if (textOnly) {
+          content = $node.text();
+        } else {
+          content = $node.html();
+        }
+
+        if (content) {
+          return content;
         }
       }
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
   }
+
   return null;
 }
 
@@ -1435,14 +1810,18 @@ function isWordpress($) {
   return $(IS_WP_SELECTOR).length > 0;
 }
 
-var IS_LINK = new RegExp('https?://', 'i');
-var IMAGE_RE = '.(png|gif|jpe?g)';
-var IS_IMAGE = new RegExp("".concat(IMAGE_RE), 'i');
+const IS_LINK = new RegExp('https?://', 'i');
+const IMAGE_RE = '.(png|gif|jpe?g)';
+const IS_IMAGE = new RegExp(`${IMAGE_RE}`, 'i');
 // A srcset descriptor is always whitespace-separated, so requiring `\s+` (not
 // `\s*`) removes the overlap between the greedy `\S+` query and the `[\d.]+`
 // descriptor that made this O(n^2) on long numeric query strings.
-var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\?\\S+)?(\\s+[\\d.]+[wx])"), 'i');
-var TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
+const IS_SRCSET = new RegExp(
+  `${IMAGE_RE}(\\?\\S+)?(\\s+[\\d.]+[wx])`,
+  'i'
+);
+
+const TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 
 // Convert all instances of images with potentially
 // lazy loaded images into normal images.
@@ -1450,25 +1829,33 @@ var TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 // attribute that a is a placeholer. We need to be able to properly fill in
 // the src attribute so the images are no longer lazy loaded.
 function convertLazyLoadedImages($) {
-  var extractSrcFromJSON = function extractSrcFromJSON(str) {
+  const extractSrcFromJSON = str => {
     try {
-      var _JSON$parse = JSON.parse(str),
-        src = _JSON$parse.src;
+      const { src } = JSON.parse(str);
       if (typeof src === 'string') return src;
-    } catch (_unused) {
+    } catch {
       return false;
     }
+
     return false;
   };
-  $('img').each(function (_, img) {
-    var attrs = getAttrs(img);
-    _Reflect$ownKeys(attrs).forEach(function (attr) {
-      var value = attrs[attr];
+
+  $('img').each((_, img) => {
+    const attrs = getAttrs(img);
+
+    Reflect.ownKeys(attrs).forEach(attr => {
+      const value = attrs[attr];
+
       if (attr !== 'srcset' && IS_LINK.test(value) && IS_SRCSET.test(value)) {
         $(img).attr('srcset', value);
-      } else if (attr !== 'src' && attr !== 'srcset' && IS_LINK.test(value) && IS_IMAGE.test(value)) {
+      } else if (
+        attr !== 'src' &&
+        attr !== 'srcset' &&
+        IS_LINK.test(value) &&
+        IS_IMAGE.test(value)
+      ) {
         // Is the value a JSON object? If so, we should attempt to extract the image src from the data.
-        var existingSrc = extractSrcFromJSON(value);
+        const existingSrc = extractSrcFromJSON(value);
         if (existingSrc) {
           $(img).attr('src', existingSrc);
         } else {
@@ -1477,53 +1864,43 @@ function convertLazyLoadedImages($) {
       }
     });
   });
+
   return $;
 }
-
-function _createForOfIteratorHelper$3(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$3(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$3(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$3(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$3(r, a) : void 0; } }
-function _arrayLikeToArray$3(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 // Walk the tree explicitly rather than using
 // `$.root().find('*').contents().filter(isComment)`, which builds its combined
 // child list by repeated array concatenation and so is quadratic in node count.
 function cleanComments($) {
-  var root = $.root().get(0);
-  var stack = root ? [root] : [];
-  var comments = [];
+  const root = $.root().get(0);
+  const stack = root ? [root] : [];
+  const comments = [];
+
   while (stack.length > 0) {
-    var node = stack.pop();
+    const node = stack.pop();
     if (node.type === 'comment') {
       comments.push(node);
     } else if (node.children) {
       // One at a time: spreading a wide child list exceeds the argument limit
       // on documents with hundreds of thousands of siblings.
-      var _iterator = _createForOfIteratorHelper$3(node.children),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var child = _step.value;
-          stack.push(child);
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
+      for (const child of node.children) stack.push(child);
     }
   }
 
   // Remove after the walk so sibling links stay intact while traversing.
   $(comments).remove();
+
   return $;
 }
+
 function clean$2($) {
   $(TAGS_TO_REMOVE).remove();
+
   $ = cleanComments($);
   return $;
 }
 
-var Resource = {
+const Resource = {
   // Create a Resource.
   //
   // :param url: The URL for the document we should retrieve.
@@ -1531,230 +1908,221 @@ var Resource = {
   //                  attempting to fetch it ourselves. Expects a
   //                  string.
   // :param headers: Custom headers to be included in the request
-  create: function create(url, preparedResponse, parsedUrl) {
-    var _arguments = arguments,
-      _this = this;
-    return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      var headers, result, validResponse;
-      return _regeneratorRuntime.wrap(function (_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            headers = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : {};
-            if (!preparedResponse) {
-              _context.next = 1;
-              break;
-            }
-            validResponse = {
-              statusMessage: 'OK',
-              statusCode: 200,
-              headers: {
-                'content-type': 'text/html',
-                'content-length': 500
-              }
-            };
-            result = {
-              body: preparedResponse,
-              response: validResponse,
-              alreadyDecoded: true
-            };
-            _context.next = 3;
-            break;
-          case 1:
-            _context.next = 2;
-            return fetchResource(url, parsedUrl, headers);
-          case 2:
-            result = _context.sent;
-          case 3:
-            if (!result.error) {
-              _context.next = 4;
-              break;
-            }
-            result.failed = true;
-            return _context.abrupt("return", result);
-          case 4:
-            return _context.abrupt("return", _this.generateDoc(result));
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }))();
+  async create(url, preparedResponse, parsedUrl, headers = {}) {
+    let result;
+
+    if (preparedResponse) {
+      const validResponse = {
+        statusMessage: 'OK',
+        statusCode: 200,
+        headers: {
+          'content-type': 'text/html',
+          'content-length': 500,
+        },
+      };
+
+      result = {
+        body: preparedResponse,
+        response: validResponse,
+        alreadyDecoded: true,
+      };
+    } else {
+      result = await fetchResource(url, parsedUrl, headers);
+    }
+
+    if (result.error) {
+      result.failed = true;
+      return result;
+    }
+
+    return this.generateDoc(result);
   },
-  generateDoc: function generateDoc(_ref) {
-    var content = _ref.body,
-      response = _ref.response,
-      _ref$alreadyDecoded = _ref.alreadyDecoded,
-      alreadyDecoded = _ref$alreadyDecoded === void 0 ? false : _ref$alreadyDecoded;
-    var _response$headers$con = response.headers['content-type'],
-      contentType = _response$headers$con === void 0 ? '' : _response$headers$con;
+
+  generateDoc({ body: content, response, alreadyDecoded = false }) {
+    const { 'content-type': contentType = '' } = response.headers;
 
     // TODO: Implement is_text function from
     // https://github.com/ReadabilityHoldings/readability/blob/8dc89613241d04741ebd42fa9fa7df1b1d746303/readability/utils/text.py#L57
     if (!contentType.includes('html') && !contentType.includes('text')) {
       throw new Error('Content does not appear to be text.');
     }
-    var $ = this.encodeDoc({
-      content: content,
-      contentType: contentType,
-      alreadyDecoded: alreadyDecoded
-    });
+
+    let $ = this.encodeDoc({ content, contentType, alreadyDecoded });
+
     if ($('body').children().length === 0 && $('body').text().trim() === '') {
       throw new Error('No children, likely a bad parse.');
     }
+
     $ = normalizeMetaTags($);
     $ = convertLazyLoadedImages($);
     $ = clean$2($);
+
     return $;
   },
-  encodeDoc: function encodeDoc(_ref2) {
-    var content = _ref2.content,
-      contentType = _ref2.contentType,
-      _ref2$alreadyDecoded = _ref2.alreadyDecoded,
-      alreadyDecoded = _ref2$alreadyDecoded === void 0 ? false : _ref2$alreadyDecoded;
+
+  encodeDoc({ content, contentType, alreadyDecoded = false }) {
     if (alreadyDecoded) {
       return cheerio__namespace.load(content);
     }
-    var encoding = getEncoding(contentType);
+
+    const encoding = getEncoding(contentType);
     // UTF-8 is handled natively by Node.js, skip iconv-lite
-    var decodedContent = encoding === 'utf-8' ? content.toString('utf-8') : iconv.decode(content, encoding);
-    var $ = cheerio__namespace.load(decodedContent);
+    let decodedContent =
+      encoding === 'utf-8'
+        ? content.toString('utf-8')
+        : iconv.decode(content, encoding);
+    let $ = cheerio__namespace.load(decodedContent);
     // after first cheerio.load, check to see if encoding matches
-    var contentTypeSelector = isBrowser ? 'meta[http-equiv=content-type]' : 'meta[http-equiv=content-type i]';
-    var metaContentType = $(contentTypeSelector).attr('content') || $('meta[charset]').attr('charset');
-    var properEncoding = getEncoding(metaContentType);
+    const contentTypeSelector = isBrowser
+      ? 'meta[http-equiv=content-type]'
+      : 'meta[http-equiv=content-type i]';
+    const metaContentType =
+      $(contentTypeSelector).attr('content') ||
+      $('meta[charset]').attr('charset');
+    const properEncoding = getEncoding(metaContentType);
 
     // if encodings in the header/body dont match, use the one in the body
     if (metaContentType && properEncoding !== encoding) {
-      decodedContent = properEncoding === 'utf-8' ? content.toString('utf-8') : iconv.decode(content, properEncoding);
+      decodedContent =
+        properEncoding === 'utf-8'
+          ? content.toString('utf-8')
+          : iconv.decode(content, properEncoding);
       $ = cheerio__namespace.load(decodedContent);
     }
+
     return $;
-  }
+  },
 };
 
-function range() {
-  var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  return /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-    return _regeneratorRuntime.wrap(function (_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          if (!(start <= end)) {
-            _context.next = 2;
-            break;
-          }
-          _context.next = 1;
-          return start += 1;
-        case 1:
-          _context.next = 0;
-          break;
-        case 2:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee);
-  })();
+function* range(start = 1, end = 1) {
+  while (start <= end) {
+    yield (start += 1);
+  }
 }
 
 // extremely simple url validation as a first step
-function validateUrl(_ref) {
-  var hostname = _ref.hostname;
+function validateUrl(parsedUrl) {
   // If this isn't a valid url, return an error message
-  return !!hostname;
+  return !!parsedUrl && !!parsedUrl.hostname;
 }
 
-var merge = function merge(extractor, domains) {
-  return domains.reduce(function (acc, domain) {
+const merge = (extractor, domains) =>
+  domains.reduce((acc, domain) => {
     acc[domain] = extractor;
     return acc;
   }, {});
-};
+
 function mergeSupportedDomains(extractor) {
-  return extractor.supportedDomains ? merge(extractor, [extractor.domain].concat(_toConsumableArray(extractor.supportedDomains))) : merge(extractor, [extractor.domain]);
+  return extractor.supportedDomains
+    ? merge(extractor, [extractor.domain, ...extractor.supportedDomains])
+    : merge(extractor, [extractor.domain]);
 }
 
-var apiExtractors = {};
+const apiExtractors = {};
+
 function addExtractor(extractor) {
   if (!extractor || !extractor.domain) {
     return {
       error: true,
-      message: 'Unable to add custom extractor. Invalid parameters.'
+      message: 'Unable to add custom extractor. Invalid parameters.',
     };
   }
-  _Object$assign(apiExtractors, mergeSupportedDomains(extractor));
+
+  Object.assign(apiExtractors, mergeSupportedDomains(extractor));
+
   return apiExtractors;
 }
 
-var BalloonJuiceComExtractor = {
+const BalloonJuiceComExtractor = {
   domain: 'balloon-juice.com',
+
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title'],
   },
+
   author: {
-    selectors: ['.entry-author-name']
+    selectors: ['.entry-author-name'],
   },
+
   date_published: {
-    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      ['meta[property="article:published_time"]', 'content'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+    selectors: [
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="og:image"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['.entry-content', 'article'],
     transforms: {
       // Handle JS-rendered iframes
-      'iframe[src*="embed.bsky.app"]': function iframeSrcEmbedBskyApp($node) {
+      'iframe[src*="embed.bsky.app"]': $node => {
         $node.addClass('mercury-parser-keep iframe-embed-bsky');
         $node.parent('.bluesky-embed').addClass('mercury-parser-keep');
       },
       // Handle no-JS blockquote fallbacks - convert to iframes
-      'blockquote.bluesky-embed[data-bluesky-uri]': function blockquoteBlueskyEmbedDataBlueskyUri($node, $) {
-        var uri = $node.attr('data-bluesky-uri');
+      'blockquote.bluesky-embed[data-bluesky-uri]': ($node, $) => {
+        const uri = $node.attr('data-bluesky-uri');
         if (uri) {
           // Convert at://did:plc:.../app.bsky.feed.post/... to embed URL
-          var embedPath = uri.replace('at://', '');
-          var src = "https://embed.bsky.app/embed/".concat(embedPath);
-          var $iframe = $("<iframe src=\"".concat(src, "\" class=\"mercury-parser-keep iframe-embed-bsky\" width=\"100%\" frameborder=\"0\"></iframe>"));
+          const embedPath = uri.replace('at://', '');
+          const src = `https://embed.bsky.app/embed/${embedPath}`;
+          const $iframe = $(
+            `<iframe src="${src}" class="mercury-parser-keep iframe-embed-bsky" width="100%" frameborder="0"></iframe>`
+          );
           $node.replaceWith($iframe);
         }
-      }
+      },
     },
-    clean: ['.shared-counts-wrap', '.entry-meta']
-  }
+    clean: ['.shared-counts-wrap', '.entry-meta'],
+  },
 };
 
-var BloggerExtractor = {
+const BloggerExtractor = {
   domain: 'blogspot.com',
   content: {
     // Blogger is insane and does not load its content
     // initially in the page, but it's all there
     // in noscript
     selectors: ['.post-content noscript'],
+
     // Selectors to remove from the extracted content
     clean: [],
+
     // Convert the noscript tag to a div
     transforms: {
-      noscript: 'div'
-    }
+      noscript: 'div',
+    },
   },
+
   author: {
-    selectors: ['.post-author-name']
+    selectors: ['.post-author-name'],
   },
+
   title: {
-    selectors: ['.post h2.title']
+    selectors: ['.post h2.title'],
   },
+
   date_published: {
-    selectors: ['span.publishdate']
-  }
+    selectors: ['span.publishdate'],
+  },
 };
 
-var NYMagExtractor = {
+const NYMagExtractor = {
   domain: 'nymag.com',
   content: {
     // Order by most likely. Extractor will stop on first occurrence
     selectors: ['div.article-content', 'section.body', 'article.article'],
+
     // Selectors to remove from the extracted content
     clean: ['.ad', '.single-related-story'],
+
     // Object of tranformations to make on matched elements
     // Each key is the selector, each value is the tag to
     // transform to.
@@ -1764,638 +2132,920 @@ var NYMagExtractor = {
     transforms: {
       // Convert h1s to h2s
       h1: 'h2',
+
       // Convert lazy-loaded noscript images to figures
       // Note: Cheerio 1.x treats noscript content as text, not parsed HTML
       // so we need to parse it manually
-      noscript: function noscript($node, $) {
-        var noscriptHtml = $node.html();
+      noscript: ($node, $) => {
+        const noscriptHtml = $node.html();
         if (!noscriptHtml) return null;
 
         // Parse the noscript content to check if it's a single img
-        var $parsed = $.load ? $.load(noscriptHtml, null, false) : $("<div>".concat(noscriptHtml, "</div>"));
-        var $children = $.load ? $parsed('*') : $parsed.children();
-        if ($children.length === 1 && $children.get(0) !== undefined && $children.get(0).tagName.toLowerCase() === 'img') {
+        const $parsed = $.load
+          ? $.load(noscriptHtml, null, false)
+          : $(`<div>${noscriptHtml}</div>`);
+        const $children = $.load ? $parsed('*') : $parsed.children();
+
+        if (
+          $children.length === 1 &&
+          $children.get(0) !== undefined &&
+          $children.get(0).tagName.toLowerCase() === 'img'
+        ) {
           return 'figure';
         }
+
         return null;
-      }
-    }
+      },
+    },
   },
+
   title: {
-    selectors: ['h1.lede-feature-title', 'h1.headline-primary', 'h1']
+    selectors: ['h1.lede-feature-title', 'h1.headline-primary', 'h1'],
   },
+
   author: {
-    selectors: ['.by-authors', '.lede-feature-author']
+    selectors: ['.by-authors', '.lede-feature-author'],
   },
+
   dek: {
-    selectors: ['.lede-feature-teaser']
+    selectors: ['.lede-feature-teaser'],
   },
+
   date_published: {
-    selectors: [['time.article-timestamp[datetime]', 'datetime'], 'time.article-timestamp']
-  }
+    selectors: [
+      ['time.article-timestamp[datetime]', 'datetime'],
+      'time.article-timestamp',
+    ],
+  },
 };
 
-var WikipediaExtractor = {
+const WikipediaExtractor = {
   domain: 'wikipedia.org',
   content: {
     selectors: ['#mw-content-text'],
+
     defaultCleaner: false,
+
     // transform top infobox to an image with caption
     transforms: {
-      '.infobox img': function infobox_img($node) {
-        var $parent = $node.parents('.infobox');
+      '.infobox img': $node => {
+        const $parent = $node.parents('.infobox');
         // Only prepend the first image in .infobox
         if ($parent.children('img').length === 0) {
           $parent.prepend($node);
         }
       },
       '.infobox caption': 'figcaption',
-      '.infobox': 'figure'
+      '.infobox': 'figure',
     },
+
     // Selectors to remove from the extracted content
-    clean: ['.mw-editsection', 'figure tr, figure td, figure tbody', '#toc', '.navbox']
+    clean: [
+      '.mw-editsection',
+      'figure tr, figure td, figure tbody',
+      '#toc',
+      '.navbox',
+    ],
   },
+
   author: 'Wikipedia Contributors',
+
   title: {
-    selectors: ['h2.title']
+    selectors: ['h2.title'],
   },
+
   date_published: {
-    selectors: ['#footer-info-lastmod']
-  }
+    selectors: ['#footer-info-lastmod'],
+  },
 };
 
-var TwitterExtractor = {
+const TwitterExtractor = {
   domain: 'twitter.com',
+
   content: {
     transforms: {
       // We're transforming essentially the whole page here.
       // Twitter doesn't have nice selectors, so our initial
       // selector grabs the whole page, then we're re-writing
       // it to fit our needs before we clean it up.
-      '.permalink[role=main]': function permalinkRoleMain($node, $) {
-        var tweets = $node.find('.tweet');
-        var $tweetContainer = $('<div id="TWEETS_GO_HERE"></div>');
+      '.permalink[role=main]': ($node, $) => {
+        const tweets = $node.find('.tweet');
+        const $tweetContainer = $('<div id="TWEETS_GO_HERE"></div>');
         $tweetContainer.append(tweets);
         $node.replaceWith($tweetContainer);
       },
+
       // Twitter wraps @ with s, which
       // renders as a strikethrough
-      s: 'span'
+      s: 'span',
     },
+
     selectors: ['.permalink[role=main]'],
+
     defaultCleaner: false,
-    clean: ['.stream-item-footer', 'button', '.tweet-details-fixer']
+
+    clean: ['.stream-item-footer', 'button', '.tweet-details-fixer'],
   },
+
   author: {
-    selectors: ['.tweet.permalink-tweet .username']
+    selectors: ['.tweet.permalink-tweet .username'],
   },
+
   date_published: {
-    selectors: [['.permalink-tweet ._timestamp[data-time-ms]', 'data-time-ms']]
-  }
+    selectors: [['.permalink-tweet ._timestamp[data-time-ms]', 'data-time-ms']],
+  },
 };
 
-var NYTimesExtractor = {
+const NYTimesExtractor = {
   domain: 'www.nytimes.com',
+
   title: {
-    selectors: ['h1[data-testid="headline"]', 'h1.g-headline', 'h1[itemprop="headline"]', 'h1.headline', 'h1 .balancedHeadline']
+    selectors: [
+      'h1[data-testid="headline"]',
+      'h1.g-headline',
+      'h1[itemprop="headline"]',
+      'h1.headline',
+      'h1 .balancedHeadline',
+    ],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], '.g-byline', '.byline', ['meta[name="byl"]', 'value']]
+    selectors: [
+      ['meta[name="author"]', 'value'],
+      '.g-byline',
+      '.byline',
+      ['meta[name="byl"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['div.g-blocks', 'section[name="articleBody"]', 'article#story'],
+
     transforms: {
-      'img.g-lazy': function imgGLazy($node) {
-        var src = $node.attr('src');
-        var width = 640;
+      'img.g-lazy': $node => {
+        let src = $node.attr('src');
+        const width = 640;
+
         src = src.replace('{{size}}', width);
         $node.attr('src', src);
-      }
+      },
     },
-    clean: ['.ad', 'header#story-header', '.story-body-1 .lede.video', '.visually-hidden', '#newsletter-promo', '.promo', '.comments-button', '.hidden', '.comments', '.supplemental', '.nocontent', '.story-footer-links']
+
+    clean: [
+      '.ad',
+      'header#story-header',
+      '.story-body-1 .lede.video',
+      '.visually-hidden',
+      '#newsletter-promo',
+      '.promo',
+      '.comments-button',
+      '.hidden',
+      '.comments',
+      '.supplemental',
+      '.nocontent',
+      '.story-footer-links',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['meta[name="article:published"]', 'value']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['meta[name="article:published"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: null,
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
-var TheAtlanticExtractor = {
+const TheAtlanticExtractor = {
   domain: 'www.theatlantic.com',
   title: {
-    selectors: ['h1', '.c-article-header__hed']
+    selectors: ['h1', '.c-article-header__hed'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], '.c-byline__author']
+    selectors: [['meta[name="author"]', 'value'], '.c-byline__author'],
   },
+
   content: {
     selectors: ['article', '.article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.partner-box', '.callout', '.c-article-writer__image', '.c-article-writer__content', '.c-letters-cta__text', '.c-footer__logo', '.c-recirculation-link', '.twitter-tweet']
+    clean: [
+      '.partner-box',
+      '.callout',
+      '.c-article-writer__image',
+      '.c-article-writer__content',
+      '.c-letters-cta__text',
+      '.c-footer__logo',
+      '.c-recirculation-link',
+      '.twitter-tweet',
+    ],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   date_published: {
-    selectors: [['time[itemprop="datePublished"]', 'datetime']]
+    selectors: [['time[itemprop="datePublished"]', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var NewYorkerExtractor = {
+const NewYorkerExtractor = {
   domain: 'www.newyorker.com',
   title: {
-    selectors: ['h1[class^="content-header"]', 'h1[class^="ArticleHeader__hed"]', 'h1[class*="ContentHeaderHed"]', ['meta[name="og:title"]', 'value']]
+    selectors: [
+      'h1[class^="content-header"]',
+      'h1[class^="ArticleHeader__hed"]',
+      'h1[class*="ContentHeaderHed"]',
+      ['meta[name="og:title"]', 'value'],
+    ],
   },
+
   author: {
-    selectors: ['article header div[class^="BylinesWrapper"]', ['meta[name="article:author"]', 'value'], 'div[class^="ArticleContributors"] a[rel="author"]', 'article header div[class*="Byline__multipleContributors"]']
+    selectors: [
+      'article header div[class^="BylinesWrapper"]',
+      ['meta[name="article:author"]', 'value'],
+      'div[class^="ArticleContributors"] a[rel="author"]',
+      'article header div[class*="Byline__multipleContributors"]',
+    ],
   },
+
   content: {
-    selectors: ['.article__body', 'article.article.main-content', 'main[class^="Layout__content"]'],
+    selectors: [
+      '.article__body',
+      'article.article.main-content',
+      'main[class^="Layout__content"]',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '.caption__text': 'figcaption',
-      '.caption__credit': 'figcaption'
+      '.caption__credit': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['footer[class^="ArticleFooter__footer"]', 'aside']
+    clean: ['footer[class^="ArticleFooter__footer"]', 'aside'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], 'time.content-header__publish-date', ['meta[name="pubdate"]', 'value']],
-    timezone: 'America/New_York'
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      'time.content-header__publish-date',
+      ['meta[name="pubdate"]', 'value'],
+    ],
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: ['div[class^="ContentHeaderDek"]', 'div.content-header__dek', 'h2[class^="ArticleHeader__dek"]', ['meta[name="description"]', 'value']]
+    selectors: [
+      'div[class^="ContentHeaderDek"]',
+      'div.content-header__dek',
+      'h2[class^="ArticleHeader__dek"]',
+      ['meta[name="description"]', 'value'],
+    ],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var WiredExtractor = {
+const WiredExtractor = {
   domain: 'www.wired.com',
   title: {
-    selectors: ['h1[data-testId="ContentHeaderHed"]'
-    // enter title selectors
-    ]
-  },
-  author: {
-    selectors: [['meta[name="article:author"]', 'value'], 'a[rel="author"]'
-    // enter author selectors
-    ]
-  },
-  content: {
-    selectors: ['article.article.main-content', 'article.content'
-    // enter content selectors
+    selectors: [
+      'h1[data-testId="ContentHeaderHed"]',
+      // enter title selectors
     ],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: [],
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: ['.visually-hidden', 'figcaption img.photo', '.alert-message']
   },
-  date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  dek: {
-    selectors: []
-  },
-  next_page_url: null,
-  excerpt: null
-};
 
-// Rename CustomExtractor
-// to fit your publication
-// (e.g., NYTimesExtractor)
-var MSNExtractor = {
-  domain: 'www.msn.com',
-  title: {
-    selectors: ['h1'
-    // enter title selectors
-    ]
-  },
   author: {
-    selectors: ['span.authorname-txt'
-    // enter author selectors
-    ]
-  },
-  content: {
-    selectors: ['div.richtext'
-    // enter content selectors
+    selectors: [
+      ['meta[name="article:author"]', 'value'],
+      'a[rel="author"]',
+      // enter author selectors
     ],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: [],
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: ['span.caption']
   },
-  date_published: {
-    selectors: ['span.time']
-  },
-  lead_image_url: {
-    selectors: []
-  },
-  dek: {
-    selectors: []
-  },
-  next_page_url: null,
-  excerpt: null
-};
 
-// Rename CustomExtractor
-// to fit your publication
-// (e.g., NYTimesExtractor)
-var YahooExtractor = {
-  domain: 'www.yahoo.com',
-  title: {
-    selectors: ['header.canvas-header'
-    // enter title selectors
-    ]
-  },
-  author: {
-    selectors: ['span.provider-name'
-    // enter author selectors
-    ]
-  },
   content: {
     selectors: [
-    // enter content selectors
-    '.content-canvas'],
+      'article.article.main-content',
+      'article.content',
+      // enter content selectors
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.figure-caption']
+    clean: ['.visually-hidden', 'figcaption img.photo', '.alert-message'],
   },
+
   date_published: {
-    selectors: [['time.date[datetime]', 'datetime']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
+  dek: {
+    selectors: [],
+  },
+
+  next_page_url: null,
+
+  excerpt: null,
+};
+
+// Rename CustomExtractor
+// to fit your publication
+// (e.g., NYTimesExtractor)
+const MSNExtractor = {
+  domain: 'www.msn.com',
+  title: {
+    selectors: [
+      'h1',
+      // enter title selectors
+    ],
+  },
+
+  author: {
+    selectors: [
+      'span.authorname-txt',
+      // enter author selectors
+    ],
+  },
+
+  content: {
+    selectors: [
+      'div.richtext',
+      // enter content selectors
+    ],
+
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: [],
+
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['span.caption'],
+  },
+
+  date_published: {
+    selectors: ['span.time'],
+  },
+
+  lead_image_url: {
+    selectors: [],
+  },
+
+  dek: {
+    selectors: [],
+  },
+
+  next_page_url: null,
+
+  excerpt: null,
+};
+
+// Rename CustomExtractor
+// to fit your publication
+// (e.g., NYTimesExtractor)
+const YahooExtractor = {
+  domain: 'www.yahoo.com',
+  title: {
+    selectors: [
+      'header.canvas-header',
+      // enter title selectors
+    ],
+  },
+
+  author: {
+    selectors: [
+      'span.provider-name',
+      // enter author selectors
+    ],
+  },
+
+  content: {
+    selectors: [
+      // enter content selectors
+      '.content-canvas',
+    ],
+
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: [],
+
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.figure-caption'],
+  },
+
+  date_published: {
+    selectors: [['time.date[datetime]', 'datetime']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
   dek: {
     selectors: [
       // enter dek selectors
-    ]
+    ],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var BuzzfeedExtractor = {
+const BuzzfeedExtractor = {
   domain: 'www.buzzfeed.com',
+
   supportedDomains: ['www.buzzfeednews.com'],
+
   title: {
-    selectors: ['h1.embed-headline-title'
-    // enter title selectors
-    ]
+    selectors: [
+      'h1.embed-headline-title',
+      // enter title selectors
+    ],
   },
+
   author: {
-    selectors: ['a[data-action="user/username"]', 'byline__author', ['meta[name="author"]', 'value']
-    // enter author selectors
-    ]
+    selectors: [
+      'a[data-action="user/username"]',
+      'byline__author',
+      ['meta[name="author"]', 'value'],
+      // enter author selectors
+    ],
   },
+
   content: {
-    selectors: [['div[class^="featureimage_featureImageWrapper"]', '.js-subbuzz-wrapper'], ['.js-subbuzz-wrapper']],
+    selectors: [
+      ['div[class^="featureimage_featureImageWrapper"]', '.js-subbuzz-wrapper'],
+      ['.js-subbuzz-wrapper'],
+    ],
+
     defaultCleaner: false,
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       h2: 'b',
-      'div.longform_custom_header_media': function divLongform_custom_header_media($node) {
+
+      'div.longform_custom_header_media': $node => {
         if ($node.has('img') && $node.has('.longform_header_image_source')) {
           return 'figure';
         }
+
         return null;
       },
-      'figure.longform_custom_header_media .longform_header_image_source': 'figcaption'
+
+      'figure.longform_custom_header_media .longform_header_image_source':
+        'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.instapaper_ignore', '.suplist_list_hide .buzz_superlist_item .buzz_superlist_number_inline', '.share-box', '.print', '.js-inline-share-bar', '.js-ad-placement']
+    clean: [
+      '.instapaper_ignore',
+      '.suplist_list_hide .buzz_superlist_item .buzz_superlist_number_inline',
+      '.share-box',
+      '.print',
+      '.js-inline-share-bar',
+      '.js-ad-placement',
+    ],
   },
+
   date_published: {
-    selectors: [['time[datetime]', 'datetime']]
+    selectors: [['time[datetime]', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: ['.embed-headline-description']
+    selectors: ['.embed-headline-description'],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var WikiaExtractor = {
+const WikiaExtractor = {
   domain: 'fandom.wikia.com',
   title: {
-    selectors: ['h1.entry-title'
-    // enter title selectors
-    ]
-  },
-  author: {
-    selectors: ['.author vcard', '.fn'
-    // enter author selectors
-    ]
-  },
-  content: {
-    selectors: ['.grid-content', '.entry-content'
-    // enter content selectors
+    selectors: [
+      'h1.entry-title',
+      // enter title selectors
     ],
+  },
+
+  author: {
+    selectors: [
+      '.author vcard',
+      '.fn',
+      // enter author selectors
+    ],
+  },
+
+  content: {
+    selectors: [
+      '.grid-content',
+      '.entry-content',
+      // enter content selectors
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
+    clean: [],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var LittleThingsExtractor = {
+const LittleThingsExtractor = {
   domain: 'www.littlethings.com',
   title: {
-    selectors: ['h1[class*="PostHeader"]', 'h1.post-title'
-    // enter title selectors
-    ]
+    selectors: [
+      'h1[class*="PostHeader"]',
+      'h1.post-title',
+      // enter title selectors
+    ],
   },
+
   author: {
-    selectors: ['div[class^="PostHeader__ScAuthorNameSection"]', ['meta[name="author"]', 'value']
-    // enter author selectors
-    ]
+    selectors: [
+      'div[class^="PostHeader__ScAuthorNameSection"]',
+      ['meta[name="author"]', 'value'],
+      // enter author selectors
+    ],
   },
+
   content: {
     selectors: [
-    // enter content selectors
-    'section[class*="PostMainArticle"]', '.mainContentIntro', '.content-wrapper'],
+      // enter content selectors
+      'section[class*="PostMainArticle"]',
+      '.mainContentIntro',
+      '.content-wrapper',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
+    clean: [],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   next_page_url: null,
-  excerpt: null
+
+  excerpt: null,
 };
 
-var PoliticoExtractor = {
+const PoliticoExtractor = {
   domain: 'www.politico.com',
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['div[itemprop="author"] meta[itemprop="name"]', 'value'], '.story-meta__authors .vcard', '.story-main-content .byline .vcard']
+    selectors: [
+      ['div[itemprop="author"] meta[itemprop="name"]', 'value'],
+      '.story-meta__authors .vcard',
+      '.story-main-content .byline .vcard',
+    ],
   },
+
   content: {
     selectors: [['.story-text'], '.story-main-content', '.story-core'],
+
     transforms: [],
-    clean: ['figcaption', '.story-meta', '.ad']
+
+    clean: ['figcaption', '.story-meta', '.ad'],
   },
+
   date_published: {
-    selectors: [['time[itemprop="datePublished"]', 'datetime'], ['.story-meta__details time[datetime]', 'datetime'], ['.story-main-content .timestamp time[datetime]', 'datetime']],
-    timezone: 'America/New_York'
+    selectors: [
+      ['time[itemprop="datePublished"]', 'datetime'],
+      ['.story-meta__details time[datetime]', 'datetime'],
+      ['.story-main-content .timestamp time[datetime]', 'datetime'],
+    ],
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
-  }
+    selectors: [['meta[name="og:description"]', 'value']],
+  },
 };
 
-var DeadspinExtractor = {
+const DeadspinExtractor = {
   domain: 'deadspin.com',
-  supportedDomains: ['jezebel.com', 'lifehacker.com', 'kotaku.com', 'gizmodo.com', 'jalopnik.com', 'kinja.com', 'avclub.com', 'clickhole.com', 'splinternews.com', 'theonion.com', 'theroot.com', 'thetakeout.com', 'theinventory.com'],
+
+  supportedDomains: [
+    'jezebel.com',
+    'lifehacker.com',
+    'kotaku.com',
+    'gizmodo.com',
+    'jalopnik.com',
+    'kinja.com',
+    'avclub.com',
+    'clickhole.com',
+    'splinternews.com',
+    'theonion.com',
+    'theroot.com',
+    'thetakeout.com',
+    'theinventory.com',
+  ],
+
   title: {
-    selectors: ['header h1', 'h1.headline']
+    selectors: ['header h1', 'h1.headline'],
   },
+
   author: {
-    selectors: ['a[data-ga*="Author"]', '.author']
+    selectors: ['a[data-ga*="Author"]', '.author'],
   },
+
   content: {
     selectors: ['.js_post-content', '.post-content', '.entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'iframe.lazyload[data-recommend-id^="youtube://"]': function iframeLazyloadDataRecommendIdYoutube__($node) {
-        var youtubeId = $node.attr('id').split('youtube-')[1];
-        $node.attr('src', "https://www.youtube.com/embed/".concat(youtubeId));
-      }
+      'iframe.lazyload[data-recommend-id^="youtube://"]': $node => {
+        const youtubeId = $node.attr('id').split('youtube-')[1];
+        $node.attr('src', `https://www.youtube.com/embed/${youtubeId}`);
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.magnifier', '.lightbox']
+    clean: ['.magnifier', '.lightbox'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['time.updated[datetime]', 'datetime']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['time.updated[datetime]', 'datetime'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   next_page_url: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   excerpt: {
     selectors: [
       // enter selectors
-    ]
-  }
+    ],
+  },
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var BroadwayWorldExtractor = {
+const BroadwayWorldExtractor = {
   domain: 'www.broadwayworld.com',
   title: {
-    selectors: ['h1[itemprop=headline]', 'h1.article-title']
+    selectors: ['h1[itemprop=headline]', 'h1.article-title'],
   },
+
   author: {
-    selectors: ['span[itemprop=author]']
+    selectors: ['span[itemprop=author]'],
   },
+
   content: {
     selectors: ['div[itemprop=articlebody]'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
+    clean: [],
   },
+
   date_published: {
-    selectors: [['meta[itemprop=datePublished]', 'value']]
+    selectors: [['meta[itemprop=datePublished]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   next_page_url: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   excerpt: {
     selectors: [
       // enter selectors
-    ]
-  }
+    ],
+  },
 };
 
 // Rename CustomExtractor
 // to fit your publication
 // (e.g., NYTimesExtractor)
-var ApartmentTherapyExtractor = {
+const ApartmentTherapyExtractor = {
   domain: 'www.apartmenttherapy.com',
   title: {
-    selectors: ['h1.headline']
+    selectors: ['h1.headline'],
   },
+
   author: {
-    selectors: ['.PostByline__name']
+    selectors: ['.PostByline__name'],
   },
+
   content: {
     selectors: ['div.post__content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div[data-render-react-id="images/LazyPicture"]': function divDataRenderReactIdImages_LazyPicture($node, $) {
-        var data = JSON.parse($node.attr('data-props'));
-        var src = data.sources[0].src;
-        var $img = $('<img />').attr('src', src);
+      'div[data-render-react-id="images/LazyPicture"]': ($node, $) => {
+        const data = JSON.parse($node.attr('data-props'));
+        const { src } = data.sources[0];
+        const $img = $('<img />').attr('src', src);
         $node.replaceWith($img);
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
+    clean: [],
   },
+
   date_published: {
-    selectors: [['.PostByline__timestamp[datetime]', 'datetime']]
+    selectors: [['.PostByline__timestamp[datetime]', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   next_page_url: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   excerpt: {
     selectors: [
       // enter selectors
-    ]
-  }
+    ],
+  },
 };
 
-var MediumExtractor = {
+const MediumExtractor = {
   domain: 'medium.com',
+
   title: {
-    selectors: ['h1', ['meta[name="og:title"]', 'value']]
+    selectors: ['h1', ['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       // Allow drop cap character.
-      'section span:first-of-type': function section_spanFirstOfType($node) {
-        var $text = $node.html();
+      'section span:first-of-type': $node => {
+        const $text = $node.html();
         if ($text.length === 1 && /^[a-zA-Z()]+$/.test($text)) {
           $node.replaceWith($text);
         }
       },
       // Re-write lazy-loaded youtube videos
-      iframe: function iframe($node) {
-        var ytRe = /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
-        var thumb = decodeURIComponent($node.attr('data-thumbnail'));
-        var $parent = $node.parents('figure');
+      iframe: $node => {
+        const ytRe =
+          /https:\/\/i.embed.ly\/.+url=https:\/\/i\.ytimg\.com\/vi\/(\w+)\//;
+        const thumb = decodeURIComponent($node.attr('data-thumbnail'));
+        const $parent = $node.parents('figure');
+
         if (ytRe.test(thumb)) {
-          var _thumb$match = thumb.match(ytRe),
-            _thumb$match2 = _slicedToArray(_thumb$match, 2);
-            _thumb$match2[0];
-            var youtubeId = _thumb$match2[1]; // eslint-disable-line
-          $node.attr('src', "https://www.youtube.com/embed/".concat(youtubeId));
-          var $caption = $parent.find('figcaption');
+          const [_, youtubeId] = thumb.match(ytRe); // eslint-disable-line
+          $node.attr('src', `https://www.youtube.com/embed/${youtubeId}`);
+          const $caption = $parent.find('figcaption');
           $parent.empty().append([$node, $caption]);
           return;
         }
@@ -2403,2022 +3053,2772 @@ var MediumExtractor = {
         // If we can't draw the YouTube preview, remove the figure.
         $parent.remove();
       },
+
       // rewrite figures to pull out image and caption, remove rest
-      figure: function figure($node) {
+      figure: $node => {
         // ignore if figure has an iframe
         if ($node.find('iframe').length > 0) return;
-        var $img = $node.find('img').slice(-1)[0];
-        var $caption = $node.find('figcaption');
+
+        const $img = $node.find('img').slice(-1)[0];
+        const $caption = $node.find('figcaption');
+
         $node.empty().append([$img, $caption]);
       },
+
       // Remove any smaller images that did not get caught by the generic image
       // cleaner (author photo 48px, leading sentence images 79px, etc.).
-      img: function img($node) {
-        var width = _parseInt($node.attr('width'), 10);
+      img: $node => {
+        const width = parseInt($node.attr('width'), 10);
         if (width < 100) $node.remove();
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['span a', 'svg']
+    clean: ['span a', 'svg'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: null,
+
   next_page_url: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   excerpt: {
     selectors: [
       // enter selectors
-    ]
-  }
+    ],
+  },
 };
 
-var WwwTmzComExtractor = {
+const WwwTmzComExtractor = {
   domain: 'www.tmz.com',
+
   title: {
-    selectors: ['.post-title-breadcrumb', 'h1', '.headline']
+    selectors: ['.post-title-breadcrumb', 'h1', '.headline'],
   },
+
   author: 'TMZ STAFF',
+
   date_published: {
     selectors: ['.article__published-at', '.article-posted-date'],
-    timezone: 'America/Los_Angeles'
+
+    timezone: 'America/Los_Angeles',
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article__blocks', '.article-content', '.all-post-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.lightbox-link']
-  }
+    clean: ['.lightbox-link'],
+  },
 };
 
-var WwwWashingtonpostComExtractor = {
+const WwwWashingtonpostComExtractor = {
   domain: 'www.washingtonpost.com',
+
   title: {
-    selectors: ['h1', '#topper-headline-wrapper']
+    selectors: ['h1', '#topper-headline-wrapper'],
   },
+
   author: {
-    selectors: ['.pb-author-name']
+    selectors: ['.pb-author-name'],
   },
+
   date_published: {
-    selectors: [['.author-timestamp[itemprop="datePublished"]', 'content']]
+    selectors: [['.author-timestamp[itemprop="datePublished"]', 'content']],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div.inline-content': function divInlineContent($node) {
+      'div.inline-content': $node => {
         if ($node.has('img,iframe,video').length > 0) {
           return 'figure';
         }
+
         $node.remove();
         return null;
       },
-      '.pb-caption': 'figcaption'
+      '.pb-caption': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.interstitial-link', '.newsletter-inline-unit']
-  }
+    clean: ['.interstitial-link', '.newsletter-inline-unit'],
+  },
 };
 
-var WwwHuffingtonpostComExtractor = {
+const WwwHuffingtonpostComExtractor = {
   domain: 'www.huffingtonpost.com',
+
   title: {
-    selectors: ['h1.headline__title']
+    selectors: ['h1.headline__title'],
   },
+
   author: {
-    selectors: ['span.author-card__details__name']
+    selectors: ['span.author-card__details__name'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:modified_time"]', 'value'], ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      ['meta[name="article:modified_time"]', 'value'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   dek: {
-    selectors: ['h2.headline__subtitle']
+    selectors: ['h2.headline__subtitle'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.entry__body'],
+
     defaultCleaner: false,
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.pull-quote', '.tag-cloud', '.embed-asset', '.below-entry', '.entry-corrections', '#suggested-story']
-  }
+    clean: [
+      '.pull-quote',
+      '.tag-cloud',
+      '.embed-asset',
+      '.below-entry',
+      '.entry-corrections',
+      '#suggested-story',
+    ],
+  },
 };
 
-var NewrepublicComExtractor = {
+const NewrepublicComExtractor = {
   domain: 'newrepublic.com',
+
   title: {
-    selectors: ['h1.article-headline']
+    selectors: ['h1.article-headline'],
   },
+
   author: {
-    selectors: ['span.AuthorList']
+    selectors: ['span.AuthorList'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['h2.article-subhead']
+    selectors: ['h2.article-subhead'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['div.article-body']],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['aside']
-  }
+    clean: ['aside'],
+  },
 };
 
-var MoneyCnnComExtractor = {
+const MoneyCnnComExtractor = {
   domain: 'money.cnn.com',
+
   title: {
-    selectors: ['.article-title']
+    selectors: ['.article-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], '.byline a']
+    selectors: [['meta[name="author"]', 'value'], '.byline a'],
   },
+
   date_published: {
     selectors: [['meta[name="date"]', 'value']],
-    timezone: 'GMT'
+
+    timezone: 'GMT',
   },
+
   dek: {
-    selectors: ['#storytext h2']
+    selectors: ['#storytext h2'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#storytext'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.inStoryHeading']
-  }
+    clean: ['.inStoryHeading'],
+  },
 };
 
-var WwwCnnComExtractor = {
+const WwwCnnComExtractor = {
   domain: 'www.cnn.com',
+
   title: {
-    selectors: ['h1.pg-headline', 'h1']
+    selectors: ['h1.pg-headline', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [
-    // a more specific selector to grab the lead image and the body
-    ['.media__video--thumbnail', '.zn-body-text'],
-    // a fallback for the above
-    '.zn-body-text', 'div[itemprop="articleBody"]'],
+      // a more specific selector to grab the lead image and the body
+      ['.media__video--thumbnail', '.zn-body-text'],
+      // a fallback for the above
+      '.zn-body-text',
+      'div[itemprop="articleBody"]',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': function znBody__paragraph_El__leafmediaSourcedParagraph($node) {
-        var $text = $node.html();
+      '.zn-body__paragraph, .el__leafmedia--sourced-paragraph': $node => {
+        const $text = $node.html();
         if ($text) {
           return 'p';
         }
+
         return null;
       },
+
       // this transform cleans the short, all-link sections linking
       // to related content but not marked as such in any way.
-      '.zn-body__paragraph': function znBody__paragraph($node) {
+      '.zn-body__paragraph': $node => {
         if ($node.has('a')) {
           if ($node.text().trim() === $node.find('a').text().trim()) {
             $node.remove();
           }
         }
       },
-      '.media__video--thumbnail': 'figure'
+
+      '.media__video--thumbnail': 'figure',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwAolComExtractor = {
+const WwwAolComExtractor = {
   domain: 'www.aol.com',
+
   title: {
-    selectors: ['h1.p-article__title']
+    selectors: ['h1.p-article__title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
     selectors: ['.p-article__byline__date'],
-    timezone: 'America/New_York'
+
+    timezone: 'America/New_York',
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwYoutubeComExtractor = {
+const WwwYoutubeComExtractor = {
   domain: 'www.youtube.com',
+
   title: {
-    selectors: [['meta[name="title"]', 'value'], '.watch-title', 'h1.watch-title-container']
+    selectors: [
+      ['meta[name="title"]', 'value'],
+      '.watch-title',
+      'h1.watch-title-container',
+    ],
   },
+
   author: {
-    selectors: [['link[itemprop="name"]', 'content'], '.yt-user-info']
+    selectors: [['link[itemprop="name"]', 'content'], '.yt-user-info'],
   },
+
   date_published: {
-    selectors: [['meta[itemProp="datePublished"]', 'value']]
+    selectors: [['meta[itemProp="datePublished"]', 'value']],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     defaultCleaner: false,
-    selectors: ['#player-container-outer', 'ytd-expandable-video-description-body-renderer #description', ['#player-api', '#description']],
+
+    selectors: [
+      '#player-container-outer',
+      'ytd-expandable-video-description-body-renderer #description',
+      ['#player-api', '#description'],
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '#player-api': function playerApi($node, $) {
-        var videoId = $('meta[itemProp="videoId"]').attr('value');
-        $node.html("\n          <iframe src=\"https://www.youtube.com/embed/".concat(videoId, "\" frameborder=\"0\" allowfullscreen></iframe>"));
+      '#player-api': ($node, $) => {
+        const videoId = $('meta[itemProp="videoId"]').attr('value');
+        $node.html(`
+          <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`);
       },
-      '#player-container-outer': function playerContainerOuter($node, $) {
-        var videoId = $('meta[itemProp="videoId"]').attr('value');
-        var description = $('meta[itemProp="description"]').attr('value');
-        $node.html("\n        <iframe src=\"https://www.youtube.com/embed/".concat(videoId, "\" frameborder=\"0\" allowfullscreen></iframe>\n        <div><span>").concat(description, "</span></div>"));
-      }
+      '#player-container-outer': ($node, $) => {
+        const videoId = $('meta[itemProp="videoId"]').attr('value');
+        const description = $('meta[itemProp="description"]').attr('value');
+        $node.html(`
+        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+        <div><span>${description}</span></div>`);
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwTheguardianComExtractor = {
+const WwwTheguardianComExtractor = {
   domain: 'www.theguardian.com',
+
   title: {
-    selectors: ['h1', '.content__headline']
+    selectors: ['h1', '.content__headline'],
   },
+
   author: {
-    selectors: ['address[data-link-name="byline"]', 'p.byline']
+    selectors: ['address[data-link-name="byline"]', 'p.byline'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['div[data-gu-name="standfirst"]', '.content__standfirst']
+    selectors: ['div[data-gu-name="standfirst"]', '.content__standfirst'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#maincontent', '.content__article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.hide-on-mobile', '.inline-icon']
-  }
+    clean: ['.hide-on-mobile', '.inline-icon'],
+  },
 };
 
-var WwwSbnationComExtractor = {
+const WwwSbnationComExtractor = {
   domain: 'www.sbnation.com',
+
   title: {
-    selectors: ['h1.c-page-title']
+    selectors: ['h1.c-page-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['p.c-entry-summary.p-dek', 'h2.c-entry-summary.p-dek']
+    selectors: ['p.c-entry-summary.p-dek', 'h2.c-entry-summary.p-dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.c-entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwBloombergComExtractor = {
+const WwwBloombergComExtractor = {
   domain: 'www.bloomberg.com',
+
   title: {
     selectors: [
-    // normal articles
-    '.lede-headline',
-    // /graphics/ template
-    'h1.article-title',
-    // /news/ template
-    'h1[class^="headline"]', 'h1.lede-text-only__hed']
+      // normal articles
+      '.lede-headline',
+
+      // /graphics/ template
+      'h1.article-title',
+
+      // /news/ template
+      'h1[class^="headline"]',
+      'h1.lede-text-only__hed',
+    ],
   },
+
   author: {
-    selectors: [['meta[name="parsely-author"]', 'value'], '.byline-details__link',
-    // /graphics/ template
-    '.bydek',
-    // /news/ template
-    '.author', 'p[class*="author"]']
+    selectors: [
+      ['meta[name="parsely-author"]', 'value'],
+      '.byline-details__link',
+
+      // /graphics/ template
+      '.bydek',
+
+      // /news/ template
+      '.author',
+      'p[class*="author"]',
+    ],
   },
+
   date_published: {
-    selectors: [['time.published-at', 'datetime'], ['time[datetime]', 'datetime'], ['meta[name="date"]', 'value'], ['meta[name="parsely-pub-date"]', 'value'], ['meta[name="parsely-pub-date"]', 'content']]
+    selectors: [
+      ['time.published-at', 'datetime'],
+      ['time[datetime]', 'datetime'],
+      ['meta[name="date"]', 'value'],
+      ['meta[name="parsely-pub-date"]', 'value'],
+      ['meta[name="parsely-pub-date"]', 'content'],
+    ],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'], ['meta[name="og:image"]', 'content']]
+    selectors: [
+      ['meta[name="og:image"]', 'value'],
+      ['meta[name="og:image"]', 'content'],
+    ],
   },
+
   content: {
-    selectors: ['.article-body__content', '.body-content',
-    // /graphics/ template
-    ['section.copy-block'],
-    // /news/ template
-    '.body-copy'],
+    selectors: [
+      '.article-body__content',
+      '.body-content',
+
+      // /graphics/ template
+      ['section.copy-block'],
+
+      // /news/ template
+      '.body-copy',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.inline-newsletter', '.page-ad']
-  }
+    clean: ['.inline-newsletter', '.page-ad'],
+  },
 };
 
-var WwwBustleComExtractor = {
+const WwwBustleComExtractor = {
   domain: 'www.bustle.com',
+
   title: {
-    selectors: ['h1', 'h1.post-page__title']
+    selectors: ['h1', 'h1.post-page__title'],
   },
+
   author: {
-    selectors: ['a[href*="profile"]', 'div.content-meta__author']
+    selectors: ['a[href*="profile"]', 'div.content-meta__author'],
   },
+
   date_published: {
-    selectors: [['time', 'datetime']]
+    selectors: [['time', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article', '.post-page__body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwNprOrgExtractor = {
+const WwwNprOrgExtractor = {
   domain: 'www.npr.org',
+
   title: {
-    selectors: ['h1', '.storytitle']
+    selectors: ['h1', '.storytitle'],
   },
+
   author: {
-    selectors: ['p.byline__name.byline__name--block']
+    selectors: ['p.byline__name.byline__name--block'],
   },
+
   date_published: {
-    selectors: [['.dateblock time[datetime]', 'datetime'], ['meta[name="date"]', 'value']]
+    selectors: [
+      ['.dateblock time[datetime]', 'datetime'],
+      ['meta[name="date"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'], ['meta[name="twitter:image:src"]', 'value']]
+    selectors: [
+      ['meta[name="og:image"]', 'value'],
+      ['meta[name="twitter:image:src"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['.storytext'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '.bucketwrap.image': 'figure',
-      '.bucketwrap.image .credit-caption': 'figcaption'
+      '.bucketwrap.image .credit-caption': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['div.enlarge_measure']
-  }
+    clean: ['div.enlarge_measure'],
+  },
 };
 
-var WwwRecodeNetExtractor = {
+const WwwRecodeNetExtractor = {
   domain: 'www.recode.net',
+
   title: {
-    selectors: ['h1.c-page-title']
+    selectors: ['h1.c-page-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['h2.c-entry-summary.p-dek']
+    selectors: ['h2.c-entry-summary.p-dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['figure.e-image--hero', '.c-entry-content'], '.c-entry-content'],
+    selectors: [
+      ['figure.e-image--hero', '.c-entry-content'],
+      '.c-entry-content',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var QzComExtractor = {
+const QzComExtractor = {
   domain: 'qz.com',
-  title: {
-    selectors: ['article header h1']
-  },
-  author: {
-    selectors: [['meta[name="author"]', 'value']]
-  },
-  date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['time[datetime]', 'datetime']]
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'], ['meta[property="og:image"]', 'content'], ['meta[name="twitter:image"]', 'content']]
-  },
-  content: {
-    selectors: ['#article-content'],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: []
-  }
-};
 
-var WwwDmagazineComExtractor = {
-  domain: 'www.dmagazine.com',
   title: {
-    selectors: ['h1.story__title']
+    selectors: ['article header h1'],
   },
+
   author: {
-    selectors: ['.story__info .story__info__item:first-child']
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
     selectors: [
-    // enter selectors
-    '.story__info'],
-    timezone: 'America/Chicago',
-    format: 'MMMM D, YYYY h:mm a'
+      ['meta[name="article:published_time"]', 'value'],
+      ['time[datetime]', 'datetime'],
+    ],
   },
-  dek: {
-    selectors: ['.story__subhead']
-  },
+
   lead_image_url: {
-    selectors: [['article figure a:first-child', 'href']]
+    selectors: [
+      ['meta[name="og:image"]', 'value'],
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="twitter:image"]', 'content'],
+    ],
   },
+
+  content: {
+    selectors: ['#article-content'],
+
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: [],
+  },
+};
+
+const WwwDmagazineComExtractor = {
+  domain: 'www.dmagazine.com',
+
+  title: {
+    selectors: ['h1.story__title'],
+  },
+
+  author: {
+    selectors: ['.story__info .story__info__item:first-child'],
+  },
+
+  date_published: {
+    selectors: [
+      // enter selectors
+      '.story__info',
+    ],
+
+    timezone: 'America/Chicago',
+    format: 'MMMM D, YYYY h:mm a',
+  },
+
+  dek: {
+    selectors: ['.story__subhead'],
+  },
+
+  lead_image_url: {
+    selectors: [['article figure a:first-child', 'href']],
+  },
+
   content: {
     selectors: ['.story__content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwReutersComExtractor = {
+const WwwReutersComExtractor = {
   domain: 'www.reuters.com',
+
   title: {
-    selectors: ['h1[class*="ArticleHeader-headline-"]', 'h1.article-headline']
+    selectors: ['h1[class*="ArticleHeader-headline-"]', 'h1.article-headline'],
   },
+
   author: {
-    selectors: [['meta[name="og:article:author"]', 'value'], '.author']
+    selectors: [['meta[name="og:article:author"]', 'value'], '.author'],
   },
+
   date_published: {
-    selectors: [['meta[name="og:article:published_time"]', 'value']]
+    selectors: [['meta[name="og:article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.ArticleBodyWrapper', '#article-text'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.article-subtitle': 'h4'
+      '.article-subtitle': 'h4',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['div[class^="ArticleBody-byline-container-"]', '#article-byline .author']
-  }
+    clean: [
+      'div[class^="ArticleBody-byline-container-"]',
+      '#article-byline .author',
+    ],
+  },
 };
 
-var MashableComExtractor = {
+const MashableComExtractor = {
   domain: 'mashable.com',
+
   title: {
-    selectors: ['header h1', 'h1.title']
+    selectors: ['header h1', 'h1.title'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], 'span.author_name a']
+    selectors: [['meta[name="article:author"]', 'value'], 'span.author_name a'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#article', 'section.article-content.blueprint'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.image-credit': 'figcaption'
+      '.image-credit': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwChicagotribuneComExtractor = {
+const WwwChicagotribuneComExtractor = {
   domain: 'www.chicagotribune.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['div.article_byline span:first-of-type']
+    selectors: ['div.article_byline span:first-of-type'],
   },
+
   date_published: {
-    selectors: ['time']
+    selectors: ['time'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwVoxComExtractor = {
+const WwwVoxComExtractor = {
   domain: 'www.vox.com',
+
   title: {
-    selectors: ['h1.c-page-title']
+    selectors: ['h1.c-page-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.p-dek']
+    selectors: ['.p-dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['figure.e-image--hero', '.c-entry-content'], '.c-entry-content'],
+    selectors: [
+      ['figure.e-image--hero', '.c-entry-content'],
+      '.c-entry-content',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'figure .e-image__image noscript': function figure_EImage__image_noscript($node) {
-        var imgHtml = $node.html();
-        $node.parents('.e-image__image').find('.c-dynamic-image').replaceWith(imgHtml);
+      'figure .e-image__image noscript': $node => {
+        const imgHtml = $node.html();
+        $node
+          .parents('.e-image__image')
+          .find('.c-dynamic-image')
+          .replaceWith(imgHtml);
       },
-      'figure .e-image__meta': 'figcaption'
+
+      'figure .e-image__meta': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var NewsNationalgeographicComExtractor = {
+const NewsNationalgeographicComExtractor = {
   domain: 'news.nationalgeographic.com',
+
   title: {
-    selectors: ['h1', 'h1.main-title']
+    selectors: ['h1', 'h1.main-title'],
   },
+
   author: {
-    selectors: ['.byline-component__contributors b span']
+    selectors: ['.byline-component__contributors b span'],
   },
+
   date_published: {
     selectors: [['meta[name="article:published_time"]', 'value']],
     format: 'ddd MMM D HH:mm:ss zz YYYY',
-    timezone: 'EST'
+    timezone: 'EST',
   },
+
   dek: {
-    selectors: ['.article__deck']
+    selectors: ['.article__deck'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['.parsys.content', '.__image-lead__'], '.content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.parsys.content': function parsysContent($node, $) {
-        var $imgSrc = $node.find('.image.parbase.section').find('.picturefill').first().data('platform-src');
+      '.parsys.content': ($node, $) => {
+        const $imgSrc = $node
+          .find('.image.parbase.section')
+          .find('.picturefill')
+          .first()
+          .data('platform-src');
         if ($imgSrc) {
-          $node.prepend($("<img class=\"__image-lead__\" src=\"".concat($imgSrc, "\"/>")));
+          $node.prepend($(`<img class="__image-lead__" src="${$imgSrc}"/>`));
         }
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.pull-quote.pull-quote--large']
-  }
+    clean: ['.pull-quote.pull-quote--large'],
+  },
 };
 
-var WwwNationalgeographicComExtractor = {
+const WwwNationalgeographicComExtractor = {
   domain: 'www.nationalgeographic.com',
+
   title: {
-    selectors: ['h1', 'h1.main-title']
+    selectors: ['h1', 'h1.main-title'],
   },
+
   author: {
-    selectors: ['.byline-component__contributors b span']
+    selectors: ['.byline-component__contributors b span'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.Article__Headline__Desc', '.article__deck']
+    selectors: ['.Article__Headline__Desc', '.article__deck'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['section.Article__Content', ['.parsys.content', '.__image-lead__'], '.content'],
+    selectors: [
+      'section.Article__Content',
+      ['.parsys.content', '.__image-lead__'],
+      '.content',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.parsys.content': function parsysContent($node, $) {
-        var $imageParent = $node.children().first();
+      '.parsys.content': ($node, $) => {
+        const $imageParent = $node.children().first();
         if ($imageParent.hasClass('imageGroup')) {
-          var $dataAttrContainer = $imageParent.find('.media--medium__container').children().first();
-          var imgPath1 = $dataAttrContainer.data('platform-image1-path');
-          var imgPath2 = $dataAttrContainer.data('platform-image2-path');
+          const $dataAttrContainer = $imageParent
+            .find('.media--medium__container')
+            .children()
+            .first();
+          const imgPath1 = $dataAttrContainer.data('platform-image1-path');
+          const imgPath2 = $dataAttrContainer.data('platform-image2-path');
           if (imgPath2 && imgPath1) {
-            $node.prepend($("<div class=\"__image-lead__\">\n                <img src=\"".concat(imgPath1, "\"/>\n                <img src=\"").concat(imgPath2, "\"/>\n              </div>")));
+            $node.prepend(
+              $(`<div class="__image-lead__">
+                <img src="${imgPath1}"/>
+                <img src="${imgPath2}"/>
+              </div>`)
+            );
           }
         } else {
-          var $imgSrc = $node.find('.image.parbase.section').find('.picturefill').first().data('platform-src');
+          const $imgSrc = $node
+            .find('.image.parbase.section')
+            .find('.picturefill')
+            .first()
+            .data('platform-src');
           if ($imgSrc) {
-            $node.prepend($("<img class=\"__image-lead__\" src=\"".concat($imgSrc, "\"/>")));
+            $node.prepend($(`<img class="__image-lead__" src="${$imgSrc}"/>`));
           }
         }
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.pull-quote.pull-quote--small']
-  }
+    clean: ['.pull-quote.pull-quote--small'],
+  },
 };
 
-var WwwLatimesComExtractor = {
+const WwwLatimesComExtractor = {
   domain: 'www.latimes.com',
+
   title: {
-    selectors: ['h1.headline', '.trb_ar_hl']
+    selectors: ['h1.headline', '.trb_ar_hl'],
   },
+
   author: {
-    selectors: ['a[data-click="standardBylineAuthorName"]', ['meta[name="author"]', 'value']]
+    selectors: [
+      'a[data-click="standardBylineAuthorName"]',
+      ['meta[name="author"]', 'value'],
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['meta[itemprop="datePublished"]', 'value']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['meta[itemprop="datePublished"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.page-article-body', '.trb_ar_main'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.trb_ar_la': function trb_ar_la($node) {
-        var $figure = $node.find('figure');
+      '.trb_ar_la': $node => {
+        const $figure = $node.find('figure');
         $node.replaceWith($figure);
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.trb_ar_by', '.trb_ar_cr']
-  }
+    clean: ['.trb_ar_by', '.trb_ar_cr'],
+  },
 };
 
-var PagesixComExtractor = {
+const PagesixComExtractor = {
   domain: 'pagesix.com',
+
   supportedDomains: ['nypost.com'],
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.byline']
+    selectors: ['.byline'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['#featured-image-wrapper', '.entry-content'], '.entry-content'],
+    selectors: [
+      ['#featured-image-wrapper', '.entry-content'],
+      '.entry-content',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '#featured-image-wrapper': 'figure',
-      '.wp-caption-text': 'figcaption'
+      '.wp-caption-text': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.modal-trigger']
-  }
+    clean: ['.modal-trigger'],
+  },
 };
 
-var ThefederalistpapersOrgExtractor = {
+const ThefederalistpapersOrgExtractor = {
   domain: 'thefederalistpapers.org',
+
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title'],
   },
+
   author: {
-    selectors: ['.author-meta-title', 'main span.entry-author-name']
+    selectors: ['.author-meta-title', 'main span.entry-author-name'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['header', '.article-sharing', '.after-article', '.type-commenting', '.more-posts', ['p[style]']]
-  }
+    clean: [
+      'header',
+      '.article-sharing',
+      '.after-article',
+      '.type-commenting',
+      '.more-posts',
+      ['p[style]'],
+    ],
+  },
 };
 
-var WwwCbssportsComExtractor = {
+const WwwCbssportsComExtractor = {
   domain: 'www.cbssports.com',
+
   title: {
-    selectors: ['.Article-headline', '.article-headline']
+    selectors: ['.Article-headline', '.article-headline'],
   },
+
   author: {
-    selectors: ['.ArticleAuthor-nameText', '.author-name']
+    selectors: ['.ArticleAuthor-nameText', '.author-name'],
   },
+
   date_published: {
     selectors: [['meta[itemprop="datePublished"]', 'value']],
-    timezone: 'UTC'
+    timezone: 'UTC',
   },
+
   dek: {
-    selectors: ['.Article-subline', '.article-subline']
+    selectors: ['.Article-subline', '.article-subline'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwMsnbcComExtractor = {
+const WwwMsnbcComExtractor = {
   domain: 'www.msnbc.com',
+
   title: {
-    selectors: ['h1', 'h1.is-title-pane']
+    selectors: ['h1', 'h1.is-title-pane'],
   },
+
   author: {
-    selectors: ['.byline-name', '.author']
+    selectors: ['.byline-name', '.author'],
   },
+
   date_published: {
-    selectors: [['meta[itemprop="datePublished"]', 'value'], ['meta[name="DC.date.issued"]', 'value']]
+    selectors: [
+      ['meta[itemprop="datePublished"]', 'value'],
+      ['meta[name="DC.date.issued"]', 'value'],
+    ],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-body__content', '.pane-node-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.pane-node-body': function paneNodeBody($node, $) {
-        var _WwwMsnbcComExtractor = _slicedToArray(WwwMsnbcComExtractor.lead_image_url.selectors[0], 2),
-          selector = _WwwMsnbcComExtractor[0],
-          attr = _WwwMsnbcComExtractor[1];
-        var src = $(selector).attr(attr);
+      '.pane-node-body': ($node, $) => {
+        const [selector, attr] =
+          WwwMsnbcComExtractor.lead_image_url.selectors[0];
+        const src = $(selector).attr(attr);
         if (src) {
-          $node.prepend("<img src=\"".concat(src, "\" />"));
+          $node.prepend(`<img src="${src}" />`);
         }
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwThepoliticalinsiderComExtractor = {
+const WwwThepoliticalinsiderComExtractor = {
   domain: 'www.thepoliticalinsider.com',
+
   title: {
-    selectors: [['meta[name="sailthru.title"]', 'value']]
+    selectors: [['meta[name="sailthru.title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="sailthru.author"]', 'value']]
+    selectors: [['meta[name="sailthru.author"]', 'value']],
   },
+
   date_published: {
     selectors: [['meta[name="sailthru.date"]', 'value']],
-    timezone: 'America/New_York'
+    timezone: 'America/New_York',
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'] // enter selectors
-    ]
+    selectors: [
+      ['meta[name="og:image"]', 'value'], // enter selectors
+    ],
   },
+
   content: {
     selectors: ['div#article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwMentalflossComExtractor = {
+const WwwMentalflossComExtractor = {
   domain: 'www.mentalfloss.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h1.title', '.title-group', '.inner']
+    selectors: [
+      ['meta[name="og:title"]', 'value'],
+      'h1.title',
+      '.title-group',
+      '.inner',
+    ],
   },
+
   author: {
-    selectors: ['a[data-vars-label*="authors"]', '.field-name-field-enhanced-authors']
+    selectors: [
+      'a[data-vars-label*="authors"]',
+      '.field-name-field-enhanced-authors',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], '.date-display-single'],
-    timezone: 'America/New_York'
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      '.date-display-single',
+    ],
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article main', 'div.field.field-name-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['small']
-  }
+    clean: ['small'],
+  },
 };
 
-var AbcnewsGoComExtractor = {
+const AbcnewsGoComExtractor = {
   domain: 'abcnews.go.com',
+
   title: {
-    selectors: ['div[class*="Article_main__body"] h1', '.article-header h1']
+    selectors: ['div[class*="Article_main__body"] h1', '.article-header h1'],
   },
+
   author: {
     selectors: ['.ShareByline span:nth-child(2)', '.authors'],
-    clean: ['.author-overlay', '.by-text']
+    clean: ['.author-overlay', '.by-text'],
   },
+
   date_published: {
     selectors: ['.ShareByline', '.timestamp'],
     format: 'MMMM D, YYYY h:mm a',
-    timezone: 'America/New_York'
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article', '.article-copy'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwNydailynewsComExtractor = {
+const WwwNydailynewsComExtractor = {
   domain: 'www.nydailynews.com',
+
   title: {
-    selectors: ['h1.headline', 'h1#ra-headline']
+    selectors: ['h1.headline', 'h1#ra-headline'],
   },
+
   author: {
-    selectors: ['.article_byline span', ['meta[name="parsely-author"]', 'value']]
+    selectors: [
+      '.article_byline span',
+      ['meta[name="parsely-author"]', 'value'],
+    ],
   },
+
   date_published: {
-    selectors: ['time', ['meta[name="sailthru.date"]', 'value']]
+    selectors: ['time', ['meta[name="sailthru.date"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article', 'article#ra-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['dl#ra-tags', '.ra-related', 'a.ra-editor', 'dl#ra-share-bottom']
-  }
+    clean: ['dl#ra-tags', '.ra-related', 'a.ra-editor', 'dl#ra-share-bottom'],
+  },
 };
 
-var WwwCnbcComExtractor = {
+const WwwCnbcComExtractor = {
   domain: 'www.cnbc.com',
+
   title: {
-    selectors: ['h1.title', 'h1.ArticleHeader-headline']
+    selectors: ['h1.title', 'h1.ArticleHeader-headline'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['div#article_body.content', 'div.story', 'div.ArticleBody-articleBody'],
+    selectors: [
+      'div#article_body.content',
+      'div.story',
+      'div.ArticleBody-articleBody',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwPopsugarComExtractor = {
+const WwwPopsugarComExtractor = {
   domain: 'www.popsugar.com',
+
   title: {
-    selectors: ['h2.post-title', 'title-text']
+    selectors: ['h2.post-title', 'title-text'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value']]
+    selectors: [['meta[name="article:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.share-copy-title', '.post-tags', '.reactions']
-  }
+    clean: ['.share-copy-title', '.post-tags', '.reactions'],
+  },
 };
 
-var ObserverComExtractor = {
+const ObserverComExtractor = {
   domain: 'observer.com',
+
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title'],
   },
+
   author: {
-    selectors: ['.author', '.vcard']
+    selectors: ['.author', '.vcard'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['h2.dek']
+    selectors: ['h2.dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var PeopleComExtractor = {
+const PeopleComExtractor = {
   domain: 'people.com',
+
   title: {
-    selectors: ['.article-header h1', ['meta[name="og:title"]', 'value']]
+    selectors: ['.article-header h1', ['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="sailthru.author"]', 'value'], 'a.author.url.fn']
+    selectors: [['meta[name="sailthru.author"]', 'value'], 'a.author.url.fn'],
   },
+
   date_published: {
-    selectors: ['.mntl-attribution__item-date', ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      '.mntl-attribution__item-date',
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: ['.article-header h2']
+    selectors: ['.article-header h2'],
   },
+
   content: {
     selectors: ['div[class^="loc article-content"]', 'div.article-body__inner'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwUsmagazineComExtractor = {
+const WwwUsmagazineComExtractor = {
   domain: 'www.usmagazine.com',
+
   title: {
-    selectors: ['header h1']
+    selectors: ['header h1'],
   },
+
   author: {
-    selectors: ['a.author', 'a.article-byline.tracked-offpage']
+    selectors: ['a.author', 'a.article-byline.tracked-offpage'],
   },
+
   date_published: {
     timezone: 'America/New_York',
-    selectors: [['meta[name="article:published_time"]', 'value']]
+
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.module-related']
-  }
+    clean: ['.module-related'],
+  },
 };
 
-var WwwRollingstoneComExtractor = {
+const WwwRollingstoneComExtractor = {
   domain: 'www.rollingstone.com',
+
   title: {
-    selectors: ['h1.l-article-header__row--title', 'h1.content-title']
+    selectors: ['h1.l-article-header__row--title', 'h1.content-title'],
   },
+
   author: {
-    selectors: ['a.c-byline__link', 'a.content-author.tracked-offpage']
+    selectors: ['a.c-byline__link', 'a.content-author.tracked-offpage'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], 'time.content-published-date'],
-    timezone: 'America/New_York'
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      'time.content-published-date',
+    ],
+
+    timezone: 'America/New_York',
   },
+
   dek: {
-    selectors: ['h2.l-article-header__row--lead', '.content-description']
+    selectors: ['h2.l-article-header__row--lead', '.content-description'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['.l-article-content', ['.lead-container', '.article-content'], '.article-content'],
+    selectors: [
+      '.l-article-content',
+      ['.lead-container', '.article-content'],
+      '.article-content',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.c-related-links-wrapper', '.module-related']
-  }
+    clean: ['.c-related-links-wrapper', '.module-related'],
+  },
 };
 
-var twofortysevensportsComExtractor = {
+const twofortysevensportsComExtractor = {
   domain: '247sports.com',
+
   title: {
-    selectors: ['title', 'article header h1']
+    selectors: ['title', 'article header h1'],
   },
+
   author: {
-    selectors: ['.article-cnt__author', '.author']
+    selectors: ['.article-cnt__author', '.author'],
   },
+
   date_published: {
-    selectors: [['time[data-published]', 'data-published']]
+    selectors: [['time[data-published]', 'data-published']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-body', 'section.body.article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var UproxxComExtractor = {
+const UproxxComExtractor = {
   domain: 'uproxx.com',
+
   title: {
-    selectors: ['div.entry-header h1']
+    selectors: ['div.entry-header h1'],
   },
+
   author: {
-    selectors: [['meta[name="qc:author"]', 'value']]
+    selectors: [['meta[name="qc:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       'div.image': 'figure',
-      'div.image .wp-media-credit': 'figcaption'
+      'div.image .wp-media-credit': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwEonlineComExtractor = {
+const WwwEonlineComExtractor = {
   domain: 'www.eonline.com',
+
   title: {
-    selectors: ['h1.article-detail__title', 'h1.article__title']
+    selectors: ['h1.article-detail__title', 'h1.article__title'],
   },
+
   author: {
-    selectors: ['.article-detail__meta__author', '.entry-meta__author a']
+    selectors: ['.article-detail__meta__author', '.entry-meta__author a'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['meta[itemprop="datePublished"]', 'value']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['meta[itemprop="datePublished"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['.article-detail__main-content section'], ['.post-content section, .post-content div.post-content__image']],
+    selectors: [
+      ['.article-detail__main-content section'],
+      ['.post-content section, .post-content div.post-content__image'],
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       'div.post-content__image': 'figure',
-      'div.post-content__image .image__credits': 'figcaption'
+      'div.post-content__image .image__credits': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwMiamiheraldComExtractor = {
+const WwwMiamiheraldComExtractor = {
   domain: 'www.miamiherald.com',
+
   title: {
-    selectors: ['h1.title']
+    selectors: ['h1.title'],
   },
+
   date_published: {
     selectors: ['p.published-date'],
-    timezone: 'America/New_York'
+
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.dateline-storybody'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwRefinery29ComExtractor = {
+const WwwRefinery29ComExtractor = {
   domain: 'www.refinery29.com',
+
   title: {
-    selectors: ['h1.title']
+    selectors: ['h1.title'],
   },
+
   author: {
-    selectors: ['.contributor']
+    selectors: ['.contributor'],
   },
+
   date_published: {
     selectors: [['meta[name="sailthru.date"]', 'value']],
-    timezone: 'America/New_York'
+
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['.full-width-opener', '.article-content'], '.article-content', '.body'],
+    selectors: [
+      ['.full-width-opener', '.article-content'],
+      '.article-content',
+      '.body',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div.loading noscript': function divLoading_noscript($node) {
-        var imgHtml = $node.html();
+      'div.loading noscript': $node => {
+        const imgHtml = $node.html();
         $node.parents('.loading').replaceWith(imgHtml);
       },
+
       '.section-image': 'figure',
+
       '.section-image .content-caption': 'figcaption',
-      '.section-text': 'p'
+
+      '.section-text': 'p',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.story-share']
-  }
+    clean: ['.story-share'],
+  },
 };
 
-var WwwMacrumorsComExtractor = {
+const WwwMacrumorsComExtractor = {
   domain: 'www.macrumors.com',
+
   title: {
-    selectors: ['h1', 'h1.title']
+    selectors: ['h1', 'h1.title'],
   },
+
   author: {
-    selectors: ['article a[rel="author"]', '.author-url']
+    selectors: ['article a[rel="author"]', '.author-url'],
   },
+
   date_published: {
     selectors: [['time', 'datetime']],
-    timezone: 'America/Los_Angeles'
+
+    timezone: 'America/Los_Angeles',
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article', '.article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwAndroidcentralComExtractor = {
+const WwwAndroidcentralComExtractor = {
   domain: 'www.androidcentral.com',
+
   title: {
-    selectors: ['h1', 'h1.main-title']
+    selectors: ['h1', 'h1.main-title'],
   },
+
   author: {
-    selectors: [['meta[name="parsely-author"]', 'value']]
+    selectors: [['meta[name="parsely-author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.intro', 'blockquote']
-  }
+    clean: ['.intro', 'blockquote'],
+  },
 };
 
-var WwwSiComExtractor = {
+const WwwSiComExtractor = {
   domain: 'www.si.com',
+
   title: {
-    selectors: ['h1', 'h1.headline']
+    selectors: ['h1', 'h1.headline'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
     selectors: [['meta[name="published"]', 'value']],
-    timezone: 'America/New_York'
+
+    timezone: 'America/New_York',
   },
+
   dek: {
-    selectors: ['.m-detail-header--dek']
+    selectors: ['.m-detail-header--dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['.m-detail--body', ['p', '.marquee_large_2x', '.component.image']],
+    selectors: [
+      '.m-detail--body',
+      ['p', '.marquee_large_2x', '.component.image'],
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      noscript: function noscript($node) {
-        var $children = $node.children();
+      noscript: $node => {
+        const $children = $node.children();
         if ($children.length === 1 && $children.get(0).tagName === 'img') {
           return 'figure';
         }
+
         return null;
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: [['.inline-thumb', '.primary-message', '.description', '.instructions']]
-  }
+    clean: [
+      ['.inline-thumb', '.primary-message', '.description', '.instructions'],
+    ],
+  },
 };
 
-var WwwRawstoryComExtractor = {
+const WwwRawstoryComExtractor = {
   domain: 'www.rawstory.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], '.blog-title']
+    selectors: [['meta[name="og:title"]', 'value'], '.blog-title'],
   },
+
   author: {
-    selectors: ['div.main-post-head .social-author__name', '.blog-author a:first-of-type']
+    selectors: [
+      'div.main-post-head .social-author__name',
+      '.blog-author a:first-of-type',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], '.blog-author a:last-of-type'],
-    timezone: 'EST'
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      '.blog-author a:last-of-type',
+    ],
+
+    timezone: 'EST',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.post-body', '.blog-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwCnetComExtractor = {
+const WwwCnetComExtractor = {
   domain: 'www.cnet.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['span.author', 'a.author']
+    selectors: ['span.author', 'a.author'],
   },
+
   date_published: {
     selectors: ['time'],
-    timezone: 'America/Los_Angeles'
+
+    timezone: 'America/Los_Angeles',
   },
+
   dek: {
-    selectors: ['.c-head_dek', '.article-dek']
+    selectors: ['.c-head_dek', '.article-dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['img.__image-lead__', '.article-main-body'], '.article-main-body'],
+    selectors: [
+      ['img.__image-lead__', '.article-main-body'],
+      '.article-main-body',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'figure.image': function figureImage($node) {
-        var $img = $node.find('img');
+      'figure.image': $node => {
+        const $img = $node.find('img');
         $img.attr('width', '100%');
         $img.attr('height', '100%');
         $img.addClass('__image-lead__');
         $node.remove('.imgContainer').prepend($img);
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwTodayComExtractor = {
+const WwwTodayComExtractor = {
   domain: 'www.today.com',
+
   title: {
-    selectors: ['h1.article-hero-headline__htag', 'h1.entry-headline']
+    selectors: ['h1.article-hero-headline__htag', 'h1.entry-headline'],
   },
+
   author: {
-    selectors: ['span.byline-name', ['meta[name="author"]', 'value']]
+    selectors: ['span.byline-name', ['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: ['time[datetime]', ['meta[name="DC.date.issued"]', 'value']]
+    selectors: ['time[datetime]', ['meta[name="DC.date.issued"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article-body__content', '.entry-container'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.label-comment']
-  }
+    clean: ['.label-comment'],
+  },
 };
 
-var WwwAlComExtractor = {
+const WwwAlComExtractor = {
   domain: 'www.al.com',
+
   title: {
-    selectors: [['meta[name="title"]', 'value']]
+    selectors: [['meta[name="title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="article_author"]', 'value']]
+    selectors: [['meta[name="article_author"]', 'value']],
   },
+
   date_published: {
     selectors: [['meta[name="article_date_original"]', 'value']],
-    timezone: 'EST'
+    timezone: 'EST',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwThepennyhoarderComExtractor = {
+const WwwThepennyhoarderComExtractor = {
   domain: 'www.thepennyhoarder.com',
+
   title: {
-    selectors: [['meta[name="dcterms.title"]', 'value']]
+    selectors: [['meta[name="dcterms.title"]', 'value']],
   },
+
   author: {
-    selectors: [['link[rel="author"]', 'title']]
+    selectors: [['link[rel="author"]', 'title']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: [['.post-img', '.post-text'], '.post-text', '.single-post-content-inner'],
+    selectors: [
+      ['.post-img', '.post-text'],
+      '.post-text',
+      '.single-post-content-inner',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwWesternjournalismComExtractor = {
+const WwwWesternjournalismComExtractor = {
   domain: 'www.westernjournalism.com',
+
   title: {
-    selectors: ['title', 'h1.entry-title']
+    selectors: ['title', 'h1.entry-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="DC.date.issued"]', 'value']]
+    selectors: [['meta[name="DC.date.issued"]', 'value']],
   },
+
   dek: {
-    selectors: ['.subtitle']
+    selectors: ['.subtitle'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article-sharing.top + div'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.ad-notice-small']
-  }
+    clean: ['.ad-notice-small'],
+  },
 };
 
-var WwwAmericanowComExtractor = {
+const WwwAmericanowComExtractor = {
   domain: 'www.americanow.com',
+
   title: {
-    selectors: ['.title', ['meta[name="title"]', 'value']]
+    selectors: ['.title', ['meta[name="title"]', 'value']],
   },
+
   author: {
-    selectors: ['.byline']
+    selectors: ['.byline'],
   },
+
   date_published: {
-    selectors: [['meta[name="publish_date"]', 'value']]
+    selectors: [['meta[name="publish_date"]', 'value']],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['.article-content', '.image', '.body'], '.body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.article-video-wrapper', '.show-for-small-only']
-  }
+    clean: ['.article-video-wrapper', '.show-for-small-only'],
+  },
 };
 
-var ScienceflyComExtractor = {
+const ScienceflyComExtractor = {
   domain: 'sciencefly.com',
+
   title: {
-    selectors: ['.entry-title', '.cb-entry-title', '.cb-single-title']
+    selectors: ['.entry-title', '.cb-entry-title', '.cb-single-title'],
   },
+
   author: {
-    selectors: ['div.cb-author', 'div.cb-author-title']
+    selectors: ['div.cb-author', 'div.cb-author-title'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['div.theiaPostSlider_slides img', 'src']]
+    selectors: [['div.theiaPostSlider_slides img', 'src']],
   },
+
   content: {
     selectors: ['div.theiaPostSlider_slides'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var HellogigglesComExtractor = {
+const HellogigglesComExtractor = {
   domain: 'hellogiggles.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], '.title']
+    selectors: [['meta[name="og:title"]', 'value'], '.title'],
   },
+
   author: {
-    selectors: ['.byline-wrapper span.author_name', '.author-link']
+    selectors: ['.byline-wrapper span.author_name', '.author-link'],
   },
+
   date_published: {
-    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      ['meta[property="article:published_time"]', 'content'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.main-content', '.entry-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var ThoughtcatalogComExtractor = {
+const ThoughtcatalogComExtractor = {
   domain: 'thoughtcatalog.com',
+
   title: {
-    selectors: ['h1.title', ['meta[name="og:title"]', 'value']]
+    selectors: ['h1.title', ['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['cite a', 'div.col-xs-12.article_header div.writer-container.writer-container-inline.writer-no-avatar h4.writer-name', 'h1.writer-name']
+    selectors: [
+      'cite a',
+      'div.col-xs-12.article_header div.writer-container.writer-container-inline.writer-no-avatar h4.writer-name',
+      'h1.writer-name',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry.post'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.tc_mark', 'figcaption']
-  }
+    clean: ['.tc_mark', 'figcaption'],
+  },
 };
 
-var WwwInquisitrComExtractor = {
+const WwwInquisitrComExtractor = {
   domain: 'www.inquisitr.com',
+
   title: {
-    selectors: ['h1.entry-title.story--header--title']
+    selectors: ['h1.entry-title.story--header--title'],
   },
+
   author: {
-    selectors: ['div.story--header--author']
+    selectors: ['div.story--header--author'],
   },
+
   date_published: {
-    selectors: [['meta[name="datePublished"]', 'value']]
+    selectors: [['meta[name="datePublished"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article.story', '.entry-content.'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.post-category', '.story--header--socials', '.story--header--content']
-  }
+    clean: [
+      '.post-category',
+      '.story--header--socials',
+      '.story--header--content',
+    ],
+  },
 };
 
-var WwwNbcnewsComExtractor = {
+const WwwNbcnewsComExtractor = {
   domain: 'www.nbcnews.com',
+
   title: {
-    selectors: ['div.article-hero-headline h1', 'div.article-hed h1']
+    selectors: ['div.article-hero-headline h1', 'div.article-hed h1'],
   },
+
   author: {
-    selectors: ['div.article-inline-byline span.byline-name', 'span.byline_author']
+    selectors: [
+      'div.article-inline-byline span.byline-name',
+      'span.byline_author',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published"]', 'value'], ['.flag_article-wrapper time.timestamp_article[datetime]', 'datetime'], '.flag_article-wrapper time']
+    selectors: [
+      ['meta[name="article:published"]', 'value'],
+      ['.flag_article-wrapper time.timestamp_article[datetime]', 'datetime'],
+      '.flag_article-wrapper time',
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article-body__content', 'div.article-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var FortuneComExtractor = {
+const FortuneComExtractor = {
   domain: 'fortune.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
     selectors: ['.MblGHNMJ'],
-    timezone: 'UTC'
+
+    timezone: 'UTC',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['picture', 'article.row'], 'article.row'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwLinkedinComExtractor = {
+const WwwLinkedinComExtractor = {
   domain: 'www.linkedin.com',
+
   title: {
-    selectors: ['.article-title', 'h1']
+    selectors: ['.article-title', 'h1'],
   },
+
   author: {
-    selectors: ['.main-author-card h3', ['meta[name="article:author"]', 'value'], '.entity-name a[rel=author]']
+    selectors: [
+      '.main-author-card h3',
+      ['meta[name="article:author"]', 'value'],
+      '.entity-name a[rel=author]',
+    ],
   },
+
   date_published: {
-    selectors: ['.base-main-card__metadata', ['time[itemprop="datePublished"]', 'datetime']],
-    timezone: 'America/Los_Angeles'
+    selectors: [
+      '.base-main-card__metadata',
+      ['time[itemprop="datePublished"]', 'datetime'],
+    ],
+
+    timezone: 'America/Los_Angeles',
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['.article-content__body', ['header figure', '.prose'], '.prose'],
+    selectors: [
+      '.article-content__body',
+      ['header figure', '.prose'],
+      '.prose',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.entity-image']
-  }
+    clean: ['.entity-image'],
+  },
 };
 
-var ObamawhitehouseArchivesGovExtractor = {
+const ObamawhitehouseArchivesGovExtractor = {
   domain: 'obamawhitehouse.archives.gov',
+
   supportedDomains: ['whitehouse.gov'],
+
   title: {
-    selectors: ['h1', '.pane-node-title']
+    selectors: ['h1', '.pane-node-title'],
   },
+
   author: {
-    selectors: ['.blog-author-link', '.node-person-name-link']
+    selectors: ['.blog-author-link', '.node-person-name-link'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.field-name-field-forall-summary']
+    selectors: ['.field-name-field-forall-summary'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     defaultCleaner: false,
+
     selectors: ['div#content-start', '.pane-node-field-forall-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.pane-node-title', '.pane-custom.pane-1']
-  }
+    clean: ['.pane-node-title', '.pane-custom.pane-1'],
+  },
 };
 
-var WwwOpposingviewsComExtractor = {
+const WwwOpposingviewsComExtractor = {
   domain: 'www.opposingviews.com',
+
   title: {
-    selectors: ['h1.m-detail-header--title', 'h1.title']
+    selectors: ['h1.m-detail-header--title', 'h1.title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], 'div.date span span a']
+    selectors: [['meta[name="author"]', 'value'], 'div.date span span a'],
   },
+
   date_published: {
-    selectors: [['meta[name="published"]', 'value'], ['meta[name="publish_date"]', 'value']]
+    selectors: [
+      ['meta[name="published"]', 'value'],
+      ['meta[name="publish_date"]', 'value'],
+    ],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.m-detail--body', '.article-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.show-for-small-only']
-  }
+    clean: ['.show-for-small-only'],
+  },
 };
 
-var WwwProspectmagazineCoUkExtractor = {
+const WwwProspectmagazineCoUkExtractor = {
   domain: 'www.prospectmagazine.co.uk',
+
   title: {
-    selectors: ['.blog-header__title', '.page-title']
+    selectors: ['.blog-header__title', '.page-title'],
   },
+
   author: {
-    selectors: ['.blog-header__author-link', '.aside_author .title']
+    selectors: ['.blog-header__author-link', '.aside_author .title'],
   },
+
   date_published: {
     selectors: [['meta[name="article:published_time"]', 'value'], '.post-info'],
-    timezone: 'Europe/London'
+
+    timezone: 'Europe/London',
   },
+
   dek: {
-    selectors: ['.blog-header__description', '.page-subtitle']
+    selectors: ['.blog-header__description', '.page-subtitle'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.blog__container', 'article .post_content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var ForwardComExtractor = {
+const ForwardComExtractor = {
   domain: 'forward.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.post-author a', '.author-name', ['meta[name="sailthru.author"]', 'value']]
+    selectors: [
+      '.post-author a',
+      '.author-name',
+      ['meta[name="sailthru.author"]', 'value'],
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['meta[name="date"]', 'value']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['meta[name="date"]', 'value'],
+    ],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['.content-container article', ['.post-item-media-wrap', '.post-item p']],
+    selectors: [
+      '.content-container article',
+      ['.post-item-media-wrap', '.post-item p'],
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.post-author', '.donate-box', '.message', '.subtitle']
-  }
+    clean: ['.post-author', '.donate-box', '.message', '.subtitle'],
+  },
 };
 
-var WwwQdailyComExtractor = {
+const WwwQdailyComExtractor = {
   domain: 'www.qdaily.com',
+
   title: {
-    selectors: ['h2', 'h2.title']
+    selectors: ['h2', 'h2.title'],
   },
+
   author: {
-    selectors: ['.name']
+    selectors: ['.name'],
   },
+
   date_published: {
-    selectors: [['.date.smart-date', 'data-origindate']]
+    selectors: [['.date.smart-date', 'data-origindate']],
   },
+
   dek: {
-    selectors: ['.excerpt']
+    selectors: ['.excerpt'],
   },
+
   lead_image_url: {
-    selectors: [['.article-detail-hd img', 'src']]
+    selectors: [['.article-detail-hd img', 'src']],
   },
+
   content: {
     selectors: ['.detail'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.lazyload', '.lazylad', '.lazylood']
-  }
+    clean: ['.lazyload', '.lazylad', '.lazylood'],
+  },
 };
 
-var GothamistComExtractor = {
+const GothamistComExtractor = {
   domain: 'gothamist.com',
-  supportedDomains: ['chicagoist.com', 'laist.com', 'sfist.com', 'shanghaiist.com', 'dcist.com'],
+
+  supportedDomains: [
+    'chicagoist.com',
+    'laist.com',
+    'sfist.com',
+    'shanghaiist.com',
+    'dcist.com',
+  ],
+
   title: {
-    selectors: ['h1', '.entry-header h1']
+    selectors: ['h1', '.entry-header h1'],
   },
+
   author: {
     // There are multiple article-metadata and byline-author classes, but the main article's is the 3rd child of the l-container class
-    selectors: ['.article-metadata:nth-child(3) .byline-author', '.author']
+    selectors: ['.article-metadata:nth-child(3) .byline-author', '.author'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], 'abbr', 'abbr.published'],
-    timezone: 'America/New_York'
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      'abbr',
+      'abbr.published',
+    ],
+
+    timezone: 'America/New_York',
   },
+
   dek: {
-    selectors: [null]
+    selectors: [null],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-body', '.entry-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
@@ -4427,1285 +5827,1811 @@ var GothamistComExtractor = {
       'div.image-left': 'figure',
       '.image-left i': 'figcaption',
       'div.image-right': 'figure',
-      '.image-right i': 'figcaption'
+      '.image-right i': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.image-none br', '.image-left br', '.image-right br', '.galleryEase']
-  }
+    clean: [
+      '.image-none br',
+      '.image-left br',
+      '.image-right br',
+      '.galleryEase',
+    ],
+  },
 };
 
-var WwwFoolComExtractor = {
+const WwwFoolComExtractor = {
   domain: 'www.fool.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], '.author-inline .author-name']
+    selectors: [
+      ['meta[name="author"]', 'value'],
+      '.author-inline .author-name',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="date"]', 'value']]
+    selectors: [['meta[name="date"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value'], 'header h2']
+    selectors: [['meta[name="og:description"]', 'value'], 'header h2'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.tailwind-article-body', '.article-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '.caption img': function caption_img($node) {
-        var src = $node.attr('src');
-        $node.parent().replaceWith("<figure><img src=\"".concat(src, "\"/></figure>"));
+      '.caption img': $node => {
+        const src = $node.attr('src');
+        $node.parent().replaceWith(`<figure><img src="${src}"/></figure>`);
       },
-      '.caption': 'figcaption'
+      '.caption': 'figcaption',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['#pitch']
-  }
+    clean: ['#pitch'],
+  },
 };
 
-var WwwSlateComExtractor = {
+const WwwSlateComExtractor = {
   domain: 'www.slate.com',
+
   title: {
-    selectors: ['.hed', 'h1']
+    selectors: ['.hed', 'h1'],
   },
+
   author: {
-    selectors: ['a[rel=author]']
+    selectors: ['a[rel=author]'],
   },
+
   date_published: {
     selectors: ['.pub-date'],
-    timezone: 'America/New_York'
+
+    timezone: 'America/New_York',
   },
+
   dek: {
-    selectors: ['.dek']
+    selectors: ['.dek'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.about-the-author', '.pullquote', '.newsletter-signup-component', '.top-comment']
-  }
+    clean: [
+      '.about-the-author',
+      '.pullquote',
+      '.newsletter-signup-component',
+      '.top-comment',
+    ],
+  },
 };
 
-var IciRadioCanadaCaExtractor = {
+const IciRadioCanadaCaExtractor = {
   domain: 'ici.radio-canada.ca',
+
   title: {
-    selectors: [['meta[name="dc.title"]', 'value']]
+    selectors: [['meta[name="dc.title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="dc.creator"]', 'value']]
+    selectors: [['meta[name="dc.creator"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="dc.date.created"]', 'value']]
+    selectors: [['meta[name="dc.date.created"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article main', 'article'],
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      ul: function ul(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      ul: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['header', 'nav', 'button', 'figcaption', '[class*="adBox"]', '.framed']
-  }
+    clean: [
+      'header',
+      'nav',
+      'button',
+      'figcaption',
+      '[class*="adBox"]',
+      '.framed',
+    ],
+  },
 };
 
-var WwwFortinetComExtractor = {
+const WwwFortinetComExtractor = {
   domain: 'www.fortinet.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.b15-blog-meta__author']
+    selectors: ['.b15-blog-meta__author'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['div.responsivegrid.aem-GridColumn.aem-GridColumn--default--12'],
+    selectors: [
+      'div.responsivegrid.aem-GridColumn.aem-GridColumn--default--12',
+    ],
+
     transforms: {
       // Cheerio 1.x treats noscript content as text, not parsed HTML
       // so we need to parse it manually
-      noscript: function noscript($node, $) {
-        var noscriptHtml = $node.html();
+      noscript: ($node, $) => {
+        const noscriptHtml = $node.html();
         if (!noscriptHtml) return null;
 
         // Parse the noscript content to check if it's a single img
-        var $parsed = $.load ? $.load(noscriptHtml, null, false) : $("<div>".concat(noscriptHtml, "</div>"));
-        var $children = $.load ? $parsed('*') : $parsed.children();
+        const $parsed = $.load
+          ? $.load(noscriptHtml, null, false)
+          : $(`<div>${noscriptHtml}</div>`);
+        const $children = $.load ? $parsed('*') : $parsed.children();
+
         if ($children.length === 1 && $children.get(0).tagName === 'img') {
           return 'figure';
         }
         return null;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
-var WwwFastcompanyComExtractor = {
+const WwwFastcompanyComExtractor = {
   domain: 'www.fastcompany.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.post__deck']
+    selectors: ['.post__deck'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['.post__article']
-  }
+    selectors: ['.post__article'],
+  },
 };
 
-var BlisterreviewComExtractor = {
+const BlisterreviewComExtractor = {
   domain: 'blisterreview.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h1.entry-title']
+    selectors: [['meta[name="og:title"]', 'value'], 'h1.entry-title'],
   },
+
   author: {
-    selectors: ['span.author-name']
+    selectors: ['span.author-name'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['time.entry-date', 'datetime'], ['meta[itemprop="datePublished"]', 'content']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['time.entry-date', 'datetime'],
+      ['meta[itemprop="datePublished"]', 'content'],
+    ],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'], ['meta[property="og:image"]', 'content'], ['meta[itemprop="image"]', 'content'], ['meta[name="twitter:image"]', 'content'], ['img.attachment-large', 'src']]
+    selectors: [
+      ['meta[name="og:image"]', 'value'],
+      ['meta[property="og:image"]', 'content'],
+      ['meta[itemprop="image"]', 'content'],
+      ['meta[name="twitter:image"]', 'content'],
+      ['img.attachment-large', 'src'],
+    ],
   },
+
   content: {
-    selectors: [['.elementor-section-wrap', '.elementor-text-editor > p, .elementor-text-editor > ul > li, .attachment-large, .wp-caption-text']],
+    selectors: [
+      [
+        '.elementor-section-wrap',
+        '.elementor-text-editor > p, .elementor-text-editor > ul > li, .attachment-large, .wp-caption-text',
+      ],
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      figcaption: 'p'
+      figcaption: 'p',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.comments-area']
-  }
+    clean: ['.comments-area'],
+  },
 };
 
-var NewsMynaviJpExtractor = {
+const NewsMynaviJpExtractor = {
   domain: 'news.mynavi.jp',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['a.articleHeader_name', 'main div.article-author a.article-author__name']
+    selectors: [
+      'a.articleHeader_name',
+      'main div.article-author a.article-author__name',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article-body', 'main article div'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      img: function img($node) {
-        var src = $node.attr('data-original');
+      img: $node => {
+        const src = $node.attr('data-original');
         if (src !== '') {
           $node.attr('src', src);
         }
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var ClinicaltrialsGovExtractor = {
+const ClinicaltrialsGovExtractor = {
   domain: 'clinicaltrials.gov',
+
   title: {
-    selectors: ['h1.tr-solo_record']
+    selectors: ['h1.tr-solo_record'],
   },
+
   author: {
-    selectors: ['div#sponsor.tr-info-text']
+    selectors: ['div#sponsor.tr-info-text'],
   },
+
   date_published: {
     // selectors: ['span.term[data-term="Last Update Posted"]'],
-    selectors: ['div:has(> span.term[data-term="Last Update Posted"])']
+    selectors: ['div:has(> span.term[data-term="Last Update Posted"])'],
   },
+
   content: {
     selectors: ['div#tab-body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.usa-alert> img']
-  }
+    clean: ['.usa-alert> img'],
+  },
 };
 
-var GithubComExtractor = {
+const GithubComExtractor = {
   domain: 'github.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
     selectors: [
       // enter author selectors
-    ]
+    ],
   },
+
   date_published: {
-    selectors: [['relative-time[datetime]', 'datetime'], ['span[itemprop="dateModified"] relative-time', 'datetime']]
+    selectors: [
+      ['relative-time[datetime]', 'datetime'],
+      ['span[itemprop="dateModified"] relative-time', 'datetime'],
+    ],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value'], 'span[itemprop="about"]']
+    selectors: [
+      ['meta[name="description"]', 'value'],
+      'span[itemprop="about"]',
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['#readme article']],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwRedditComExtractor = {
+const WwwRedditComExtractor = {
   domain: 'www.reddit.com',
+
   title: {
-    selectors: ['div[data-test-id="post-content"] h1', 'div[data-test-id="post-content"] h2']
-  },
-  author: {
-    selectors: ['div[data-test-id="post-content"] a[href*="user/"]']
-  },
-  date_published: {
-    selectors: ['div[data-test-id="post-content"] span[data-click-id="timestamp"]', 'div[data-test-id="post-content"] a[data-click-id="timestamp"]']
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  content: {
-    selectors: [['div[data-test-id="post-content"] p'],
-    // text post
-    ['div[data-test-id="post-content"] a[target="_blank"]:not([data-click-id="timestamp"])',
-    // external link
-    'div[data-test-id="post-content"] div[data-click-id="media"]' // embedded media
+    selectors: [
+      'div[data-test-id="post-content"] h1',
+      'div[data-test-id="post-content"] h2',
     ],
-    // external link with media preview (YouTube, imgur album, etc...)
-    ['div[data-test-id="post-content"] div[data-click-id="media"]'],
-    // Embedded media (Reddit video)
-    ['div[data-test-id="post-content"] a'],
-    // external link
-    'div[data-test-id="post-content"]'],
+  },
+
+  author: {
+    selectors: ['div[data-test-id="post-content"] a[href*="user/"]'],
+  },
+
+  date_published: {
+    selectors: [
+      'div[data-test-id="post-content"] span[data-click-id="timestamp"]',
+      'div[data-test-id="post-content"] a[data-click-id="timestamp"]',
+    ],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: [
+      ['div[data-test-id="post-content"] p'], // text post
+      [
+        'div[data-test-id="post-content"] a[target="_blank"]:not([data-click-id="timestamp"])', // external link
+        'div[data-test-id="post-content"] div[data-click-id="media"]', // embedded media
+      ], // external link with media preview (YouTube, imgur album, etc...)
+      ['div[data-test-id="post-content"] div[data-click-id="media"]'], // Embedded media (Reddit video)
+      ['div[data-test-id="post-content"] a'], // external link
+      'div[data-test-id="post-content"]',
+    ],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div[role="img"]': function divRoleImg($node) {
+      'div[role="img"]': $node => {
         // External link image preview
-        var $img = $node.find('img');
-        var bgImg = $node.css('background-image');
+        const $img = $node.find('img');
+        const bgImg = $node.css('background-image');
         if ($img.length === 1 && bgImg) {
           $img.attr('src', bgImg.match(/\((.*?)\)/)[1].replace(/('|")/g, ''));
           return $img;
         }
         return $node;
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.icon', 'span[id^="PostAwardBadges"]', 'div a[data-test-id="comments-page-link-num-comments"]']
-  }
+    clean: [
+      '.icon',
+      'span[id^="PostAwardBadges"]',
+      'div a[data-test-id="comments-page-link-num-comments"]',
+    ],
+  },
 };
 
-var OtrsComExtractor = {
+const OtrsComExtractor = {
   domain: 'otrs.com',
+
   title: {
-    selectors: ['#main article h1']
+    selectors: ['#main article h1'],
   },
+
   author: {
-    selectors: ['div.dateplusauthor a']
+    selectors: ['div.dateplusauthor a'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#main article'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['div.dateplusauthor', 'div.gr-12.push-6.footershare', '#atftbx', 'div.category-modul']
-  }
+
+    clean: [
+      'div.dateplusauthor',
+      'div.gr-12.push-6.footershare',
+      '#atftbx',
+      'div.category-modul',
+    ],
+  },
 };
 
-var WwwOssnewsJpExtractor = {
+const WwwOssnewsJpExtractor = {
   domain: 'www.ossnews.jp',
+
   title: {
-    selectors: ['#alpha-block h1.hxnewstitle']
+    selectors: ['#alpha-block h1.hxnewstitle'],
   },
+
   author: null,
+
   date_published: {
-    selectors: ['p.fs12']
+    selectors: ['p.fs12'],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#alpha-block .section:has(h1.hxnewstitle)'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var BuzzapJpExtractor = {
+const BuzzapJpExtractor = {
   domain: 'buzzap.jp',
+
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title'],
   },
+
   author: null,
+
   date_published: {
-    selectors: [['time.entry-date', 'datetime']]
+    selectors: [['time.entry-date', 'datetime']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.ctiframe'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwAsahiComExtractor = {
+const WwwAsahiComExtractor = {
   domain: 'www.asahi.com',
+
   title: {
-    selectors: ['main h1', '.ArticleTitle h1']
+    selectors: ['main h1', '.ArticleTitle h1'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value']]
+    selectors: [['meta[name="article:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="pubdate"]', 'value']]
+    selectors: [['meta[name="pubdate"]', 'value']],
   },
+
   dek: null,
+
   excerpt: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['div.AdMod', 'div.LoginSelectArea', 'time', 'div.notPrint']
-  }
+
+    clean: ['div.AdMod', 'div.LoginSelectArea', 'time', 'div.notPrint'],
+  },
 };
 
-var WwwSanwaCoJpExtractor = {
+const WwwSanwaCoJpExtractor = {
   domain: 'www.sanwa.co.jp',
+
   title: {
-    selectors: ['#newsContent h1']
+    selectors: ['#newsContent h1'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['dl.date'],
     format: 'YYYY.M.D',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#newsContent'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['#smartphone', 'div.sns_box', 'div.contentFoot']
-  }
+
+    clean: ['#smartphone', 'div.sns_box', 'div.contentFoot'],
+  },
 };
 
-var WwwElecomCoJpExtractor = {
+const WwwElecomCoJpExtractor = {
   domain: 'www.elecom.co.jp',
+
   title: {
-    selectors: ['title']
+    selectors: ['title'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['p.section-last'],
     format: 'YYYY.M.D',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: null,
+
   content: {
     selectors: ['td.TableMain2'],
+
     defaultCleaner: false,
+
     transforms: {
-      table: function table($node) {
+      table: $node => {
         $node.attr('width', 'auto');
-      }
+      },
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var ScanNetsecurityNeJpExtractor = {
+const ScanNetsecurityNeJpExtractor = {
   domain: 'scan.netsecurity.ne.jp',
+
   title: {
-    selectors: ['header.arti-header h1.head']
+    selectors: ['header.arti-header h1.head'],
   },
+
   author: null,
+
   date_published: {
-    selectors: [['meta[name="article:modified_time"]', 'value']]
+    selectors: [['meta[name="article:modified_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['header.arti-header p.arti-summary']
+    selectors: ['header.arti-header p.arti-summary'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.arti-content.arti-content--thumbnail'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['aside.arti-giga']
-  }
+
+    clean: ['aside.arti-giga'],
+  },
 };
 
-var JvndbJvnJpExtractor = {
+const JvndbJvnJpExtractor = {
   domain: 'jvndb.jvn.jp',
+
   title: {
-    selectors: ['title']
+    selectors: ['title'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['div.modifytxt:nth-child(2)'],
     format: 'YYYY/M/D',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: null,
+
   content: {
     selectors: ['#news-list'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var GeniusComExtractor = {
+const GeniusComExtractor = {
   domain: 'genius.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['h2 a']
+    selectors: ['h2 a'],
   },
+
   date_published: {
-    selectors: [['meta[itemprop=page_data]', 'value', function (res) {
-      var json = JSON.parse(res);
-      return json.song.release_date;
-    }]]
+    selectors: [
+      [
+        'meta[itemprop=page_data]',
+        'value',
+        res => {
+          const json = JSON.parse(res);
+          return json.song.release_date;
+        },
+      ],
+    ],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[itemprop=page_data]', 'value', function (res) {
-      var json = JSON.parse(res);
-      return json.song.album.cover_art_url;
-    }]]
+    selectors: [
+      [
+        'meta[itemprop=page_data]',
+        'value',
+        res => {
+          const json = JSON.parse(res);
+          return json.song.album.cover_art_url;
+        },
+      ],
+    ],
   },
+
   content: {
     selectors: ['.lyrics'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwJnsaOrgExtractor = {
+const WwwJnsaOrgExtractor = {
   domain: 'www.jnsa.org',
+
   title: {
-    selectors: ['#wgtitle h2']
+    selectors: ['#wgtitle h2'],
   },
+
   author: null,
+
   date_published: null,
+
   dek: null,
+
   excerpt: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#main_area'],
+
     transforms: {},
-    clean: ['#pankuzu', '#side']
-  }
+
+    clean: ['#pankuzu', '#side'],
+  },
 };
 
-var PhpspotOrgExtractor = {
+const PhpspotOrgExtractor = {
   domain: 'phpspot.org',
+
   title: {
-    selectors: ['h3.hl']
+    selectors: ['h3.hl'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['h4.hl'],
     format: 'YYYY年M月D日',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: null,
+
   content: {
     selectors: ['div.entrybody'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwInfoqComExtractor = {
+const WwwInfoqComExtractor = {
   domain: 'www.infoq.com',
+
   title: {
-    selectors: ['h1.heading']
+    selectors: ['h1.heading'],
   },
+
   author: {
-    selectors: ['div.widget.article__authors']
+    selectors: ['div.widget.article__authors'],
   },
+
   date_published: {
     selectors: ['.article__readTime.date'],
     format: 'YYYY年M月D日',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article__data'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwMoongiftJpExtractor = {
+const WwwMoongiftJpExtractor = {
   domain: 'www.moongift.jp',
+
   title: {
-    selectors: ['h1.title a']
+    selectors: ['h1.title a'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['ul.meta li:not(.social):first-of-type'],
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#main'],
+
     transforms: {},
-    clean: ['ul.mg_service.cf']
-  }
+
+    clean: ['ul.mg_service.cf'],
+  },
 };
 
-var WwwItmediaCoJpExtractor = {
+const WwwItmediaCoJpExtractor = {
   domain: 'www.itmedia.co.jp',
-  supportedDomains: ['www.atmarkit.co.jp', 'techtarget.itmedia.co.jp', 'nlab.itmedia.co.jp'],
+
+  supportedDomains: [
+    'www.atmarkit.co.jp',
+    'techtarget.itmedia.co.jp',
+    'nlab.itmedia.co.jp',
+  ],
+
   title: {
-    selectors: ['#cmsTitle h1']
+    selectors: ['#cmsTitle h1'],
   },
+
   author: {
-    selectors: ['#byline']
+    selectors: ['#byline'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:modified_time"]', 'value']]
+    selectors: [['meta[name="article:modified_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['#cmsAbstract h2']
+    selectors: ['#cmsAbstract h2'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#cmsBody'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['#snsSharebox']
-  }
+
+    clean: ['#snsSharebox'],
+  },
 };
 
-var WwwPublickey1JpExtractor = {
+const WwwPublickey1JpExtractor = {
   domain: 'www.publickey1.jp',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.bloggerinchief p:first-of-type', '#subcol p:has(img)']
+    selectors: ['.bloggerinchief p:first-of-type', '#subcol p:has(img)'],
   },
+
   date_published: {
     selectors: ['div.pubdate'],
     format: 'YYYY年MM月DD日',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#maincol'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['#breadcrumbs', 'div.sbm', 'div.ad_footer']
-  }
+
+    clean: ['#breadcrumbs', 'div.sbm', 'div.ad_footer'],
+  },
 };
 
-var TakagihiromitsuJpExtractor = {
+const TakagihiromitsuJpExtractor = {
   domain: 'takagi-hiromitsu.jp',
+
   title: {
-    selectors: ['h3']
+    selectors: ['h3'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[http-equiv="Last-Modified"]', 'value']]
+    selectors: [['meta[http-equiv="Last-Modified"]', 'value']],
   },
+
   dek: null,
+
   lead_image_url: null,
+
   content: {
     selectors: ['div.body'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var BookwalkerJpExtractor = {
+const BookwalkerJpExtractor = {
   domain: 'bookwalker.jp',
+
   title: {
-    selectors: ['h1.p-main__title', 'h1.main-heading']
+    selectors: ['h1.p-main__title', 'h1.main-heading'],
   },
+
   author: {
-    selectors: ['div.p-author__list', 'div.authors']
+    selectors: ['div.p-author__list', 'div.authors'],
   },
+
   date_published: {
-    selectors: ['dl.p-information__data dd:nth-of-type(7)', '.work-info .work-detail:first-of-type .work-detail-contents:last-of-type'],
-    timezone: 'Asia/Tokyo'
+    selectors: [
+      'dl.p-information__data dd:nth-of-type(7)',
+      '.work-info .work-detail:first-of-type .work-detail-contents:last-of-type',
+    ],
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['div.p-main__information', ['div.main-info', 'div.main-cover-inner']],
+    selectors: [
+      'div.p-main__information',
+      ['div.main-info', 'div.main-cover-inner'],
+    ],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['span.label.label--trial', 'dt.info-head.info-head--coin', 'dd.info-contents.info-contents--coin', 'div.info-notice.fn-toggleClass']
-  }
+
+    clean: [
+      'span.label.label--trial',
+      'dt.info-head.info-head--coin',
+      'dd.info-contents.info-contents--coin',
+      'div.info-notice.fn-toggleClass',
+    ],
+  },
 };
 
-var WwwYomiuriCoJpExtractor = {
+const WwwYomiuriCoJpExtractor = {
   domain: 'www.yomiuri.co.jp',
+
   title: {
-    selectors: ['h1.title-article.c-article-title']
+    selectors: ['h1.title-article.c-article-title'],
   },
+
   author: null,
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.p-main-contents'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var JapanCnetComExtractor = {
+const JapanCnetComExtractor = {
   domain: 'japan.cnet.com',
+
   title: {
-    selectors: ['.leaf-headline-ttl']
+    selectors: ['.leaf-headline-ttl'],
   },
+
   author: {
-    selectors: ['.writer']
+    selectors: ['.writer'],
   },
+
   date_published: {
     selectors: ['.date'],
     format: 'YYYY年M月D日 HH時mm分',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article_body'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var DeadlineComExtractor = {
+const DeadlineComExtractor = {
   domain: 'deadline.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['section.author h2']
+    selectors: ['section.author h2'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.a-article-grid__main.pmc-a-grid article.pmc-a-grid-item'],
+
     transforms: {
-      '.embed-twitter': function embedTwitter($node) {
-        var innerHtml = $node.html();
+      '.embed-twitter': $node => {
+        const innerHtml = $node.html();
         $node.replaceWith(innerHtml);
-      }
+      },
     },
-    clean: ['figcaption']
-  }
+
+    clean: ['figcaption'],
+  },
 };
 
-var WwwGizmodoJpExtractor = {
+const WwwGizmodoJpExtractor = {
   domain: 'www.gizmodo.jp',
+
   title: {
-    selectors: ['h1.p-post-title']
+    selectors: ['h1.p-post-title'],
   },
+
   author: {
-    selectors: ['li.p-post-AssistAuthor']
+    selectors: ['li.p-post-AssistAuthor'],
   },
+
   date_published: {
-    selectors: [['li.p-post-AssistTime time', 'datetime']]
+    selectors: [['li.p-post-AssistTime time', 'datetime']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article.p-post'],
+
     transforms: {
-      'img.p-post-thumbnailImage': function imgPPostThumbnailImage($node) {
-        var src = $node.attr('src');
+      'img.p-post-thumbnailImage': $node => {
+        const src = $node.attr('src');
         $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
-      }
+      },
     },
-    clean: ['h1.p-post-title', 'ul.p-post-Assist']
-  }
+
+    clean: ['h1.p-post-title', 'ul.p-post-Assist'],
+  },
 };
 
-var GetnewsJpExtractor = {
+const GetnewsJpExtractor = {
   domain: 'getnews.jp',
+
   title: {
-    selectors: ['article h1']
+    selectors: ['article h1'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], 'span.prof']
+    selectors: [['meta[name="article:author"]', 'value'], 'span.prof'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['ul.cattag-top time', 'datetime']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['ul.cattag-top time', 'datetime'],
+    ],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.post-bodycopy'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwLifehackerJpExtractor = {
+const WwwLifehackerJpExtractor = {
   domain: 'www.lifehacker.jp',
+
   title: {
-    selectors: ['h1[class^="article_pArticle_Title"]', 'h1.lh-summary-title']
+    selectors: ['h1[class^="article_pArticle_Title"]', 'h1.lh-summary-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value'], 'p.lh-entryDetailInner--credit']
+    selectors: [
+      ['meta[name="author"]', 'value'],
+      'p.lh-entryDetailInner--credit',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['div.lh-entryDetail-header time', 'datetime']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['div.lh-entryDetail-header time', 'datetime'],
+    ],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['div[class^="article_pArticle_Body__"]', 'div.lh-entryDetail-body'],
+    selectors: [
+      'div[class^="article_pArticle_Body__"]',
+      'div.lh-entryDetail-body',
+    ],
+
     transforms: {
-      'img.lazyload': function imgLazyload($node) {
-        var src = $node.attr('src');
+      'img.lazyload': $node => {
+        const src = $node.attr('src');
         $node.attr('src', src.replace(/^.*=%27/, '').replace(/%27;$/, ''));
-      }
+      },
     },
-    clean: ['p.lh-entryDetailInner--credit']
-  }
+
+    clean: ['p.lh-entryDetailInner--credit'],
+  },
 };
 
-var SectIijAdJpExtractor = {
+const SectIijAdJpExtractor = {
   domain: 'sect.iij.ad.jp',
+
   title: {
-    selectors: ['div.title-box-inner h1', 'h3']
+    selectors: ['div.title-box-inner h1', 'h3'],
   },
+
   author: {
-    selectors: ['p.post-author a', 'dl.entrydate dd']
+    selectors: ['p.post-author a', 'dl.entrydate dd'],
   },
+
   date_published: {
     selectors: ['time'],
     format: 'YYYY年M月D日',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry-inner', '#article'],
+
     transforms: {},
-    clean: ['dl.entrydate']
-  }
+
+    clean: ['dl.entrydate'],
+  },
 };
 
-var WwwOreillyCoJpExtractor = {
+const WwwOreillyCoJpExtractor = {
   domain: 'www.oreilly.co.jp',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h3']
+    selectors: [['meta[name="og:title"]', 'value'], 'h3'],
   },
+
   author: {
-    selectors: ['span[itemprop="author"]', 'li[itemprop="author"]']
+    selectors: ['span[itemprop="author"]', 'li[itemprop="author"]'],
   },
+
   date_published: {
-    selectors: [['dd[itemprop="datePublished"]', 'content'], ['meta[itemprop="datePublished"]', 'value']]
+    selectors: [
+      ['dd[itemprop="datePublished"]', 'content'],
+      ['meta[itemprop="datePublished"]', 'value'],
+    ],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image:secure_url"]', 'value'], ['meta[name="og:image"]', 'value']]
+    selectors: [
+      ['meta[name="og:image:secure_url"]', 'value'],
+      ['meta[name="og:image"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['section.detail', '#content'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['.social-tools']
-  }
+
+    clean: ['.social-tools'],
+  },
 };
 
-var WwwIpaGoJpExtractor = {
+const WwwIpaGoJpExtractor = {
   domain: 'www.ipa.go.jp',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: null,
+
   date_published: {
     selectors: ['p.ipar_text_right'],
     format: 'YYYY年M月D日',
-    timezone: 'Asia/Tokyo'
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: null,
+
   content: {
     selectors: ['#ipar_main'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['p.ipar_text_right']
-  }
+
+    clean: ['p.ipar_text_right'],
+  },
 };
 
-var WeeklyAsciiJpExtractor = {
+const WeeklyAsciiJpExtractor = {
   domain: 'weekly.ascii.jp',
+
   title: {
-    selectors: ['article h1', 'h1[itemprop="headline"]']
+    selectors: ['article h1', 'h1[itemprop="headline"]'],
   },
+
   author: {
-    selectors: ['p.author']
+    selectors: ['p.author'],
   },
+
   date_published: {
     selectors: ['p.date', ['meta[name="odate"]', 'value']],
+
     format: 'YYYY年M月D日 HH:mm',
-    timezone: 'Asia/Tokyo'
+
+    timezone: 'Asia/Tokyo',
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div#contents_detail', 'div.article'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var TechlogIijAdJpExtractor = {
+const TechlogIijAdJpExtractor = {
   domain: 'techlog.iij.ad.jp',
+
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title'],
   },
+
   author: {
-    selectors: ['a[rel="author"]']
+    selectors: ['a[rel="author"]'],
   },
+
   date_published: {
-    selectors: [['time.entry-date', 'datetime']]
+    selectors: [['time.entry-date', 'datetime']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.entry-content'],
+
     defaultCleaner: false,
+
     transforms: {},
-    clean: ['.wp_social_bookmarking_light']
-  }
+
+    clean: ['.wp_social_bookmarking_light'],
+  },
 };
 
-var WiredJpExtractor = {
+const WiredJpExtractor = {
   domain: 'wired.jp',
+
   title: {
-    selectors: ['h1[data-testid="ContentHeaderHed"]', 'h1.post-title']
+    selectors: ['h1[data-testid="ContentHeaderHed"]', 'h1.post-title'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], 'p[itemprop="author"]']
+    selectors: [
+      ['meta[name="article:author"]', 'value'],
+      'p[itemprop="author"]',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['time', 'datetime']]
+    selectors: [
+      ['meta[name="article:published_time"]', 'value'],
+      ['time', 'datetime'],
+    ],
   },
+
   dek: {
-    selectors: ['div[class^="ContentHeaderDek"]', '.post-intro']
+    selectors: ['div[class^="ContentHeaderDek"]', '.post-intro'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
-    selectors: ['div[data-attribute-verso-pattern="article-body"]', 'article.article-detail'],
+    selectors: [
+      'div[data-attribute-verso-pattern="article-body"]',
+      'article.article-detail',
+    ],
+
     transforms: {
-      'img[data-original]': function imgDataOriginal($node) {
-        var dataOriginal = $node.attr('data-original');
-        var src = $node.attr('src');
-        var url = URL$1.resolve(src, dataOriginal);
+      'img[data-original]': $node => {
+        const dataOriginal = $node.attr('data-original');
+        const src = $node.attr('src');
+        const url = resolveUrl(dataOriginal, src);
         $node.attr('src', url);
-      }
+      },
     },
-    clean: ['.post-category', 'time', 'h1.post-title', '.social-area-syncer']
-  }
+
+    clean: ['.post-category', 'time', 'h1.post-title', '.social-area-syncer'],
+  },
 };
 
-var JapanZdnetComExtractor = {
+const JapanZdnetComExtractor = {
   domain: 'japan.zdnet.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: [['meta[name="cXenseParse:author"]', 'value']]
+    selectors: [['meta[name="cXenseParse:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article_body'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwRbbtodayComExtractor = {
+const WwwRbbtodayComExtractor = {
   domain: 'www.rbbtoday.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.writer.writer-name']
+    selectors: ['.writer.writer-name'],
   },
+
   date_published: {
-    selectors: [['header time', 'datetime']]
+    selectors: [['header time', 'datetime']],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value'], '.arti-summary']
+    selectors: [['meta[name="description"]', 'value'], '.arti-summary'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.arti-content'],
+
     transforms: {},
-    clean: ['.arti-giga']
-  }
+
+    clean: ['.arti-giga'],
+  },
 };
 
-var WwwLemondeFrExtractor = {
+const WwwLemondeFrExtractor = {
   domain: 'www.lemonde.fr',
+
   title: {
-    selectors: ['h1.article__title']
+    selectors: ['h1.article__title'],
   },
+
   author: {
-    selectors: ['.author__name']
+    selectors: ['.author__name'],
   },
+
   date_published: {
-    selectors: [['meta[name="og:article:published_time"]', 'value']]
+    selectors: [['meta[name="og:article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.article__desc']
+    selectors: ['.article__desc'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article__content'],
+
     transforms: {},
-    clean: ['figcaption']
-  }
+
+    clean: ['figcaption'],
+  },
 };
 
-var WwwPhoronixComExtractor = {
+const WwwPhoronixComExtractor = {
   domain: 'www.phoronix.com',
+
   title: {
-    selectors: ['article h1', 'article header']
+    selectors: ['article h1', 'article header'],
   },
+
   author: {
-    selectors: ['.author a:first-child']
+    selectors: ['.author a:first-child'],
   },
+
   date_published: {
     selectors: ['.author'],
     // 1 June 2019 at 08:34 PM EDT
     format: 'D MMMM YYYY at hh:mm',
-    timezone: 'America/New_York'
+    timezone: 'America/New_York',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content', 'article'],
     defaultCleaner: false,
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var PitchforkComExtractor = {
+const PitchforkComExtractor = {
   domain: 'pitchfork.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'title']
+    selectors: [['meta[name="og:title"]', 'value'], 'title'],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], '.authors-detail__display-name']
+    selectors: [
+      ['meta[name="article:author"]', 'value'],
+      '.authors-detail__display-name',
+    ],
   },
+
   date_published: {
-    selectors: ['div[class^="InfoSliceWrapper-"]', ['.pub-date', 'datetime']]
+    selectors: ['div[class^="InfoSliceWrapper-"]', ['.pub-date', 'datetime']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value'], '.review-detail__abstract']
+    selectors: [
+      ['meta[name="og:description"]', 'value'],
+      '.review-detail__abstract',
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value'], ['.single-album-tombstone__art img', 'src']]
+    selectors: [
+      ['meta[name="og:image"]', 'value'],
+      ['.single-album-tombstone__art img', 'src'],
+    ],
   },
+
   content: {
-    selectors: ['div.body__inner-container', '.review-detail__text']
+    selectors: ['div.body__inner-container', '.review-detail__text'],
   },
+
   extend: {
     score: {
-      selectors: ['p[class*="Rating"]', '.score']
-    }
-  }
+      selectors: ['p[class*="Rating"]', '.score'],
+    },
+  },
 };
 
-var BiorxivOrgExtractor = {
+const BiorxivOrgExtractor = {
   domain: 'biorxiv.org',
+
   title: {
-    selectors: ['h1#page-title']
+    selectors: ['h1#page-title'],
   },
+
   author: {
-    selectors: ['div.highwire-citation-biorxiv-article-top > div.highwire-cite-authors']
+    selectors: [
+      'div.highwire-citation-biorxiv-article-top > div.highwire-cite-authors',
+    ],
   },
+
   content: {
     selectors: ['div#abstract-1'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var EpaperZeitDeExtractor = {
+const EpaperZeitDeExtractor = {
   domain: 'epaper.zeit.de',
+
   title: {
-    selectors: ['p.title']
+    selectors: ['p.title'],
   },
+
   author: {
-    selectors: ['.article__author']
+    selectors: ['.article__author'],
   },
+
   date_published: null,
+
   excerpt: {
-    selectors: ['subtitle']
+    selectors: ['subtitle'],
   },
+
   lead_image_url: null,
+
   content: {
     selectors: ['.article'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       'p.title': 'h1',
       '.article__author': 'p',
       byline: 'p',
-      linkbox: 'p'
+      linkbox: 'p',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['image-credits', 'box[type=citation]']
-  }
+    clean: ['image-credits', 'box[type=citation]'],
+  },
 };
 
-var WwwLadbibleComExtractor = {
+const WwwLadbibleComExtractor = {
   domain: 'www.ladbible.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['[class*=Byline]']
+    selectors: ['[class*=Byline]'],
   },
+
   date_published: {
     selectors: ['time'],
-    timezone: 'Europe/London'
+    timezone: 'Europe/London',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['[class*=ArticleContainer]'],
-    clean: ['time', 'source', 'a[href^="https://www.ladbible.com/"]', 'picture', '[class*=StyledCardBlock]']
-  }
+    clean: [
+      'time',
+      'source',
+      'a[href^="https://www.ladbible.com/"]',
+      'picture',
+      '[class*=StyledCardBlock]',
+    ],
+  },
 };
 
-var TimesofindiaIndiatimesComExtractor = {
+const TimesofindiaIndiatimesComExtractor = {
   domain: 'timesofindia.indiatimes.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   extend: {
     reporter: {
       selectors: ['div.byline'],
-      transforms: {}
-    }
+      transforms: {},
+    },
   },
+
   date_published: {
     selectors: ['.byline'],
     format: 'MMM D, YYYY, HH:mm z',
-    timezone: 'Asia/Kolkata'
+    timezone: 'Asia/Kolkata',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.contentwrapper:has(section)'],
     defaultCleaner: false,
-    clean: ['section', 'h1', '.byline', '.img_cptn', '.icon_share_wrap', 'ul[itemtype="https://schema.org/BreadcrumbList"]']
-  }
+
+    clean: [
+      'section',
+      'h1',
+      '.byline',
+      '.img_cptn',
+      '.icon_share_wrap',
+      'ul[itemtype="https://schema.org/BreadcrumbList"]',
+    ],
+  },
 };
 
-var MaTtiasBeExtractor = {
+const MaTtiasBeExtractor = {
   domain: 'ma.ttias.be',
+
   title: {
-    selectors: [['meta[name="twitter:title"]', 'value']]
+    selectors: [['meta[name="twitter:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   content: {
     selectors: [['.content']],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      h2: function h2($node) {
+      h2: $node => {
         // The "id" attribute values would result in low scores and the element being
         // removed.
         $node.attr('id', null);
@@ -5713,7 +7639,7 @@ var MaTtiasBeExtractor = {
         // h1 elements will be demoted to h2, so demote h2 elements to h3.
         return 'h3';
       },
-      h1: function h1($node) {
+      h1: $node => {
         // The "id" attribute values would result in low scores and the element being
         // removed.
         $node.attr('id', null);
@@ -5722,1830 +7648,2412 @@ var MaTtiasBeExtractor = {
         // add a paragraph here. It will be removed anyway because it is empty.
         $node.after('<p></p>');
       },
-      ul: function ul($node) {
+      ul: $node => {
         // Articles contain lists of links which look like, but are not, navigation
         // elements. Adding this class attribute avoids them being incorrectly removed.
         $node.attr('class', 'entry-content-asset');
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
-var PastebinComExtractor = {
+const PastebinComExtractor = {
   domain: 'pastebin.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.username', '.paste_box_line2 .t_us + a']
+    selectors: ['.username', '.paste_box_line2 .t_us + a'],
   },
+
   date_published: {
     selectors: ['.date', '.paste_box_line2 .t_da + span'],
     timezone: 'America/New_York',
-    format: 'MMMM D, YYYY'
+    format: 'MMMM D, YYYY',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.source', '#selectable .text'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       ol: 'div',
-      li: 'p'
+      li: 'p',
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwAbendblattDeExtractor = {
+const WwwAbendblattDeExtractor = {
   domain: 'www.abendblatt.de',
+
   title: {
-    selectors: ['h2.article__header__headline']
+    selectors: ['h2.article__header__headline'],
   },
+
   author: {
-    selectors: ['span.author-info__name-text']
+    selectors: ['span.author-info__name-text'],
   },
+
   date_published: {
-    selectors: [['time.teaser-stream-time', 'datetime'], ['time.article__header__date', 'datetime']]
+    selectors: [
+      ['time.teaser-stream-time', 'datetime'],
+      ['time.article__header__date', 'datetime'],
+    ],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div.article__body'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      p: function p($node) {
+      p: $node => {
         if (!$node.hasClass('obfuscated')) return null;
-        var o = '';
-        var n = 0;
-        for (var i = $node.text(); n < i.length; n += 1) {
-          var r = i.charCodeAt(n);
-          r === 177 ? o += '%' : r === 178 ? o += '!' : r === 180 ? o += ';' : r === 181 ? o += '=' : r === 32 ? o += ' ' : r === 10 ? o += '\n' : r > 33 && (o += String.fromCharCode(r - 1));
+        let o = '';
+        let n = 0;
+        for (let i = $node.text(); n < i.length; n += 1) {
+          const r = i.charCodeAt(n);
+          r === 177
+            ? (o += '%')
+            : r === 178
+              ? (o += '!')
+              : r === 180
+                ? (o += ';')
+                : r === 181
+                  ? (o += '=')
+                  : r === 32
+                    ? (o += ' ')
+                    : r === 10
+                      ? (o += '\n')
+                      : r > 33 && (o += String.fromCharCode(r - 1));
         }
+
         $node.html(o);
         $node.removeClass('obfuscated');
         $node.addClass('deobfuscated');
         return null;
       },
-      div: function div($node) {
+      div: $node => {
         if (!$node.hasClass('obfuscated')) return null;
-        var o = '';
-        var n = 0;
-        for (var i = $node.text(); n < i.length; n += 1) {
-          var r = i.charCodeAt(n);
-          r === 177 ? o += '%' : r === 178 ? o += '!' : r === 180 ? o += ';' : r === 181 ? o += '=' : r === 32 ? o += ' ' : r === 10 ? o += '\n' : r > 33 && (o += String.fromCharCode(r - 1));
+        let o = '';
+        let n = 0;
+        for (let i = $node.text(); n < i.length; n += 1) {
+          const r = i.charCodeAt(n);
+          r === 177
+            ? (o += '%')
+            : r === 178
+              ? (o += '!')
+              : r === 180
+                ? (o += ';')
+                : r === 181
+                  ? (o += '=')
+                  : r === 32
+                    ? (o += ' ')
+                    : r === 10
+                      ? (o += '\n')
+                      : r > 33 && (o += String.fromCharCode(r - 1));
         }
+
         $node.html(o);
         $node.removeClass('obfuscated');
         $node.addClass('deobfuscated');
         return null;
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwGrueneDeExtractor = {
+const WwwGrueneDeExtractor = {
   domain: 'www.gruene.de',
+
   title: {
-    selectors: ['header h1']
+    selectors: ['header h1'],
   },
+
   author: null,
+
   date_published: null,
+
   dek: null,
+
   lead_image_url: {
-    selectors: [['meta[property="og:image"]', 'content']]
+    selectors: [['meta[property="og:image"]', 'content']],
   },
+
   content: {
     // selectors: ['section'],
     selectors: [['section header', 'section h2', 'section p', 'section ol']],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['figcaption', 'p[class]']
-  }
+    clean: ['figcaption', 'p[class]'],
+  },
 };
 
-var ArstechnicaComExtractor = {
+const ArstechnicaComExtractor = {
   domain: 'arstechnica.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.post-content', 'main'],
+
     transforms: {
-      img: function img($node) {
+      img: $node => {
         $node.removeAttr('width');
         $node.removeAttr('sizes');
-      }
+      },
     },
-    clean: ['header', '.upper-deck__text', '.text-settings-dropdown-story']
-  }
+
+    clean: ['header', '.upper-deck__text', '.text-settings-dropdown-story'],
+  },
 };
 
-var WwwNdtvComExtractor = {
+const WwwNdtvComExtractor = {
   domain: 'www.ndtv.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h1.entry-title']
+    selectors: [['meta[name="og:title"]', 'value'], 'h1.entry-title'],
   },
+
   author: {
-    selectors: ['span[itemprop="author"] span[itemprop="name"]']
+    selectors: ['span[itemprop="author"] span[itemprop="name"]'],
   },
+
   date_published: {
-    selectors: [['span[itemprop="dateModified"]', 'content']]
+    selectors: [['span[itemprop="dateModified"]', 'content']],
   },
+
   dek: {
-    selectors: ['h2']
+    selectors: ['h2'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div[itemprop="articleBody"]'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       // This site puts a dateline in a 'b' above the first paragraph, and then somehow
       // blends it into the first paragraph with CSS. This transform moves the dateline
       // to the first paragraph.
-      '.place_cont': function place_cont($node) {
+      '.place_cont': $node => {
         if (!$node.parents('p').length) {
-          var nextSibling = $node.next('p');
+          const nextSibling = $node.next('p');
           if (nextSibling) {
             $node.remove();
             nextSibling.prepend($node);
           }
         }
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.highlghts_Wdgt', '.ins_instory_dv_caption', 'input', '._world-wrapper .mt20']
-  }
+    clean: [
+      '.highlghts_Wdgt',
+      '.ins_instory_dv_caption',
+      'input',
+      '._world-wrapper .mt20',
+    ],
+  },
 };
 
-var SpektrumExtractor = {
+const SpektrumExtractor = {
   domain: 'www.spektrum.de',
+
   title: {
-    selectors: ['.content__title']
+    selectors: ['.content__title'],
   },
+
   author: {
-    selectors: ['.content__author__info__name']
+    selectors: ['.content__author__info__name'],
   },
+
   date_published: {
     selectors: ['.content__meta__date'],
     format: 'D.M.YYYY',
-    timezone: 'Europe/Berlin'
+    timezone: 'Europe/Berlin',
   },
+
   dek: {
-    selectors: ['.content__intro']
+    selectors: ['.content__intro'],
   },
+
   lead_image_url: {
     selectors: [
-    // This is how the meta tag appears in the original source code.
-    ['meta[name="og:image"]', 'value'],
-    // This is how the meta tag appears in the DOM in Chrome.
-    // The selector is included here to make the code work within the browser as well.
-    ['meta[property="og:image"]', 'content'],
-    // This is the image that is shown on the page.
-    // It can be slightly cropped compared to the original in the meta tag.
-    '.image__article__top img']
+      // This is how the meta tag appears in the original source code.
+      ['meta[name="og:image"]', 'value'],
+      // This is how the meta tag appears in the DOM in Chrome.
+      // The selector is included here to make the code work within the browser as well.
+      ['meta[property="og:image"]', 'content'],
+      // This is the image that is shown on the page.
+      // It can be slightly cropped compared to the original in the meta tag.
+      '.image__article__top img',
+    ],
   },
+
   content: {
     selectors: ['article.content'],
-    clean: ['.breadcrumbs', '.hide-for-print', 'aside', 'header h2', '.image__article__top', '.content__author', '.copyright', '.callout-box']
-  }
+    clean: [
+      '.breadcrumbs',
+      '.hide-for-print',
+      'aside',
+      'header h2',
+      '.image__article__top',
+      '.content__author',
+      '.copyright',
+      '.callout-box',
+    ],
+  },
 };
 
-var WwwInvestmentexecutiveComExtractor = {
+const WwwInvestmentexecutiveComExtractor = {
   domain: 'www.investmentexecutive.com',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['div[itemprop="author"]']
+    selectors: ['div[itemprop="author"]'],
   },
+
   date_published: {
-    selectors: [['meta[itemprop="datePublished"]', 'value']]
+    selectors: [['meta[itemprop="datePublished"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['section.article-body'],
-    clean: ['.hidden']
-  }
+
+    clean: ['.hidden'],
+  },
 };
 
-var WwwCbcCaExtractor = {
+const WwwCbcCaExtractor = {
   domain: 'www.cbc.ca',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.authorText', '.bylineDetails']
+    selectors: ['.authorText', '.bylineDetails'],
   },
+
   date_published: {
-    selectors: [['.timeStamp[datetime]', 'datetime']]
+    selectors: [['.timeStamp[datetime]', 'datetime']],
   },
+
   dek: {
-    selectors: ['.deck']
+    selectors: ['.deck'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.story'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwVersantsComExtractor = {
+const WwwVersantsComExtractor = {
   domain: 'www.versants.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     transforms: {
-      '.featured-image': function featuredImage($node) {
+      '.featured-image': $node => {
         $node.addClass('mercury-parser-keep');
-        var figcaption = $node.find('span');
+        const figcaption = $node.find('span');
         $node.find('figure').append(figcaption);
-      }
+      },
     },
     selectors: ['.article-content'],
-    clean: ['.adv-link', '.versa-target', 'header',
-    // Clean title
-    '.author',
-    // Clean author
-    '.thumbnail-slider' // Remove, the main images will be within the .main-slider div.
-    ]
-  }
+    clean: [
+      '.adv-link',
+      '.versa-target',
+      'header', // Clean title
+      '.author', // Clean author
+      '.thumbnail-slider', // Remove, the main images will be within the .main-slider div.
+    ],
+  },
 };
 
-var Www1pezeshkComExtractor = {
+const Www1pezeshkComExtractor = {
   domain: 'www.1pezeshk.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h1.post-title']
+    selectors: [['meta[name="og:title"]', 'value'], 'h1.post-title'],
   },
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
   lead_image_url: {
-    selectors: [['.featured-area img', 'src']]
+    selectors: [['.featured-area img', 'src']],
   },
   content: {
     selectors: ['article > .entry-content'],
+
     transforms: {
-      img: function img($node) {
+      img: $node => {
         $node.src = decodeURIComponent($node.src);
-      }
+      },
     },
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
-  }
+    clean: [],
+  },
 };
 
 function removeAffiliateLink(node) {
-  if (node.text().startsWith('Affiliate links on Android Authority may earn us a commission.')) {
+  if (
+    node
+      .text()
+      .startsWith(
+        'Affiliate links on Android Authority may earn us a commission.'
+      )
+  ) {
     node.remove();
   }
 }
+
 function removePolls(node) {
-  var siblings = node.parent().children();
+  const siblings = node.parent().children();
+
   if (siblings.find('button:not(:has(picture))').length > 0) {
     node.parent().remove();
+
     return true;
   }
+
   return false;
 }
-var WwwAndroidauthorityComExtractor = {
+
+const WwwAndroidauthorityComExtractor = {
   domain: 'www.androidauthority.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'h1']
+    selectors: [['meta[name="og:title"]', 'value'], 'h1'],
   },
+
   author: {
-    selectors: ['button.d_ic']
+    selectors: ['button.d_ic'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   // Some pages have a nested header elements that are significant, and that the parser will
   // remove if not following a paragraph. Adding this empty paragraph fixes it, and
   // the empty paragraph will be removed anyway.
   content: {
     selectors: ['main'],
     transforms: {
-      div: function div(node) {
+      div: node => {
         removeAffiliateLink(node);
       },
-      p: function p(node) {
+      p: node => {
         if (node.text().startsWith('Published on')) {
           node.remove();
         }
+
         removeAffiliateLink(node);
       },
-      ol: function ol(node) {
+      ol: node => {
         node.attr('class', 'mercury-parser-keep');
       },
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3(node) {
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: node => {
         if (!removePolls(node)) {
           node.attr('class', 'mercury-parser-keep');
         }
-      }
+      },
     },
-    clean: ['h1 + div',
-    // Dek
-    'picture + div' // Lead image text
-    ]
-  }
+    clean: [
+      'h1 + div', // Dek
+      'picture + div', // Lead image text
+    ],
+  },
 };
 
-var TechcrunchComExtractor = {
+const TechcrunchComExtractor = {
   domain: 'techcrunch.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
     transforms: {},
-    clean: ['img.post-authors-list__author-thumb']
-  }
+    clean: ['img.post-authors-list__author-thumb'],
+  },
 };
 
-var WwwHardwarezoneComSgExtractor = {
+const WwwHardwarezoneComSgExtractor = {
   domain: 'www.hardwarezone.com.sg',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.article-view-author-name a']
+    selectors: ['.article-view-author-name a'],
   },
+
   date_published: {
     selectors: ['.article-view-timestamp'],
-    timezone: 'UTC'
+    timezone: 'UTC',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content', 'article'],
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
       },
-      p: function p(node) {
+      p: node => {
         node.attr('class', 'mercury-parser-keep');
-      }
+      },
     },
-    clean: []
-  }
+    clean: [],
+  },
 };
 
-var WwwSpiegelDeExtractor = {
+const WwwSpiegelDeExtractor = {
   domain: 'www.spiegel.de',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="date"]', 'value']]
+    selectors: [['meta[name="date"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['div[data-area="body"]', 'article'],
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var MobilesyrupComExtractor = {
+const MobilesyrupComExtractor = {
   domain: 'mobilesyrup.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
     selectors: [
       // enter selectors
-    ]
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-content'],
+
     transforms: {
-      '.article-content > ul': function articleContent__ul(node) {
+      '.article-content > ul': node => {
         node.attr('class', 'mercury-parser-keep');
-      }
+      },
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwChannelnewsasiaComExtractor = {
+const WwwChannelnewsasiaComExtractor = {
   domain: 'www.channelnewsasia.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.link--author-profile', ['meta[name="cXenseParse:author"]', 'value']]
+    selectors: [
+      '.link--author-profile',
+      ['meta[name="cXenseParse:author"]', 'value'],
+    ],
   },
+
   date_published: {
     selectors: ['.article-publish:not(span)'],
     format: 'D MMM YYYY hh:mmA',
-    timezone: 'Asia/Singapore'
+    timezone: 'Asia/Singapore',
   },
+
   dek: {
-    selectors: ['.content-detail__description']
+    selectors: ['.content-detail__description'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['section[data-title="Content"]'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WccftechComExtractor = {
+const WccftechComExtractor = {
   domain: 'wccftech.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['div.meta a:first-of-type']
+    selectors: ['div.meta a:first-of-type'],
   },
+
   date_published: {
-    selectors: [['meta[name="pub_date"]', 'value'], ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      ['meta[name="pub_date"]', 'value'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content'],
     transforms: {},
-    clean: ['.democracy' // JavaScript polls
-    ]
-  }
+    clean: [
+      '.democracy', // JavaScript polls
+    ],
+  },
 };
 
-var WwwHeiseDeExtractor = {
+const WwwHeiseDeExtractor = {
   domain: 'www.heise.de',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="date"]', 'value']]
+    selectors: [['meta[name="date"]', 'value']],
   },
+
   dek: {
-    selectors: ['.a-article-header__lead']
+    selectors: ['.a-article-header__lead'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-layout__content'],
+
     transforms: {
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      }
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.ad-mobile-group-1', '.branding', '[data-component="RecommendationBox"]']
-  }
+
+    clean: [
+      '.ad-mobile-group-1',
+      '.branding',
+      '[data-component="RecommendationBox"]',
+    ],
+  },
 };
 
-var TldrTechExtractor = {
+const TldrTechExtractor = {
   domain: 'tldr.tech',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="twitter:image"]', 'value']]
+    selectors: [['meta[name="twitter:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content-center', 'body'],
+
     transforms: {
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      }
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var BskyAppExtractor = {
+const BskyAppExtractor = {
   domain: 'bsky.app',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: null,
+
   date_published: null,
+
   lead_image_url: {
-    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+    selectors: [
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="og:image"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['noscript'],
+
     transforms: {
-      noscript: function noscript($node, $) {
-        var innerHtml = $.browser ? $node.text() : $node.html();
-        var summary = $(innerHtml).find('#bsky_post_text');
+      noscript: ($node, $) => {
+        const innerHtml = $.browser ? $node.text() : $node.html();
+        const summary = $(innerHtml).find('#bsky_post_text');
         $node.replaceWith(summary.html());
-      }
+      },
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwNtvDeExtractor = {
+const WwwNtvDeExtractor = {
   domain: 'www.n-tv.de',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="date"]', 'value']]
+    selectors: [['meta[name="date"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article__text', 'article'],
+
     transforms: {},
-    clean: ['.article__share-main']
-  }
+
+    clean: ['.article__share-main'],
+  },
 };
 
-var WwwSePlExtractor = {
+const WwwSePlExtractor = {
   domain: 'www.se.pl',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.article_author:first-of-type']
+    selectors: ['.article_author:first-of-type'],
   },
+
   date_published: {
     selectors: ['#timezone'],
-    timezone: 'Europe/Warsaw'
+    timezone: 'Europe/Warsaw',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
-  }
+
+    clean: [
+      '#timezone',
+      '.author',
+      '.article__author__croppimg',
+      '.article_authors_with_thumbnail',
+      '.related_articles__elements',
+      '.gl_plugin.socials',
+      '.gl_plugin.player',
+      '.gl_plugin.video_player',
+      '.gl_plugin + video',
+    ],
+  },
 };
 
-function ownKeys$f(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$f(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$f(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var SportSePlExtractor = _objectSpread$f(_objectSpread$f({}, WwwSePlExtractor), {}, {
-  domain: 'sport.se.pl'
-});
+const SportSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'sport.se.pl',
+};
 
-function ownKeys$e(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$e(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$e(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$e(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var PolitykaSePlExtractor = _objectSpread$e(_objectSpread$e({}, WwwSePlExtractor), {}, {
-  domain: 'polityka.se.pl'
-});
+const PolitykaSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'polityka.se.pl',
+};
 
-var SuperserialeSePlExtractor = {
+const SuperserialeSePlExtractor = {
   domain: 'superseriale.se.pl',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.article_author:first-of-type']
+    selectors: ['.article_author:first-of-type'],
   },
+
   date_published: {
     selectors: ['#timezone'],
-    timezone: 'Europe/Warsaw'
+    timezone: 'Europe/Warsaw',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['#timezone', '.author', '.article__author__croppimg',
-    // author photo
-    '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
-  }
+
+    clean: [
+      '#timezone',
+      '.author',
+      '.article__author__croppimg', // author photo
+      '.related_articles__elements',
+      '.gl_plugin.socials',
+      '.gl_plugin.player',
+      '.gl_plugin.video_player',
+      '.gl_plugin + video',
+    ],
+  },
 };
 
-function ownKeys$d(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$d(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$d(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var SzczecinSePlExtractor = _objectSpread$d(_objectSpread$d({}, WwwSePlExtractor), {}, {
-  domain: 'szczecin.se.pl'
-});
+const SzczecinSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'szczecin.se.pl',
+};
 
-function ownKeys$c(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$c(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$c(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var SuperbizSePlExtractor = _objectSpread$c(_objectSpread$c({}, WwwSePlExtractor), {}, {
-  domain: 'superbiz.se.pl'
-});
+const SuperbizSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'superbiz.se.pl',
+};
 
-function ownKeys$b(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$b(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$b(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var PortalobronnySePlExtractor = _objectSpread$b(_objectSpread$b({}, WwwSePlExtractor), {}, {
-  domain: 'portalobronny.se.pl'
-});
+const PortalobronnySePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'portalobronny.se.pl',
+};
 
-var PolskisamorzadSePlExtractor = {
+const PolskisamorzadSePlExtractor = {
   domain: 'polskisamorzad.se.pl',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.article_author:first-of-type', '.article-author', ['meta[name="og:article:author"]', 'value']]
+    selectors: [
+      '.article_author:first-of-type',
+      '.article-author',
+      ['meta[name="og:article:author"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-single'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['#timezone', '.author', '.article__author__croppimg', '.article_authors_with_thumbnail', '.related_articles__elements', '.gl_plugin.socials', '.gl_plugin.player', '.gl_plugin.video_player', '.gl_plugin + video']
-  }
+
+    clean: [
+      '#timezone',
+      '.author',
+      '.article__author__croppimg',
+      '.article_authors_with_thumbnail',
+      '.related_articles__elements',
+      '.gl_plugin.socials',
+      '.gl_plugin.player',
+      '.gl_plugin.video_player',
+      '.gl_plugin + video',
+    ],
+  },
 };
 
-function ownKeys$a(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$a(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$a(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var LodzSePlExtractor = _objectSpread$a(_objectSpread$a({}, WwwSePlExtractor), {}, {
-  domain: 'lodz.se.pl'
-});
+const LodzSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'lodz.se.pl',
+};
 
-function ownKeys$9(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$9(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$9(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$9(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var WroclawSePlExtractor = _objectSpread$9(_objectSpread$9({}, WwwSePlExtractor), {}, {
-  domain: 'wroclaw.se.pl'
-});
+const WroclawSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'wroclaw.se.pl',
+};
 
-function ownKeys$8(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$8(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$8(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var LublinSePlExtractor = _objectSpread$8(_objectSpread$8({}, WwwSePlExtractor), {}, {
-  domain: 'lublin.se.pl'
-});
+const LublinSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'lublin.se.pl',
+};
 
-function ownKeys$7(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$7(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$7(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var BialystokSePlExtractor = _objectSpread$7(_objectSpread$7({}, WwwSePlExtractor), {}, {
-  domain: 'bialystok.se.pl'
-});
+const BialystokSePlExtractor = {
+  ...WwwSePlExtractor,
+  domain: 'bialystok.se.pl',
+};
 
-var WwwLebensmittelwarnungDeExtractor = {
+const WwwLebensmittelwarnungDeExtractor = {
   domain: 'www.lebensmittelwarnung.de',
+
   title: {
-    selectors: ['.lmw-intro__heading', 'title']
+    selectors: ['.lmw-intro__heading', 'title'],
   },
+
   date_published: {
     selectors: [['.lmw-intro__meta > time', 'datetime']],
     format: 'DD.MM.YYYY',
-    timezone: 'Europe/Berlin'
+    timezone: 'Europe/Berlin',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {
-      h2: function h2(node) {
-        var button = node.find('button');
+      h2: node => {
+        const button = node.find('button');
+
         if (node.find('button').length > 0) {
           node.find('.lmw-section__toggle-icon').remove();
           node.text(button.text().trim());
         }
+
         node.attr('class', 'mercury-parser-keep');
       },
-      ul: function ul($node) {
+      ul: $node => {
         $node.attr('class', 'mercury-parser-keep');
       },
-      '.lmw-bodytext': function lmwBodytext(node) {
+      '.lmw-bodytext': node => {
         // Kontakt Information
         node.attr('class', 'mercury-parser-keep');
       },
-      '.lmw-description-list__item': function lmwDescriptionList__item(node) {
+      '.lmw-description-list__item': node => {
         node.attr('class', 'mercury-parser-keep');
-      }
+      },
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwQbitaiComExtractor = {
+const WwwQbitaiComExtractor = {
   domain: 'www.qbitai.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   content: {
     selectors: ['.article'],
+
     transforms: {
-      '.zhaiyao': function zhaiyao(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      '.zhaiyao': node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.article_info']
-  }
+
+    clean: ['.article_info'],
+  },
 };
 
-var EconomictimesIndiatimesComExtractor = {
+const EconomictimesIndiatimesComExtractor = {
   domain: 'economictimes.indiatimes.com',
+
   title: {
-    selectors: ['title', ['meta[name="og:title"]', 'value']]
+    selectors: ['title', ['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['a[rel="author"]']
+    selectors: ['a[rel="author"]'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     transforms: {},
-    clean: ['span.imgAgency']
-  }
+
+    clean: ['span.imgAgency'],
+  },
 };
 
-var FactorioComExtractor = {
+const FactorioComExtractor = {
   domain: 'factorio.com',
+
   title: {
-    selectors: ['title']
+    selectors: ['title'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: [['.blog-post', 'div:nth-child(2)']],
+
     transforms: {
-      h3: function h3(node) {
-        var author = node.find('author');
+      h3: node => {
+        const author = node.find('author');
+
         if (author.text()) {
-          node.after("<p>".concat(author.text(), "</p>"));
+          node.after(`<p>${author.text()}</p>`);
+
           author.remove();
         }
-      }
+      },
     },
-    clean: ['.logo-expansion-space-age']
-  }
+
+    clean: ['.logo-expansion-space-age'],
+  },
 };
 
-var WwwTagesschauDeExtractor = {
+const WwwTagesschauDeExtractor = {
   domain: 'www.tagesschau.de',
+
   title: {
-    selectors: ['.seitenkopf__headline--text', 'title']
+    selectors: ['.seitenkopf__headline--text', 'title'],
   },
+
   author: {
-    selectors: ['.authorline__author authorline__link:first-child']
+    selectors: ['.authorline__author authorline__link:first-child'],
   },
+
   date_published: {
     selectors: [['meta[name="date"]', 'value'], '.metatextline'],
-    timezone: 'UTC'
+    timezone: 'UTC',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
-    clean: ['[data-config]', '.seitenkopf__headline', '.authorline__author', '.metatextline']
-  }
+
+    clean: [
+      '[data-config]',
+      '.seitenkopf__headline',
+      '.authorline__author',
+      '.metatextline',
+    ],
+  },
 };
 
-var Nineto5googleComExtractor = {
+const Nineto5googleComExtractor = {
   domain: '9to5google.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
-      }
+      },
     },
-    clean: ['.post-meta']
-  }
+
+    clean: ['.post-meta'],
+  },
 };
 
-var WwwEngadgetComExtractor = {
+const WwwEngadgetComExtractor = {
   domain: 'www.engadget.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: ['.caas-attr-item-author']
+    selectors: ['.caas-attr-item-author'],
   },
+
   date_published: {
-    selectors: [['time', 'datetime']]
+    selectors: [['time', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.caas-body'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      'blockquote noscript': function blockquote_noscript(node) {
-        var iframe = node.find('iframe');
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+
+      'blockquote noscript': node => {
+        const iframe = node.find('iframe');
+
         if (iframe != null) {
           return 'div';
         }
+
         return null;
-      }
+      },
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var TarnkappeInfoExtractor = {
+const TarnkappeInfoExtractor = {
   domain: 'tarnkappe.info',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['section#author']
-  }
+
+    clean: ['section#author'],
+  },
 };
 
-var WwwVortezNetExtractor = {
+const WwwVortezNetExtractor = {
   domain: 'www.vortez.net',
+
   title: {
-    selectors: ['title']
+    selectors: ['title'],
   },
+
   dek: {
-    selectors: []
+    selectors: [],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   next_page_url: {
-    selectors: ['.pagelink:nth-child(2) > a']
+    selectors: ['.pagelink:nth-child(2) > a'],
   },
+
   content: {
     selectors: ['.main-content', '.the-article-content'],
+
     transforms: {
       strong: 'p',
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.article-header', '.panel-title', 'select', 'br']
-  }
+
+    clean: ['.article-header', '.panel-title', 'select', 'br'],
+  },
 };
 
-var WwwPolygonComExtractor = {
+const WwwPolygonComExtractor = {
   domain: 'www.polygon.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
+
     transforms: {
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      img: function img($node) {
-        var srcset = $node.attr('srcset');
-        var _split = (srcset || '').split(','),
-          _split2 = _slicedToArray(_split, 1),
-          src = _split2[0];
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      img: $node => {
+        const srcset = $node.attr('srcset');
+        const [src] = (srcset || '').split(',');
+
         if (src) {
-          $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
+          $node
+            .parent()
+            .replaceWith(
+              `<figure><img srcset="${srcset}" src="${src}"/></figure>`
+            );
         }
-      }
+      },
     },
-    clean: ['cite', '.duet--ad--native-ad-rail', '.duet--layout--rail', '.duet--article--table-of-contents']
-  }
+
+    clean: [
+      'cite',
+      '.duet--ad--native-ad-rail',
+      '.duet--layout--rail',
+      '.duet--article--table-of-contents',
+    ],
+  },
 };
 
-var WwwThevergeComExtractor = {
+const WwwThevergeComExtractor = {
   domain: 'www.theverge.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.duet--layout--entry-body', 'article'],
+
     transforms: {
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h4: function h4($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      img: function img($node) {
-        var srcset = $node.attr('srcset');
-        var _split = (srcset || '').split(','),
-          _split2 = _slicedToArray(_split, 1),
-          src = _split2[0];
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h4: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      img: $node => {
+        const srcset = $node.attr('srcset');
+        const [src] = (srcset || '').split(',');
+
         if (src) {
-          $node.parent().replaceWith("<figure><img srcset=\"".concat(srcset, "\" src=\"").concat(src, "\"/></figure>"));
+          $node
+            .parent()
+            .replaceWith(
+              `<figure><img srcset="${srcset}" src="${src}"/></figure>`
+            );
         }
-      }
+      },
     },
-    clean: ['.duet--article--timestamp', '[id*="-article_footer"]', '[id*="-article_footer"] ~ *', '#comments', '#comments ~ *']
-  }
+
+    clean: [
+      '.duet--article--timestamp',
+      '[id*="-article_footer"]',
+      '[id*="-article_footer"] ~ *',
+      '#comments',
+      '#comments ~ *',
+    ],
+  },
 };
 
-var WwwTechpowerupComExtractor = {
+const WwwTechpowerupComExtractor = {
   domain: 'www.techpowerup.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.byline address']
+    selectors: ['.byline address'],
   },
+
   date_published: {
-    selectors: [['.byline time[datetime]', 'datetime']]
+    selectors: [['.byline time[datetime]', 'datetime']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.contnt'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['header', 'footer']
+
+    clean: ['header', 'footer'],
   },
+
   next_page_url: {
-    selectors: [['.nextpage-bottom', 'href']]
-  }
+    selectors: [['.nextpage-bottom', 'href']],
+  },
 };
 
-var WwwFlatpanelshdComExtractor = {
+const WwwFlatpanelshdComExtractor = {
   domain: 'www.flatpanelshd.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[itemprop="author"]', 'value']]
+    selectors: [['meta[itemprop="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[itemprop="datePublished"]', 'value']]
+    selectors: [['meta[itemprop="datePublished"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#zephr-anchor', 'article'],
+
     transforms: {
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h4: function h4($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      pre: 'div'
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h4: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      pre: 'div',
     },
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var Nineto5macComExtractor = {
+const Nineto5macComExtractor = {
   domain: '9to5mac.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
-      }
+      },
     },
-    clean: ['.post-meta']
-  }
+
+    clean: ['.post-meta'],
+  },
 };
 
-var WwwNotebookcheckNetExtractor = {
+const WwwNotebookcheckNetExtractor = {
   domain: 'www.notebookcheck.net',
+
   title: {
-    selectors: ['h1']
+    selectors: ['h1'],
   },
+
   author: {
-    selectors: ['.intro-author a']
+    selectors: ['.intro-author a'],
   },
+
   date_published: {
     selectors: [['.intro-author time', 'datetime']],
-    timezone: 'GMT'
+    timezone: 'GMT',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#content'],
+
     transforms: {
-      h2: function h2($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      },
-      h4: function h4($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      }
+      h2: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h3: $node => $node.attr('class', 'mercury-parser-keep'),
+
+      h4: $node => $node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.ttcl_3', '.socialarea', '.tx-nbc2fe-relatedarticles', 'aside']
-  }
+
+    clean: ['.ttcl_3', '.socialarea', '.tx-nbc2fe-relatedarticles', 'aside'],
+  },
 };
 
-var WwwFuturaSciencesComExtractor = {
+const WwwFuturaSciencesComExtractor = {
   domain: 'www.futura-sciences.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#article-anchor-article-main-content', '.article-text'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      h4: function h4(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      ul: function ul($node) {
-        return $node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+
+      h3: node => node.attr('class', 'mercury-parser-keep'),
+
+      h4: node => node.attr('class', 'mercury-parser-keep'),
+
+      ul: $node => $node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.cWHWfD', 'span[class*="wrappers__Span"]']
-  }
+
+    clean: ['.cWHWfD', 'span[class*="wrappers__Span"]'],
+  },
 };
 
-var SgNewsYahooComExtractor = {
+const SgNewsYahooComExtractor = {
   domain: 'sg.news.yahoo.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value'], 'title']
+    selectors: [['meta[name="og:title"]', 'value'], 'title'],
   },
+
   author: {
-    selectors: ['.caas-attr-provider', 'meta[name="author"]']
+    selectors: ['.caas-attr-provider', 'meta[name="author"]'],
   },
+
   date_published: {
     selectors: ['time[datetime]', 'meta[property="article:published_time"]'],
-    timezone: 'UTC'
+    timezone: 'UTC',
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.caas-body-content', 'article'],
+
     transforms: {},
-    clean: ['.caas-header', '.caas-logo', '.caas-title-wrapper', 'button', '.advertisement', '.sda-*', '[data-content="Advertisement"]']
-  }
+
+    clean: [
+      '.caas-header',
+      '.caas-logo',
+      '.caas-title-wrapper',
+      'button',
+      '.advertisement',
+      '.sda-*',
+      '[data-content="Advertisement"]',
+    ],
+  },
 };
 
-var GonintendoComExtractor = {
+const GonintendoComExtractor = {
   domain: 'gonintendo.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="og:article:published_time"]', 'value']]
+    selectors: [['meta[name="og:article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.content'],
+
     transforms: {},
-    clean: ['.text-brand-gray-600']
-  }
+
+    clean: ['.text-brand-gray-600'],
+  },
 };
 
-var OrfAtExtractor = {
+const OrfAtExtractor = {
   domain: 'orf.at',
+
   title: {
-    selectors: ['title']
+    selectors: ['title'],
   },
+
   date_published: {
-    selectors: [['meta[name="dc.date"]', 'value']]
+    selectors: [['meta[name="dc.date"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {},
-    clean: ['.story-meta']
-  }
+
+    clean: ['.story-meta'],
+  },
 };
 
-var WwwVideogameschronicleComExtractor = {
+const WwwVideogameschronicleComExtractor = {
   domain: 'www.videogameschronicle.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.author-byline a[rel="author"]']
+    selectors: ['.author-byline a[rel="author"]'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   content: {
     selectors: ['.post__content-body', 'article'],
+
     transforms: {
-      'figure a': function figure_a($node) {
-        var href = $node.attr('href');
-        var $img = $node.find('img');
+      'figure a': $node => {
+        const href = $node.attr('href');
+        const $img = $node.find('img');
         if (href && $img.length && !$img.attr('src')) {
           $img.attr('src', href);
           $node.replaceWith($img);
         }
-      }
+      },
     },
-    clean: ['.adcontainer']
-  }
+
+    clean: ['.adcontainer'],
+  },
 };
 
-var WwwNumeramaComExtractor = {
+const WwwNumeramaComExtractor = {
   domain: 'www.numerama.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['.article-header__description']
+    selectors: ['.article-header__description'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.article-content', 'article'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.js-newsletter-block', '.premium-promo-alert', '[data-nosnippet]', '.ultimedia_cntr']
-  }
+
+    clean: [
+      '.js-newsletter-block',
+      '.premium-promo-alert',
+      '[data-nosnippet]',
+      '.ultimedia_cntr',
+    ],
+  },
 };
 
-var TerminaltroveComExtractor = {
+const TerminaltroveComExtractor = {
   domain: 'terminaltrove.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
-    clean: ['.share-badge', '.modal', '.modal-toggle', '.sr-only', '.premium-sponsor-featured']
-  }
+    clean: [
+      '.share-badge',
+      '.modal',
+      '.modal-toggle',
+      '.sr-only',
+      '.premium-sponsor-featured',
+    ],
+  },
 };
 
-var NewsPtsOrgTwExtractor = {
+const NewsPtsOrgTwExtractor = {
   domain: 'news.pts.org.tw',
+
   title: {
-    selectors: ['h1.article-title']
+    selectors: ['h1.article-title'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'content'], ['meta[name="author"]', 'value']]
+    selectors: [
+      ['meta[name="author"]', 'content'],
+      ['meta[name="author"]', 'value'],
+    ],
   },
+
   date_published: {
-    selectors: [['meta[property="article:published_time"]', 'content'], ['meta[name="article:published_time"]', 'value']]
+    selectors: [
+      ['meta[property="article:published_time"]', 'content'],
+      ['meta[name="article:published_time"]', 'value'],
+    ],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'content'], ['meta[name="description"]', 'value']]
+    selectors: [
+      ['meta[name="description"]', 'content'],
+      ['meta[name="description"]', 'value'],
+    ],
   },
+
   lead_image_url: {
-    selectors: [['meta[property="og:image"]', 'content'], ['meta[name="og:image"]', 'value']]
+    selectors: [
+      ['meta[property="og:image"]', 'content'],
+      ['meta[name="og:image"]', 'value'],
+    ],
   },
+
   content: {
     selectors: ['.post-article', '.article-content'],
+
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
+
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.articleimg', 'ul']
-  }
+    clean: ['.articleimg', 'ul'],
+  },
 };
 
-var WwwThedriveComExtractor = {
+const WwwThedriveComExtractor = {
   domain: 'www.thedrive.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry-content', 'article'],
+
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
       },
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h3: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.product-disclosure', '.recurrent-newsletter-block', '.pw-incontent-commerce-ad', '#author-widgets']
-  }
+
+    clean: [
+      '.product-disclosure',
+      '.recurrent-newsletter-block',
+      '.pw-incontent-commerce-ad',
+      '#author-widgets',
+    ],
+  },
 };
 
-var ChicagoyimbyComExtractor = {
+const ChicagoyimbyComExtractor = {
   domain: 'chicagoyimby.com',
+
   title: {
-    selectors: ['h1.post-title']
+    selectors: ['h1.post-title'],
   },
+
   author: {
-    selectors: ['.entry-meta-author a']
+    selectors: ['.entry-meta-author a'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.entry-content'],
+
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
-      }
+      },
     },
-    clean: ['.breadcrumb']
-  }
+
+    clean: ['.breadcrumb'],
+  },
 };
 
-var WwwJalopnikComExtractor = {
+const WwwJalopnikComExtractor = {
   domain: 'www.jalopnik.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value']]
+    selectors: [['meta[name="article:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article.news-post'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      '.slide-key': function slideKey(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      '.slide-key': node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.breadcrumbs', '.byline-container']
-  }
+
+    clean: ['.breadcrumbs', '.byline-container'],
+  },
 };
 
-var Nineto5linuxComExtractor = {
+const Nineto5linuxComExtractor = {
   domain: '9to5linux.com',
+
   title: {
-    selectors: ['title', 'h1']
+    selectors: ['title', 'h1'],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['main'],
+
     transforms: {
-      img: function img(node) {
+      img: node => {
         node.removeAttr('sizes');
-      }
+      },
     },
-    clean: ['.post-meta']
-  }
+
+    clean: ['.post-meta'],
+  },
 };
 
-var WwwTransfermarktDeExtractor = {
+const WwwTransfermarktDeExtractor = {
   domain: 'www.transfermarkt.de',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: null,
+
   date_published: {
     selectors: ['.news-header span:first-child'],
     format: 'DD.MM.YYYY - HH:mm',
-    timezone: 'Europe/Berlin'
+    timezone: 'Europe/Berlin',
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.news-content'],
     defaultCleaner: false,
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.dachzeile', '.news-header-social', '.newsansicht-bildquelle', '.news-widget--container', '.pinpoll', '.advertisment-button-container', 'tm-consent']
-  }
+    clean: [
+      '.dachzeile',
+      '.news-header-social',
+      '.newsansicht-bildquelle',
+      '.news-widget--container',
+      '.pinpoll',
+      '.advertisment-button-container',
+      'tm-consent',
+    ],
+  },
 };
 
-var WwwBlickDeExtractor = {
+const WwwBlickDeExtractor = {
   domain: 'www.blick.de',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.article-meta__author']
+    selectors: ['.article-meta__author'],
   },
+
   date_published: {
-    selectors: [['time.article-meta__date[datetime]', 'datetime']]
+    selectors: [['time.article-meta__date[datetime]', 'datetime']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['article'],
     defaultCleaner: false,
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      'figcaption details': function figcaption_details(node) {
-        var text = node.text();
-        node.replaceWith("<span>".concat(text, "</span>"));
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      'figcaption details': node => {
+        const text = node.text();
+        node.replaceWith(`<span>${text}</span>`);
       },
       'ul.gallery__item-wrapper': 'div',
-      'li.gallery__item': 'div'
+      'li.gallery__item': 'div',
     },
-    clean: ['.section-header', '.article__footer', '.social-button-container', '.gallery__button', '.gallery__position-label', '.detail-img__caption-toggle', '.nativendo-mid-article', '.taboola-mid-article', 'article > p']
-  }
+    clean: [
+      '.section-header',
+      '.article__footer',
+      '.social-button-container',
+      '.gallery__button',
+      '.gallery__position-label',
+      '.detail-img__caption-toggle',
+      '.nativendo-mid-article',
+      '.taboola-mid-article',
+      'article > p',
+    ],
+  },
 };
 
-var WwwEuronewsComExtractor = {
+const WwwEuronewsComExtractor = {
   domain: 'www.euronews.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value'], '.c-article-contributors']
+    selectors: [
+      ['meta[name="article:author"]', 'value'],
+      '.c-article-contributors',
+    ],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: ['h2.c-article-summary']
+    selectors: ['h2.c-article-summary'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.c-article-content', 'article'],
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      '.widget__figure': function widget__figure(node) {
-        return node.addClass('mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      '.widget__figure': node => node.addClass('mercury-parser-keep'),
     },
-    clean: ['.c-ad', '.c-widget-related', '.connatix-container']
-  }
+    clean: ['.c-ad', '.c-widget-related', '.connatix-container'],
+  },
 };
 
-function ownKeys$6(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$6(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var GrEuronewsComExtractor = _objectSpread$6(_objectSpread$6({}, WwwEuronewsComExtractor), {}, {
-  domain: 'gr.euronews.com'
-});
+const GrEuronewsComExtractor = {
+  ...WwwEuronewsComExtractor,
+  domain: 'gr.euronews.com',
+};
 
-var WwwIlfattoquotidianoItExtractor = {
+const WwwIlfattoquotidianoItExtractor = {
   domain: 'www.ilfattoquotidiano.it',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
     selectors: ['.ifq-post__author .ifq-news-meta__author-name'],
-    clean: ['span']
+    clean: ['span'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.ifq-post__content', 'article'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var ActualidadRtComExtractor = {
+const ActualidadRtComExtractor = {
   domain: 'actualidad.rt.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="article:author"]', 'value']]
+    selectors: [['meta[name="article:author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="mediator_published_time"]', 'value']]
+    selectors: [['meta[name="mediator_published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.ArticleView-text'],
+
     transforms: {},
+
     // RT wraps each <img> in a <picture> whose <source> elements carry a
     // base64 placeholder srcset; browsers honor that over the real <img src>,
     // so drop the sources and let the <img> (real URL) render.
-    clean: ['.ReadMore-root', 'source']
-  }
+    clean: ['.ReadMore-root', 'source'],
+  },
 };
 
-var WwwTweaktownComExtractor = {
+const WwwTweaktownComExtractor = {
   domain: 'www.tweaktown.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.info-bar-div2 a[rel="author"]']
+    selectors: ['.info-bar-div2 a[rel="author"]'],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['#article-body'],
+
     transforms: {},
-    clean: []
-  }
+
+    clean: [],
+  },
 };
 
-var WwwFrandroidComExtractor = {
+const WwwFrandroidComExtractor = {
   domain: 'www.frandroid.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="parsely-author"]', 'value']]
+    selectors: [['meta[name="parsely-author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['section.article-content'],
+
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      },
-      h3: function h3(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
+      h3: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['.index-menu-wrapper', '.is-gastric-kingfisher', '.newsletter-form', '.share', '.article-footer', '.js-feed-posts', '.optidigital-adslot', '[id^="optidigital-adslot"]']
-  }
+
+    clean: [
+      '.index-menu-wrapper',
+      '.is-gastric-kingfisher',
+      '.newsletter-form',
+      '.share',
+      '.article-footer',
+      '.js-feed-posts',
+      '.optidigital-adslot',
+      '[id^="optidigital-adslot"]',
+    ],
+  },
 };
 
-var WwwMotorsportComExtractor = {
+const WwwMotorsportComExtractor = {
   domain: 'www.motorsport.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.msnt-author-toolbar a[href*="/info/about-us/"]']
+    selectors: ['.msnt-author-toolbar a[href*="/info/about-us/"]'],
   },
+
   date_published: {
-    selectors: [['meta[name="datePublished"]', 'value']]
+    selectors: [['meta[name="datePublished"]', 'value']],
   },
+
   dek: {
-    selectors: ['h2.text-article-description']
+    selectors: ['h2.text-article-description'],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.ms-article-content'],
     transforms: {
-      h2: function h2(node) {
-        return node.attr('class', 'mercury-parser-keep');
-      }
+      h2: node => node.attr('class', 'mercury-parser-keep'),
     },
-    clean: ['msnt-survey-promo', '.article-fullwidth-gallery_item ~ .article-fullwidth-gallery_item', '.ms-inarticle-widgets', '.relatedContent', '.ms-apb', '.ms-ap-native', '.outstream_partner']
-  }
+    clean: [
+      'msnt-survey-promo',
+      '.article-fullwidth-gallery_item ~ .article-fullwidth-gallery_item',
+      '.ms-inarticle-widgets',
+      '.relatedContent',
+      '.ms-apb',
+      '.ms-ap-native',
+      '.outstream_partner',
+    ],
+  },
 };
 
-var SubstackComExtractor = {
+const SubstackComExtractor = {
   domain: 'substack.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: [['meta[name="author"]', 'value']]
+    selectors: [['meta[name="author"]', 'value']],
   },
+
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value']]
+    selectors: [['meta[name="article:published_time"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.available-content'],
+
     transforms: {
       'div.captioned-image-container': 'figure',
-      'div.image-link': function divImageLink($node) {
+      'div.image-link': $node => {
         $node.replaceWith($node.find('img'));
-      }
+      },
     },
-    clean: ['.subscribe-widget', '.subscription-widget-wrap', '.subscription-widget-wrap-editor', '.button-wrapper', '.poll-embed', '.share-dialog']
-  }
+
+    clean: [
+      '.subscribe-widget',
+      '.subscription-widget-wrap',
+      '.subscription-widget-wrap-editor',
+      '.button-wrapper',
+      '.poll-embed',
+      '.share-dialog',
+    ],
+  },
 };
 
-var WwwDwComExtractor = {
+const WwwDwComExtractor = {
   domain: 'www.dw.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: {
-    selectors: ['.author-name .author-link']
+    selectors: ['.author-name .author-link'],
   },
+
   date_published: {
-    selectors: [['meta[name="date"]', 'value']]
+    selectors: [['meta[name="date"]', 'value']],
   },
+
   dek: {
-    selectors: [['meta[name="og:description"]', 'value']]
+    selectors: [['meta[name="og:description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['[data-tracking-name="rich-text"]'],
+
     transforms: {
       // DW inline images are responsive: the real template lives in data-url
       // with a literal ${formatId} size token that JS would replace, leaving a
       // broken src in the raw HTML. Resolve it to a standard content size.
-      img: function img(node) {
-        var template = node.attr('data-url') || node.attr('src') || '';
+      img: node => {
+        const template = node.attr('data-url') || node.attr('src') || '';
         if (template.includes('${formatId}')) {
           node.attr('src', template.replace('${formatId}', '6'));
         }
-      }
+      },
     },
+
     // Embedded tweets are non-functional fallback markup without JS.
-    clean: ['blockquote.tweet.embed']
-  }
+    clean: ['blockquote.tweet.embed'],
+  },
 };
 
-var WwwAnimenewsnetworkComExtractor = {
+const WwwAnimenewsnetworkComExtractor = {
   domain: 'www.animenewsnetwork.com',
+
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: [['meta[name="og:title"]', 'value']],
   },
+
   author: null,
+
   date_published: {
-    selectors: [['small time', 'datetime']]
+    selectors: [['small time', 'datetime']],
   },
+
   dek: {
-    selectors: [['meta[name="description"]', 'value']]
+    selectors: [['meta[name="description"]', 'value']],
   },
+
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [['meta[name="og:image"]', 'value']],
   },
+
   content: {
     selectors: ['.KonaBody'],
+
     transforms: {
       // Images are lazy-loaded: real URL in data-src, a spacer.gif in src.
       // Promote data-src so the images survive cleaning and render.
-      img: function img(node) {
-        var dataSrc = node.attr('data-src');
+      img: node => {
+        const dataSrc = node.attr('data-src');
         if (dataSrc) {
-          var src = dataSrc.startsWith('/') ? "https://www.animenewsnetwork.com".concat(dataSrc) : dataSrc;
+          const src = dataSrc.startsWith('/')
+            ? `https://www.animenewsnetwork.com${dataSrc}`
+            : dataSrc;
           node.attr('src', src);
           node.removeAttr('data-src');
         }
-      }
+      },
     },
+
     // .intro duplicates the dek; instaread-player is an audio widget.
-    clean: ['.intro', 'instaread-player']
-  }
+    clean: ['.intro', 'instaread-player'],
+  },
+};
+
+const WwwDigitalfoundryNetExtractor = {
+  domain: 'www.digitalfoundry.net',
+
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']],
+  },
+
+  author: {
+    selectors: [['meta[name="author"]', 'value']],
+  },
+
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['.article-text', 'article'],
+
+    transforms: {
+      'iframe[data-src]': node => {
+        node.attr('src', node.attr('data-src'));
+      },
+    },
+
+    clean: ['.youtube-sub', '.object-related', '.poll', '.insert', '.see-also'],
+  },
 };
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -7665,6 +10173,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwCnbcComExtractor: WwwCnbcComExtractor,
   WwwCnetComExtractor: WwwCnetComExtractor,
   WwwCnnComExtractor: WwwCnnComExtractor,
+  WwwDigitalfoundryNetExtractor: WwwDigitalfoundryNetExtractor,
   WwwDmagazineComExtractor: WwwDmagazineComExtractor,
   WwwDwComExtractor: WwwDwComExtractor,
   WwwElecomCoJpExtractor: WwwElecomCoJpExtractor,
@@ -7757,43 +10266,71 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   twofortysevensportsComExtractor: twofortysevensportsComExtractor
 });
 
-function ownKeys$5(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
-  var extractor = CustomExtractors[key];
-  return _objectSpread$5(_objectSpread$5({}, acc), mergeSupportedDomains(extractor));
+var Extractors = Object.keys(CustomExtractors).reduce((acc, key) => {
+  const extractor = CustomExtractors[key];
+  return {
+    ...acc,
+    ...mergeSupportedDomains(extractor),
+  };
 }, {});
 
 // CLEAN AUTHOR CONSTANTS
-var CLEAN_AUTHOR_RE = /^\s*(posted |written )?by\s*:?\s*(.*)/i;
+const CLEAN_AUTHOR_RE = /^\s*(posted |written )?by\s*:?\s*(.*)/i;
 
 // CLEAN DEK CONSTANTS
-var TEXT_LINK_RE = new RegExp('http(s)?://', 'i');
+const TEXT_LINK_RE = new RegExp('http(s)?://', 'i');
 
 // CLEAN DATE PUBLISHED CONSTANTS
-var MS_DATE_STRING = /^\d{13}$/i;
-var SEC_DATE_STRING = /^\d{10}$/i;
-var CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
+const MS_DATE_STRING = /^\d{13}$/i;
+const SEC_DATE_STRING = /^\d{10}$/i;
+const CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
 // Anchored so the leading `.*` isn't retried from every position; unanchored
 // this was O(n^2) on long digit strings containing no am/pm.
-var TIME_MERIDIAN_SPACE_RE = /^(.*\d)(am|pm)(.*)/i;
-var TIME_MERIDIAN_DOTS_RE = /\.m\./i;
-var TIME_NOW_STRING = /^\s*(just|right)?\s*now\s*/i;
-var timeUnits = ['seconds?', 'minutes?', 'hours?', 'days?', 'weeks?', 'months?', 'years?'];
-var allTimeUnits = timeUnits.join('|');
+const TIME_MERIDIAN_SPACE_RE = /^(.*\d)(am|pm)(.*)/i;
+const TIME_MERIDIAN_DOTS_RE = /\.m\./i;
+const TIME_NOW_STRING = /^\s*(just|right)?\s*now\s*/i;
+const timeUnits = [
+  'seconds?',
+  'minutes?',
+  'hours?',
+  'days?',
+  'weeks?',
+  'months?',
+  'years?',
+];
+const allTimeUnits = timeUnits.join('|');
 // `(?<!\d)` pins the digit run to its start, so the scan can't re-run `\d+`
 // from every position; without it this was O(n^2) on long digit strings.
-var TIME_AGO_STRING = new RegExp("(?<!\\d)(\\d+)\\s+(".concat(allTimeUnits, ")\\s+ago"), 'i');
-var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-var allMonths = months.join('|');
-var timestamp1 = '[0-9]{1,2}:[0-9]{2,2}( ?[ap].?m.?)?';
-var timestamp2 = '[0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4}';
-var timestamp3 = '-[0-9]{3,4}$';
-var SPLIT_DATE_STRING = new RegExp("(".concat(timestamp1, ")|(").concat(timestamp2, ")|(").concat(timestamp3, ")|([0-9]{1,4})|(").concat(allMonths, ")"), 'ig');
+const TIME_AGO_STRING = new RegExp(
+  `(?<!\\d)(\\d+)\\s+(${allTimeUnits})\\s+ago`,
+  'i'
+);
+const months = [
+  'jan',
+  'feb',
+  'mar',
+  'apr',
+  'may',
+  'jun',
+  'jul',
+  'aug',
+  'sep',
+  'oct',
+  'nov',
+  'dec',
+];
+const allMonths = months.join('|');
+const timestamp1 = '[0-9]{1,2}:[0-9]{2,2}( ?[ap].?m.?)?';
+const timestamp2 = '[0-9]{1,2}[/-][0-9]{1,2}[/-][0-9]{2,4}';
+const timestamp3 = '-[0-9]{3,4}$';
+const SPLIT_DATE_STRING = new RegExp(
+  `(${timestamp1})|(${timestamp2})|(${timestamp3})|([0-9]{1,4})|(${allMonths})`,
+  'ig'
+);
 
 // 2016-11-22T08:57-500, 2016-12-22T19:27:41+00:00, 2016-12-22T19:27:41Z
 // Check if datetime string has an offset at the end
-var TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
+const TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
 
 // CLEAN TITLE CONSTANTS
 // A regular expression that will match separating characters on a
@@ -7802,8 +10339,9 @@ var TIME_WITH_OFFSET_RE = /([+-]\d{2}:?\d{2}|Z)$/;
 // Deliberately not /g: cleanTitle calls `.test()` on it, and /g makes `.test()`
 // stateful, advancing lastIndex between parses. The other consumer,
 // `title.split(TITLE_SPLITTERS_RE)`, is unaffected — split ignores the flag.
-var TITLE_SPLITTERS_RE = /(: | - | \| )/;
-var DOMAIN_ENDINGS_RE = new RegExp('.com$|.net$|.org$|.co.uk$', 'g');
+const TITLE_SPLITTERS_RE = /(: | - | \| )/;
+
+const DOMAIN_ENDINGS_RE = new RegExp('.com$|.net$|.org$|.co.uk$', 'g');
 
 // Take an author string (like 'By David Smith ') and clean it to
 // just the name(s): 'David Smith'.
@@ -7814,38 +10352,43 @@ function cleanAuthor(author) {
 function clean$1(leadImageUrl) {
   try {
     return new URL(leadImageUrl.trim()).toString();
-  } catch (_unused) {
+  } catch {
     return null;
   }
 }
 
 // Take a dek HTML fragment, and return the cleaned version of it.
 // Return None if the dek wasn't good enough.
-function cleanDek(dek, _ref) {
-  var $ = _ref.$,
-    excerpt = _ref.excerpt;
+function cleanDek(dek, { $, excerpt }) {
   // Sanity check that we didn't get too short or long of a dek.
   if (dek.length > 1000 || dek.length < 5) return null;
 
   // Check that dek isn't the same as excerpt
-  if (excerpt && excerptContent(excerpt, 10) === excerptContent(dek, 10)) return null;
-  var dekText = stripTags(dek, $);
+  if (excerpt && excerptContent(excerpt, 10) === excerptContent(dek, 10))
+    return null;
+
+  const dekText = stripTags(dek, $);
 
   // Plain text links shouldn't exist in the dek. If we have some, it's
   // not a good dek - bail.
   if (TEXT_LINK_RE.test(dekText)) return null;
+
   return normalizeSpaces(dekText.trim());
 }
 
 dayjs.extend(utc);
 dayjs.extend(timezonePlugin);
 dayjs.extend(customParseFormat);
-var TIMEZONE_ABBR_RE = /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
+
+const TIMEZONE_ABBR_RE =
+  /\b(EST|EDT|CST|CDT|MST|MDT|PST|PDT|ET|CT|MT|PT|GMT|UTC)\b/gi;
 // Check if string contains timezone offset info (e.g., +0000, GMT+0000, Z)
-var HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
+const HAS_TIMEZONE_RE = /([+-]\d{2}:?\d{2}|Z|\bGMT[+-]\d+|\bUTC\b)/i;
+
 function hasTimezoneInfo(str) {
   return HAS_TIMEZONE_RE.test(str);
 }
+
 function stripTimezoneAbbr(str) {
   return str.replace(TIMEZONE_ABBR_RE, '').replace(/\s+/g, ' ').trim();
 }
@@ -7854,55 +10397,68 @@ function stripTimezoneAbbr(str) {
 function stripTimezoneFromFormat(format) {
   return format.replace(/\s*z+/gi, '').replace(/\s+/g, ' ').trim();
 }
+
 function cleanDateString(dateString) {
-  return (dateString.match(SPLIT_DATE_STRING) || []).join(' ').replace(TIME_MERIDIAN_DOTS_RE, 'm').replace(TIME_MERIDIAN_SPACE_RE, '$1 $2 $3').replace(CLEAN_DATE_STRING_RE, '$1').trim();
+  return (dateString.match(SPLIT_DATE_STRING) || [])
+    .join(' ')
+    .replace(TIME_MERIDIAN_DOTS_RE, 'm')
+    .replace(TIME_MERIDIAN_SPACE_RE, '$1 $2 $3')
+    .replace(CLEAN_DATE_STRING_RE, '$1')
+    .trim();
 }
+
 function createDate(dateString, timezone, format) {
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
     return dayjs(new Date(dateString));
   }
+
   if (TIME_AGO_STRING.test(dateString)) {
-    var fragments = TIME_AGO_STRING.exec(dateString);
+    const fragments = TIME_AGO_STRING.exec(dateString);
     return dayjs().subtract(fragments[1], fragments[2]);
   }
+
   if (TIME_NOW_STRING.test(dateString)) {
     return dayjs();
   }
-  var stringHasTimezone = hasTimezoneInfo(dateString);
-  var cleanedDateString = stripTimezoneAbbr(dateString);
+
+  const stringHasTimezone = hasTimezoneInfo(dateString);
+  const cleanedDateString = stripTimezoneAbbr(dateString);
+
   if (stringHasTimezone) {
-    var _nativeDate = new Date(dateString);
-    if (!_Number$isNaN(_nativeDate.getTime())) {
-      return dayjs(_nativeDate);
+    const nativeDate = new Date(dateString);
+    if (!Number.isNaN(nativeDate.getTime())) {
+      return dayjs(nativeDate);
     }
   }
+
   if (timezone && !stringHasTimezone) {
     if (format) {
-      var cleanedFormat = stripTimezoneFromFormat(format);
+      const cleanedFormat = stripTimezoneFromFormat(format);
       try {
-        var _parsed = dayjs.tz(cleanedDateString, cleanedFormat, timezone);
-        if (_parsed.isValid()) return _parsed;
-      } catch (_unused) {
+        const parsed = dayjs.tz(cleanedDateString, cleanedFormat, timezone);
+        if (parsed.isValid()) return parsed;
+      } catch {
         // Fall through
       }
     }
-    var _nativeDate2 = new Date(cleanedDateString);
-    if (!_Number$isNaN(_nativeDate2.getTime())) {
-      return dayjs(_nativeDate2).tz(timezone, true);
+    const nativeDate = new Date(cleanedDateString);
+    if (!Number.isNaN(nativeDate.getTime())) {
+      return dayjs(nativeDate).tz(timezone, true);
     }
-    var parsed = dayjs(cleanedDateString);
+    const parsed = dayjs(cleanedDateString);
     if (parsed.isValid()) {
       return parsed.tz(timezone, true);
     }
     return dayjs(null);
   }
+
   if (format) {
-    var _cleanedFormat = stripTimezoneFromFormat(format);
-    var _parsed2 = dayjs(cleanedDateString, _cleanedFormat);
-    if (_parsed2.isValid()) return _parsed2;
+    const cleanedFormat = stripTimezoneFromFormat(format);
+    const parsed = dayjs(cleanedDateString, cleanedFormat);
+    if (parsed.isValid()) return parsed;
   }
-  var nativeDate = new Date(cleanedDateString);
-  if (!_Number$isNaN(nativeDate.getTime())) {
+  const nativeDate = new Date(cleanedDateString);
+  if (!Number.isNaN(nativeDate.getTime())) {
     return dayjs(nativeDate);
   }
   return dayjs(cleanedDateString);
@@ -7910,35 +10466,33 @@ function createDate(dateString, timezone, format) {
 
 // Take a date published string, and hopefully return a date out of
 // it. Return none if we fail.
-function cleanDatePublished(dateString) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    timezone = _ref.timezone,
-    format = _ref.format;
+function cleanDatePublished(
+  dateString,
+  { timezone, format } = {}
+) {
   // If string is in milliseconds or seconds, convert to int and return
   if (MS_DATE_STRING.test(dateString)) {
-    return new Date(_parseInt(dateString, 10)).toISOString();
+    return new Date(parseInt(dateString, 10)).toISOString();
   }
   if (SEC_DATE_STRING.test(dateString)) {
-    return new Date(_parseInt(dateString, 10) * 1000).toISOString();
+    return new Date(parseInt(dateString, 10) * 1000).toISOString();
   }
-  var date = createDate(dateString, timezone, format);
+
+  let date = createDate(dateString, timezone, format);
+
   if (!date.isValid()) {
     dateString = cleanDateString(dateString);
     date = createDate(dateString, timezone, format);
   }
+
   return date.isValid() ? date.toISOString() : null;
 }
 
 // Clean our article content, returning a new, cleaned node.
-function extractCleanNode(article, _ref) {
-  var $ = _ref.$;
-    _ref.cleanConditionally;
-    var _ref$title = _ref.title,
-    title = _ref$title === void 0 ? '' : _ref$title,
-    _ref$url = _ref.url,
-    url = _ref$url === void 0 ? '' : _ref$url,
-    _ref$defaultCleaner = _ref.defaultCleaner,
-    defaultCleaner = _ref$defaultCleaner === void 0 ? true : _ref$defaultCleaner;
+function extractCleanNode(
+  article,
+  { $, cleanConditionally = true, title = '', url = '', defaultCleaner = true }
+) {
   // Rewrite the tag name to div if it's a top level node like body or
   // html to avoid later complications with multiple body tags.
   rewriteTopLevel(article, $);
@@ -7979,6 +10533,7 @@ function extractCleanNode(article, _ref) {
 
   // Remove unnecessary attributes
   cleanAttributes(article);
+
   return article;
 }
 
@@ -7990,19 +10545,21 @@ function extractBreadcrumbTitle(splitTitle, text) {
     // Look to see if we can find a breadcrumb splitter that happens
     // more than once. If we can, we'll be able to better pull out
     // the title.
-    var termCounts = splitTitle.reduce(function (acc, titleText) {
+    const termCounts = splitTitle.reduce((acc, titleText) => {
       acc[titleText] = acc[titleText] ? acc[titleText] + 1 : 1;
       return acc;
     }, {});
-    var _Reflect$ownKeys$redu = _Reflect$ownKeys(termCounts).reduce(function (acc, key) {
+
+    const [maxTerm, termCount] = Reflect.ownKeys(termCounts).reduce(
+      (acc, key) => {
         if (acc[1] < termCounts[key]) {
           return [key, termCounts[key]];
         }
+
         return acc;
-      }, [0, 0]),
-      _Reflect$ownKeys$redu2 = _slicedToArray(_Reflect$ownKeys$redu, 2),
-      maxTerm = _Reflect$ownKeys$redu2[0],
-      termCount = _Reflect$ownKeys$redu2[1];
+      },
+      [0, 0]
+    );
 
     // We found a splitter that was used more than once, so it
     // is probably the breadcrumber. Split our title on that instead.
@@ -8011,17 +10568,23 @@ function extractBreadcrumbTitle(splitTitle, text) {
     if (termCount >= 2 && maxTerm.length <= 4) {
       splitTitle = text.split(maxTerm);
     }
-    var splitEnds = [splitTitle[0], splitTitle.slice(-1)];
-    var longestEnd = splitEnds.reduce(function (acc, end) {
-      return acc.length > end.length ? acc : end;
-    }, '');
+
+    const splitEnds = [splitTitle[0], splitTitle.slice(-1)];
+    const longestEnd = splitEnds.reduce(
+      (acc, end) => (acc.length > end.length ? acc : end),
+      ''
+    );
+
     if (longestEnd.length > 10) {
       return longestEnd;
     }
+
     return text;
   }
+
   return null;
 }
+
 function cleanDomainFromTitle(splitTitle, url) {
   // Search the ends of the title, looking for bits that fuzzy match
   // the URL too closely. If one is found, discard it and return the
@@ -8029,34 +10592,42 @@ function cleanDomainFromTitle(splitTitle, url) {
   //
   // Strip out the big TLDs - it just makes the matching a bit more
   // accurate. Not the end of the world if it doesn't strip right.
-  var _URL$parse = URL$1.parse(url),
-    host = _URL$parse.host;
-  var nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
-  var startSlug = splitTitle[0].toLowerCase().replace(' ', '');
-  var startSlugRatio = wuzzy.levenshtein(startSlug, nakedDomain);
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  const { host } = parsedUrl;
+  const nakedDomain = host.replace(DOMAIN_ENDINGS_RE, '');
+
+  const startSlug = splitTitle[0].toLowerCase().replace(' ', '');
+  const startSlugRatio = wuzzy.levenshtein(startSlug, nakedDomain);
+
   if (startSlugRatio > 0.4 && startSlug.length > 5) {
     return splitTitle.slice(2).join('');
   }
-  var endSlug = splitTitle.slice(-1)[0].toLowerCase().replace(' ', '');
-  var endSlugRatio = wuzzy.levenshtein(endSlug, nakedDomain);
+
+  const endSlug = splitTitle.slice(-1)[0].toLowerCase().replace(' ', '');
+  const endSlugRatio = wuzzy.levenshtein(endSlug, nakedDomain);
+
   if (endSlugRatio > 0.4 && endSlug.length >= 5) {
     return splitTitle.slice(0, -2).join('');
   }
+
   return null;
 }
 
 // Given a title with separators in it (colons, dashes, etc),
 // resolve whether any of the segments should be removed.
-function resolveSplitTitle(title) {
-  var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+function resolveSplitTitle(title, url = '') {
   // Splits while preserving splitters, like:
   // ['The New New York', ' - ', 'The Washington Post']
-  var splitTitle = title.split(TITLE_SPLITTERS_RE);
+  const splitTitle = title.split(TITLE_SPLITTERS_RE);
   if (splitTitle.length === 1) {
     return title;
   }
-  var newTitle = extractBreadcrumbTitle(splitTitle, title);
+
+  let newTitle = extractBreadcrumbTitle(splitTitle, title);
   if (newTitle) return newTitle;
+
   newTitle = cleanDomainFromTitle(splitTitle, url);
   if (newTitle) return newTitle;
 
@@ -8065,9 +10636,7 @@ function resolveSplitTitle(title) {
   return title;
 }
 
-function cleanTitle(title, _ref) {
-  var url = _ref.url,
-    $ = _ref.$;
+function cleanTitle(title, { url, $ }) {
   // If title has |, :, or - in it, see if
   // we can clean it up.
   if (TITLE_SPLITTERS_RE.test(title)) {
@@ -8078,7 +10647,7 @@ function cleanTitle(title, _ref) {
   // if (title.length > 150 || title.length < 15) {
   if (title.length > 150) {
     // If we did, return h1 from the document if it exists
-    var h1 = $('h1');
+    const h1 = $('h1');
     if (h1.length === 1) {
       title = h1.text();
     }
@@ -8088,60 +10657,63 @@ function cleanTitle(title, _ref) {
   return normalizeSpaces(stripTags(title, $).trim());
 }
 
-var Cleaners = {
+const Cleaners = {
   author: cleanAuthor,
   lead_image_url: clean$1,
   dek: cleanDek,
   date_published: cleanDatePublished,
   content: extractCleanNode,
-  title: cleanTitle
+  title: cleanTitle,
 };
 
 function convertSpans($node, $) {
   if ($node.get(0)) {
-    var _$node$get = $node.get(0),
-      tagName = _$node$get.tagName;
+    const { tagName } = $node.get(0);
+
     if (tagName === 'span') {
       // convert spans to divs
       convertNodeTo($node, $, 'div');
     }
   }
 }
+
 function addScoreTo($node, $, score) {
   if ($node) {
     convertSpans($node, $);
     addScore($node, $, score);
   }
 }
+
 function scorePs($, weightNodes) {
-  $('p, pre').not('[score]').each(function (index, node) {
-    // The raw score for this paragraph, before we add any parent/child
-    // scores.
-    var $node = $(node);
-    $node = setScore($node, $, getOrInitScore($node, $, weightNodes));
-    var $parent = $node.parent();
-    var rawScore = scoreNode($node);
-    addScoreTo($parent, $, rawScore);
-    if ($parent) {
-      // Add half of the individual content score to the
-      // grandparent
-      addScoreTo($parent.parent(), $, rawScore / 2);
-    }
-  });
+  $('p, pre')
+    .not('[score]')
+    .each((index, node) => {
+      // The raw score for this paragraph, before we add any parent/child
+      // scores.
+      let $node = $(node);
+      $node = setScore($node, $, getOrInitScore($node, $, weightNodes));
+
+      const $parent = $node.parent();
+      const rawScore = scoreNode($node);
+
+      addScoreTo($parent, $, rawScore);
+      if ($parent) {
+        // Add half of the individual content score to the
+        // grandparent
+        addScoreTo($parent.parent(), $, rawScore / 2);
+      }
+    });
+
   return $;
 }
 
 // score content. Parents get the full value of their children's
 // content score, grandparents half
-function scoreContent($) {
-  var weightNodes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+function scoreContent($, weightNodes = true) {
   // First, look for special hNews based selectors and give them a big
   // boost, if they exist
-  HNEWS_CONTENT_SELECTORS.forEach(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      parentSelector = _ref2[0],
-      childSelector = _ref2[1];
-    $("".concat(parentSelector, " ").concat(childSelector)).each(function (index, node) {
+  HNEWS_CONTENT_SELECTORS.forEach(([parentSelector, childSelector]) => {
+    $(`${parentSelector} ${childSelector}`).each((index, node) => {
       addScore($(node).parent(parentSelector), $, 80);
     });
   });
@@ -8153,6 +10725,7 @@ function scoreContent($) {
   // should be fixed.
   scorePs($, weightNodes);
   scorePs($, weightNodes);
+
   return $;
 }
 
@@ -8165,75 +10738,97 @@ function mergeSiblings($candidate, topScore, $) {
   if (!$candidate.parent().length) {
     return $candidate;
   }
-  var siblingScoreThreshold = Math.max(10, topScore * 0.25);
-  var wrappingDiv = $('<div></div>');
-  $candidate.parent().children().each(function (index, sibling) {
-    var $sibling = $(sibling);
-    // Ignore tags like BR, HR, etc
-    if (NON_TOP_CANDIDATE_TAGS_RE.test(sibling.tagName)) {
-      return null;
-    }
-    var siblingScore = getScore($sibling);
-    if (siblingScore) {
-      if ($sibling.get(0) === $candidate.get(0)) {
-        wrappingDiv.append($sibling);
-      } else {
-        var contentBonus = 0;
-        var density = linkDensity($sibling);
 
-        // If sibling has a very low link density,
-        // give it a small bonus
-        if (density < 0.05) {
-          contentBonus += 20;
-        }
+  const siblingScoreThreshold = Math.max(10, topScore * 0.25);
+  const wrappingDiv = $('<div></div>');
 
-        // If sibling has a high link density,
-        // give it a penalty
-        if (density >= 0.5) {
-          contentBonus -= 20;
-        }
+  $candidate
+    .parent()
+    .children()
+    .each((index, sibling) => {
+      const $sibling = $(sibling);
+      // Ignore tags like BR, HR, etc
+      if (NON_TOP_CANDIDATE_TAGS_RE.test(sibling.tagName)) {
+        return null;
+      }
 
-        // If sibling node has the same class as
-        // candidate, give it a bonus
-        if ($sibling.attr('class') === $candidate.attr('class')) {
-          contentBonus += topScore * 0.2;
-        }
-        var newScore = siblingScore + contentBonus;
-        if (newScore >= siblingScoreThreshold) {
-          return wrappingDiv.append($sibling);
-        }
-        if (sibling.tagName === 'p') {
-          var siblingContent = $sibling.text();
-          var siblingContentLength = textLength(siblingContent);
-          if (siblingContentLength > 80 && density < 0.25) {
+      const siblingScore = getScore($sibling);
+      if (siblingScore) {
+        if ($sibling.get(0) === $candidate.get(0)) {
+          wrappingDiv.append($sibling);
+        } else {
+          let contentBonus = 0;
+          const density = linkDensity($sibling);
+
+          // If sibling has a very low link density,
+          // give it a small bonus
+          if (density < 0.05) {
+            contentBonus += 20;
+          }
+
+          // If sibling has a high link density,
+          // give it a penalty
+          if (density >= 0.5) {
+            contentBonus -= 20;
+          }
+
+          // If sibling node has the same class as
+          // candidate, give it a bonus
+          if ($sibling.attr('class') === $candidate.attr('class')) {
+            contentBonus += topScore * 0.2;
+          }
+
+          const newScore = siblingScore + contentBonus;
+
+          if (newScore >= siblingScoreThreshold) {
             return wrappingDiv.append($sibling);
           }
-          if (siblingContentLength <= 80 && density === 0 && hasSentenceEnd(siblingContent)) {
-            return wrappingDiv.append($sibling);
+          if (sibling.tagName === 'p') {
+            const siblingContent = $sibling.text();
+            const siblingContentLength = textLength(siblingContent);
+
+            if (siblingContentLength > 80 && density < 0.25) {
+              return wrappingDiv.append($sibling);
+            }
+            if (
+              siblingContentLength <= 80 &&
+              density === 0 &&
+              hasSentenceEnd(siblingContent)
+            ) {
+              return wrappingDiv.append($sibling);
+            }
           }
         }
       }
-    }
-    return null;
-  });
-  if (wrappingDiv.children().length === 1 && wrappingDiv.children().first().get(0) === $candidate.get(0)) {
+
+      return null;
+    });
+
+  if (
+    wrappingDiv.children().length === 1 &&
+    wrappingDiv.children().first().get(0) === $candidate.get(0)
+  ) {
     return $candidate;
   }
+
   return wrappingDiv;
 }
 
 // After we've calculated scores, loop through all of the possible
 // candidate nodes we found and find the one with the highest score.
 function findTopCandidate($) {
-  var $candidate;
-  var topScore = 0;
-  $('[score]').each(function (index, node) {
+  let $candidate;
+  let topScore = 0;
+
+  $('[score]').each((index, node) => {
     // Ignore tags like BR, HR, etc
     if (NON_TOP_CANDIDATE_TAGS_RE.test(node.tagName)) {
       return;
     }
-    var $node = $(node);
-    var score = getScore($node);
+
+    const $node = $(node);
+    const score = getScore($node);
+
     if (score > topScore) {
       topScore = score;
       $candidate = $node;
@@ -8245,7 +10840,9 @@ function findTopCandidate($) {
   if (!$candidate) {
     return $('body') || $('*').first();
   }
+
   $candidate = mergeSiblings($candidate, topScore, $);
+
   return $candidate;
 }
 
@@ -8264,23 +10861,21 @@ function extractBestNode($, opts) {
   if (opts.stripUnlikelyCandidates) {
     $ = stripUnlikelyCandidates($);
   }
+
   $ = convertToParagraphs($);
   $ = scoreContent($, opts.weightNodes);
-  var $topCandidate = findTopCandidate($);
+  const $topCandidate = findTopCandidate($);
+
   return $topCandidate;
 }
 
-function _createForOfIteratorHelper$2(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$2(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$2(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$2(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$2(r, a) : void 0; } }
-function _arrayLikeToArray$2(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function ownKeys$4(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var GenericContentExtractor = {
+const GenericContentExtractor = {
   defaultOpts: {
     stripUnlikelyCandidates: true,
     weightNodes: true,
-    cleanConditionally: true
+    cleanConditionally: true,
   },
+
   // Extract the content for this resource - initially, pass in our
   // most restrictive opts which will return the highest quality
   // content. On each failure, retry with slightly more lax opts.
@@ -8300,62 +10895,56 @@ var GenericContentExtractor = {
   //
   // cleanConditionally: Clean the node to return of some
   // superfluous content. Things like forms, ads, etc.
-  extract: function extract(_ref, opts) {
-    var $ = _ref.$,
-      html = _ref.html,
-      title = _ref.title,
-      url = _ref.url;
-    opts = _objectSpread$4(_objectSpread$4({}, this.defaultOpts), opts);
+  extract({ $, html, title, url }, opts) {
+    opts = { ...this.defaultOpts, ...opts };
+
     $ = $ || cheerio__namespace.load(html);
 
     // Cascade through our extraction-specific opts in an ordered fashion,
     // turning them off as we try to extract content.
-    var node = this.getContentNode($, title, url, opts);
+    let node = this.getContentNode($, title, url, opts);
+
     if (nodeIsSufficient(node)) {
       return this.cleanAndReturnNode(node, $);
     }
 
     // We didn't succeed on first pass, one by one disable our
     // extraction opts and try again.
-    var _iterator = _createForOfIteratorHelper$2(_Reflect$ownKeys(opts).filter(function (k) {
-        return opts[k] === true;
-      })),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var key = _step.value;
-        opts[key] = false;
-        $ = cheerio__namespace.load(html);
-        node = this.getContentNode($, title, url, opts);
-        if (nodeIsSufficient(node)) {
-          break;
-        }
+
+    for (const key of Reflect.ownKeys(opts).filter(k => opts[k] === true)) {
+      opts[key] = false;
+      $ = cheerio__namespace.load(html);
+
+      node = this.getContentNode($, title, url, opts);
+
+      if (nodeIsSufficient(node)) {
+        break;
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
     }
+
     return this.cleanAndReturnNode(node, $);
   },
+
   // Get node given current options
-  getContentNode: function getContentNode($, title, url, opts) {
+  getContentNode($, title, url, opts) {
     return extractCleanNode(extractBestNode($, opts), {
-      $: $,
+      $,
       cleanConditionally: opts.cleanConditionally,
-      title: title,
-      url: url
+      title,
+      url,
     });
   },
+
   // Once we got here, either we're at our last-resort node, or
   // we broke early. Make sure we at least have -something- before we
   // move forward.
-  cleanAndReturnNode: function cleanAndReturnNode(node, $) {
+  cleanAndReturnNode(node, $) {
     if (!node) {
       return null;
     }
+
     return normalizeSpaces($.html(node));
-  }
+  },
 };
 
 // TODO: It would be great if we could merge the meta and selector lists into
@@ -8365,11 +10954,17 @@ var GenericContentExtractor = {
 // An ordered list of meta tag names that denote likely article titles. All
 // attributes should be lowercase for faster case-insensitive matching. From
 // most distinct to least distinct.
-var STRONG_TITLE_META_TAGS = ['tweetmeme-title', 'dc.title', 'rbtitle', 'headline', 'title'];
+const STRONG_TITLE_META_TAGS = [
+  'tweetmeme-title',
+  'dc.title',
+  'rbtitle',
+  'headline',
+  'title',
+];
 
 // og:title is weak because it typically contains context that we don't like,
 // for example the source site's name. Gotta get that brand into facebook!
-var WEAK_TITLE_META_TAGS = ['og:title'];
+const WEAK_TITLE_META_TAGS = ['og:title'];
 
 // An ordered list of XPath Selectors to find likely article titles. From
 // most explicit to least explicit.
@@ -8378,48 +10973,58 @@ var WEAK_TITLE_META_TAGS = ['og:title'];
 // exists in the className, which is not as accurate as .className (which
 // splits on spaces/endlines), but for our purposes it's close enough. The
 // speed tradeoff is worth the accuracy hit.
-var STRONG_TITLE_SELECTORS = ['.hentry .entry-title', 'h1#articleHeader', 'h1.articleHeader', 'h1.article', '.instapaper_title', '#meebo-title'];
-var WEAK_TITLE_SELECTORS = ['article h1', '#entry-title', '.entry-title', '#entryTitle', '#entrytitle', '.entryTitle', '.entrytitle', '#articleTitle', '.articleTitle', 'post post-title', 'h1.title', 'h2.article', 'h1', 'html head title', 'title'];
+const STRONG_TITLE_SELECTORS = [
+  '.hentry .entry-title',
+  'h1#articleHeader',
+  'h1.articleHeader',
+  'h1.article',
+  '.instapaper_title',
+  '#meebo-title',
+];
 
-var GenericTitleExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      url = _ref.url,
-      metaCache = _ref.metaCache;
+const WEAK_TITLE_SELECTORS = [
+  'article h1',
+  '#entry-title',
+  '.entry-title',
+  '#entryTitle',
+  '#entrytitle',
+  '.entryTitle',
+  '.entrytitle',
+  '#articleTitle',
+  '.articleTitle',
+  'post post-title',
+  'h1.title',
+  'h2.article',
+  'h1',
+  'html head title',
+  'title',
+];
+
+const GenericTitleExtractor = {
+  extract({ $, url, metaCache }) {
     // First, check to see if we have a matching meta tag that we can make
     // use of that is strongly associated with the headline.
-    var title;
+    let title;
+
     title = extractFromMeta($, STRONG_TITLE_META_TAGS, metaCache);
-    if (title) return cleanTitle(title, {
-      url: url,
-      $: $
-    });
+    if (title) return cleanTitle(title, { url, $ });
 
     // Second, look through our content selectors for the most likely
     // article title that is strongly associated with the headline.
     title = extractFromSelectors($, STRONG_TITLE_SELECTORS);
-    if (title) return cleanTitle(title, {
-      url: url,
-      $: $
-    });
+    if (title) return cleanTitle(title, { url, $ });
 
     // Third, check for weaker meta tags that may match.
     title = extractFromMeta($, WEAK_TITLE_META_TAGS, metaCache);
-    if (title) return cleanTitle(title, {
-      url: url,
-      $: $
-    });
+    if (title) return cleanTitle(title, { url, $ });
 
     // Last, look for weaker selector tags that may match.
     title = extractFromSelectors($, WEAK_TITLE_SELECTORS);
-    if (title) return cleanTitle(title, {
-      url: url,
-      $: $
-    });
+    if (title) return cleanTitle(title, { url, $ });
 
     // If no matches, return an empty string
     return '';
-  }
+  },
 };
 
 // An ordered list of meta tag names that denote likely article authors. All
@@ -8428,8 +11033,17 @@ var GenericTitleExtractor = {
 //
 // Note: "author" is too often the -developer- of the page, so it is not
 // added here.
-var AUTHOR_META_TAGS = ['byl', 'clmst', 'dc.author', 'dcsext.author', 'dc.creator', 'rbauthors', 'authors'];
-var AUTHOR_MAX_LENGTH = 300;
+const AUTHOR_META_TAGS = [
+  'byl',
+  'clmst',
+  'dc.author',
+  'dcsext.author',
+  'dc.creator',
+  'rbauthors',
+  'authors',
+];
+
+const AUTHOR_MAX_LENGTH = 300;
 
 // An ordered list of XPath Selectors to find likely article authors. From
 // most explicit to least explicit.
@@ -8438,21 +11052,43 @@ var AUTHOR_MAX_LENGTH = 300;
 // exists in the className, which is not as accurate as .className (which
 // splits on spaces/endlines), but for our purposes it's close enough. The
 // speed tradeoff is worth the accuracy hit.
-var AUTHOR_SELECTORS = ['.entry .entry-author', '.author.vcard .fn', '.author .vcard .fn', '.byline.vcard .fn', '.byline .vcard .fn', '.byline .by .author', '.byline .by', '.byline .author', '.post-author.vcard', '.post-author .vcard', 'a[rel=author]', '#by_author', '.by_author', '#entryAuthor', '.entryAuthor', '.byline a[href*=author]', '#author .authorname', '.author .authorname', '#author', '.author', '.articleauthor', '.ArticleAuthor', '.byline'];
+const AUTHOR_SELECTORS = [
+  '.entry .entry-author',
+  '.author.vcard .fn',
+  '.author .vcard .fn',
+  '.byline.vcard .fn',
+  '.byline .vcard .fn',
+  '.byline .by .author',
+  '.byline .by',
+  '.byline .author',
+  '.post-author.vcard',
+  '.post-author .vcard',
+  'a[rel=author]',
+  '#by_author',
+  '.by_author',
+  '#entryAuthor',
+  '.entryAuthor',
+  '.byline a[href*=author]',
+  '#author .authorname',
+  '.author .authorname',
+  '#author',
+  '.author',
+  '.articleauthor',
+  '.ArticleAuthor',
+  '.byline',
+];
 
 // An ordered list of Selectors to find likely article authors, with
 // regular expression for content.
-var bylineRe = /^[\n\s]*By/i;
-var BYLINE_SELECTORS_RE = [['#byline', bylineRe], ['.byline', bylineRe]];
+const bylineRe = /^[\n\s]*By/i;
+const BYLINE_SELECTORS_RE = [
+  ['#byline', bylineRe],
+  ['.byline', bylineRe],
+];
 
-function _createForOfIteratorHelper$1(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray$1(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray$1(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray$1(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0; } }
-function _arrayLikeToArray$1(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var GenericAuthorExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      metaCache = _ref.metaCache;
-    var author;
+const GenericAuthorExtractor = {
+  extract({ $, metaCache }) {
+    let author;
 
     // First, check to see if we have a matching
     // meta tag that we can make use of.
@@ -8469,57 +11105,89 @@ var GenericAuthorExtractor = {
 
     // Last, use our looser regular-expression based selectors for
     // potential authors.
-    var _iterator = _createForOfIteratorHelper$1(BYLINE_SELECTORS_RE),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var _step$value = _slicedToArray(_step.value, 2),
-          selector = _step$value[0],
-          regex = _step$value[1];
-        var node = $(selector);
-        if (node.length === 1) {
-          var text = node.text();
-          if (regex.test(text)) {
-            return cleanAuthor(text);
-          }
+
+    for (const [selector, regex] of BYLINE_SELECTORS_RE) {
+      const node = $(selector);
+      if (node.length === 1) {
+        const text = node.text();
+        if (regex.test(text)) {
+          return cleanAuthor(text);
         }
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
     }
+
     return null;
-  }
+  },
 };
 
 // An ordered list of meta tag names that denote
 // likely date published dates. All attributes
 // should be lowercase for faster case-insensitive matching.
 // From most distinct to least distinct.
-var DATE_PUBLISHED_META_TAGS = ['article:published_time', 'displaydate', 'dc.date', 'dc.date.issued', 'rbpubdate', 'publish_date', 'pub_date', 'pagedate', 'pubdate', 'revision_date', 'doc_date', 'date_created', 'content_create_date', 'lastmodified', 'created', 'date'];
+const DATE_PUBLISHED_META_TAGS = [
+  'article:published_time',
+  'displaydate',
+  'dc.date',
+  'dc.date.issued',
+  'rbpubdate',
+  'publish_date',
+  'pub_date',
+  'pagedate',
+  'pubdate',
+  'revision_date',
+  'doc_date',
+  'date_created',
+  'content_create_date',
+  'lastmodified',
+  'created',
+  'date',
+];
 
 // An ordered list of XPath Selectors to find
 // likely date published dates. From most explicit
 // to least explicit.
-var DATE_PUBLISHED_SELECTORS = ['.hentry .dtstamp.published', '.hentry .published', '.hentry .dtstamp.updated', '.hentry .updated', '.single .published', '.meta .published', '.meta .postDate', '.entry-date', '.byline .date', '.postmetadata .date', '.article_datetime', '.date-header', '.story-date', '.dateStamp', '#story .datetime', '.dateline', '.pubdate'];
+const DATE_PUBLISHED_SELECTORS = [
+  '.hentry .dtstamp.published',
+  '.hentry .published',
+  '.hentry .dtstamp.updated',
+  '.hentry .updated',
+  '.single .published',
+  '.meta .published',
+  '.meta .postDate',
+  '.entry-date',
+  '.byline .date',
+  '.postmetadata .date',
+  '.article_datetime',
+  '.date-header',
+  '.story-date',
+  '.dateStamp',
+  '#story .datetime',
+  '.dateline',
+  '.pubdate',
+];
 
 // An ordered list of compiled regular expressions to find likely date
 // published dates from the URL. These should always have the first
 // reference be a date string that is parseable by dateutil.parser.parse
-var abbrevMonthsStr = '(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)';
-var DATE_PUBLISHED_URL_RES = [new RegExp('/(20\\d{2}/\\d{2}/\\d{2})/', 'i'), new RegExp('(20\\d{2}-[01]\\d-[0-3]\\d)', 'i'), new RegExp("/(20\\d{2}/".concat(abbrevMonthsStr, "/[0-3]\\d)/"), 'i')];
+const abbrevMonthsStr = '(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)';
+const DATE_PUBLISHED_URL_RES = [
+  new RegExp('/(20\\d{2}/\\d{2}/\\d{2})/', 'i'),
+  new RegExp('(20\\d{2}-[01]\\d-[0-3]\\d)', 'i'),
+  new RegExp(`/(20\\d{2}/${abbrevMonthsStr}/[0-3]\\d)/`, 'i'),
+];
 
-var GenericDatePublishedExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      url = _ref.url,
-      metaCache = _ref.metaCache;
-    var datePublished;
+const GenericDatePublishedExtractor = {
+  extract({ $, url, metaCache }) {
+    let datePublished;
     // First, check to see if we have a matching meta tag
     // that we can make use of.
     // Don't try cleaning tags from this string
-    datePublished = extractFromMeta($, DATE_PUBLISHED_META_TAGS, metaCache, false);
+    datePublished = extractFromMeta(
+      $,
+      DATE_PUBLISHED_META_TAGS,
+      metaCache,
+      false
+    );
     if (datePublished) return cleanDatePublished(datePublished);
 
     // Second, look through our selectors looking for potential
@@ -8530,43 +11198,92 @@ var GenericDatePublishedExtractor = {
     // Lastly, look to see if a dately string exists in the URL
     datePublished = extractFromUrl(url, DATE_PUBLISHED_URL_RES);
     if (datePublished) return cleanDatePublished(datePublished);
+
     return null;
-  }
+  },
 };
 
 // Currently there is only one selector for
 // deks. We should simply return null here
 // until we have a more robust generic option.
 // Below is the original source for this, for reference.
-var GenericDekExtractor = {
-  extract: function extract() {
+const GenericDekExtractor = {
+  extract() {
     return null;
-  }
+  },
 };
 
 // An ordered list of meta tag names that denote likely article leading images.
 // All attributes should be lowercase for faster case-insensitive matching.
 // From most distinct to least distinct.
-var LEAD_IMAGE_URL_META_TAGS = ['og:image', 'twitter:image', 'image_src'];
-var LEAD_IMAGE_URL_SELECTORS = ['link[rel=image_src]'];
-var POSITIVE_LEAD_IMAGE_URL_HINTS = ['upload', 'wp-content', 'large', 'photo', 'wp-image'];
-var POSITIVE_LEAD_IMAGE_URL_HINTS_RE = new RegExp(POSITIVE_LEAD_IMAGE_URL_HINTS.join('|'), 'i');
-var NEGATIVE_LEAD_IMAGE_URL_HINTS = ['spacer', 'sprite', 'blank', 'throbber', 'gradient', 'tile', 'bg', 'background', 'icon', 'social', 'header', 'hdr', 'advert', 'spinner', 'loader', 'loading', 'default', 'rating', 'share', 'facebook', 'twitter', 'theme', 'promo', 'ads', 'wp-includes'];
-var NEGATIVE_LEAD_IMAGE_URL_HINTS_RE = new RegExp(NEGATIVE_LEAD_IMAGE_URL_HINTS.join('|'), 'i');
-var GIF_RE = /\.gif(\?.*)?$/i;
-var JPG_RE = /\.jpe?g(\?.*)?$/i;
+const LEAD_IMAGE_URL_META_TAGS = [
+  'og:image',
+  'twitter:image',
+  'image_src',
+];
+
+const LEAD_IMAGE_URL_SELECTORS = ['link[rel=image_src]'];
+
+const POSITIVE_LEAD_IMAGE_URL_HINTS = [
+  'upload',
+  'wp-content',
+  'large',
+  'photo',
+  'wp-image',
+];
+const POSITIVE_LEAD_IMAGE_URL_HINTS_RE = new RegExp(
+  POSITIVE_LEAD_IMAGE_URL_HINTS.join('|'),
+  'i'
+);
+
+const NEGATIVE_LEAD_IMAGE_URL_HINTS = [
+  'spacer',
+  'sprite',
+  'blank',
+  'throbber',
+  'gradient',
+  'tile',
+  'bg',
+  'background',
+  'icon',
+  'social',
+  'header',
+  'hdr',
+  'advert',
+  'spinner',
+  'loader',
+  'loading',
+  'default',
+  'rating',
+  'share',
+  'facebook',
+  'twitter',
+  'theme',
+  'promo',
+  'ads',
+  'wp-includes',
+];
+const NEGATIVE_LEAD_IMAGE_URL_HINTS_RE = new RegExp(
+  NEGATIVE_LEAD_IMAGE_URL_HINTS.join('|'),
+  'i'
+);
+
+const GIF_RE = /\.gif(\?.*)?$/i;
+const JPG_RE = /\.jpe?g(\?.*)?$/i;
 
 function getSig($node) {
-  return "".concat($node.attr('class') || '', " ").concat($node.attr('id') || '');
+  return `${$node.attr('class') || ''} ${$node.attr('id') || ''}`;
 }
 
 // Scores image urls based on a variety of heuristics.
 function scoreImageUrl(url) {
   url = url.trim();
-  var score = 0;
+  let score = 0;
+
   if (POSITIVE_LEAD_IMAGE_URL_HINTS_RE.test(url)) {
     score += 20;
   }
+
   if (NEGATIVE_LEAD_IMAGE_URL_HINTS_RE.test(url)) {
     score -= 20;
   }
@@ -8576,6 +11293,7 @@ function scoreImageUrl(url) {
   if (GIF_RE.test(url)) {
     score -= 10;
   }
+
   if (JPG_RE.test(url)) {
     score += 10;
   }
@@ -8590,49 +11308,59 @@ function scoreAttr($img) {
   if ($img.attr('alt')) {
     return 5;
   }
+
   return 0;
 }
 
 // Look through our parent and grandparent for figure-like
 // container elements, give a bonus if we find them
 function scoreByParents$1($img) {
-  var score = 0;
-  var $figParent = $img.parents('figure').first();
+  let score = 0;
+  const $figParent = $img.parents('figure').first();
+
   if ($figParent.length === 1) {
     score += 25;
   }
-  var $parent = $img.parent();
-  var $gParent;
+
+  const $parent = $img.parent();
+  let $gParent;
   if ($parent.length === 1) {
     $gParent = $parent.parent();
   }
-  [$parent, $gParent].forEach(function ($node) {
+
+  [$parent, $gParent].forEach($node => {
     if (PHOTO_HINTS_RE.test(getSig($node))) {
       score += 15;
     }
   });
+
   return score;
 }
 
 // Look at our immediate sibling and see if it looks like it's a
 // caption. Bonus if so.
 function scoreBySibling($img) {
-  var score = 0;
-  var $sibling = $img.next();
-  var sibling = $sibling.get(0);
+  let score = 0;
+  const $sibling = $img.next();
+  const sibling = $sibling.get(0);
+
   if (sibling && sibling.tagName.toLowerCase() === 'figcaption') {
     score += 25;
   }
+
   if (PHOTO_HINTS_RE.test(getSig($sibling))) {
     score += 15;
   }
+
   return score;
 }
+
 function scoreByDimensions($img) {
-  var score = 0;
-  var width = _parseFloat($img.attr('width'));
-  var height = _parseFloat($img.attr('height'));
-  var src = $img.attr('src');
+  let score = 0;
+
+  const width = parseFloat($img.attr('width'));
+  const height = parseFloat($img.attr('height'));
+  const src = $img.attr('src');
 
   // Penalty for skinny images
   if (width && width <= 50) {
@@ -8643,8 +11371,9 @@ function scoreByDimensions($img) {
   if (height && height <= 50) {
     score -= 50;
   }
+
   if (width && height && !src.includes('sprite')) {
-    var area = width * height;
+    const area = width * height;
     if (area < 5000) {
       // Smaller than 50 x 100
       score -= 100;
@@ -8652,15 +11381,13 @@ function scoreByDimensions($img) {
       score += Math.round(area / 1000);
     }
   }
+
   return score;
 }
+
 function scoreByPosition($imgs, index) {
   return $imgs.length / 2 - index;
 }
-
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof _Symbol && r[_Symbol$iterator] || r["@@iterator"]; if (!t) { if (_Array$isArray(r) || (t = _unsupportedIterableToArray(r)) || e) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: true } : { done: false, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = true, u = false; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = true, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
 // Given a resource, try to find the lead image URL from within
 // it. Like content and next page extraction, uses a scoring system
@@ -8670,13 +11397,9 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 // Potential signals to still take advantage of:
 //   * domain
 //   * weird aspect ratio
-var GenericLeadImageUrlExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      content = _ref.content,
-      metaCache = _ref.metaCache,
-      html = _ref.html;
-    var cleanUrl;
+const GenericLeadImageUrlExtractor = {
+  extract({ $, content, metaCache, html }) {
+    let cleanUrl;
     if (!$.browser && $('head').length === 0) {
       $('*').first().prepend(html);
     }
@@ -8685,72 +11408,79 @@ var GenericLeadImageUrlExtractor = {
     // Moving this higher because common practice is now to use large
     // images on things like Open Graph or Twitter cards.
     // images usually have for things like Open Graph.
-    var imageUrl = extractFromMeta($, LEAD_IMAGE_URL_META_TAGS, metaCache, false);
+    const imageUrl = extractFromMeta(
+      $,
+      LEAD_IMAGE_URL_META_TAGS,
+      metaCache,
+      false
+    );
+
     if (imageUrl) {
       cleanUrl = clean$1(imageUrl);
+
       if (cleanUrl) return cleanUrl;
     }
 
     // Next, try to find the "best" image via the content.
     // We'd rather not have to fetch each image and check dimensions,
     // so try to do some analysis and determine them instead.
-    var $content = $(content);
-    var imgs = $('img', $content).toArray();
-    var imgScores = {};
-    imgs.forEach(function (img, index) {
-      var $img = $(img);
-      var src = $img.attr('src');
+    const $content = $(content);
+    const imgs = $('img', $content).toArray();
+    const imgScores = {};
+
+    imgs.forEach((img, index) => {
+      const $img = $(img);
+      const src = $img.attr('src');
+
       if (!src) return;
-      var score = scoreImageUrl(src);
+
+      let score = scoreImageUrl(src);
       score += scoreAttr($img);
       score += scoreByParents$1($img);
       score += scoreBySibling($img);
       score += scoreByDimensions($img);
       score += scoreByPosition(imgs, index);
+
       imgScores[src] = score;
     });
-    var _Reflect$ownKeys$redu = _Reflect$ownKeys(imgScores).reduce(function (acc, key) {
-        return imgScores[key] > acc[1] ? [key, imgScores[key]] : acc;
-      }, [null, 0]),
-      _Reflect$ownKeys$redu2 = _slicedToArray(_Reflect$ownKeys$redu, 2),
-      topUrl = _Reflect$ownKeys$redu2[0],
-      topScore = _Reflect$ownKeys$redu2[1];
+
+    const [topUrl, topScore] = Reflect.ownKeys(imgScores).reduce(
+      (acc, key) => (imgScores[key] > acc[1] ? [key, imgScores[key]] : acc),
+      [null, 0]
+    );
+
     if (topScore > 0) {
       cleanUrl = clean$1(topUrl);
+
       if (cleanUrl) return cleanUrl;
     }
 
     // If nothing else worked, check to see if there are any really
     // probable nodes in the doc, like <link rel="image_src" />.
-    var _iterator = _createForOfIteratorHelper(LEAD_IMAGE_URL_SELECTORS),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var selector = _step.value;
-        var $node = $(selector).first();
-        var src = $node.attr('src');
-        if (src) {
-          cleanUrl = clean$1(src);
-          if (cleanUrl) return cleanUrl;
-        }
-        var href = $node.attr('href');
-        if (href) {
-          cleanUrl = clean$1(href);
-          if (cleanUrl) return cleanUrl;
-        }
-        var value = $node.attr('value');
-        if (value) {
-          cleanUrl = clean$1(value);
-          if (cleanUrl) return cleanUrl;
-        }
+
+    for (const selector of LEAD_IMAGE_URL_SELECTORS) {
+      const $node = $(selector).first();
+      const src = $node.attr('src');
+      if (src) {
+        cleanUrl = clean$1(src);
+        if (cleanUrl) return cleanUrl;
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+
+      const href = $node.attr('href');
+      if (href) {
+        cleanUrl = clean$1(href);
+        if (cleanUrl) return cleanUrl;
+      }
+
+      const value = $node.attr('value');
+      if (value) {
+        cleanUrl = clean$1(value);
+        if (cleanUrl) return cleanUrl;
+      }
     }
+
     return null;
-  }
+  },
 };
 
 function scoreSimilarity(score, articleUrl, href) {
@@ -8760,17 +11490,22 @@ function scoreSimilarity(score, articleUrl, href) {
   // sliding scale, subtract points from this link based on
   // similarity.
   if (score > 0) {
-    var similarity = new difflib.SequenceMatcher(null, articleUrl, href).ratio();
+    const similarity = new difflib.SequenceMatcher(
+      null,
+      articleUrl,
+      href
+    ).ratio();
     // Subtract .1 from diff_percent when calculating modifier,
     // which means that if it's less than 10% different, we give a
     // bonus instead. Ex:
     //  3% different = +17.5 points
     // 10% different = 0 points
     // 20% different = -25 points
-    var diffPercent = 1.0 - similarity;
-    var diffModifier = -(250 * (diffPercent - 0.2));
+    const diffPercent = 1.0 - similarity;
+    const diffModifier = -(250 * (diffPercent - 0.2));
     return score + diffModifier;
   }
+
   return 0;
 }
 
@@ -8779,9 +11514,10 @@ function scoreLinkText(linkText, pageNum) {
   // bonus, with a slight bias towards lower numbered pages. This is
   // so that pages that might not have 'next' in their text can still
   // get scored, and sorted properly by score.
-  var score = 0;
+  let score = 0;
+
   if (IS_DIGIT_RE.test(linkText.trim())) {
-    var linkTextAsNum = _parseInt(linkText, 10);
+    const linkTextAsNum = parseInt(linkText, 10);
     // If it's the first page, we already got it on the first call.
     // Give it a negative score. Otherwise, up to page 10, give a
     // small bonus.
@@ -8798,6 +11534,7 @@ function scoreLinkText(linkText, pageNum) {
       score -= 50;
     }
   }
+
   return score;
 }
 
@@ -8808,53 +11545,79 @@ function scorePageInLink(pageNum, isWp) {
   if (pageNum && !isWp) {
     return 50;
   }
+
   return 0;
 }
 
-var DIGIT_RE = /\d/;
+const DIGIT_RE = /\d/;
 
 // A list of words that, if found in link text or URLs, likely mean that
 // this link is not a next page link.
-var EXTRANEOUS_LINK_HINTS = ['print', 'archive', 'comment', 'discuss', 'e-mail', 'email', 'share', 'reply', 'all', 'login', 'sign', 'single', 'adx', 'entry-unrelated'];
-var EXTRANEOUS_LINK_HINTS_RE = new RegExp(EXTRANEOUS_LINK_HINTS.join('|'), 'i');
+const EXTRANEOUS_LINK_HINTS = [
+  'print',
+  'archive',
+  'comment',
+  'discuss',
+  'e-mail',
+  'email',
+  'share',
+  'reply',
+  'all',
+  'login',
+  'sign',
+  'single',
+  'adx',
+  'entry-unrelated',
+];
+const EXTRANEOUS_LINK_HINTS_RE = new RegExp(
+  EXTRANEOUS_LINK_HINTS.join('|'),
+  'i'
+);
 
 // Match any link text/classname/id that looks like it could mean the next
 // page. Things like: next, continue, >, >>, » but not >|, »| as those can
 // mean last page.
-var NEXT_LINK_TEXT_RE = new RegExp('(next|weiter|continue|>([^|]|$)|»([^|]|$))', 'i');
+const NEXT_LINK_TEXT_RE = new RegExp(
+  '(next|weiter|continue|>([^|]|$)|»([^|]|$))',
+  'i'
+);
 
 // Match any link text/classname/id that looks like it is an end link: things
 // like "first", "last", "end", etc.
-var CAP_LINK_TEXT_RE = new RegExp('(first|last|end)', 'i');
+const CAP_LINK_TEXT_RE = new RegExp('(first|last|end)', 'i');
 
 // Match any link text/classname/id that looks like it means the previous
 // page.
-var PREV_LINK_TEXT_RE = new RegExp('(prev|earl|old|new|<|«)', 'i');
+const PREV_LINK_TEXT_RE = new RegExp('(prev|earl|old|new|<|«)', 'i');
 
 function scoreExtraneousLinks(href) {
   // If the URL itself contains extraneous values, give a penalty.
   if (EXTRANEOUS_LINK_HINTS_RE.test(href)) {
     return -25;
   }
+
   return 0;
 }
 
 function makeSig$1($link) {
-  return "".concat($link.attr('class') || '', " ").concat($link.attr('id') || '');
+  return `${$link.attr('class') || ''} ${$link.attr('id') || ''}`;
 }
+
 function scoreByParents($link) {
   // If a parent node contains paging-like classname or id, give a
   // bonus. Additionally, if a parent_node contains bad content
   // (like 'sponsor'), give a penalty.
-  var $parent = $link.parent();
-  var positiveMatch = false;
-  var negativeMatch = false;
-  var score = 0;
-  _Array$from(range(0, 4)).forEach(function () {
+  let $parent = $link.parent();
+  let positiveMatch = false;
+  let negativeMatch = false;
+  let score = 0;
+
+  Array.from(range(0, 4)).forEach(() => {
     if ($parent.length === 0) {
       return;
     }
-    var parentData = makeSig$1($parent);
+
+    const parentData = makeSig$1($parent);
 
     // If we have 'page' or 'paging' in our data, that's a good
     // sign. Add a bonus.
@@ -8866,14 +11629,20 @@ function scoreByParents($link) {
     // If we have 'comment' or something in our data, and
     // we don't have something like 'content' as well, that's
     // a bad sign. Give a penalty.
-    if (!negativeMatch && NEGATIVE_SCORE_RE$1.test(parentData) && EXTRANEOUS_LINK_HINTS_RE.test(parentData)) {
+    if (
+      !negativeMatch &&
+      NEGATIVE_SCORE_RE$1.test(parentData) &&
+      EXTRANEOUS_LINK_HINTS_RE.test(parentData)
+    ) {
       if (!POSITIVE_SCORE_RE$1.test(parentData)) {
         negativeMatch = true;
         score -= 25;
       }
     }
+
     $parent = $parent.parent();
   });
+
   return score;
 }
 
@@ -8883,14 +11652,20 @@ function scorePrevLink(linkData) {
   if (PREV_LINK_TEXT_RE.test(linkData)) {
     return -200;
   }
+
   return 0;
 }
 
-function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrls) {
+function shouldScore(
+  href,
+  articleUrl,
+  baseUrl,
+  parsedUrl,
+  linkText,
+  previousUrls
+) {
   // skip if we've already fetched this url
-  if (previousUrls.find(function (url) {
-    return href === url;
-  }) !== undefined) {
+  if (previousUrls.find(url => href === url) !== undefined) {
     return false;
   }
 
@@ -8899,18 +11674,17 @@ function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrl
   if (!href || href === articleUrl || href === baseUrl) {
     return false;
   }
-  var hostname = parsedUrl.hostname;
-  var _URL$parse = URL$1.parse(href),
-    linkHost = _URL$parse.hostname;
+
+  const linkUrl = parseUrl(href);
 
   // Domain mismatch.
-  if (linkHost !== hostname) {
+  if (!linkUrl || linkUrl.hostname !== parsedUrl.hostname) {
     return false;
   }
 
   // If href doesn't contain a digit after removing the base URL,
   // it's certainly not the next page.
-  var fragment = href.replace(baseUrl, '');
+  const fragment = href.replace(baseUrl, '');
   if (!DIGIT_RE.test(fragment)) {
     return false;
   }
@@ -8925,6 +11699,7 @@ function shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrl
   if (linkText.length > 25) {
     return false;
   }
+
   return true;
 }
 
@@ -8936,6 +11711,7 @@ function scoreBaseUrl(href, baseRegex) {
   if (!baseRegex.test(href)) {
     return -25;
   }
+
   return 0;
 }
 
@@ -8944,6 +11720,7 @@ function scoreNextLinkText(linkData) {
   if (NEXT_LINK_TEXT_RE.test(linkData)) {
     return 50;
   }
+
   return 0;
 }
 
@@ -8958,26 +11735,31 @@ function scoreCapLinks(linkData) {
       return -65;
     }
   }
+
   return 0;
 }
 
 function makeBaseRegex(baseUrl) {
-  return new RegExp("^".concat(baseUrl), 'i');
+  return new RegExp(`^${baseUrl}`, 'i');
 }
+
 function makeSig($link, linkText) {
-  return "".concat(linkText || $link.text(), " ").concat($link.attr('class') || '', " ").concat($link.attr('id') || '');
+  return `${linkText || $link.text()} ${$link.attr('class') || ''} ${
+    $link.attr('id') || ''
+  }`;
 }
-function scoreLinks(_ref) {
-  var links = _ref.links,
-    articleUrl = _ref.articleUrl,
-    baseUrl = _ref.baseUrl,
-    parsedUrl = _ref.parsedUrl,
-    $ = _ref.$,
-    _ref$previousUrls = _ref.previousUrls,
-    previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-  parsedUrl = parsedUrl || URL$1.parse(articleUrl);
-  var baseRegex = makeBaseRegex(baseUrl);
-  var isWp = isWordpress($);
+
+function scoreLinks({
+  links,
+  articleUrl,
+  baseUrl,
+  parsedUrl,
+  $,
+  previousUrls = [],
+}) {
+  parsedUrl = parsedUrl || new URL(articleUrl);
+  const baseRegex = makeBaseRegex(baseUrl);
+  const isWp = isWordpress($);
 
   // Loop through all links, looking for hints that they may be next-page
   // links. Things like having "page" in their textContent, className or
@@ -8986,18 +11768,22 @@ function scoreLinks(_ref) {
   // After we do that, assign each page a score, and pick the one that
   // looks most like the next page link, as long as its score is strong
   // enough to have decent confidence.
-  var scoredPages = links.reduce(function (possiblePages, link) {
+  const scoredPages = links.reduce((possiblePages, link) => {
     // Remove any anchor data since we don't do a good job
     // standardizing URLs (it's hard), we're going to do
     // some checking with and without a trailing slash
-    var attrs = getAttrs(link);
+    const attrs = getAttrs(link);
 
     // if href is undefined, return
     if (!attrs.href) return possiblePages;
-    var href = removeAnchor(attrs.href);
-    var $link = $(link);
-    var linkText = $link.text();
-    if (!shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrls)) {
+
+    const href = removeAnchor(attrs.href);
+    const $link = $(link);
+    const linkText = $link.text();
+
+    if (
+      !shouldScore(href, articleUrl, baseUrl, parsedUrl, linkText, previousUrls)
+    ) {
       return possiblePages;
     }
 
@@ -9005,16 +11791,20 @@ function scoreLinks(_ref) {
     if (!possiblePages[href]) {
       possiblePages[href] = {
         score: 0,
-        linkText: linkText,
-        href: href
+        linkText,
+        href,
       };
     } else {
-      possiblePages[href].linkText = "".concat(possiblePages[href].linkText, "|").concat(linkText);
+      possiblePages[href].linkText = `${
+        possiblePages[href].linkText
+      }|${linkText}`;
     }
-    var possiblePage = possiblePages[href];
-    var linkData = makeSig($link, linkText);
-    var pageNum = pageNumFromUrl(href);
-    var score = scoreBaseUrl(href, baseRegex);
+
+    const possiblePage = possiblePages[href];
+    const linkData = makeSig($link, linkText);
+    const pageNum = pageNumFromUrl(href);
+
+    let score = scoreBaseUrl(href, baseRegex);
     score += scoreNextLinkText(linkData);
     score += scoreCapLinks(linkData);
     score += scorePrevLink(linkData);
@@ -9023,32 +11813,33 @@ function scoreLinks(_ref) {
     score += scorePageInLink(pageNum, isWp);
     score += scoreLinkText(linkText, pageNum);
     score += scoreSimilarity(score, articleUrl, href);
+
     possiblePage.score = score;
+
     return possiblePages;
   }, {});
-  return _Reflect$ownKeys(scoredPages).length === 0 ? null : scoredPages;
+
+  return Reflect.ownKeys(scoredPages).length === 0 ? null : scoredPages;
 }
 
 // Looks for and returns next page url
 // for multi-page articles
-var GenericNextPageUrlExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      url = _ref.url,
-      parsedUrl = _ref.parsedUrl,
-      _ref$previousUrls = _ref.previousUrls,
-      previousUrls = _ref$previousUrls === void 0 ? [] : _ref$previousUrls;
-    parsedUrl = parsedUrl || URL$1.parse(url);
-    var articleUrl = removeAnchor(url);
-    var baseUrl = articleBaseUrl(url, parsedUrl);
-    var links = $('a[href]').toArray();
-    var scoredLinks = scoreLinks({
-      links: links,
-      articleUrl: articleUrl,
-      baseUrl: baseUrl,
-      parsedUrl: parsedUrl,
-      $: $,
-      previousUrls: previousUrls
+const GenericNextPageUrlExtractor = {
+  extract({ $, url, parsedUrl, previousUrls = [] }) {
+    parsedUrl = parsedUrl || new URL(url);
+
+    const articleUrl = removeAnchor(url);
+    const baseUrl = articleBaseUrl(url, parsedUrl);
+
+    const links = $('a[href]').toArray();
+
+    const scoredLinks = scoreLinks({
+      links,
+      articleUrl,
+      baseUrl,
+      parsedUrl,
+      $,
+      previousUrls,
     });
 
     // If no links were scored, return null
@@ -9056,155 +11847,171 @@ var GenericNextPageUrlExtractor = {
 
     // now that we've scored all possible pages,
     // find the biggest one.
-    var topPage = _Reflect$ownKeys(scoredLinks).reduce(function (acc, link) {
-      var scoredLink = scoredLinks[link];
-      return scoredLink.score > acc.score ? scoredLink : acc;
-    }, {
-      score: -100
-    });
+    const topPage = Reflect.ownKeys(scoredLinks).reduce(
+      (acc, link) => {
+        const scoredLink = scoredLinks[link];
+        return scoredLink.score > acc.score ? scoredLink : acc;
+      },
+      { score: -100 }
+    );
 
     // If the score is less than 50, we're not confident enough to use it,
     // so we fail.
     if (topPage.score >= 50) {
       return topPage.href;
     }
+
     return null;
-  }
+  },
 };
 
-var CANONICAL_META_SELECTORS = ['og:url'];
+const CANONICAL_META_SELECTORS = ['og:url'];
 
 function parseDomain(url) {
-  var parsedUrl = URL$1.parse(url);
-  var hostname = parsedUrl.hostname;
-  return hostname;
+  const parsedUrl = parseUrl(url);
+  if (!parsedUrl) return null;
+
+  return parsedUrl.hostname;
 }
+
 function result(url) {
   return {
-    url: url,
-    domain: parseDomain(url)
+    url,
+    domain: parseDomain(url),
   };
 }
-var GenericUrlExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      url = _ref.url,
-      metaCache = _ref.metaCache;
-    var $canonical = $('link[rel=canonical]');
+
+const GenericUrlExtractor = {
+  extract({ $, url, metaCache }) {
+    const $canonical = $('link[rel=canonical]');
     if ($canonical.length !== 0) {
-      var href = $canonical.attr('href');
+      const href = $canonical.attr('href');
       if (href) {
         return result(href);
       }
     }
-    var metaUrl = extractFromMeta($, CANONICAL_META_SELECTORS, metaCache);
+
+    const metaUrl = extractFromMeta($, CANONICAL_META_SELECTORS, metaCache);
     if (metaUrl) {
       return result(metaUrl);
     }
+
     return result(url);
-  }
+  },
 };
 
-var defaults = {
+const defaults = {
   ellipse: '…',
   chars: [' ', '-'],
   max: 140,
-  truncate: true
+  truncate: true,
 };
+
 function ellipsizeMiddle(str, max, ellipse, chars) {
   if (str.length <= max) return str;
   if (max < 2) return str.slice(0, max - ellipse.length) + ellipse;
-  var maxLen = max - ellipse.length;
-  var middle = Math.floor(maxLen / 2);
-  var left = middle;
-  var right = str.length - middle;
-  for (var i = 0; i < middle; i += 1) {
-    var charLeft = str.charAt(i);
-    var posRight = str.length - i;
-    var charRight = str.charAt(posRight);
+
+  const maxLen = max - ellipse.length;
+  const middle = Math.floor(maxLen / 2);
+
+  let left = middle;
+  let right = str.length - middle;
+
+  for (let i = 0; i < middle; i += 1) {
+    const charLeft = str.charAt(i);
+    const posRight = str.length - i;
+    const charRight = str.charAt(posRight);
+
     if (chars.indexOf(charLeft) !== -1) left = i;
     if (chars.indexOf(charRight) !== -1) right = posRight;
   }
+
   return str.slice(0, left) + ellipse + str.slice(right);
 }
+
 function ellipsize(str, max, ellipse, chars, truncate) {
   if (str.length <= max) return str;
-  var maxLen = max - ellipse.length;
-  var end = maxLen;
-  var breakpointFound = false;
-  for (var i = 0; i <= maxLen; i += 1) {
-    var _char = str.charAt(i);
-    if (chars.indexOf(_char) !== -1) {
+
+  const maxLen = max - ellipse.length;
+  let end = maxLen;
+  let breakpointFound = false;
+
+  for (let i = 0; i <= maxLen; i += 1) {
+    const char = str.charAt(i);
+    if (chars.indexOf(char) !== -1) {
       end = i;
       breakpointFound = true;
     }
   }
+
   if (!truncate && !breakpointFound) return '';
+
   return str.slice(0, end) + ellipse;
 }
-var ellipsize$1 = (function (str, max, opts) {
+
+var ellipsize$1 = (str, max, opts) => {
   if (typeof str !== 'string' || str.length === 0) return '';
   if (max === 0) return '';
+
   opts = opts || {};
-  _Object$keys(defaults).forEach(function (key) {
+
+  Object.keys(defaults).forEach(key => {
     if (opts[key] === null || typeof opts[key] === 'undefined') {
       opts[key] = defaults[key];
     }
   });
+
   opts.max = max || opts.max;
-  if (opts.truncate === 'middle') return ellipsizeMiddle(str, opts.max, opts.ellipse, opts.chars);
+
+  if (opts.truncate === 'middle')
+    return ellipsizeMiddle(str, opts.max, opts.ellipse, opts.chars);
+
   return ellipsize(str, opts.max, opts.ellipse, opts.chars, opts.truncate);
-});
+};
 
-var EXCERPT_META_SELECTORS = ['og:description', 'twitter:description'];
+const EXCERPT_META_SELECTORS = ['og:description', 'twitter:description'];
 
-function clean(content, $) {
-  var maxLength = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
+function clean(content, $, maxLength = 200) {
   content = content.replace(/[\s\n]+/g, ' ').trim();
-  return ellipsize$1(content, maxLength, {
-    ellipse: '&hellip;'
-  });
+  return ellipsize$1(content, maxLength, { ellipse: '&hellip;' });
 }
-var GenericExcerptExtractor = {
-  extract: function extract(_ref) {
-    var $ = _ref.$,
-      content = _ref.content,
-      metaCache = _ref.metaCache;
-    var excerpt = extractFromMeta($, EXCERPT_META_SELECTORS, metaCache);
+
+const GenericExcerptExtractor = {
+  extract({ $, content, metaCache }) {
+    const excerpt = extractFromMeta($, EXCERPT_META_SELECTORS, metaCache);
     if (excerpt) {
       return clean(stripTags(excerpt, $));
     }
     // Fall back to excerpting from the extracted content
-    var maxLength = 200;
-    var shortContent = content.slice(0, maxLength * 5);
+    const maxLength = 200;
+    const shortContent = content.slice(0, maxLength * 5);
     return clean($(shortContent).text(), $, maxLength);
-  }
+  },
 };
 
-var getWordCount = function getWordCount(content) {
-  var $ = cheerio__namespace.load(content);
-  var $content = $('div').first();
-  var text = normalizeSpaces($content.text());
+const getWordCount = content => {
+  const $ = cheerio__namespace.load(content);
+  const $content = $('div').first();
+  const text = normalizeSpaces($content.text());
   return text.split(/\s/).length;
 };
-var getWordCountAlt = function getWordCountAlt(content) {
+
+const getWordCountAlt = content => {
   content = content.replace(/<[^>]*>/g, ' ');
   content = content.replace(/\s+/g, ' ');
   content = content.trim();
   return content.split(' ').length;
 };
-var GenericWordCountExtractor = {
-  extract: function extract(_ref) {
-    var content = _ref.content;
-    var count = getWordCount(content);
+
+const GenericWordCountExtractor = {
+  extract({ content }) {
+    let count = getWordCount(content);
     if (count === 1) count = getWordCountAlt(content);
     return count;
-  }
+  },
 };
 
-function ownKeys$3(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var GenericExtractor = {
+const GenericExtractor = {
   // This extractor is the default for all domains
   domain: '*',
   title: GenericTitleExtractor.extract,
@@ -9217,106 +12024,97 @@ var GenericExtractor = {
   url_and_domain: GenericUrlExtractor.extract,
   excerpt: GenericExcerptExtractor.extract,
   word_count: GenericWordCountExtractor.extract,
-  direction: function direction(_ref) {
-    var title = _ref.title;
-    return stringDirection.getDirection(title);
-  },
-  extract: function extract(options) {
-    var html = options.html,
-      $ = options.$;
+  direction: ({ title }) => stringDirection.getDirection(title),
+
+  extract(options) {
+    const { html, $ } = options;
+
     if (html && !$) {
-      var loaded = cheerio__namespace.load(html);
+      const loaded = cheerio__namespace.load(html);
       options.$ = loaded;
     }
-    var title = this.title(options);
-    var date_published = this.date_published(options);
-    var author = this.author(options);
-    var content = this.content(_objectSpread$3(_objectSpread$3({}, options), {}, {
-      title: title
-    }));
-    var lead_image_url = this.lead_image_url(_objectSpread$3(_objectSpread$3({}, options), {}, {
-      content: content
-    }));
-    var dek = this.dek(_objectSpread$3(_objectSpread$3({}, options), {}, {
-      content: content
-    }));
-    var next_page_url = this.next_page_url(options);
-    var excerpt = this.excerpt(_objectSpread$3(_objectSpread$3({}, options), {}, {
-      content: content
-    }));
-    var word_count = this.word_count(_objectSpread$3(_objectSpread$3({}, options), {}, {
-      content: content
-    }));
-    var direction = this.direction({
-      title: title
-    });
-    var _this$url_and_domain = this.url_and_domain(options),
-      url = _this$url_and_domain.url,
-      domain = _this$url_and_domain.domain;
+
+    const title = this.title(options);
+    const date_published = this.date_published(options);
+    const author = this.author(options);
+    const content = this.content({ ...options, title });
+    const lead_image_url = this.lead_image_url({ ...options, content });
+    const dek = this.dek({ ...options, content });
+    const next_page_url = this.next_page_url(options);
+    const excerpt = this.excerpt({ ...options, content });
+    const word_count = this.word_count({ ...options, content });
+    const direction = this.direction({ title });
+    const { url, domain } = this.url_and_domain(options);
+
     return {
-      title: title,
-      author: author,
+      title,
+      author,
       date_published: date_published || null,
-      dek: dek,
-      lead_image_url: lead_image_url,
-      content: content,
-      next_page_url: next_page_url,
-      url: url,
-      domain: domain,
-      excerpt: excerpt,
-      word_count: word_count,
-      direction: direction
+      dek,
+      lead_image_url,
+      content,
+      next_page_url,
+      url,
+      domain,
+      excerpt,
+      word_count,
+      direction,
     };
-  }
+  },
 };
 
-var Detectors = {
+const Detectors = {
   'meta[name="al:ios:app_name"][value="Medium"]': MediumExtractor,
-  'meta[name="generator"][value="blogger"]': BloggerExtractor
+  'meta[name="generator"][value="blogger"]': BloggerExtractor,
 };
+
 function detectByHtml($) {
-  var selector = _Reflect$ownKeys(Detectors).find(function (s) {
-    return $(s).length > 0;
-  });
+  const selector = Reflect.ownKeys(Detectors).find(s => $(s).length > 0);
+
   return Detectors[selector];
 }
 
 function getExtractor(url, parsedUrl, $) {
-  parsedUrl = parsedUrl || URL$1.parse(url);
-  var _parsedUrl = parsedUrl,
-    hostname = _parsedUrl.hostname;
-  var baseDomain = hostname.split('.').slice(-2).join('.');
-  return apiExtractors[hostname] || apiExtractors[baseDomain] || Extractors[hostname] || Extractors[baseDomain] || detectByHtml($) || GenericExtractor;
+  parsedUrl = parsedUrl || new URL(url);
+  const { hostname } = parsedUrl;
+  const baseDomain = hostname.split('.').slice(-2).join('.');
+
+  return (
+    apiExtractors[hostname] ||
+    apiExtractors[baseDomain] ||
+    Extractors[hostname] ||
+    Extractors[baseDomain] ||
+    detectByHtml($) ||
+    GenericExtractor
+  );
 }
 
-function ownKeys$2(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-
 // Remove elements by an array of selectors
-function cleanBySelectors($content, $, _ref) {
-  var clean = _ref.clean;
+function cleanBySelectors($content, $, { clean }) {
   if (!clean) return $content;
+
   $(clean.join(','), $content).remove();
+
   return $content;
 }
 
 // Transform matching elements
-function transformElements($content, $, _ref2) {
-  var transforms = _ref2.transforms;
+function transformElements($content, $, { transforms }) {
   if (!transforms) return $content;
-  _Reflect$ownKeys(transforms).forEach(function (key) {
-    var $matches = $(key, $content);
-    var value = transforms[key];
+
+  Reflect.ownKeys(transforms).forEach(key => {
+    const $matches = $(key, $content);
+    const value = transforms[key];
 
     // If value is a string, convert directly
     if (typeof value === 'string') {
-      $matches.each(function (index, node) {
+      $matches.each((index, node) => {
         convertNodeTo($(node), $, transforms[key]);
       });
     } else if (typeof value === 'function') {
       // If value is function, apply function to node
-      $matches.each(function (index, node) {
-        var result = value($(node), $);
+      $matches.each((index, node) => {
+        const result = value($(node), $);
         // If function returns a string, convert node to that value
         if (typeof result === 'string') {
           convertNodeTo($(node), $, result);
@@ -9324,64 +12122,77 @@ function transformElements($content, $, _ref2) {
       });
     }
   });
+
   return $content;
 }
+
 function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
-  return selectors.find(function (selector) {
-    if (_Array$isArray(selector)) {
+  return selectors.find(selector => {
+    if (Array.isArray(selector)) {
       if (extractHtml) {
-        return selector.reduce(function (acc, s) {
-          return acc && $(s).length > 0;
-        }, true);
+        return selector.reduce((acc, s) => acc && $(s).length > 0, true);
       }
-      var _selector = _slicedToArray(selector, 2),
-        s = _selector[0],
-        attr = _selector[1];
-      return (allowMultiple || !allowMultiple && $(s).length === 1) && $(s).attr(attr) && $(s).attr(attr).trim() !== '';
+
+      const [s, attr] = selector;
+      return (
+        (allowMultiple || (!allowMultiple && $(s).length === 1)) &&
+        $(s).attr(attr) &&
+        $(s).attr(attr).trim() !== ''
+      );
     }
-    return (allowMultiple || !allowMultiple && $(selector).length === 1) && $(selector).text().trim() !== '';
+
+    return (
+      (allowMultiple || (!allowMultiple && $(selector).length === 1)) &&
+      $(selector).text().trim() !== ''
+    );
   });
 }
+
 function select(opts) {
-  var $ = opts.$,
-    type = opts.type,
-    extractionOpts = opts.extractionOpts,
-    _opts$extractHtml = opts.extractHtml,
-    extractHtml = _opts$extractHtml === void 0 ? false : _opts$extractHtml;
+  const { $, type, extractionOpts, extractHtml = false } = opts;
   // Skip if there's not extraction for this type
   if (!extractionOpts) return null;
 
   // If a string is hardcoded for a type (e.g., Wikipedia
   // contributors), return the string
   if (typeof extractionOpts === 'string') return extractionOpts;
-  var selectors = extractionOpts.selectors,
-    _extractionOpts$defau = extractionOpts.defaultCleaner,
-    defaultCleaner = _extractionOpts$defau === void 0 ? true : _extractionOpts$defau,
-    allowMultiple = extractionOpts.allowMultiple;
-  var overrideAllowMultiple = type === 'lead_image_url' || allowMultiple;
-  var matchingSelector = findMatchingSelector($, selectors, extractHtml, overrideAllowMultiple);
+
+  const { selectors, defaultCleaner = true, allowMultiple } = extractionOpts;
+
+  const overrideAllowMultiple = type === 'lead_image_url' || allowMultiple;
+
+  const matchingSelector = findMatchingSelector(
+    $,
+    selectors,
+    extractHtml,
+    overrideAllowMultiple
+  );
+
   if (!matchingSelector) return null;
+
   function transformAndClean($node) {
     makeLinksAbsolute($node, $, opts.url || '');
     cleanBySelectors($node, $, extractionOpts);
     transformElements($node, $, extractionOpts);
     return $node;
   }
+
   function selectHtml() {
     // If the selector type requests html as its return type
     // transform and clean the element with provided selectors
-    var $content;
+    let $content;
 
     // If matching selector is an array, we're considering this a
     // multi-match selection, which allows the parser to choose several
     // selectors to include in the result. Note that all selectors in the
     // array must match in order for this selector to trigger
-    if (_Array$isArray(matchingSelector)) {
+    if (Array.isArray(matchingSelector)) {
       $content = $(matchingSelector.join(','));
-      var $wrapper = $('<div></div>');
-      $content.each(function (_, element) {
+      const $wrapper = $('<div></div>');
+      $content.each((_, element) => {
         $wrapper.append(element);
       });
+
       $content = $wrapper;
     } else {
       $content = $(matchingSelector);
@@ -9392,70 +12203,68 @@ function select(opts) {
     $content = $content.parent();
     $content = transformAndClean($content);
     if (Cleaners[type]) {
-      Cleaners[type]($content, _objectSpread$2(_objectSpread$2({}, opts), {}, {
-        defaultCleaner: defaultCleaner
-      }));
+      Cleaners[type]($content, { ...opts, defaultCleaner });
     }
+
     if (allowMultiple) {
-      return $content.children().toArray().map(function (el) {
-        return $.html($(el));
-      });
+      return $content
+        .children()
+        .toArray()
+        .map(el => $.html($(el)));
     }
+
     return $.html($content);
   }
+
   if (extractHtml) {
     return selectHtml();
   }
-  var $match;
-  var result;
+
+  let $match;
+  let result;
   // if selector is an array (e.g., ['img', 'src']),
   // extract the attr
-  if (_Array$isArray(matchingSelector)) {
-    var _matchingSelector = _slicedToArray(matchingSelector, 3),
-      selector = _matchingSelector[0],
-      attr = _matchingSelector[1],
-      transform = _matchingSelector[2];
+  if (Array.isArray(matchingSelector)) {
+    const [selector, attr, transform] = matchingSelector;
     $match = $(selector);
     $match = transformAndClean($match);
-    result = $match.map(function (_, el) {
-      var item = $(el).attr(attr).trim();
+    result = $match.map((_, el) => {
+      const item = $(el).attr(attr).trim();
       return transform ? transform(item) : item;
     });
   } else {
     $match = $(matchingSelector);
     $match = transformAndClean($match);
-    result = $match.map(function (_, el) {
-      return $(el).text().trim();
-    });
+    result = $match.map((_, el) => $(el).text().trim());
   }
-  result = _Array$isArray(result.toArray()) && allowMultiple ? result.toArray() : result[0];
+
+  result =
+    Array.isArray(result.toArray()) && allowMultiple
+      ? result.toArray()
+      : result[0];
   // Allow custom extractor to skip default cleaner
   // for this type; defaults to true
   if (defaultCleaner && Cleaners[type]) {
-    return Cleaners[type](result, _objectSpread$2(_objectSpread$2({}, opts), extractionOpts));
+    return Cleaners[type](result, { ...opts, ...extractionOpts });
   }
+
   return result;
 }
+
 function selectExtendedTypes(extend, opts) {
-  var results = {};
-  _Reflect$ownKeys(extend).forEach(function (t) {
+  const results = {};
+  Reflect.ownKeys(extend).forEach(t => {
     if (!results[t]) {
-      results[t] = select(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-        type: t,
-        extractionOpts: extend[t]
-      }));
+      results[t] = select({ ...opts, type: t, extractionOpts: extend[t] });
     }
   });
   return results;
 }
+
 function extractResult(opts) {
-  var type = opts.type,
-    extractor = opts.extractor,
-    _opts$fallback = opts.fallback,
-    fallback = _opts$fallback === void 0 ? true : _opts$fallback;
-  var result = select(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-    extractionOpts: extractor[type]
-  }));
+  const { type, extractor, fallback = true } = opts;
+
+  const result = select({ ...opts, extractionOpts: extractor[type] });
 
   // If custom parser succeeds, return the result
   if (result) {
@@ -9465,279 +12274,246 @@ function extractResult(opts) {
   // If nothing matches the selector, and fallback is enabled,
   // run the Generic extraction
   if (fallback) return GenericExtractor[type](opts);
+
   return null;
 }
-var RootExtractor = {
-  extract: function extract() {
-    var extractor = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : GenericExtractor;
-    var opts = arguments.length > 1 ? arguments[1] : undefined;
-    var _opts = opts,
-      contentOnly = _opts.contentOnly,
-      extractedTitle = _opts.extractedTitle;
+
+const RootExtractor = {
+  extract(extractor = GenericExtractor, opts) {
+    const { contentOnly, extractedTitle } = opts;
     // This is the generic extractor. Run its extract method
     if (extractor.domain === '*') return extractor.extract(opts);
-    opts = _objectSpread$2(_objectSpread$2({}, opts), {}, {
-      extractor: extractor
-    });
+
+    opts = {
+      ...opts,
+      extractor,
+    };
+
     if (contentOnly) {
-      var _content = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
+      const content = extractResult({
+        ...opts,
         type: 'content',
         extractHtml: true,
-        title: extractedTitle
-      }));
+        title: extractedTitle,
+      });
       return {
-        content: _content
+        content,
       };
     }
-    var extendedResults = {};
+    let extendedResults = {};
     if (extractor.extend) {
       extendedResults = selectExtendedTypes(extractor.extend, opts);
     }
-    var title = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'title'
-    }));
-    var date_published = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'date_published'
-    }));
-    var author = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'author'
-    }));
-    var next_page_url = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'next_page_url'
-    }));
-    var content = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
+    const title = extractResult({ ...opts, type: 'title' });
+    const date_published = extractResult({ ...opts, type: 'date_published' });
+    const author = extractResult({ ...opts, type: 'author' });
+    const next_page_url = extractResult({ ...opts, type: 'next_page_url' });
+    const content = extractResult({
+      ...opts,
       type: 'content',
       extractHtml: true,
-      title: title
-    }));
-    var lead_image_url = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
+      title,
+    });
+    const lead_image_url = extractResult({
+      ...opts,
       type: 'lead_image_url',
-      content: content
-    }));
-    var excerpt = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'excerpt',
-      content: content
-    }));
-    var dek = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'dek',
-      content: content,
-      excerpt: excerpt
-    }));
-    var word_count = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'word_count',
-      content: content
-    }));
-    var direction = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-      type: 'direction',
-      title: title
-    }));
-    var _ref3 = extractResult(_objectSpread$2(_objectSpread$2({}, opts), {}, {
-        type: 'url_and_domain'
-      })) || {
-        url: null,
-        domain: null
-      },
-      url = _ref3.url,
-      domain = _ref3.domain;
-    return _objectSpread$2({
-      title: title,
-      content: content,
-      author: author,
-      date_published: date_published,
-      lead_image_url: lead_image_url,
-      dek: dek,
-      next_page_url: next_page_url,
-      url: url,
-      domain: domain,
-      excerpt: excerpt,
-      word_count: word_count,
-      direction: direction
-    }, extendedResults);
-  }
+      content,
+    });
+    const excerpt = extractResult({ ...opts, type: 'excerpt', content });
+    const dek = extractResult({ ...opts, type: 'dek', content, excerpt });
+    const word_count = extractResult({ ...opts, type: 'word_count', content });
+    const direction = extractResult({ ...opts, type: 'direction', title });
+    const { url, domain } = extractResult({
+      ...opts,
+      type: 'url_and_domain',
+    }) || { url: null, domain: null };
+
+    return {
+      title,
+      content,
+      author,
+      date_published,
+      lead_image_url,
+      dek,
+      next_page_url,
+      url,
+      domain,
+      excerpt,
+      word_count,
+      direction,
+      ...extendedResults,
+    };
+  },
 };
 
-function ownKeys$1(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-function collectAllPages(_x) {
-  return _collectAllPages.apply(this, arguments);
-}
-function _collectAllPages() {
-  _collectAllPages = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(_ref) {
-    var next_page_url, html, $, metaCache, result, Extractor, title, url, pages, previousUrls, extractorOpts, nextPageResult, word_count;
-    return _regeneratorRuntime.wrap(function (_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          next_page_url = _ref.next_page_url, html = _ref.html, $ = _ref.$, metaCache = _ref.metaCache, result = _ref.result, Extractor = _ref.Extractor, title = _ref.title, url = _ref.url;
-          // At this point, we've fetched just the first page
-          pages = 1;
-          previousUrls = [removeAnchor(url)]; // If we've gone over 26 pages, something has
-          // likely gone wrong.
-        case 1:
-          if (!(next_page_url && pages < 26)) {
-            _context.next = 3;
-            break;
-          }
-          pages += 1;
-          _context.next = 2;
-          return Resource.create(next_page_url);
-        case 2:
-          $ = _context.sent;
-          html = $.html();
-          extractorOpts = {
-            url: next_page_url,
-            html: html,
-            $: $,
-            metaCache: metaCache,
-            extractedTitle: title,
-            previousUrls: previousUrls
-          };
-          nextPageResult = RootExtractor.extract(Extractor, extractorOpts);
-          previousUrls.push(next_page_url);
-          result = _objectSpread$1(_objectSpread$1({}, result), {}, {
-            content: "".concat(result.content, "<hr><h4>Page ").concat(pages, "</h4>").concat(nextPageResult.content)
-          });
-          next_page_url = nextPageResult.next_page_url;
-          _context.next = 1;
-          break;
-        case 3:
-          word_count = GenericExtractor.word_count({
-            content: "<div>".concat(result.content, "</div>")
-          });
-          return _context.abrupt("return", _objectSpread$1(_objectSpread$1({}, result), {}, {
-            total_pages: pages,
-            rendered_pages: pages,
-            word_count: word_count
-          }));
-        case 4:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee);
-  }));
-  return _collectAllPages.apply(this, arguments);
+async function collectAllPages({
+  next_page_url,
+  html,
+  $,
+  metaCache,
+  result,
+  Extractor,
+  title,
+  url,
+}) {
+  // At this point, we've fetched just the first page
+  let pages = 1;
+  const previousUrls = [removeAnchor(url)];
+  // If we've gone over 26 pages, something has
+  // likely gone wrong.
+  while (next_page_url && pages < 26) {
+    pages += 1;
+
+    $ = await Resource.create(next_page_url);
+    html = $.html();
+
+    const extractorOpts = {
+      url: next_page_url,
+      html,
+      $,
+      metaCache,
+      extractedTitle: title,
+      previousUrls,
+    };
+
+    const nextPageResult = RootExtractor.extract(Extractor, extractorOpts);
+
+    previousUrls.push(next_page_url);
+    result = {
+      ...result,
+      content: `${result.content}<hr><h4>Page ${pages}</h4>${
+        nextPageResult.content
+      }`,
+    };
+
+    next_page_url = nextPageResult.next_page_url;
+  }
+
+  const word_count = GenericExtractor.word_count({
+    content: `<div>${result.content}</div>`,
+  });
+  return {
+    ...result,
+    total_pages: pages,
+    rendered_pages: pages,
+    word_count,
+  };
 }
 
-var _excluded = ["html"];
-function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
-var Parser = {
-  parse: function parse(url) {
-    var _arguments = arguments;
-    return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      var _ref, html, opts, _opts$fetchAllPages, fetchAllPages, _opts$fallback, fallback, _opts$contentType, contentType, _opts$headers, headers, extend, customExtractor, parsedUrl, $, Extractor, metaCache, extendedTypes, result, _result, title, next_page_url, turndownService;
-      return _regeneratorRuntime.wrap(function (_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            _ref = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {}, html = _ref.html, opts = _objectWithoutProperties(_ref, _excluded);
-            _opts$fetchAllPages = opts.fetchAllPages, fetchAllPages = _opts$fetchAllPages === void 0 ? true : _opts$fetchAllPages, _opts$fallback = opts.fallback, fallback = _opts$fallback === void 0 ? true : _opts$fallback, _opts$contentType = opts.contentType, contentType = _opts$contentType === void 0 ? 'html' : _opts$contentType, _opts$headers = opts.headers, headers = _opts$headers === void 0 ? {} : _opts$headers, extend = opts.extend, customExtractor = opts.customExtractor; // if no url was passed and this is the browser version,
-            // set url to window.location.href and load the html
-            // from the current page
-            if (!url && isBrowser) {
-              url = window.location.href; // eslint-disable-line no-undef
-              html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
-            }
-            parsedUrl = URL$1.parse(url);
-            if (validateUrl(parsedUrl)) {
-              _context.next = 1;
-              break;
-            }
-            return _context.abrupt("return", {
-              error: true,
-              message: 'The url parameter passed does not look like a valid URL. Please check your URL and try again.'
-            });
-          case 1:
-            _context.next = 2;
-            return Resource.create(url, html, parsedUrl, headers);
-          case 2:
-            $ = _context.sent;
-            if (!$.failed) {
-              _context.next = 3;
-              break;
-            }
-            return _context.abrupt("return", $);
-          case 3:
-            // Add custom extractor via cli.
-            if (customExtractor) {
-              addExtractor(customExtractor);
-            }
-            Extractor = getExtractor(url, parsedUrl, $); // console.log(`Using extractor for ${Extractor.domain}`);
-            // if html still has not been set (i.e., url passed to Parser.parse),
-            // set html from the response of Resource.create
-            if (!html) {
-              html = $.html();
-            }
+const Parser = {
+  async parse(url, { html, ...opts } = {}) {
+    const {
+      fetchAllPages = true,
+      fallback = true,
+      contentType = 'html',
+      headers = {},
+      extend,
+      customExtractor,
+    } = opts;
 
-            // Cached value of every meta name in our document.
-            // Used when extracting title/author/date_published/dek
-            metaCache = $('meta').map(function (_, node) {
-              return $(node).attr('name');
-            }).toArray();
-            extendedTypes = {};
-            if (extend) {
-              extendedTypes = selectExtendedTypes(extend, {
-                $: $,
-                url: url,
-                html: html
-              });
-            }
-            result = RootExtractor.extract(Extractor, {
-              url: url,
-              html: html,
-              $: $,
-              metaCache: metaCache,
-              parsedUrl: parsedUrl,
-              fallback: fallback,
-              contentType: contentType
-            });
-            _result = result, title = _result.title, next_page_url = _result.next_page_url; // Fetch more pages if next_page_url found
-            if (!(fetchAllPages && next_page_url)) {
-              _context.next = 5;
-              break;
-            }
-            _context.next = 4;
-            return collectAllPages({
-              Extractor: Extractor,
-              next_page_url: next_page_url,
-              html: html,
-              $: $,
-              metaCache: metaCache,
-              result: result,
-              title: title,
-              url: url
-            });
-          case 4:
-            result = _context.sent;
-            _context.next = 6;
-            break;
-          case 5:
-            result = _objectSpread(_objectSpread({}, result), {}, {
-              total_pages: 1,
-              rendered_pages: 1
-            });
-          case 6:
-            if (contentType === 'markdown') {
-              turndownService = new TurndownService();
-              result.content = turndownService.turndown(result.content);
-            } else if (contentType === 'text') {
-              result.content = $.text($(result.content));
-            }
-            return _context.abrupt("return", _objectSpread(_objectSpread({}, result), extendedTypes));
-          case 7:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }))();
+    // if no url was passed and this is the browser version,
+    // set url to window.location.href and load the html
+    // from the current page
+    if (!url && isBrowser) {
+      url = window.location.href; // eslint-disable-line no-undef
+      html = html || document.documentElement.outerHTML; // eslint-disable-line no-undef
+    }
+
+    const parsedUrl = parseUrl(url);
+
+    if (!validateUrl(parsedUrl)) {
+      return {
+        error: true,
+        message:
+          'The url parameter passed does not look like a valid URL. Please check your URL and try again.',
+      };
+    }
+
+    const $ = await Resource.create(url, html, parsedUrl, headers);
+
+    // If we found an error creating the resource, return that error
+    if ($.failed) {
+      return $;
+    }
+
+    // Add custom extractor via cli.
+    if (customExtractor) {
+      addExtractor(customExtractor);
+    }
+
+    const Extractor = getExtractor(url, parsedUrl, $);
+    // console.log(`Using extractor for ${Extractor.domain}`);
+
+    // if html still has not been set (i.e., url passed to Parser.parse),
+    // set html from the response of Resource.create
+    if (!html) {
+      html = $.html();
+    }
+
+    // Cached value of every meta name in our document.
+    // Used when extracting title/author/date_published/dek
+    const metaCache = $('meta')
+      .map((_, node) => $(node).attr('name'))
+      .toArray();
+
+    let extendedTypes = {};
+    if (extend) {
+      extendedTypes = selectExtendedTypes(extend, { $, url, html });
+    }
+
+    let result = RootExtractor.extract(Extractor, {
+      url,
+      html,
+      $,
+      metaCache,
+      parsedUrl,
+      fallback,
+      contentType,
+    });
+
+    const { title, next_page_url } = result;
+
+    // Fetch more pages if next_page_url found
+    if (fetchAllPages && next_page_url) {
+      result = await collectAllPages({
+        Extractor,
+        next_page_url,
+        html,
+        $,
+        metaCache,
+        result,
+        title,
+        url,
+      });
+    } else {
+      result = {
+        ...result,
+        total_pages: 1,
+        rendered_pages: 1,
+      };
+    }
+
+    if (contentType === 'markdown') {
+      const turndownService = new TurndownService();
+      result.content = turndownService.turndown(result.content);
+    } else if (contentType === 'text') {
+      result.content = $.text($(result.content));
+    }
+
+    return { ...result, ...extendedTypes };
   },
+
   browser: isBrowser,
+
   // A convenience method for getting a resource
   // to work with, e.g., for custom extractor generator
-  fetchResource: function fetchResource(url) {
+  fetchResource(url) {
     return Resource.create(url);
   },
-  addExtractor: function addExtractor$1(extractor) {
+
+  addExtractor(extractor) {
     return addExtractor(extractor);
-  }
+  },
 };
 
 module.exports = Parser;
