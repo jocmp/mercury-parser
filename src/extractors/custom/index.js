@@ -204,3 +204,7 @@ export * from './substack.com';
 export * from './www.dw.com';
 export * from './www.animenewsnetwork.com';
 export * from './www.digitalfoundry.net';
+export * from './www.journaldelagence.com';
+export * from './metsul.com';
+export * from './actualites.logic-immo.com';
+export * from './edito.meilleursagents.com';
