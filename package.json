@@ -60,7 +60,7 @@
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
-    "@vitest/browser": "^4.0.17",
+    "@vitest/browser": "^5.0.4",
     "@vitest/browser-playwright": "^4.0.17",
     "browserslist": "^4.28.7",
     "es-check": "^9.6.4",
