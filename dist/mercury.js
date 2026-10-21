@@ -10056,10 +10056,119 @@ const WwwDigitalfoundryNetExtractor = {
   },
 };
 
+const WwwJournaldelagenceComExtractor = {
+  domain: 'www.journaldelagence.com',
+
+  title: {
+    selectors: ['h1.full-article-ttl'],
+  },
+
+  author: null,
+
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['#js-readspeaker'],
+  },
+};
+
+const MetsulComExtractor = {
+  domain: 'metsul.com',
+
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']],
+  },
+
+  author: {
+    selectors: [['meta[name="author"]', 'value']],
+  },
+
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['.post-content'],
+
+    clean: ['.metsul-leia-tambem', '.metsu-entity-placement'],
+  },
+};
+
+const ActualitesLogicImmoComExtractor = {
+  domain: 'actualites.logic-immo.com',
+
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']],
+  },
+
+  author: {
+    selectors: ['.field--name-uid .username'],
+  },
+
+  date_published: {
+    selectors: [['.field--name-published-at time', 'datetime']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['.main-contenu'],
+
+    clean: [
+      '.visually-hidden',
+      '.field--name-field-sommaire',
+      '.paragraph--type--texte-cta',
+    ],
+  },
+};
+
+const EditoMeilleursagentsComExtractor = {
+  domain: 'edito.meilleursagents.com',
+
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']],
+  },
+
+  author: {
+    selectors: ['.field--name-uid .username'],
+  },
+
+  date_published: {
+    selectors: [['.field--name-published-at time', 'datetime']],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
+  },
+
+  content: {
+    selectors: ['.main-contenu'],
+
+    clean: [
+      '.visually-hidden',
+      '.field--name-field-sommaire',
+      '.paragraph--type--texte-cta',
+    ],
+  },
+};
+
 var CustomExtractors = /*#__PURE__*/Object.freeze({
   __proto__: null,
   AbcnewsGoComExtractor: AbcnewsGoComExtractor,
   ActualidadRtComExtractor: ActualidadRtComExtractor,
+  ActualitesLogicImmoComExtractor: ActualitesLogicImmoComExtractor,
   ApartmentTherapyExtractor: ApartmentTherapyExtractor,
   ArstechnicaComExtractor: ArstechnicaComExtractor,
   BalloonJuiceComExtractor: BalloonJuiceComExtractor,
@@ -10077,6 +10186,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   DeadlineComExtractor: DeadlineComExtractor,
   DeadspinExtractor: DeadspinExtractor,
   EconomictimesIndiatimesComExtractor: EconomictimesIndiatimesComExtractor,
+  EditoMeilleursagentsComExtractor: EditoMeilleursagentsComExtractor,
   EpaperZeitDeExtractor: EpaperZeitDeExtractor,
   FactorioComExtractor: FactorioComExtractor,
   FortuneComExtractor: FortuneComExtractor,
@@ -10099,6 +10209,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   MaTtiasBeExtractor: MaTtiasBeExtractor,
   MashableComExtractor: MashableComExtractor,
   MediumExtractor: MediumExtractor,
+  MetsulComExtractor: MetsulComExtractor,
   MobilesyrupComExtractor: MobilesyrupComExtractor,
   MoneyCnnComExtractor: MoneyCnnComExtractor,
   NYMagExtractor: NYMagExtractor,
@@ -10199,6 +10310,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwItmediaCoJpExtractor: WwwItmediaCoJpExtractor,
   WwwJalopnikComExtractor: WwwJalopnikComExtractor,
   WwwJnsaOrgExtractor: WwwJnsaOrgExtractor,
+  WwwJournaldelagenceComExtractor: WwwJournaldelagenceComExtractor,
   WwwLadbibleComExtractor: WwwLadbibleComExtractor,
   WwwLatimesComExtractor: WwwLatimesComExtractor,
   WwwLebensmittelwarnungDeExtractor: WwwLebensmittelwarnungDeExtractor,
