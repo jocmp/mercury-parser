@@ -5,13 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Romantic Versioning](https://github.com/romversioning/romver).
 
+## v3.1.2
+
+- Fix a handful of sites by @benubois in [#222](https://github.com/jocmp/mercury-parser/pull/222)
+- build: target baseline widely available browsers by @jocmp in [#215](https://github.com/jocmp/mercury-parser/pull/215)
+
 ## v3.1.1
 
+- bump version v3.1.0 -> v3.1.1 by @jocmp
+- Update changelog by @jocmp in [#216](https://github.com/jocmp/mercury-parser/pull/216)
 - refactor: replace legacy url module with WHATWG URL by @jocmp in [#214](https://github.com/jocmp/mercury-parser/pull/214)
 - refactor: replace legacy url module with WHATWG URL by @jocmp
 - ci: RSSHub-style consumer test by @jocmp in [#213](https://github.com/jocmp/mercury-parser/pull/213)
 - feat: Add www.digitalfoundry.net custom parser by @jocmp in [#212](https://github.com/jocmp/mercury-parser/pull/212)
 - build: drop babel from the build and tests by @jocmp in [#206](https://github.com/jocmp/mercury-parser/pull/206)
+
+**Full Changelog**: https://github.com/jocmp/mercury-parser/compare/v3.1.0...v3.1.1
 
 ## v3.1.0
 
