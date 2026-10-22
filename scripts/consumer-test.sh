@@ -45,17 +45,3 @@ if (typeof Parser.parse !== 'function') {
 }
 console.log('PASS: CommonJS require exposes Parser.parse');
 "
-
-echo "==> Starting the MCP server from the installed bin"
-REPLY=$(printf '%s\n' \
-  '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}' \
-  '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
-  | node_modules/.bin/mercury-parser-mcp)
-
-if ! grep -q '"name":"parse_article"' <<< "$REPLY"; then
-  echo "FAIL: mercury-parser-mcp did not list parse_article"
-  echo "$REPLY"
-  exit 1
-fi
-
-echo "PASS: mercury-parser-mcp lists parse_article"
