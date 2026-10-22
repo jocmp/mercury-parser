@@ -60,8 +60,8 @@
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
-    "@vitest/browser": "^4.0.17",
-    "@vitest/browser-playwright": "^4.0.17",
+    "@vitest/browser": "^5.0.5",
+    "@vitest/browser-playwright": "^5.0.5",
     "browserslist": "^4.28.7",
     "es-check": "^9.6.4",
     "eslint": "^10.0.1",
@@ -81,7 +81,7 @@
     "rollup": "^4.62.0",
     "rollup-plugin-node-globals": "^1.4.0",
     "vite-plugin-node-polyfills": "^0.28.0",
-    "vitest": "^4.0.17"
+    "vitest": "^5.0.5"
   },
   "dependencies": {
     "browser-request": "github:postlight/browser-request#feat-add-headers-to-response",
