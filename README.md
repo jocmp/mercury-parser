@@ -148,7 +148,7 @@ For other clients, add it to the client's MCP configuration:
 }
 ```
 
-Mercury Parser does not run JavaScript, so pages that render their content client-side return an error rather than an article. Article text is passed to the model as-is, so treat it like any other untrusted web content.
+Mercury Parser does not run JavaScript from the article. Pages that render their content client-side return an error rather than the article. Article text is passed to the model as-is, so treat it like any other untrusted web content.
 
 ### Previewing
 
