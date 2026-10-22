@@ -127,6 +127,29 @@ mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --ext
 mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
 ```
 
+#### The MCP server
+
+Mercury Parser also ships with an [MCP](https://modelcontextprotocol.io) server, so agents like Claude Code can read articles with it. It runs locally over stdio and provides one tool, `parse_article`, which takes a `url`, an optional `format` (`markdown` by default, or `html` or `text`), and optional request `headers`.
+
+```bash
+claude mcp add mercury -- npx -y -p @jocmp/mercury-parser mercury-parser-mcp
+```
+
+For other clients, add it to the client's MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "mercury": {
+      "command": "npx",
+      "args": ["-y", "-p", "@jocmp/mercury-parser", "mercury-parser-mcp"]
+    }
+  }
+}
+```
+
+Mercury Parser does not run JavaScript, so pages that render their content client-side return an error rather than an article. Article text is passed to the model as-is, so treat it like any other untrusted web content.
+
 ### Previewing
 
 You can run a local server to test out your changes with the following command. The site will be

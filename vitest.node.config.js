@@ -3,7 +3,7 @@ import path from 'path';
 
 export default defineConfig({
   test: {
-    include: ['src/**/*.test.js', 'nock/**/*.test.js'],
+    include: ['src/**/*.test.js', 'nock/**/*.test.js', 'mcp.test.js'],
     globals: true,
     environment: 'node',
     alias: {
