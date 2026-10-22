@@ -22,14 +22,12 @@
   "files": [
     "dist",
     "cli.js",
-    "mcp.js",
     "src/shims/"
   ],
   "main": "./dist/mercury.js",
   "module": "./dist/mercury.esm.js",
   "bin": {
-    "mercury-parser": "./cli.js",
-    "mercury-parser-mcp": "./mcp.js"
+    "mercury-parser": "./cli.js"
   },
   "scripts": {
     "lint": "eslint . --fix",
