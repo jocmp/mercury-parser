@@ -5,6 +5,13 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [nodePolyfills()],
+  optimizeDeps: {
+    include: [
+      'vite-plugin-node-polyfills/shims/buffer',
+      'vite-plugin-node-polyfills/shims/global',
+      'vite-plugin-node-polyfills/shims/process',
+    ],
+  },
   test: {
     include: ['src/**/*.test.js'],
     // Exclude tests that use fs.readFileSync for fixtures - they run in Node via Jest
