@@ -83,6 +83,18 @@ describe('convertLazyLoadedImages($)', () => {
     );
   });
 
+  it('does not replace an img src with an unexpanded URL template', () => {
+    const $ = cheerio.load(
+      '<img src="http://example.com/resize/1100/?url=foo.jpg" data-template="http://example.com/resize/{width}/?url=foo.jpg">'
+    );
+    const result = convertLazyLoadedImages($)('body').html();
+
+    assert.strictEqual(
+      result,
+      '<img src="http://example.com/resize/1100/?url=foo.jpg" data-template="http://example.com/resize/{width}/?url=foo.jpg">'
+    );
+  });
+
   // Guards against O(n^2) backtracking in IS_SRCSET: the image-url check runs on
   // every attribute of every <img>, so a long numeric query string must not hang.
   it('handles image URLs with long numeric query strings in linear time', () => {
