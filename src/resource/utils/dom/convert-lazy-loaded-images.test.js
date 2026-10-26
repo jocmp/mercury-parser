@@ -95,6 +95,27 @@ describe('convertLazyLoadedImages($)', () => {
     );
   });
 
+  it('does not replace an img src or srcset with a percent-encoded URL template', () => {
+    const html =
+      '<img src="http://example.com/foo.jpg" data-template="http://example.com/resize/%7Bwidth%7D/foo.jpg" data-srcset="http://example.com/resize/%7Bwidth%7D/foo.jpg 2x">';
+    const $ = cheerio.load(html);
+    const result = convertLazyLoadedImages($)('body').html();
+
+    assert.strictEqual(result, html);
+  });
+
+  it('moves a URL template to src when there is no usable src', () => {
+    const $ = cheerio.load(
+      '<img data-pattern="http://example.com/foo-{{size}}.jpg">'
+    );
+    const result = convertLazyLoadedImages($)('body').html();
+
+    assert.strictEqual(
+      result,
+      '<img data-pattern="http://example.com/foo-{{size}}.jpg" src="http://example.com/foo-{{size}}.jpg">'
+    );
+  });
+
   // Guards against O(n^2) backtracking in IS_SRCSET: the image-url check runs on
   // every attribute of every <img>, so a long numeric query string must not hang.
   it('handles image URLs with long numeric query strings in linear time', () => {

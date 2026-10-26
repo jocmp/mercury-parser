@@ -21,11 +21,15 @@ export default function convertLazyLoadedImages($) {
 
   $('img').each((_, img) => {
     const attrs = getAttrs(img);
+    // Keep a working src over a template; with no usable src, leave templates
+    // to extractors that expand them (e.g. NYT's `{{size}}`).
+    const hasUsableSrc =
+      IS_LINK.test(attrs.src || '') && !IS_URL_TEMPLATE.test(attrs.src);
 
     Reflect.ownKeys(attrs).forEach(attr => {
       const value = attrs[attr];
 
-      if (IS_URL_TEMPLATE.test(value)) return;
+      if (hasUsableSrc && IS_URL_TEMPLATE.test(value)) return;
 
       if (attr !== 'srcset' && IS_LINK.test(value) && IS_SRCSET.test(value)) {
         $(img).attr('srcset', value);
