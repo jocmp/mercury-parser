@@ -25,7 +25,6 @@
     "src/shims/"
   ],
   "main": "./dist/mercury.js",
-  "module": "./dist/mercury.esm.js",
   "bin": {
     "mercury-parser": "./cli.js"
   },
@@ -36,11 +35,10 @@
     "build": "rollup -c",
     "build:ci": "rollup -c",
     "build:web": "rollup -c rollup.config.web.js",
-    "build:esm": "rollup -c rollup.config.esm.js",
     "release": "npm run build && npm run build:web",
     "build:generator": "rollup -c scripts/rollup.config.js",
     "check:compat": "npm run check:compat:browser && npm run check:compat:node",
-    "check:compat:browser": "es-check --checkBrowser dist/mercury.web.js && es-check --checkBrowser --module dist/mercury.esm.js",
+    "check:compat:browser": "es-check --checkBrowser dist/mercury.web.js dist/mercury.js",
     "check:compat:node": "es-check es2022 dist/mercury.js dist/generate-custom-parser.js",
     "test_build": "rollup -c",
     "test": "npm run test:node && npm run test:web",

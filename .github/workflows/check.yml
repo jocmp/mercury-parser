@@ -28,7 +28,7 @@ jobs:
           node-version-file: ".node-version"
       - run: npm install
       # dist/ is only refreshed on release, so build before checking it
-      - run: make build && npm run build:esm
+      - run: make build
       - run: npm run check:compat
 
   consumer:
