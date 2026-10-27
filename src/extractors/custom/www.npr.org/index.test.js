@@ -19,20 +19,13 @@ describe('WwwNprOrgExtractor', () => {
     });
 
     it('is selected properly', () => {
-      // This test should be passing by default.
-      // It sanity checks that the correct parser
-      // is being selected for URLs from this domain
       const extractor = getExtractor(url);
       assert.strictEqual(extractor.domain, new URL(url).hostname);
     });
 
     it('returns the title', async () => {
-      // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.npr.org/index.js.
       const { title } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         title,
         'Jury Finds Dylann Roof Guilty In S.C. Church Shooting'
@@ -40,32 +33,20 @@ describe('WwwNprOrgExtractor', () => {
     });
 
     it('returns the author', async () => {
-      // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.npr.org/index.js.
       const { author } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(author, 'Rebecca Hersher');
     });
 
     it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.npr.org/index.js.
       const { date_published } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(date_published, '2016-12-15T20:33:00.000Z');
     });
 
     it('returns the lead_image_url', async () => {
-      // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.npr.org/index.js.
       const { lead_image_url } = await result;
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         lead_image_url,
         'https://media.npr.org/assets/img/2016/12/15/ap_16342669033405_wide-e76ba54ba052acbbbe4b9bd73bd429e8d5ca58c7.jpg?s=1400'
@@ -73,22 +54,52 @@ describe('WwwNprOrgExtractor', () => {
     });
 
     it('returns the content', async () => {
-      // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.npr.org/index.js.
-      // You may also want to make use of the clean and transform
-      // options.
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
 
       const first13 = excerptContent($('*').first().text(), 13);
 
-      // Update these values with the expected values from
-      // the article.
       assert.strictEqual(
         first13,
         'Dylann Roof is escorted from the Shelby Police Department in Shelby, N.C., on'
       );
+    });
+  });
+
+  describe('Brightspot image templates', () => {
+    it('expands template tokens in image sources', async () => {
+      const url =
+        'https://www.npr.org/2026/10/26/nx-s1-6008167/republican-redistricting-midterms-competitive-map';
+      const html = fs.readFileSync(
+        './fixtures/www.npr.org/1793044268000.html',
+        'utf-8'
+      );
+      const { content } = await Mercury.parse(url, { html, fallback: false });
+
+      assert.doesNotMatch(content, /\{\w+\}|%7B\w+%7D/i);
+      assert.match(
+        content,
+        /\/resize\/1200\/quality\/85\/format\/webp\/\?url=http%3A%2F%2Fnpr-brightspot\.s3\.amazonaws\.com%2F06%2F6a%2F46ec36764e5db11da70604db9122%2Fgettyimages-2301229190\.jpg/
+      );
+    });
+
+    it('expands template tokens in query strings', async () => {
+      const url = 'https://www.npr.org/2026/10/26/nx-s1-0000000/example';
+      const html = `
+        <html><body><div class="storytext">
+          <p>${'Story text that gives the extractor something to keep. '.repeat(10)}</p>
+          <img
+            src="https://media.npr.org/assets/img/x.jpg?s=100"
+            data-template="https://media.npr.org/assets/img/x.jpg?s={width}&c={quality}&f={format}"
+            data-format="jpeg"
+          />
+        </div></body></html>
+      `;
+      const { content } = await Mercury.parse(url, { html, fallback: false });
+
+      assert.doesNotMatch(content, /\{\w+\}|%7B\w+%7D/i);
+      assert.match(content, /x\.jpg\?s=1200&amp;c=85&amp;f=jpeg/);
     });
   });
 });

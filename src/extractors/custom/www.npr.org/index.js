@@ -26,16 +26,23 @@ export const WwwNprOrgExtractor = {
   content: {
     selectors: ['.storytext'],
 
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
       '.bucketwrap.image': 'figure',
       '.bucketwrap.image .credit-caption': 'figcaption',
+
+      // Brightspot's data-template replaces src during lazy-image conversion,
+      // and the CDN answers its unexpanded tokens with a placeholder image.
+      // Expand from data-template, since src is percent-encoded by now.
+      'img[data-template]': $node => {
+        const src = $node
+          .attr('data-template')
+          .replace(/\{width\}/g, '1200')
+          .replace(/\{quality\}/g, '85')
+          .replace(/\{format\}/g, $node.attr('data-format') || 'webp');
+        $node.attr('src', src);
+      },
     },
 
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
     clean: ['div.enlarge_measure'],
   },
 };
