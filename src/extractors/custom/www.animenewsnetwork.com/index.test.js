@@ -64,7 +64,7 @@ describe('WwwAnimenewsnetworkComExtractor', () => {
 
       assert.strictEqual(
         first13,
-        'Image via Comic Days X/Twitter accountManga creators Mito Aoi and Meza Tōno launched'
+        'Aoi, Meza Tōno launch Koko ni Fukuen Flag ga Tatteimasu manga Image via'
       );
     });
 
@@ -87,6 +87,132 @@ describe('WwwAnimenewsnetworkComExtractor', () => {
           `expected an absolute image URL, got: ${src}`
         );
       });
+    });
+  });
+  describe('news with dense encyclopedia links', () => {
+    let result;
+    beforeAll(() => {
+      const url =
+        'https://www.animenewsnetwork.com/news/2026-06-20/viz-media-releases-yukiaki-kurando-wooma-kiss-me-with-your-face-manga-in-english/.238726';
+      const html = fs.readFileSync(
+        './fixtures/www.animenewsnetwork.com/1782011300000.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
+    });
+
+    it('keeps the body and its image', async () => {
+      const { content } = await result;
+
+      assert.ok(
+        content.includes('announced on Friday that it has licensed storywriter')
+      );
+      assert.ok(
+        content.includes(
+          'src="https://cdn.animenewsnetwork.com/thumbnails/max300x600/cms/news.9/238726/face.jfif.jpeg"'
+        )
+      );
+    });
+
+    it('keeps the intro and cleans the audio player', async () => {
+      const { content } = await result;
+
+      assert.ok(content.includes('Manga about classmates who swap bodies'));
+      assert.ok(!content.includes('instaread'));
+    });
+  });
+
+  describe('review with layout tables', () => {
+    let result;
+    beforeAll(() => {
+      const url =
+        'https://www.animenewsnetwork.com/review/we-are-aliens-anime-movie/.238373';
+      const html = fs.readFileSync(
+        './fixtures/www.animenewsnetwork.com/1782011200000.html'
+      );
+      result = Parser.parse(url, { html, fallback: false });
+    });
+
+    it('unwraps the layout tables', async () => {
+      const { content } = await result;
+
+      assert.ok(
+        content.includes("I've never seen a movie that looks quite like")
+      );
+      assert.ok(content.includes('Tsubasa and Gyotaro are best friends'));
+      assert.ok(!content.includes('<table'));
+    });
+
+    it('labels the synopsis and review', async () => {
+      const { content } = await result;
+
+      const synopsis = content.indexOf('<strong>Synopsis:</strong>');
+      const review = content.indexOf('<strong>Review:</strong>');
+      const synopsisText = content.indexOf(
+        'Tsubasa and Gyotaro are best friends'
+      );
+
+      assert.ok(synopsis >= 0);
+      assert.ok(synopsis < synopsisText);
+      assert.ok(review > synopsisText);
+      assert.ok(review < content.indexOf("I've never seen a movie"));
+    });
+
+    it('keeps a single cover image', async () => {
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+      const covers = $('img')
+        .toArray()
+        .filter(img => ($(img).attr('src') || '').includes('we-are-aliens'));
+
+      assert.strictEqual(covers.length, 1);
+    });
+  });
+  describe('nested layout tables', () => {
+    let content;
+    beforeAll(async () => {
+      const html = `
+        <html><body><div class="KonaBody">
+        <table class="layout"><tbody>
+          <tr>
+            <td class="horizontal"><span style="position:absolute">Synopsis:</span></td>
+            <td>
+              <div class="floating-image fleft">
+                <table class="layout"><tbody><tr>
+                  <td><img src="//cdn.animenewsnetwork.com/nested-cover.jpg" width="200" height="300"></td>
+                  <td class="vertical"><div></div></td>
+                </tr></tbody></table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-zone"><p>A synopsis that is long enough to read as article content, with some detail.</p></td>
+            <td><iframe src="https://www.youtube.com/embed/abc123" width="640" height="360"></iframe></td>
+          </tr>
+          <tr><td class="horizontal"><b>Review:</b></td><td class="vertical"></td></tr>
+        </tbody></table>
+        <p>The review body follows the layout table, and it runs long enough to count as content.</p>
+        </div></body></html>
+      `;
+      ({ content } = await Parser.parse(
+        'https://www.animenewsnetwork.com/review/example/.1',
+        { html, fallback: false }
+      ));
+    });
+
+    it('unwraps nested layout tables', () => {
+      assert.ok(!content.includes('<table'));
+      assert.strictEqual(content.split('nested-cover.jpg').length - 1, 1);
+      assert.strictEqual(content.split('Synopsis:').length - 1, 1);
+    });
+
+    it('keeps media-only layout cells', () => {
+      assert.ok(content.includes('https://www.youtube.com/embed/abc123'));
+    });
+
+    it('keeps labels wrapped in elements', () => {
+      assert.ok(content.includes('<strong>Synopsis:</strong>'));
+      assert.ok(content.includes('<strong>Review:</strong>'));
     });
   });
 });
