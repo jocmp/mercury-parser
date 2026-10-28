@@ -208,3 +208,4 @@ export * from './www.journaldelagence.com';
 export * from './metsul.com';
 export * from './actualites.logic-immo.com';
 export * from './edito.meilleursagents.com';
+export * from './www.rosa.gr';
